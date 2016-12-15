@@ -1,0 +1,132 @@
+html, body {
+    min-height: 160vh;
+    overflow-x: hidden;
+    background: #F9FBFC;
+    font-family: 'Raleway', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: 'Roboto', sans-serif;
+}
+
+.uk-navbar {
+    background: #F9FBFC;
+    border-bottom: 1px solid #eee;
+}
+
+.uk-panel-box {
+    background: #F9FBFC;
+    padding: 40px;
+    border-radius: 5%;
+    border: 2px solid #00a8e6;
+}
+
+header {
+    position: relative;
+    /*  background: url(vikingback.jpg) center center;*/
+    background-size: cover;
+    transform: translateX(-15vw);
+    width: 120vw;
+    height: 25vh;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    margin-bottom: 100px;
+}
+
+header figure {
+    /*  background: url(vikingsposter.jpg) center center !important;*/
+    bottom: -100px;
+    left: calc(50% - 50px);
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 1px 10px 50px -20px;
+    z-index: 10;
+    border: 2px solid #F8F8F8;
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% {
+        transform: translateY(-150px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0)
+    }
+}
+
+.title {
+    padding-top: 50px;
+    font-size: 6.5rem;
+    text-align: center;
+}
+
+.subtitle {
+    text-align: center;
+    padding-bottom: 30px;
+    font-size: 1.6rem;
+}
+
+.uk-article {
+    margin-top: 20px;
+    font-size: 1.1rem;
+}
+
+.details {
+    font-size: 1.5rem;
+    margin-top: 26px;
+    text-align: center;
+}
+
+.details .info {
+    line-height: 1.2;
+}
+
+.uk-article p.uk-article-lead {
+    margin-bottom: 10px;
+}
+
+.episodes {
+    margin-top: 30px;
+    font-size: 1.2rem;
+}
+
+.gallery {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.ratebox {
+    margin-bottom: 50px;
+}
+
+.rating {
+    font-size: 4rem;
+    text-align: center;
+}
+
+.rating small {
+    font-size: 2rem;
+}
+
+.fa-heart {
+    font-size: 3rem;
+    color: crimson;
+    transform: translateY(-20%);
+}
+
+.fa-heart-o {
+    font-size: 3rem;
+    transform: translateY(-20%)
+}
+
+.fa-check-square-o {
+    color: #8cc14c;
+}
