@@ -23,7 +23,7 @@ import java.util.Properties;
 @EnableWebMvc
 @EnableTransactionManagement
 @ComponentScan(basePackages = "com.crimson")
-@PropertySource("classpath:/application.properties")
+@PropertySource("classpath:/hibernate.properties")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     //Lokalizacja widoków
