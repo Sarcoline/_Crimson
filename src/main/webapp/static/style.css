@@ -1,8 +1,9 @@
 html, body {
     min-height: 160vh;
     overflow-x: hidden;
-    background: #F9FBFC;
     font-family: 'Raleway', sans-serif;
+    background: #F9FBFC;
+
 }
 
 h1,
@@ -10,21 +11,47 @@ h2,
 h3,
 h4,
 h5 {
+
     font-family: 'Roboto', sans-serif;
 }
-
 .uk-navbar {
     background: #F9FBFC;
     border-bottom: 1px solid #eee;
+    padding: 5px;
 }
 
-.uk-panel-box {
-    background: #F9FBFC;
-    padding: 40px;
-    border-radius: 5%;
-    border: 2px solid #00a8e6;
+.uk-navbar-nav li a:hover {
+    color: #B50C3C;
+
 }
 
+.uk-navbar-nav li a {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.uk-navbar-brand {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem;
+
+}
+
+.uk-navbar-brand:hover {
+    color: #B50C3C;
+}
+
+div.login {
+    background: #fff;
+    box-shadow: 1px 10px 50px -20px;
+}
+
+.search {
+    color: inherit;
+}
+
+.search:hover {
+    color: #B50C3C;
+}
 header {
     position: relative;
     /*  background: url(vikingback.jpg) center center;*/
@@ -74,9 +101,12 @@ header figure {
     font-size: 1.6rem;
 }
 
+.uk-article-lead {
+    font-size: 1.4rem;
+}
 .uk-article {
     margin-top: 20px;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
 }
 
 .details {
@@ -87,8 +117,12 @@ header figure {
 
 .details .info {
     line-height: 1.2;
+
 }
 
+a {
+    color: #00a8e6;
+}
 .uk-article p.uk-article-lead {
     margin-bottom: 10px;
 }
@@ -98,16 +132,30 @@ header figure {
     font-size: 1.2rem;
 }
 
+li.menu a {
+    background-color: inherit;
+}
+
+li.menu.uk-active a {
+    background-color: inherit;
+    border: none;
+    border-bottom: 2px solid #00a8e6;
+}
 .gallery {
     text-align: center;
     margin-top: 30px;
 }
 
-.ratebox {
-    margin-bottom: 50px;
+.episodeDate {
+    margin-right: 1rem;
+    float: right;
 }
 
-.rating {
+.ratebox {
+    margin-bottom: 30px;
+}
+
+.overallrating {
     font-size: 4rem;
     text-align: center;
 }
@@ -118,15 +166,37 @@ header figure {
 
 .fa-heart {
     font-size: 3rem;
-    color: crimson;
+    color: #B50C3C;
     transform: translateY(-20%);
 }
 
 .fa-heart-o {
+    color: #999;
     font-size: 3rem;
     transform: translateY(-20%)
 }
 
 .fa-check-square-o {
     color: #8cc14c;
+    float: right;
+    font-size: 1.4rem;
+}
+
+.fa-square-o {
+    margin-right: 3px;
+    float: right;
+    font-size: 1.4rem;
+    color: #999;
+}
+
+.fa-square-o:hover {
+    color: #8cc14c;
+}
+
+.uk-list li {
+    padding: 2px;
+}
+
+input[type="submit"] {
+    color: #fff;
 }

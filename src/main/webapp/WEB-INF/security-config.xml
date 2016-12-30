@@ -9,13 +9,22 @@
 
 
     <http auto-config="true" use-expressions="true">
-        <intercept-url pattern="/tv/*" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/tv/gameofthrones" access="hasRole('ROLE_ADMIN')"/>
+        <form-login
+                login-page="/login"
+                default-target-url="/"
+                authentication-failure-url="/login?error"
+                username-parameter="username"
+                password-parameter="password"/>
+        <logout logout-success-url="/login?logout"/>
+        <!-- enable csrf protection -->
+        <csrf/>
     </http>
 
     <authentication-manager>
         <authentication-provider>
             <user-service>
-                <user name="meow" password="12345" authorities="ROLE_ADMIN"/>
+                <user name="Kot" password="123" authorities="ROLE_ADMIN"/>
             </user-service>
         </authentication-provider>
     </authentication-manager>
