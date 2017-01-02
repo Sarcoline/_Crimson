@@ -21,7 +21,18 @@
 <nav class="uk-navbar">
     <ul class="uk-navbar-nav"><a href="/" class="uk-navbar-brand">_Crimson</a>
         <li><a href="">Dashboard</a></li>
+
+
         <li class="uk-parent"><a href="<c:url value="/tv/gameofthrones"/> ">TvShows</a></li>
+        <li class="uk-parent" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false">
+            <a href="">Genre</a>
+            <div class="uk-dropdown uk-dropdown-navbar uk-dropdown-bottom">
+                <ul class="uk-nav uk-nav-navbar">
+                    <li><a href="/">Drama</a></li>
+                    <li><a href="/">Fantasy</a></li>
+                </ul>
+            </div>
+        </li>
         <div class="uk-navbar-content uk-hidden-small">
             <form class="uk-form uk-margin-remove uk-display-inline-block">
                 <input type="text" placeholder="Search"> <a class="search"><i class="fa fa-search fa-lg"></i></a></form>

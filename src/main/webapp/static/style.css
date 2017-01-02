@@ -40,6 +40,10 @@ h5 {
     color: #B50C3C;
 }
 
+.uk-nav-navbar li a:hover{
+    background-color:inherit;
+}
+
 div.login {
     background: #fff;
     box-shadow: 1px 10px 50px -20px;
