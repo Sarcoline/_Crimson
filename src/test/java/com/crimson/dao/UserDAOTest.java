@@ -71,6 +71,7 @@ public class UserDAOTest {
         Long idUser;
         if(users.size() == 0){
             testAddUser();
+            users = userDAO.getAllUsers();
             idUser = users.get(userDAO.getAllUsers().size()-1).getId();
         }
         else{

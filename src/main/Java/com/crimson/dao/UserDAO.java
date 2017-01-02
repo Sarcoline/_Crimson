@@ -26,8 +26,8 @@ public class UserDAO {
 
     public List<User> getAllUsers() {
         Session session = sf.getCurrentSession();
-        List<User> movies = session.createQuery("Select a From User a", User.class).getResultList();
-        return movies;
+        List<User> users = session.createQuery("Select a From User a", User.class).getResultList();
+        return users;
     }
 
     public User getUserById(Long id) {

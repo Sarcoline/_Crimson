@@ -60,5 +60,12 @@ public class User {
         this.profilePicLocation = profilePicLocation;
     }
 
+    @ManyToMany(targetEntity = TvShow.class)
+    public List<TvShow> getTvShows() {
+        return tvshows;
+    }
+    public void setTvShows(List<TvShow> tvshows) {
+        this.tvshows = tvshows;
+    }
 
 }
