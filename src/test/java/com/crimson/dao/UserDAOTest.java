@@ -64,7 +64,7 @@ public class UserDAOTest {
 
     @Test
     @Transactional
-    @Rollback(value = true)
+    @Rollback(value = false)
     public void testUpdateUser(){
 
         List<User> users = userDAO.getAllUsers();
