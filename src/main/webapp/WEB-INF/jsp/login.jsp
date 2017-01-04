@@ -31,7 +31,7 @@
             </c:if>
             <form name='loginForm' action="<c:url value='/login' />" method='POST' class="uk-form uk-form-stacked">
                 <div class="uk-form-row">
-                    <input class="uk-width-1-1 uk-form-large" type="text" name='username' placeholder="Username"></div>
+                    <input class="uk-width-1-1 uk-form-large" type="text" name='username' placeholder="Username" autofocus></div>
                 <div class="uk-form-row">
                     <input class="uk-width-1-1 uk-form-large" type="password" name='password' placeholder="Password">
                 </div>
