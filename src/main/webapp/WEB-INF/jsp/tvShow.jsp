@@ -170,8 +170,8 @@
     <div class="uk-width-1-5 uk-width-small-1-6">
         <div class="details">
             <div class="ratebox">
-                <p class="overallrating">7.2
-                    <small class="uk-text-muted" style="font-size: 2rem;">/10</small>
+                <p class="overallrating">
+                    7.2<small class="uk-text-muted" style="font-size: 2rem;">/10</small>
                 </p>
             </div>
             <div class="info">
