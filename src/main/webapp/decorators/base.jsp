@@ -15,7 +15,7 @@
     <script src="<c:url value='/static/uikit/js/uikit.min.js' />" type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/components/lightbox.min.js' />" type="application/javascript"></script>
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/style.css' />">
-    <title></title>
+    <title><decorator:title/></title>
 </head>
 <body>
 <nav class="uk-navbar">

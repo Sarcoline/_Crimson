@@ -93,12 +93,20 @@ header figure {
     }
 }
 
-.title {
-    padding-top: 50px;
-    font-size: 6.5rem;
-    text-align: center;
+@media only screen and (min-width: 790px) {
+    .title {
+        padding-top: 50px;
+        font-size: 6.5rem;
+        text-align: center;
+    }
 }
-
+@media only screen and (max-width: 790px) {
+    .title {
+        padding-top: 50px;
+        font-size: 5rem;
+        text-align: center;
+    }
+}
 .subtitle {
     text-align: center;
     padding-bottom: 30px;
@@ -121,6 +129,7 @@ header figure {
 
 .details .info {
     line-height: 1.2;
+    font-size: 1.3rem;
 
 }
 
@@ -150,6 +159,10 @@ li.menu.uk-active a {
     margin-top: 30px;
 }
 
+.gallery a img{
+    margin-bottom: 10px;
+}
+
 .episodeDate {
     margin-right: 1rem;
     float: right;
@@ -160,7 +173,7 @@ li.menu.uk-active a {
 }
 
 .overallrating {
-    font-size: 4rem;
+    font-size: 3.5rem;
     text-align: center;
 }
 
@@ -204,3 +217,76 @@ li.menu.uk-active a {
 input[type="submit"] {
     color: #fff;
 }
+.rate {
+    cursor: pointer;
+}
+@media only screen and (max-width: 1920px) {
+    .rating {
+        border: none;
+        margin-right: 45px;
+    }
+}
+@media only screen and (max-width: 950px) {
+    .rating {
+        border: none;
+        margin-right: 100px;
+    }
+}
+.userPicture {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.rateValue {
+    font-size: 1.8rem;
+}
+.rating > input { display: none; }
+@media only screen and (max-width: 1530px) {
+    .rating > label:before {
+        margin: 5px;
+        font-size: 1.2rem;
+        font-family: FontAwesome;
+        display: inline-block;
+        content: "\f005";
+    }
+}
+@media only screen and (min-width: 1530px) {
+.rating > label:before {
+    margin: 5px;
+    font-size: 1.5rem;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
+}
+}
+@media only screen and (max-width: 950px) {
+    .rating > label:before {
+        margin: 5px;
+        font-size: 1.5rem;
+        font-family: FontAwesome;
+        display: inline-block;
+        content: "\f005";
+    }
+}
+
+.rating > .half:before {
+    content: "\f089";
+    position: absolute;
+}
+
+.rating > label {
+    color: #ddd;
+    float: right;
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+
+.rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > input:checked ~ label:hover ~ label { color: #FFED85;  }

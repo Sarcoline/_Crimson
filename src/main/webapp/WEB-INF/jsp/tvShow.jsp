@@ -9,49 +9,41 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>${title}</title>
 </head>
 <body>
-<header style="background: url(<c:url value="/images/gameofthrones/back"/>) center center;">
-    <figure style="background: url(<c:url value="/images/gameofthrones/poster"/>) center center"></figure>
+<header style="background: url(<c:url value="/images/shameless/back"/>) center center;">
+    <figure style="background: url(<c:url value="/images/shameless/poster"/>) center center"></figure>
 </header>
+
 <h1 class="title">${title}
     <small><i class="fa fa-heart" aria-hidden="true" style="cursor: pointer"></i></small>
 </h1>
 <h3 class="subtitle uk-text-muted">Drama 2014</h3>
 <div class="uk-grid">
-    <div class="uk-width-1-5  uk-width-small-1-6">
+    <div class="uk-width-large-1-6  uk-width-medium-1-1" data-uk-grid-margin=" ">
         <div class="gallery">
-            <div class="uk-grid-small uk-grid-width-1-1" data-uk-grid-margin="">
-                <div>
-                    <a href="<c:url value="/images/gameofthrones/1"/>" data-lightbox-type="image"
-                       data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/gameofthrones/1"/>"
-                                                                 width="200" height="200"> </a>
-                </div>
-                <div>
-                    <a href="<c:url value="/images/gameofthrones/2"/>" data-lightbox-type="image"
-                       data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/gameofthrones/2"/>"
-                                                                 width="200" height="200"> </a>
-                </div>
-                <div>
-                    <a href="<c:url value="/images/gameofthrones/3"/>" data-lightbox-type="image"
-                       data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/gameofthrones/3"/>"
-                                                                 width="200" height="200"> </a>
-                </div>
-                <div>
-                    <a href="<c:url value="/images/gameofthrones/4"/>" data-lightbox-type="image"
-                       data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/gameofthrones/4"/>"
-                                                                 width="200" height="200"> </a>
-                </div>
-                <div>
-                    <a href="<c:url value="/images/gameofthrones/5"/>" data-lightbox-type="image"
-                       data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/gameofthrones/5"/>"
-                                                                 width="200" height="200"> </a>
-                </div>
+            <div class="uk-grid-small uk-grid-width-1-1" data-uk-grid-margin=" ">
+
+                <a href="<c:url value="/images/gameofthrones/1"/>" data-lightbox-type="image"
+                   data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/gameofthrones/1"/>"
+                                                             width="200" height="200"> </a>
+                <a href="<c:url value="/images/gameofthrones/2"/>" data-lightbox-type="image"
+                   data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/gameofthrones/2"/>"
+                                                             width="200" height="200"> </a>
+                <a href="<c:url value="/images/gameofthrones/3"/>" data-lightbox-type="image"
+                   data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/gameofthrones/3"/>"
+                                                             width="200" height="200"> </a>
+                <a href="<c:url value="/images/gameofthrones/4"/>" data-lightbox-type="image"
+                   data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/gameofthrones/4"/>"
+                                                             width="200" height="200"> </a>
+                <a href="<c:url value="/images/gameofthrones/5"/>" data-lightbox-type="image"
+                   data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/gameofthrones/5"/>"
+                                                             width="200" height="200"> </a>
             </div>
         </div>
     </div>
-    <div class="uk-width-3-5 uk-width-small-4-6">
+    <div class="uk-width-large-4-6 uk-width-medium-1-1">
         <article class="uk-article">
             <h1 class="uk-article-title">Summary of <strong>${title}</strong></h1>
             <p class="uk-article-lead">Pellentesque facilisis. Nulla imperdiet sit amet magna. Vestibulum dapibus,
@@ -167,13 +159,46 @@
             </div>
         </div>
     </div>
-    <div class="uk-width-1-5 uk-width-small-1-6">
-        <div class="details">
+    <div class="uk-width-large-1-6 uk-width-medium-1-1">
+        <div class="uk-grid details" data-uk-grid-margin=" ">
+            <div class="uk-width-large-1-1 uk-width-small-1-2">
             <div class="ratebox">
                 <p class="overallrating">
                     7.2<small class="uk-text-muted" style="font-size: 2rem;">/10</small>
                 </p>
+                <p class="uk-text-muted">253 rated</p>
+                <p class="uk-text-muted">1453 follows</p>
+                <p></p>
+                <div class="userRating">
+                    <img src="<c:url value="/images/user/meow"/>" class="userPicture">
+                    <i class="fa fa-star fa-lg rate" title="Rate!" aria-hidden="true"></i><span
+                        class="rateValue"> 5</span>
+                </div>
+                <fieldset class="rating uk-hidden">
+                    <input type="radio" id="star5" name="rating" value="10"/>
+                    <label class="full" for="star5" title="10"></label>
+                    <input type="radio" id="star4half" name="rating" value="9"/>
+                    <label class="half" for="star4half" title="9"></label>
+                    <input type="radio" id="star4" name="rating" value="8"/>
+                    <label class="full" for="star4" title="8"></label>
+                    <input type="radio" id="star3half" name="rating" value="7"/>
+                    <label class="half" for="star3half" title="7"></label>
+                    <input type="radio" id="star3" name="rating" value="6"/>
+                    <label class="full" for="star3" title="6"></label>
+                    <input type="radio" id="star2half" name="rating" value="5"/>
+                    <label class="half" for="star2half" title="5"></label>
+                    <input type="radio" id="star2" name="rating" value="4"/>
+                    <label class="full" for="star2" title="4"></label>
+                    <input type="radio" id="star1half" name="rating" value="3"/>
+                    <label class="half" for="star1half" title="3"></label>
+                    <input type="radio" id="star1" name="rating" value="2"/>
+                    <label class="full" for="star1" title="2"></label>
+                    <input type="radio" id="starhalf" name="rating" value="1"/>
+                    <label class="half" for="starhalf" title="1"></label>
+                </fieldset>
             </div>
+            </div>
+            <div class="uk-width-large-1-1 uk-width-small-1-2">
             <div class="info">
                 <p>Network:
                     <br> <strong>History</strong></p>
@@ -183,6 +208,7 @@
                     <br><strong>60 Minutes</strong></p> <a class="uk-button uk-button-primary"
                                                            href="https://www.youtube.com/watch?v=EI0ib1NErqg"
                                                            data-uk-lightbox="{group:'group2'}">Watch trailer</a></div>
+        </div>
         </div>
     </div>
 </div>
@@ -194,8 +220,14 @@
         $('h1').click(function () {
             $(this).find('i').toggleClass('fa-heart fa-heart-o');
         });
+        $('i.rate').on('click', function () {
+            $('fieldset.rating').toggleClass('uk-hidden')
+        })
+        $('label').on('click', function () {
+            $('.rateValue').html(" " + $('input#' + $(this).attr('for')).val());
+            $('fieldset.rating').addClass('uk-hidden')
+        })
     });
-
 </script>
 </body>
 </html>
