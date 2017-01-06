@@ -1,13 +1,17 @@
 package com.crimson.controller;
 
+import com.crimson.dto.UserDTO;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.validation.Valid;
 
 /**
  * Created by Meow on 30.12.2016.
@@ -25,7 +29,6 @@ public class UserController {
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             return "redirect:/";
         }
-
         if (error != null) {
             model.addAttribute("error", "Invalid username and password!");
         }
@@ -34,5 +37,22 @@ public class UserController {
         }
         return "login";
 
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public String registration(Model model) {
+        model.addAttribute("userDTO", new UserDTO());
+        return "register";
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String registration(@Valid UserDTO userDTO, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            return "register";
+        }
+        System.out.println(userDTO.getName());
+        System.out.println(userDTO.getPassword());
+        return "redirect:/";
     }
 }

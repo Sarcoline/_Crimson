@@ -20,7 +20,7 @@ public class UserDTO {
     private String email;
 
     @NotEmpty
-    @Size(min = 3)
+    @Size(min = 3, max= 100)
     private String password;
 
 

@@ -21,27 +21,28 @@
 <nav class="uk-navbar">
     <ul class="uk-navbar-nav"><a href="/" class="uk-navbar-brand">_Crimson</a>
         <li><a href="">Dashboard</a></li>
-
-
         <li class="uk-parent"><a href="<c:url value="/tv/gameofthrones"/> ">TvShows</a></li>
         <li class="uk-parent" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false">
             <a href="">Genre</a>
             <div class="uk-dropdown uk-dropdown-navbar uk-dropdown-bottom">
                 <ul class="uk-nav uk-nav-navbar">
-                    <li><a href="/">Drama</a></li>
-                    <li><a href="/">Fantasy</a></li>
+                    <li><a href="<c:url value="/tv/genre/drama"/> ">Drama</a></li>
+                    <li><a href="<c:url value="/tv/genre/fantasy"/> ">Fantasy</a></li>
                 </ul>
             </div>
         </li>
         <div class="uk-navbar-content uk-hidden-small">
-            <form class="uk-form uk-margin-remove uk-display-inline-block">
-                <input type="text" placeholder="Search"> <a class="search"><i class="fa fa-search fa-lg"></i></a></form>
+            <form class="uk-form uk-margin-remove uk-display-inline-block" action="<c:url value="/tv/search"/> " method="post">
+                <input name="search" type="text" placeholder="Search"> <a class="search"><i class="fa fa-search fa-lg"></i></a>
+                <input type="hidden" name="${_csrf.parameterName}"
+                       value="${_csrf.token}"/>
+            </form>
         </div>
     </ul>
     <div class="uk-navbar-flip">
         <ul class="uk-navbar-nav">
             <sec:authorize access="isAnonymous()">
-                <li><a href="">Register</a></li>
+                <li><a href="<c:url value="/register" />">Register</a></li>
                 <li class="uk-parent"><a href="<c:url value="/login"/> ">Login</a></li>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
@@ -56,9 +57,7 @@
     </div>
 </nav>
 
-
 <decorator:body/>
-
 <%--TODO zrobić ładniejszy logout--%>
 <script>
     function formSubmit() {
