@@ -38,8 +38,10 @@ public class TvShowDAO {
 
     public void deleteTvShow(TvShow tvshow){
         Session session = sf.getCurrentSession();
-        for(User user : tvshow.getUsers())
-            userDAO.deleteUser2TvShow(user,tvshow);
+        for(User user : userDAO.getAllUsers()) {
+            if(tvshow.getUsers().indexOf(user) > -1)
+            userDAO.deleteUser2TvShow(user, tvshow);
+        }
         session.delete(tvshow);
     }
 

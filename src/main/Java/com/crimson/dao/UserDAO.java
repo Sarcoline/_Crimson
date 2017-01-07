@@ -17,6 +17,8 @@ public class UserDAO {
 
     @Autowired
     private SessionFactory sf;
+    @Autowired
+    TvShowDAO tvShowDAO;
 
     public void saveUser(User user) {
         Session session = sf.getCurrentSession();
@@ -36,8 +38,10 @@ public class UserDAO {
 
     public void deleteUser(User user){
         Session session = sf.getCurrentSession();
-        for(TvShow tvshow : user.getTvShows())
-            deleteUser2TvShow(user,tvshow);
+        for(TvShow tvshow : tvShowDAO.getAllTvShows()) {
+            if (user.getTvShows().indexOf(tvshow) > -1)
+                deleteUser2TvShow(user, tvshow);
+        }
         session.delete(user);
     }
 

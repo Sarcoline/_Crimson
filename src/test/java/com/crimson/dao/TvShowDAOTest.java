@@ -35,17 +35,21 @@ public class TvShowDAOTest {
     public void setUp(){
         tv.setTitle("Show");
         tv.setGenre("Comedy");
-        tvShowDAO.saveTvShow(tv);
+        if(tvShowDAO.getAllTvShows().indexOf(tv) == -1)
+            tvShowDAO.saveTvShow(tv);
 
         tv2.setTitle("New");
         tv2.setGenre("Drama");
-        tvShowDAO.saveTvShow(tv2);
+        if(tvShowDAO.getAllTvShows().indexOf(tv2) == -1)
+            tvShowDAO.saveTvShow(tv2);
     }
 
     @After
     public void TearDown(){
-        tvShowDAO.deleteTvShow(tv);
-        tvShowDAO.deleteTvShow(tv2);
+        if(tvShowDAO.getTvById(tv.getId()) != null)
+            tvShowDAO.deleteTvShow(tv);
+        if(tvShowDAO.getTvById(tv2.getId()) != null)
+            tvShowDAO.deleteTvShow(tv2);
     }
 
     @Test

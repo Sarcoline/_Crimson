@@ -40,18 +40,22 @@ public class UserDAOTest {
         user.setName("Paula");
         user.setEmail("paula@gmail.com");
         user.setPassword("abc");
-        userDAO.saveUser(user);
+        if(userDAO.getAllUsers().indexOf(user) == -1)
+            userDAO.saveUser(user);
 
         user2.setName("Radek");
         user2.setEmail("radzio@gmail.com");
         user2.setPassword("123");
-        userDAO.saveUser(user2);
+        if(userDAO.getAllUsers().indexOf(user2) == -1)
+            userDAO.saveUser(user2);
     }
 
     @After
     public void TearDown(){
-        userDAO.deleteUser(user);
-        userDAO.deleteUser(user2);
+        if(userDAO.getUserById(user.getId()) != null)
+            userDAO.deleteUser(user);
+        if(userDAO.getUserById(user2.getId()) != null)
+            userDAO.deleteUser(user2);
     }
 
     @Test

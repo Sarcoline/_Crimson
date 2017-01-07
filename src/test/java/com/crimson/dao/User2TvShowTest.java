@@ -38,34 +38,42 @@ public class User2TvShowTest {
         user.setName("Paula");
         user.setEmail("paula@gmail.com");
         user.setPassword("abc");
-        userDAO.saveUser(user);
+        if(userDAO.getAllUsers().indexOf(user) == -1)
+            userDAO.saveUser(user);
 
         user2.setName("Radek");
         user2.setEmail("radzio@gmail.com");
         user2.setPassword("123");
-        userDAO.saveUser(user2);
+        if(userDAO.getAllUsers().indexOf(user2) == -1)
+            userDAO.saveUser(user2);
 
         tv.setTitle("Show");
         tv.setGenre("Comedy");
-        tvShowDAO.saveTvShow(tv);
+        if(tvShowDAO.getAllTvShows().indexOf(tv) == -1)
+            tvShowDAO.saveTvShow(tv);
 
         tv2.setTitle("New");
         tv2.setGenre("Drama");
-        tvShowDAO.saveTvShow(tv2);
+        if(tvShowDAO.getAllTvShows().indexOf(tv2) == -1)
+            tvShowDAO.saveTvShow(tv2);
     }
 
     @After
     public void TearDown(){
+        if(userDAO.getUserById(user.getId()) != null)
         userDAO.deleteUser(user);
+        if(userDAO.getUserById(user2.getId()) != null)
         userDAO.deleteUser(user2);
 
+        if(tvShowDAO.getTvById(tv.getId()) != null)
         tvShowDAO.deleteTvShow(tv);
+        if(tvShowDAO.getTvById(tv2.getId()) != null)
         tvShowDAO.deleteTvShow(tv2);
     }
 
     @Test
     @Transactional
-    @Rollback(value = false)
+    @Rollback
     public void testAddUser2TvShow() {
         userDAO.addUser2TvShow(user,tv);
 
@@ -73,18 +81,20 @@ public class User2TvShowTest {
         assertEquals("Paula",tv.getUsers().get(tv.getUsers().indexOf(user)).getName());
 
         userDAO.deleteUser2TvShow(user,tv);
+        assertEquals(-1,user.getTvShows().indexOf(tv));
+        assertEquals(-1,tv.getUsers().indexOf(user));
     }
 
     @Test
     @Transactional
     @Rollback(value = false)
-    public void testDeleteTv2User() {
+    public void testDeleteUser2TvShow() {
         userDAO.addUser2TvShow(user,tv);
         userDAO.addUser2TvShow(user,tv2);
 
         userDAO.deleteUser2TvShow(user,tv);
-
         assertEquals(-1,user.getTvShows().indexOf(tv));
         assertEquals(-1,tv.getUsers().indexOf(user));
     }
+
 }
