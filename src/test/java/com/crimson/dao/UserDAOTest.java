@@ -1,9 +1,10 @@
 package com.crimson.dao;
 
 import com.crimson.WebConfig;
+import com.crimson.model.TvShow;
 import com.crimson.model.User;
 
-import org.junit.Assert;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static junit.framework.TestCase.assertEquals;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = WebConfig.class)
 @WebAppConfiguration
@@ -29,60 +32,60 @@ public class UserDAOTest {
     @Autowired
     TvShowDAO tvShowDAO;
 
-    private int usersSize;
+    User user = new User();
+    User user2 = new User();
 
     @Before
-    public void size() {
-        usersSize = userDAO.getAllUsers().size();
+    public void setUp(){
+        user.setName("Paula");
+        user.setEmail("paula@gmail.com");
+        user.setPassword("abc");
+        userDAO.saveUser(user);
+
+        user2.setName("Radek");
+        user2.setEmail("radzio@gmail.com");
+        user2.setPassword("123");
+        userDAO.saveUser(user2);
+    }
+
+    @After
+    public void TearDown(){
+        userDAO.deleteUser(user);
+        userDAO.deleteUser(user2);
     }
 
     @Test
     @Transactional
     @Rollback(value = false)
     public void testAddUser() {
-        User user = new User();
-        user.setName("Paula");
-        user.setEmail("paula@gmail.com");
-        user.setPassword("abc");
-        userDAO.saveUser(user);
-        Assert.assertEquals(user.getName(), userDAO.getUserById(user.getId()).getName());
+        assertEquals(user.getName(), userDAO.getUserById(user.getId()).getName());
     }
 
     @Test
     @Transactional
     @Rollback(value = false)
     public void testDeleteUser(){
+        List<TvShow> tvShows = user.getTvShows();
+        userDAO.deleteUser(user);
 
-        List<User> users = userDAO.getAllUsers();
-        int userSizeBeforeDelete = users.size()-1;
-        Long idUser = users.get(userDAO.getAllUsers().size()-1).getId();
-        userDAO.deleteUser(userDAO.getUserById(idUser));
+        for(TvShow tvshow : tvShows)
+            assertEquals(-1,tvshow.getUsers().indexOf(user));
 
-        Assert.assertEquals(null, userDAO.getUserById(idUser));
-        Assert.assertEquals(userSizeBeforeDelete, userDAO.getAllUsers().size());
+        assertEquals(null, userDAO.getUserById(user.getId()));
+        assertEquals(user2,userDAO.getUserById(user2.getId()));
     }
 
     @Test
     @Transactional
     @Rollback(value = false)
     public void testUpdateUser(){
+        userDAO.getUserById(user.getId()).setName("Update Test");
+        userDAO.getUserById(user.getId()).setEmail("Update Test");
+        userDAO.updateUser(userDAO.getUserById(user.getId()));
 
-        List<User> users = userDAO.getAllUsers();
-        Long idUser;
-        if(users.size() == 0){
-            testAddUser();
-            users = userDAO.getAllUsers();
-            idUser = users.get(userDAO.getAllUsers().size()-1).getId();
-        }
-        else{
-            idUser = users.get(userDAO.getAllUsers().size()-1).getId();
-        }
-        userDAO.getUserById(idUser).setName("Update Test");
-        userDAO.getUserById(idUser).setEmail("Update Test");
-        userDAO.updateUser(userDAO.getUserById(idUser));
+        assertEquals("Update Test", userDAO.getUserById(user.getId()).getName());
+        assertEquals("Update Test", userDAO.getUserById(user.getId()).getEmail());
 
-        Assert.assertEquals("Update Test", userDAO.getUserById(idUser).getName());
-        Assert.assertEquals("Update Test", userDAO.getUserById(idUser).getEmail());
-
+        assertEquals(user2,userDAO.getUserById(user2.getId()));
     }
 }

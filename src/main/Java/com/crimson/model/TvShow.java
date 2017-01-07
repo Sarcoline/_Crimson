@@ -85,12 +85,13 @@ public class TvShow {
     }
 
     @ManyToMany(targetEntity = User.class)
+    @JoinTable(name = "User2TvShow",
+            joinColumns = {@JoinColumn(name = "idUser")},
+            inverseJoinColumns = {@JoinColumn(name = "idTvShow")})
     public List<User> getUsers() {
         return users;
     }
     public void setUsers(List<User> users) {
         this.users = users;
     }
-
-
 }

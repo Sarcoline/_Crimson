@@ -1,10 +1,7 @@
 package com.crimson.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "User")
@@ -61,6 +58,9 @@ public class User {
     }
 
     @ManyToMany(targetEntity = TvShow.class)
+    @JoinTable(name = "User2TvShow",
+            joinColumns = {@JoinColumn(name = "idUser")},
+            inverseJoinColumns = {@JoinColumn(name = "idTvShow")})
     public List<TvShow> getTvShows() {
         return tvshows;
     }
