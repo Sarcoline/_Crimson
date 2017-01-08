@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: Meow
@@ -9,17 +10,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>${title}</title>
+    <title>${tv.title}</title>
 </head>
 <body>
 <header style="background: url(<c:url value="/images/shameless/back"/>) center center;">
     <figure style="background: url(<c:url value="/images/shameless/poster"/>) center center"></figure>
 </header>
 
-<h1 class="title">${title}
-    <small><i class="fa fa-heart" aria-hidden="true" style="cursor: pointer"></i></small>
+<h1 class="title">${tv.title}
+    <sec:authorize access="isAuthenticated()">
+        <a href="<c:url value="/tv/follow/${tv.id}"/>"><small><i class="fa fa-heart" aria-hidden="true" style="cursor: pointer"></i></small></a>
+    </sec:authorize>
 </h1>
-<h3 class="subtitle uk-text-muted">Drama 2014</h3>
+<h3 class="subtitle uk-text-muted">${tv.genre} ${tv.releaseYear}</h3>
 <div class="uk-grid">
     <div class="uk-width-large-1-6  uk-width-medium-1-1" data-uk-grid-margin=" ">
         <div class="gallery">
@@ -45,7 +48,7 @@
     </div>
     <div class="uk-width-large-4-6 uk-width-medium-1-1">
         <article class="uk-article">
-            <h1 class="uk-article-title">Summary of <strong>${title}</strong></h1>
+            <h1 class="uk-article-title">Summary of <strong>${tv.title}</strong></h1>
             <p class="uk-article-lead">Pellentesque facilisis. Nulla imperdiet sit amet magna. Vestibulum dapibus,
                 mauris nec malesuada fames ac turpis velit, rhoncus eu, luctus et interdum adipiscing wisi.</p> Lorem
             ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non felis. Maecenas malesuada
@@ -164,7 +167,7 @@
             <div class="uk-width-large-1-1 uk-width-small-1-2">
             <div class="ratebox">
                 <p class="overallrating">
-                    7.2<small class="uk-text-muted" style="font-size: 2rem;">/10</small>
+                    ${tv.overallRating}<small class="uk-text-muted" style="font-size: 2rem;">/10</small>
                 </p>
                 <p class="uk-text-muted">253 rated</p>
                 <p class="uk-text-muted">1453 follows</p>
@@ -201,12 +204,12 @@
             <div class="uk-width-large-1-1 uk-width-small-1-2">
             <div class="info">
                 <p>Network:
-                    <br> <strong>History</strong></p>
+                    <br> <strong>${tv.network}</strong></p>
                 <p>Country:
-                    <br><strong>United States</strong></p>
+                    <br><strong>${tv.country}</strong></p>
                 <p>Episode Length:
-                    <br><strong>60 Minutes</strong></p> <a class="uk-button uk-button-primary"
-                                                           href="https://www.youtube.com/watch?v=EI0ib1NErqg"
+                    <br><strong>60 minutes</strong></p> <a class="uk-button uk-button-primary"
+                                                           href=${tv.trailerUrl}
                                                            data-uk-lightbox="{group:'group2'}">Watch trailer</a></div>
         </div>
         </div>
@@ -217,12 +220,12 @@
         $('a').click(function () {
             $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
         });
-        $('h1').click(function () {
+        $('small').click(function () {
             $(this).find('i').toggleClass('fa-heart fa-heart-o');
         });
         $('i.rate').on('click', function () {
             $('fieldset.rating').toggleClass('uk-hidden')
-        })
+        });
         $('label').on('click', function () {
             $('.rateValue').html(" " + $('input#' + $(this).attr('for')).val());
             $('fieldset.rating').addClass('uk-hidden')

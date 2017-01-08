@@ -1,7 +1,8 @@
 package com.crimson.model;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "TvShow")
@@ -15,6 +16,28 @@ public class TvShow {
     private String description;
     private String trailerUrl;
     private Double overallRating;
+    private int releaseYear;
+    private String slug;
+
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
+
+    public int getReleaseYear() {
+        return releaseYear;
+    }
+
+    public void setReleaseYear(int releaseYear) {
+        this.releaseYear = releaseYear;
+    }
+
+
 
     private List<User> users = new ArrayList<User>();
 

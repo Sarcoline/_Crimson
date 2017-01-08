@@ -21,7 +21,7 @@
 <nav class="uk-navbar">
     <ul class="uk-navbar-nav"><a href="/" class="uk-navbar-brand">_Crimson</a>
         <li><a href="">Dashboard</a></li>
-        <li class="uk-parent"><a href="<c:url value="/tv/gameofthrones"/> ">TvShows</a></li>
+        <li class="uk-parent"><a href="<c:url value="/tv/game-of-thrones"/> ">TvShows</a></li>
         <li class="uk-parent" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false">
             <a href="">Genre</a>
             <div class="uk-dropdown uk-dropdown-navbar uk-dropdown-bottom">

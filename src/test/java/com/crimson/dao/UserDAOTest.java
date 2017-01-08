@@ -3,12 +3,10 @@ package com.crimson.dao;
 import com.crimson.WebConfig;
 import com.crimson.model.TvShow;
 import com.crimson.model.User;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
@@ -91,5 +89,12 @@ public class UserDAOTest {
         assertEquals("Update Test", userDAO.getUserById(user.getId()).getEmail());
 
         assertEquals(user2,userDAO.getUserById(user2.getId()));
+    }
+
+    @Test
+    @Rollback
+    public void findByNameTest() {
+       User user = userDAO.getUserByName("Radek");
+       assertEquals("Radek", user.getName());
     }
 }

@@ -1,6 +1,10 @@
 package com.crimson.controller;
 
+import com.crimson.dao.UserDAO;
 import com.crimson.dto.UserDTO;
+import com.crimson.model.User;
+import ma.glasnost.orika.MapperFacade;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +22,11 @@ import javax.validation.Valid;
  */
 @Controller
 public class UserController {
+
+    @Autowired
+    UserDAO userDAO;
+    @Autowired
+    MapperFacade mapperFacade;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(
@@ -51,8 +60,9 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "register";
         }
-        System.out.println(userDTO.getName());
-        System.out.println(userDTO.getPassword());
+
+        User user = mapperFacade.map(userDTO, User.class);
+        userDAO.saveUser(user);
         return "redirect:/";
     }
 }

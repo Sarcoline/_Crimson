@@ -20,17 +20,17 @@
             <form:form modelAttribute="userDTO" method="POST" enctype="utf8" class="uk-form uk-form-stacked">
                 <form:errors cssClass="uk-alert uk-alert-danger" element="div"/>
                 <div class="uk-form-row">
-                    <form:input path="name" value="" class="uk-width-1-1 uk-form-large" type="text" name='username' placeholder="Username" />
                     <form:errors path="name" cssClass="uk-alert uk-alert-danger" element="div"/>
+                    <form:input path="name" value="" class="uk-width-1-1 uk-form-large" type="text" name='username' placeholder="Username" />
                 </div>
                 <div class="uk-form-row">
-                    <form:input path="password" value="" class="uk-width-1-1 uk-form-large" type="password" name='password' placeholder="Password" />
                     <form:errors path="password" cssClass="uk-alert uk-alert-danger" element="div"/>
+                    <form:input path="password" value="" class="uk-width-1-1 uk-form-large" type="password" name='password' placeholder="Password" />
                 </div>
                 <div class="uk-form-row">
+                    <form:errors path="email" cssClass="uk-alert uk-alert-danger" element="div"/>
                     <form:input path="email" value="" class="uk-width-1-1 uk-form-large" type="text" name='email' placeholder="Email" />
                         <%--TODO zmienic wyświetlanie błędów--%>
-                    <form:errors path="email" cssClass="uk-alert uk-alert-danger" element="div"/>
                 </div>
                 <div class="uk-form-row">
                     <input class="uk-width-1-1 uk-button uk-button-primary uk-button-large" name="submit" type="submit"

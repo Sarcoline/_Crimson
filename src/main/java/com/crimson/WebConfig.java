@@ -24,7 +24,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 @ComponentScan(basePackages = "com.crimson")
 @PropertySource("classpath:/hibernate.properties")
-public class WebConfig extends WebMvcConfigurerAdapter {
+public class WebConfig extends WebMvcConfigurerAdapter  {
 
     //Lokalizacja widoków
     @Bean
@@ -53,7 +53,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         return sessionFactory;
     }
 
-    @Bean
+    @Bean(name = "dataSource")
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));

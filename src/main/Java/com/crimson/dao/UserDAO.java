@@ -27,8 +27,12 @@ public class UserDAO {
 
     public List<User> getAllUsers() {
         Session session = sf.getCurrentSession();
-        List<User> users = session.createQuery("Select a From User a", User.class).getResultList();
-        return users;
+        return session.createQuery("Select a From User a", User.class).getResultList();
+    }
+
+    public User getUserByName(String name) {
+        Session session = sf.getCurrentSession();
+        return session.createQuery("Select a From User a where a.name like :custName", User.class).setParameter("custName", name).getSingleResult();
     }
 
     public User getUserById(Long id) {
