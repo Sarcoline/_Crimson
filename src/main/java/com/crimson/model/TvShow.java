@@ -1,49 +1,40 @@
 package com.crimson.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "TvShow")
 public class TvShow {
 
-    private Long id;
-    private String title;
-    private String network;
-    private String country;
-    private String genre;
-    private String description;
-    private String trailerUrl;
-    private Double overallRating;
-    private int releaseYear;
-    private String slug;
-
-
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
-
-    public int getReleaseYear() {
-        return releaseYear;
-    }
-
-    public void setReleaseYear(int releaseYear) {
-        this.releaseYear = releaseYear;
-    }
-
-
-
-    private List<User> users = new ArrayList<User>();
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idTvShow")
+    private Long id;
+
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "network")
+    private String network;
+
+    @Column(name = "country")
+    private String country;
+
+    @Column(name = "genre")
+    private String genre;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "overallRating")
+    private String trailerUrl;
+
+    @Column(name = "trailerUrl")
+    private Double overallRating;
+
+
+
     public Long getId(){
         return id;
     }
@@ -51,7 +42,6 @@ public class TvShow {
         this.id = id;
     }
 
-    @Column(name = "title")
     public String getTitle(){
         return title;
     }
@@ -59,7 +49,6 @@ public class TvShow {
         this.title = title;
     }
 
-    @Column(name = "network")
     public String getNetwork(){
         return network;
     }
@@ -67,7 +56,6 @@ public class TvShow {
         this.network = network;
     }
 
-    @Column(name = "country")
     public String getCountry(){
         return country;
     }
@@ -75,7 +63,6 @@ public class TvShow {
         this.country = country;
     }
 
-    @Column(name = "genre")
     public String getGenre(){
         return genre;
     }
@@ -83,7 +70,6 @@ public class TvShow {
         this.genre = genre;
     }
 
-    @Column(name = "description")
     public String getDescription(){
         return description;
     }
@@ -91,7 +77,6 @@ public class TvShow {
         this.description = description;
     }
 
-    @Column(name = "overallRating")
     public Double getOverallRating(){
         return overallRating;
     }
@@ -99,7 +84,6 @@ public class TvShow {
         this.overallRating = overallRating;
     }
 
-    @Column(name = "trailerUrl")
     public String getTrailerUrl(){
         return trailerUrl;
     }
@@ -107,14 +91,4 @@ public class TvShow {
         this.trailerUrl = trailerUrl;
     }
 
-    @ManyToMany(targetEntity = User.class)
-    @JoinTable(name = "User2TvShow",
-            joinColumns = {@JoinColumn(name = "idUser")},
-            inverseJoinColumns = {@JoinColumn(name = "idTvShow")})
-    public List<User> getUsers() {
-        return users;
-    }
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
 }

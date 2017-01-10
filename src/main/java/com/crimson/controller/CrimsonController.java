@@ -38,7 +38,6 @@ public class CrimsonController {
             tv.setOverallRating(9.2);
             tv.setTrailerUrl("https://www.youtube.com/watch?v=EI0ib1NErqg");
             tv.setCountry("USA");
-            tv.setReleaseYear(2011);
             TvShow tv1 = new TvShow();
             tv1.setGenre("Drama");
             tv1.setTitle("Dexter");
@@ -46,12 +45,11 @@ public class CrimsonController {
             tv1.setOverallRating(9.2);
             tv1.setTrailerUrl("https://www.youtube.com/watch?v=EI0ib1NErqg");
             tv1.setCountry("USA");
-            tv1.setReleaseYear(2006);
             tvShowDAO.saveTvShow(tv);
             tvShowDAO.saveTvShow(tv1);
         }
 
-        model.addAttribute("tv", tvShowDAO.getTvShowBySlug(name));
+
         return "tvShow";
     }
 
@@ -79,7 +77,7 @@ public class CrimsonController {
         System.out.print(userDto);
         return userDto;
     }
-
+/*
     @Transactional
     @RequestMapping(value = "/follow/{id}")
     public String follow(Model model, @PathVariable("id") Long id) {
@@ -93,5 +91,6 @@ public class CrimsonController {
         Slugify slg = new Slugify();
         return "redirect:/tv/" + slg.slugify(tv.getTitle());
     }
+*/
 
 }
