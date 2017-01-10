@@ -2,6 +2,7 @@ package com.crimson.dao;
 
 import com.crimson.model.TvShow;
 import com.crimson.model.User;
+import com.github.slugify.Slugify;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class TvShowDAO {
 
     public void saveTvShow(TvShow tv) {
         Session session = sf.getCurrentSession();
+        Slugify slg = new Slugify();
+        tv.setSlug(slg.slugify(tv.getTitle()));
         session.persist(tv);
     }
 
@@ -34,6 +37,12 @@ public class TvShowDAO {
     public TvShow getTvById(Long id) {
         Session session = sf.getCurrentSession();
         return session.find(TvShow.class, id);
+    }
+
+    public TvShow getTvShowBySlug(String slug) {
+        Session session = sf.getCurrentSession();
+        TvShow tv = session.createQuery("Select a From TvShow a where a.slug like :custSlug", TvShow.class).setParameter("custSlug", slug).getSingleResult();
+        return tv;
     }
 
     public void deleteTvShow(TvShow tvshow){
