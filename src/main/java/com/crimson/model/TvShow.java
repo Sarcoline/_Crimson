@@ -33,6 +33,29 @@ public class TvShow {
     @Column(name = "trailerUrl")
     private Double overallRating;
 
+    @Column(name = "releaseYear")
+    private int releaseYear;
+
+    @Column(name = "slug")
+    private String slug;
+
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
+
+    public int getReleaseYear() {
+        return releaseYear;
+    }
+
+    public void setReleaseYear(int releaseYear) {
+        this.releaseYear = releaseYear;
+    }
 
 
     public Long getId(){
@@ -90,5 +113,7 @@ public class TvShow {
     public void setTrailerUrl(String trailerUrl){
         this.trailerUrl = trailerUrl;
     }
+
+
 
 }

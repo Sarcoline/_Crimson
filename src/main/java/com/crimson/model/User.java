@@ -25,6 +25,7 @@ public class User {
     @Column(name = "profilePicLocation")
     private String profilePicLocation;
 
+    @Column(name = "role")
     private String role = "ROLE_USER";
 
 

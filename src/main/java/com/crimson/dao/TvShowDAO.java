@@ -16,10 +16,6 @@ public class TvShowDAO {
     @Autowired
     private SessionFactory sf;
 
-    @Autowired
-    UserDAO userDAO;
-
-
     public void saveTvShow(TvShow tv) {
         Session session = sf.getCurrentSession();
         session.persist(tv);
@@ -44,5 +40,11 @@ public class TvShowDAO {
     public void updateTvShow(TvShow tvshow){
         Session session = sf.getCurrentSession();
         session.update(tvshow);
+    }
+
+    public TvShow getTvShowBySlug(String slug) {
+        Session session = sf.getCurrentSession();
+        TvShow tv = session.createQuery("Select a From TvShow a where a.slug like :custSlug", TvShow.class).setParameter("custSlug", slug).getSingleResult();
+        return tv;
     }
 }
