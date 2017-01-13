@@ -1,6 +1,6 @@
 package com.crimson.dao;
 
-import com.crimson.model.User;
+import com.crimson.model.Rating;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,44 +9,41 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
 @Repository
 @Transactional
-public class UserDAO {
+public class RatingDAO {
 
     @Autowired
     private SessionFactory sf;
 
-
-    public void saveUser(User user) {
+    public void saveRating(Rating rating){
         Session session = sf.getCurrentSession();
-        session.persist(user);
+        session.persist(rating);
     }
 
-    public List<User> getAllUsers() {
+    public void deleteRating(Rating rating){
         Session session = sf.getCurrentSession();
-        List<User> users = session.createQuery("Select a From User a", User.class).getResultList();
-        return users;
+        session.delete(rating);
     }
 
-    public User getUserById(Long id) {
+    public void updateRating(Rating rating){
         Session session = sf.getCurrentSession();
-        return session.find(User.class, id);
+        session.update(rating);
     }
 
-    public void deleteUser(User user){
+    public Rating getRatingByIdUser(Long idUser){
         Session session = sf.getCurrentSession();
-        session.delete(user);
+        return session.find(Rating.class, idUser);
     }
 
-    public void updateUser(User user){
+    public Rating getRatingByIdTvShow(Long idTvShow){
         Session session = sf.getCurrentSession();
-        session.update(user);
+        return session.find(Rating.class, idTvShow);
     }
 
-    public User getUserByName(String name){
+    public List<Rating> getAllRatings(){
         Session session = sf.getCurrentSession();
-        return session.createQuery("Select a From User a where a.name like :custName", User.class).setParameter("custName", name).getSingleResult();
+        List<Rating> ratings = session.createQuery("SELECT a FROM  Rating a", Rating.class).getResultList();
+        return ratings;
     }
-
 }
