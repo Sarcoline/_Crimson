@@ -30,16 +30,21 @@ public class RatingDAO {
         Session session = sf.getCurrentSession();
         session.update(rating);
     }
-
+/*
     public Rating getRatingByIdUser(Long idUser){
         Session session = sf.getCurrentSession();
         return session.find(Rating.class, idUser);
-    }
+    }*/
 
+    public Rating getRatingByID(Long id){
+        Session session = sf.getCurrentSession();
+        return session.find(Rating.class,id);
+    }
+/*
     public Rating getRatingByIdTvShow(Long idTvShow){
         Session session = sf.getCurrentSession();
         return session.find(Rating.class, idTvShow);
-    }
+    } */
 
     public List<Rating> getAllRatings(){
         Session session = sf.getCurrentSession();

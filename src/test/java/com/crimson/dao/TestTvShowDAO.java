@@ -78,7 +78,7 @@ public class TestTvShowDAO {
     }
 
     @Test
-    public void getTvShowById(){
+    public void getTvShowByIdTest(){
         TvShow getTvShowByIdTest = tvShowDAO.getTvById(tvShow.getId());
 
         Assert.assertEquals(getTvShowByIdTest.getTitle(), tvShow.getTitle());

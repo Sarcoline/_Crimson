@@ -38,7 +38,7 @@ public class EpisodeDAO {
 
     public List<Episode> getAllEpisodes(){
         Session session = sf.getCurrentSession();
-        List<Episode> episodes = session.createQuery("SELECT a FROM Episode", Episode.class).getResultList();
+        List<Episode> episodes = session.createQuery("SELECT a FROM Episode a", Episode.class).getResultList();
         return episodes;
     }
 

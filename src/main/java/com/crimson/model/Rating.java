@@ -9,15 +9,12 @@ public class Rating {
     @Column(name = "value")
     private int value;
 
-
-
     public Rating(int value){
         super();
         this.value = value;
     }
 
     public Rating(){
-
     }
 
     public int getValue(){
@@ -29,13 +26,13 @@ public class Rating {
     }
 
     @Id
-    private String id;
+    private Long id;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }

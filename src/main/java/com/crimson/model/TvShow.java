@@ -103,7 +103,7 @@ public class TvShow {
     public Double getOverallRating(){
         return overallRating;
     }
-    public void setOverallRating(Double overallRating){
+    public void setOverallRating(double overallRating){
         this.overallRating = overallRating;
     }
 
