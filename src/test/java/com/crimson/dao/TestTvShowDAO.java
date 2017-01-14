@@ -27,7 +27,7 @@ public class TestTvShowDAO {
 
     @Before
     public void setDB(){
-        tvShow.setTitle("GameOfAlex");
+        tvShow.setTitle("Gameów Of Alex");
         tvShow.setCountry("Poland");
         tvShow.setGenre("Drama");
         tvShow.setReleaseYear(2017);

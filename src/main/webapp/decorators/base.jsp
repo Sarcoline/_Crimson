@@ -20,8 +20,10 @@
 <body>
 <nav class="uk-navbar">
     <ul class="uk-navbar-nav"><a href="/" class="uk-navbar-brand">_Crimson</a>
-        <li><a href="">Dashboard</a></li>
-        <li class="uk-parent"><a href="<c:url value="/tv/game-of-thrones"/> ">TvShows</a></li>
+        <sec:authorize access="isAuthenticated()">
+            <li><a href="/">Dashboard</a></li>
+        </sec:authorize>
+        <li class="uk-parent"><a href="<c:url value="/tv/list"/> ">TvShows</a></li>
         <li class="uk-parent" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false">
             <a href="">Genre</a>
             <div class="uk-dropdown uk-dropdown-navbar uk-dropdown-bottom">
@@ -46,8 +48,6 @@
                 <li class="uk-parent"><a href="<c:url value="/login"/> ">Login</a></li>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
-
-
                 <form action="<c:url value="/logout?${_csrf.parameterName}=${_csrf.token}"/>" method="post"
                       id="logoutForm">
                 </form>

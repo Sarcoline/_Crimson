@@ -20,7 +20,7 @@ import java.io.InputStream;
 public class ImagesController {
 
     @Autowired
-    ServletContext context;
+    private ServletContext context;
 
     @ResponseBody
     @RequestMapping(value = "images/{name}/{image}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)

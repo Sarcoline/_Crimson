@@ -1,7 +1,8 @@
 package com.crimson.model;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
-import java.util.*;
 
 @Entity
 @Table(name = "TvShow")
@@ -25,6 +26,7 @@ public class TvShow {
     private String genre;
 
     @Column(name = "description")
+    @Length(max = 10000)
     private String description;
 
     @Column(name = "overallRating")
