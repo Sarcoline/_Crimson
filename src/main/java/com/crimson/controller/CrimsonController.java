@@ -32,6 +32,13 @@ public class CrimsonController {
         return "tvShow";
     }
 
+    @GetMapping("/user/{kto}")
+    public String displayUser(Model model, @PathVariable("kto") String kto){
+        model.addAttribute("user",kto);
+        model.addAttribute("user",userDAO.getUserByName(kto));
+        return "user";
+    }
+
     @GetMapping("/genre/{name}")
     public String displayGenre(@PathVariable String name, Model model) {
         name = Character.toUpperCase(name.charAt(0)) + name.substring(1);
