@@ -92,4 +92,13 @@ public class Episode {
         this.episodeSummary = episodeSummary;
     }
 
+    //RELATIONSHIPS
+
+    //EpisodeWatched(User2Episode) Relation
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "EpisodeWatched",
+            joinColumns = {@JoinColumn(name = "idUser")},
+            inverseJoinColumns = {@JoinColumn(name = "idEpisode")})
+    public Set<User> Episode2Users = new HashSet<>();
+
 }

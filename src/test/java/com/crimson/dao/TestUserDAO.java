@@ -1,8 +1,10 @@
 package com.crimson.dao;
 
 import com.crimson.context.TestSpringCore;
+import com.crimson.model.Episode;
 import com.crimson.model.TvShow;
 import com.crimson.model.User;
+import com.sun.media.jfxmedia.track.Track;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +15,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestSpringCore.class)
@@ -27,9 +32,14 @@ public class TestUserDAO {
     @Autowired
     private TvShowDAO tvShowDAO;
 
+    @Autowired
+    private EpisodeDAO episodeDAO;
+
     private User user = new User();
 
     private TvShow tvShow = new TvShow();
+
+    private Episode episode = new Episode();
 
     @Before
     public void setDB(){
@@ -38,6 +48,9 @@ public class TestUserDAO {
 
         tvShow.setTitle("Dr.House");
         tvShowDAO.saveTvShow(tvShow);
+
+        episode.setTitle("First Day");
+        episodeDAO.saveEpisode(episode);
     }
 
     @Test
@@ -97,12 +110,15 @@ public class TestUserDAO {
 
     //RELATIONSHIP TESTS
 
+    //User2TvShow
     @Test
     public void addUser2TvShowTest(){
         int sizeOfUserTvShowsList = user.Users2TvShow.size();
+        int sizeOfTvShow2UserList = tvShow.TvShows2User.size();
 
         userDAO.addUser2TvShows(user,tvShow);
 
+        Assert.assertEquals(tvShow.TvShows2User.size(), sizeOfTvShow2UserList+1);
         Assert.assertEquals(user.Users2TvShow.size(), sizeOfUserTvShowsList+1);
     }
 
@@ -112,10 +128,39 @@ public class TestUserDAO {
         addUser2TvShowTest();
 
         int sizeOfUserTvShowsList = user.Users2TvShow.size();
+        int sizeOfTvShow2UserList = tvShow.TvShows2User.size();
 
         userDAO.deleteUser2TvShow(user, tvShow);
 
+        Assert.assertEquals(tvShow.TvShows2User.size(), sizeOfTvShow2UserList-1);
         Assert.assertEquals(user.Users2TvShow.size(), sizeOfUserTvShowsList-1);
+    }
+
+
+    //EpisodeWatched(User2Episode)
+
+    @Test
+    public void addUser2EpisodeTest(){
+        int sizeOfUser2EpisodeList = user.Users2Episode.size();
+        int sizeOfEpisode2UserList = episode.Episode2Users.size();
+
+        userDAO.addUser2Episode(user, episode);
+
+        Assert.assertEquals(sizeOfUser2EpisodeList+1, user.Users2Episode.size());
+        Assert.assertEquals(sizeOfEpisode2UserList+1, episode.Episode2Users.size());
+    }
+
+    @Test
+    public void deleteUser2EpisodeTest(){
+        addUser2EpisodeTest();
+
+        int sizeOfUser2EpisodeList = user.Users2Episode.size();
+        int sizeOfEpisode2UserList = episode.Episode2Users.size();
+
+        userDAO.delelteUser2Episode(user, episode);
+
+        Assert.assertEquals(sizeOfUser2EpisodeList-1, user.Users2Episode.size());
+        Assert.assertEquals(sizeOfEpisode2UserList-1, episode.Episode2Users.size());
     }
 
 }

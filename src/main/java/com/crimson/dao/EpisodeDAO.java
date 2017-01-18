@@ -1,6 +1,7 @@
 package com.crimson.dao;
 
 import com.crimson.model.Episode;
+import com.crimson.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,27 @@ public class EpisodeDAO {
     public Episode getEpisodeByTitle(String title){
         Session session = sf.getCurrentSession();
         return session.createQuery("Select a From Episode a where a.title like :custTitle", Episode.class).setParameter("custTitle", title).getSingleResult();
+    }
+
+
+    //RELATIONSHIPS
+
+    //EpisodeWatched(User2Episode)
+    public void addUser2Episode(User user, Episode episode){
+        if (!user.Users2Episode.contains(episode)){
+            user.Users2Episode.add(episode);
+        }
+        if (!episode.Episode2Users.contains(user)){
+            episode.Episode2Users.add(user);
+        }
+    }
+
+    public  void delelteUser2Episode(User user, Episode episode){
+        if (user.Users2Episode.contains(episode)){
+            user.Users2Episode.remove(episode);
+        }
+        if (episode.Episode2Users.contains(user)){
+            episode.Episode2Users.remove(user);
+        }
     }
 }

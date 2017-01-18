@@ -132,6 +132,7 @@ public class TvShow {
 
     //RELATIONSHIPS
 
+    //User2TvShow Relation
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user2TvShow",
             joinColumns = {@JoinColumn(name = "idUser")},

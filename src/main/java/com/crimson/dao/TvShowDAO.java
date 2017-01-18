@@ -1,6 +1,7 @@
 package com.crimson.dao;
 
 import com.crimson.model.TvShow;
+import com.crimson.model.User;
 import com.github.slugify.Slugify;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -59,5 +60,27 @@ public class TvShowDAO {
         Session session = sf.getCurrentSession();
         TvShow tv = session.createQuery("Select a From TvShow a where a.slug like :custSlug", TvShow.class).setParameter("custSlug", slug).getSingleResult();
         return tv;
+    }
+
+    //RELATIONSHIPS
+
+    //User2TvShow
+    public void addUser2TvShows(User user, TvShow tvShow){
+        if (!user.Users2TvShow.contains(tvShow))
+        {
+            user.Users2TvShow.add(tvShow);
+        }
+        if (!tvShow.TvShows2User.contains(user)){
+            tvShow.TvShows2User.add(user);
+        }
+    }
+
+    public void deleteUser2TvShow(User user, TvShow tvShow){
+        if(user.Users2TvShow.contains(tvShow)){
+            user.Users2TvShow.remove(tvShow);
+        }
+        if (tvShow.TvShows2User.contains(user)){
+            tvShow.TvShows2User.remove(user);
+        }
     }
 }

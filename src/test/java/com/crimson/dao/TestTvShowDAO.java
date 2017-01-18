@@ -2,6 +2,7 @@ package com.crimson.dao;
 
 import com.crimson.context.TestSpringCore;
 import com.crimson.model.TvShow;
+import com.crimson.model.User;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +24,12 @@ public class TestTvShowDAO {
     @Autowired
     private TvShowDAO tvShowDAO;
 
+    @Autowired
+    private UserDAO userDAO;
+
     private TvShow tvShow = new TvShow();
+
+    private User user = new User();
 
     @Before
     public void setDB(){
@@ -37,6 +43,10 @@ public class TestTvShowDAO {
         tvShow.setTrailerUrl("google.pl");
 
         tvShowDAO.saveTvShow(tvShow);
+
+
+        user.setName("Alex");
+        userDAO.saveUser(user);
     }
 
     @Test
@@ -83,4 +93,8 @@ public class TestTvShowDAO {
 
         Assert.assertEquals(getTvShowByIdTest.getTitle(), tvShow.getTitle());
     }
+
+    //RELATIONSHIP TESTS
+
+
 }

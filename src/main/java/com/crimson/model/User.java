@@ -77,11 +77,19 @@ public class User {
 
     //RELATIONSHIPS
 
+    //User2TvShow Relation
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user2TvShow",
             joinColumns = {@JoinColumn(name = "idUser")},
             inverseJoinColumns = {@JoinColumn(name = "idTvShow")})
-    public Set<TvShow> Users2TvShow = new HashSet<TvShow>();
+    public Set<TvShow> Users2TvShow = new HashSet<>();
+
+    //EpisodeWatched(User2Episode) Relation
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "EpisodeWatched",
+    joinColumns = {@JoinColumn(name = "idUser")},
+    inverseJoinColumns = {@JoinColumn(name = "idEpisode")})
+    public Set<Episode> Users2Episode = new HashSet<>();
 
 
 }
