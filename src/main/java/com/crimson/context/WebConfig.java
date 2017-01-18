@@ -11,9 +11,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
-@EnableTransactionManagement
-@ComponentScan(basePackages = "com.crimson")
-@PropertySource("classpath:/hibernate.properties")
+@ComponentScan(basePackages = "com.crimson.controller")
 @Import({SpringSecurityApplicationContext.class, SpringCore.class})
 public class WebConfig extends WebMvcConfigurerAdapter {
 

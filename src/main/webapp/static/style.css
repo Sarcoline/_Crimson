@@ -267,6 +267,9 @@ li.menu.uk-active a {
 .uk-list li {
     padding: 2px;
 }
+.uk-column {
+    width:1px;
+}
 
 /*tvShow gallery */
 .gallery {
@@ -276,6 +279,11 @@ li.menu.uk-active a {
 
 .gallery a img {
     margin-bottom: 10px;
+}
+img.center {
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
 }
 
 /*fontawesome*/
@@ -318,6 +326,37 @@ li.menu.uk-active a {
     background-size: cover;
     margin: 5px;
     box-shadow: 3px 3px 6px #999;
+
+}
+
+.item1 {
+    display: inline-block;
+    background-color: black;
+    width: 100px;
+    height: 150px;
+    background-size: cover;
+    margin: 5px;
+    box-shadow: 3px 3px 6px #999;
+
+}
+.top {
+    display: inline-block;
+    background-color: black;
+    width: 130px;
+    height: 140px;
+    background-size: cover;
+    margin: 5px;
+    box-shadow: 3px 3px 6px #999;
+
+}
+#moje {
+    width : 500px;
+    height: 140px;
+}
+#my {
+    margin-top : 60px;
+    width : 500px;
+    height: 140px;
 
 }
 

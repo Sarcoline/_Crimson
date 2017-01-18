@@ -1,8 +1,6 @@
 package com.crimson.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "User")
@@ -13,7 +11,7 @@ public class User {
     @Column(name = "idUser")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
 
     @Column(name = "email")

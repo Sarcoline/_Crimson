@@ -2,6 +2,7 @@
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication var="name" property="name"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -14,14 +15,18 @@
             type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/uikit.min.js' />" type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/components/lightbox.min.js' />" type="application/javascript"></script>
+    <script src="<c:url value='/static/uikit/js/components/slider.min.js' />" type="application/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/slider.min.css' />">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/style.css' />">
     <title><decorator:title/></title>
 </head>
 <body>
 <nav class="uk-navbar">
     <ul class="uk-navbar-nav"><a href="/" class="uk-navbar-brand">_Crimson</a>
-        <li><a href="">Dashboard</a></li>
-        <li class="uk-parent"><a href="<c:url value="/tv/game-of-thrones"/> ">TvShows</a></li>
+        <sec:authorize access="isAuthenticated()">
+            <li><a href="<c:url value="/tv/user/${name}" />">Dashboard</a></li>
+        </sec:authorize>
+        <li class="uk-parent"><a href="<c:url value="/tv/list"/> ">TvShows</a></li>
         <li class="uk-parent" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false">
             <a href="">Genre</a>
             <div class="uk-dropdown uk-dropdown-navbar uk-dropdown-bottom">
@@ -46,8 +51,6 @@
                 <li class="uk-parent"><a href="<c:url value="/login"/> ">Login</a></li>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
-
-
                 <form action="<c:url value="/logout?${_csrf.parameterName}=${_csrf.token}"/>" method="post"
                       id="logoutForm">
                 </form>

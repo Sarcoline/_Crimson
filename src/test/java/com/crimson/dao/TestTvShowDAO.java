@@ -27,7 +27,7 @@ public class TestTvShowDAO {
 
     @Before
     public void setDB(){
-        tvShow.setTitle("GameOfAlex");
+        tvShow.setTitle("Gameów Of Alex");
         tvShow.setCountry("Poland");
         tvShow.setGenre("Drama");
         tvShow.setReleaseYear(2017);
@@ -78,7 +78,7 @@ public class TestTvShowDAO {
     }
 
     @Test
-    public void getTvShowById(){
+    public void getTvShowByIdTest(){
         TvShow getTvShowByIdTest = tvShowDAO.getTvById(tvShow.getId());
 
         Assert.assertEquals(getTvShowByIdTest.getTitle(), tvShow.getTitle());

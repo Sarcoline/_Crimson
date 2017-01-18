@@ -17,10 +17,10 @@ import java.util.List;
 import java.util.Set;
 
 @Service("customUserDetailsService")
-public class customUserDetailsService implements UserDetailsService{
+public class CustomUserDetailsService implements UserDetailsService{
 
     @Autowired
-    UserDAO userDao;
+    private UserDAO userDao;
 
     @Override
     @Transactional(readOnly = true)

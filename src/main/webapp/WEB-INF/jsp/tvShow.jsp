@@ -13,13 +13,13 @@
     <title>${tv.title}</title>
 </head>
 <body>
-<header style="background: url(<c:url value="/images/shameless/back"/>) center center;">
-    <figure style="background: url(<c:url value="/images/shameless/poster"/>) center center"></figure>
+<header style="background: url(<c:url value="/images/${tv.slug}/back"/>) center center;">
+    <figure style="background: url(<c:url value="/images/${tv.slug}/poster"/>) center center"></figure>
 </header>
 
 <h1 class="title">${tv.title}
     <sec:authorize access="isAuthenticated()">
-        <a href="<c:url value="/tv/follow/${tv.id}"/>"><small><i class="fa fa-heart" aria-hidden="true" style="cursor: pointer"></i></small></a>
+            <small><i class="fa fa-heart-o" aria-hidden="true" style="cursor: pointer"></i></small>
     </sec:authorize>
 </h1>
 <h3 class="subtitle uk-text-muted">${tv.genre} ${tv.releaseYear}</h3>
@@ -28,72 +28,40 @@
         <div class="gallery">
             <div class="uk-grid-small uk-grid-width-1-1" data-uk-grid-margin=" ">
 
-                <a href="<c:url value="/images/gameofthrones/1"/>" data-lightbox-type="image"
-                   data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/gameofthrones/1"/>"
+                <a href="<c:url value="/images/${tv.slug}/1"/>" data-lightbox-type="image"
+                   data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/${tv.slug}/1"/>"
                                                              width="200" height="200"> </a>
-                <a href="<c:url value="/images/gameofthrones/2"/>" data-lightbox-type="image"
-                   data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/gameofthrones/2"/>"
+                <a href="<c:url value="/images/${tv.slug}/2"/>" data-lightbox-type="image"
+                   data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/${tv.slug}/2"/>"
                                                              width="200" height="200"> </a>
-                <a href="<c:url value="/images/gameofthrones/3"/>" data-lightbox-type="image"
-                   data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/gameofthrones/3"/>"
+                <a href="<c:url value="/images/${tv.slug}/3"/>" data-lightbox-type="image"
+                   data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/${tv.slug}/3"/>"
                                                              width="200" height="200"> </a>
-                <a href="<c:url value="/images/gameofthrones/4"/>" data-lightbox-type="image"
-                   data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/gameofthrones/4"/>"
-                                                             width="200" height="200"> </a>
-                <a href="<c:url value="/images/gameofthrones/5"/>" data-lightbox-type="image"
-                   data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/gameofthrones/5"/>"
-                                                             width="200" height="200"> </a>
+                <%--<a href="<c:url value="/images/${tv.slug}/4"/>" data-lightbox-type="image"--%>
+                <%--data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/${tv.slug}/4"/>"--%>
+                <%--width="200" height="200"> </a>--%>
+                <%--<a href="<c:url value="/images/${tv.slug}/5"/>" data-lightbox-type="image"--%>
+                <%--data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/${tv.slug}/5"/>"--%>
+                <%--width="200" height="200"> </a>--%>
             </div>
         </div>
     </div>
     <div class="uk-width-large-4-6 uk-width-medium-1-1">
         <article class="uk-article">
-            <h1 class="uk-article-title">Summary of <strong>${tv.title}</strong></h1>
-            <p class="uk-article-lead">Pellentesque facilisis. Nulla imperdiet sit amet magna. Vestibulum dapibus,
-                mauris nec malesuada fames ac turpis velit, rhoncus eu, luctus et interdum adipiscing wisi.</p> Lorem
-            ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non felis. Maecenas malesuada
-            elit lectus felis, malesuada ultricies. Curabitur et ligula. Ut molestie a, ultricies porta urna. Vestibulum
-            commodo volutpat a, convallis ac, laoreet enim. Phasellus fermentum in, dolor. Pellentesque facilisis. Nulla
-            imperdiet sit amet magna. Vestibulum dapibus, mauris nec malesuada fames ac turpis velit, rhoncus eu, luctus
-            et interdum adipiscing wisi. Aliquam erat ac ipsum. Integer aliquam purus. Quisque lorem tortor fringilla
-            sed, vestibulum id, eleifend justo vel bibendum sapien massa ac turpis faucibus orci luctus non,
-            consectetuer lobortis quis, varius in, purus. Integer ultrices posuere cubilia Curae, Nulla ipsum dolor
-            lacus, suscipit adipiscing. Cum sociis natoque penatibus et ultrices volutpat. Nullam wisi ultricies a,
-            gravida vitae, dapibus risus ante sodales lectus blandit eu, tempor diam pede cursus vitae, ultricies eu,
-            faucibus quis, porttitor eros cursus lectus, pellentesque eget, bibendum a, gravida ullamcorper quam. Nullam
-            viverra consectetuer. Quisque cursus et, porttitor risus. Aliquam sem. In hendrerit nulla quam nunc,
-            accumsan congue. Lorem ipsum primis in nibh vel risus. Sed vel lectus. Ut sagittis, ipsum dolor quam.
+            <h2 class="uk-article-title">Summary of <strong>${tv.title}</strong></h2>
+            <p>${tv.description}</p>
+
         </article>
-        <h1>Episode list:</h1>
+        <h2>Episode list:</h2>
         <div class="uk-grid episodes">
             <div class="uk-width-large-1-6 uk-width-small-2-6">
                 <ul class="uk-tab uk-tab-left" data-uk-tab="{connect:'#tab-content', animation: 'fade'}">
-                    <li class="menu" aria-expanded="false"><a href="#">Season 1</a></li>
-                    <li aria-expanded="false" class="menu"><a href="#">Season 2</a></li>
-                    <li aria-expanded="false" class="menu"><a href="#">Season 3</a></li>
                     <li aria-expanded="false" class="menu"><a href="#">Season 4</a></li>
                     <li aria-expanded="false" class="menu uk-active"><a href="#">Season 5</a></li>
                 </ul>
             </div>
             <div class="uk-width-large-3-6 uk-width-small-4-6">
                 <ul id="tab-content" class="uk-switcher ">
-                    <li class="" aria-hidden="false">
-                        <p><i class="fa fa-check-square-o" aria-hidden="true"></i> Episode title</p>
-                        <p><i class="fa fa-check-square-o" aria-hidden="true"></i> Episode title</p>
-                        <p>Episode title</p>
-                    </li>
-                    <li aria-hidden="false" class="">
-                        <h3>Season 2</h3>
-                        <p>Episode title</p>
-                        <p>Episode title</p>
-                        <p>Episode title</p>
-                    </li>
-                    <li aria-hidden="false" class="">
-                        <h3>Season 3</h3>
-                        <p>Episode title</p>
-                        <p>Episode title</p>
-                        <p>Episode title</p>
-                    </li>
                     <li aria-hidden="false" class="">
                         <h3>Season 4</h3>
                         <p>Episode title</p>
@@ -165,63 +133,70 @@
     <div class="uk-width-large-1-6 uk-width-medium-1-1">
         <div class="uk-grid details" data-uk-grid-margin=" ">
             <div class="uk-width-large-1-1 uk-width-small-1-2">
-            <div class="ratebox">
-                <p class="overallrating">
-                    ${tv.overallRating}<small class="uk-text-muted" style="font-size: 2rem;">/10</small>
-                </p>
-                <p class="uk-text-muted">253 rated</p>
-                <p class="uk-text-muted">1453 follows</p>
-                <p></p>
-                <div class="userRating">
-                    <img src="<c:url value="/images/user/meow"/>" class="userPicture">
-                    <i class="fa fa-star fa-lg rate" title="Rate!" aria-hidden="true"></i><span
-                        class="rateValue"> 5</span>
+                <div class="ratebox">
+                    <p class="overallrating">
+                        ${tv.overallRating}<small class="uk-text-muted" style="font-size: 2rem;">/10</small>
+                    </p>
+                    <p class="uk-text-muted">253 rated</p>
+                    <p class="uk-text-muted">1453 follows</p>
+                    <p></p>
+                    <sec:authorize access="isAuthenticated()">
+                        <div class="userRating">
+                            <img src="<c:url value="/images/user/meow"/>" class="userPicture">
+                            <i class="fa fa-star fa-lg rate" title="Rate!" aria-hidden="true"></i><span
+                                class="rateValue"></span>
+                        </div>
+                        <fieldset class="rating uk-hidden">
+                            <input type="radio" id="star5" name="rating" value="10"/>
+                            <label class="full" for="star5" title="10"></label>
+                            <input type="radio" id="star4half" name="rating" value="9"/>
+                            <label class="half" for="star4half" title="9"></label>
+                            <input type="radio" id="star4" name="rating" value="8"/>
+                            <label class="full" for="star4" title="8"></label>
+                            <input type="radio" id="star3half" name="rating" value="7"/>
+                            <label class="half" for="star3half" title="7"></label>
+                            <input type="radio" id="star3" name="rating" value="6"/>
+                            <label class="full" for="star3" title="6"></label>
+                            <input type="radio" id="star2half" name="rating" value="5"/>
+                            <label class="half" for="star2half" title="5"></label>
+                            <input type="radio" id="star2" name="rating" value="4"/>
+                            <label class="full" for="star2" title="4"></label>
+                            <input type="radio" id="star1half" name="rating" value="3"/>
+                            <label class="half" for="star1half" title="3"></label>
+                            <input type="radio" id="star1" name="rating" value="2"/>
+                            <label class="full" for="star1" title="2"></label>
+                            <input type="radio" id="starhalf" name="rating" value="1"/>
+                            <label class="half" for="starhalf" title="1"></label>
+                        </fieldset>
+                    </sec:authorize>
+
                 </div>
-                <fieldset class="rating uk-hidden">
-                    <input type="radio" id="star5" name="rating" value="10"/>
-                    <label class="full" for="star5" title="10"></label>
-                    <input type="radio" id="star4half" name="rating" value="9"/>
-                    <label class="half" for="star4half" title="9"></label>
-                    <input type="radio" id="star4" name="rating" value="8"/>
-                    <label class="full" for="star4" title="8"></label>
-                    <input type="radio" id="star3half" name="rating" value="7"/>
-                    <label class="half" for="star3half" title="7"></label>
-                    <input type="radio" id="star3" name="rating" value="6"/>
-                    <label class="full" for="star3" title="6"></label>
-                    <input type="radio" id="star2half" name="rating" value="5"/>
-                    <label class="half" for="star2half" title="5"></label>
-                    <input type="radio" id="star2" name="rating" value="4"/>
-                    <label class="full" for="star2" title="4"></label>
-                    <input type="radio" id="star1half" name="rating" value="3"/>
-                    <label class="half" for="star1half" title="3"></label>
-                    <input type="radio" id="star1" name="rating" value="2"/>
-                    <label class="full" for="star1" title="2"></label>
-                    <input type="radio" id="starhalf" name="rating" value="1"/>
-                    <label class="half" for="starhalf" title="1"></label>
-                </fieldset>
-            </div>
             </div>
             <div class="uk-width-large-1-1 uk-width-small-1-2">
-            <div class="info">
-                <p>Network:
-                    <br> <strong>${tv.network}</strong></p>
-                <p>Country:
-                    <br><strong>${tv.country}</strong></p>
-                <p>Episode Length:
-                    <br><strong>60 minutes</strong></p> <a class="uk-button uk-button-primary"
-                                                           href=${tv.trailerUrl}
-                                                           data-uk-lightbox="{group:'group2'}">Watch trailer</a></div>
-        </div>
+                <div class="info">
+                    <p>Network:
+                        <br> <strong>${tv.network}</strong></p>
+                    <p>Country:
+                        <br><strong>${tv.country}</strong></p>
+                    <p>Episode Length:
+                        <br><strong>60 minutes</strong></p> <a class="uk-button uk-button-primary"
+                                                               href=${tv.trailerUrl}
+                                                                       data-uk-lightbox="{group:'group2'}">Watch
+                    trailer</a></div>
+            </div>
         </div>
     </div>
 </div>
 <script>
     $(function () {
-        $('a').click(function () {
-            $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
-        });
+        <sec:authorize access="isAuthenticated()">
+            $('a').click(function () {
+                $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
+            });
+        </sec:authorize>
+
         $('small').click(function () {
-            $(this).find('i').toggleClass('fa-heart fa-heart-o');
+            $(this).find('i').toggleClass('fa-heart-o fa-heart');
         });
         $('i.rate').on('click', function () {
             $('fieldset.rating').toggleClass('uk-hidden')

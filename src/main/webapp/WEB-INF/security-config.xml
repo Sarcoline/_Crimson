@@ -21,10 +21,10 @@
         <csrf/>
     </http>
 
-    <authentication-manager >
+    <authentication-manager alias="authenticationManager">
         <authentication-provider user-service-ref="customUserDetailsService"/>
     </authentication-manager>
-    <beans:bean id="customUserDetailsService" class="com.crimson.service.customUserDetailsService"/>
+    <beans:bean id="customUserDetailsService" class="com.crimson.service.CustomUserDetailsService"/>
     <context:component-scan base-package="com.crimson"/>
 </beans:beans>
 
