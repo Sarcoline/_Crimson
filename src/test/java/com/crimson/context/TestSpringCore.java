@@ -12,9 +12,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableWebMvc
-@EnableTransactionManagement
-@ComponentScan(basePackages = "com.crimson")
 @Import({SpringCore.class})
 public class TestSpringCore {
 
@@ -22,7 +19,7 @@ public class TestSpringCore {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/test");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/crimsontest");
         dataSource.setUsername("root");
         dataSource.setPassword("admin");
         return dataSource;

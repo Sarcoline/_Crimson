@@ -328,6 +328,17 @@ img.center {
     box-shadow: 3px 3px 6px #999;
 
 }
+
+.item1 {
+    display: inline-block;
+    background-color: black;
+    width: 100px;
+    height: 150px;
+    background-size: cover;
+    margin: 5px;
+    box-shadow: 3px 3px 6px #999;
+
+}
 .top {
     display: inline-block;
     background-color: black;

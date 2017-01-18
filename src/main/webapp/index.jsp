@@ -25,22 +25,22 @@
             </span>
                 </a></li>
                 <li><a href="<c:url value="/tv/game-of-thrones"/>">
-                <span class="item" style="background-image: url('<c:url value="/images/game-of-thrones/poster"/>')">
+                <span class="item" style="background-image: url('<c:url value="/images/prison-break/poster"/>')">
                     <span class="overlay"><span class="item-header">Title</span> </span>
             </span>
                 </a></li>
                 <li><a href="<c:url value="/tv/game-of-thrones"/>">
-                <span class="item" style="background-image: url('<c:url value="/images/game-of-thrones/poster"/>')">
+                <span class="item" style="background-image: url('<c:url value="/images/news/1"/>')">
                     <span class="overlay"><span class="item-header">Title</span> </span>
             </span>
                 </a></li>
                 <li><a href="<c:url value="/tv/game-of-thrones"/>">
-                <span class="item" style="background-image: url('<c:url value="/images/game-of-thrones/poster"/>')">
+                <span class="item" style="background-image: url('<c:url value="/images/news/2"/>')">
                     <span class="overlay"><span class="item-header">Title</span> </span>
             </span>
                 </a></li>
                 <li><a href="<c:url value="/tv/game-of-thrones"/>">
-                <span class="item" style="background-image: url('<c:url value="/images/game-of-thrones/poster"/>')">
+                <span class="item" style="background-image: url('<c:url value="/images/news/3"/>')">
                     <span class="overlay"><span class="item-header">Title</span> </span>
             </span>
                 </a></li>

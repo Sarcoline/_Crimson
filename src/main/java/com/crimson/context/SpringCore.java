@@ -19,11 +19,11 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@EnableWebMvc
 @EnableTransactionManagement
-@ComponentScan(basePackages = "com.crimson")
+@ComponentScan(basePackages = {"com.crimson.dao","com.crimson.service"})
 @PropertySource("classpath:/hibernate.properties")
-public class SpringCore extends WebMvcConfigurerAdapter {
+public class SpringCore {
+
 
     @Autowired
     private Environment environment;
@@ -32,7 +32,7 @@ public class SpringCore extends WebMvcConfigurerAdapter {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan(new String[]{"com.crimson"});
+        sessionFactory.setPackagesToScan(new String[]{"com.crimson.model"});
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }

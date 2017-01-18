@@ -1,6 +1,8 @@
 package com.crimson.dao;
 
+import com.crimson.context.SpringCore;
 import com.crimson.context.TestSpringCore;
+import com.crimson.context.WebConfig;
 import com.crimson.model.Episode;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.junit.Assert;
@@ -16,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestSpringCore.class)
-@WebAppConfiguration
 @Transactional
 @Rollback(value = true)
 public class TestEpisodeDAO {

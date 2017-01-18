@@ -9,11 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 //Konfiguracja spring security
 @Configuration
-@EnableWebMvc
-@EnableTransactionManagement
-@ComponentScan(basePackages = "com.crimson")
-@PropertySource("classpath:/hibernate.properties")
-public class SpringSecurityApplicationContext extends WebMvcConfigurerAdapter {
+public class SpringSecurityApplicationContext {
 
 
 }
