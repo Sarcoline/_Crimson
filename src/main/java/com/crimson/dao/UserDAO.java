@@ -1,5 +1,6 @@
 package com.crimson.dao;
 
+import com.crimson.model.TvShow;
 import com.crimson.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -48,5 +49,23 @@ public class UserDAO {
         Session session = sf.getCurrentSession();
         return session.createQuery("Select a From User a where a.name like :custName", User.class).setParameter("custName", name).getSingleResult();
     }
+
+    //RELATIONSHIPS
+
+    public void addUser2TvShows(User user, TvShow tvShow){
+        if (!user.Users2TvShow.contains(tvShow))
+        {
+            user.Users2TvShow.add(tvShow);
+        }
+    }
+
+    public void deleteUser2TvShow(User user, TvShow tvShow){
+        if(user.Users2TvShow.contains(tvShow)){
+            user.Users2TvShow.remove(tvShow);
+        }
+    }
+
+
+
 
 }

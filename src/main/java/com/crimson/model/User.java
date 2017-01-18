@@ -1,6 +1,10 @@
 package com.crimson.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "User")
@@ -25,16 +29,6 @@ public class User {
 
     @Column(name = "role")
     private String role = "ROLE_USER";
-
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
 
 
     public Long getId() {
@@ -69,11 +63,25 @@ public class User {
     }
 
 
-    public String getProfilePicLocation() {
-        return profilePicLocation;
-    }
+    public String getProfilePicLocation() {return profilePicLocation;}
     public void setProfilePicLocation(String profilePicLocation) {
         this.profilePicLocation = profilePicLocation;
     }
+
+    public String getRole() {
+        return role;
+    }
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    //RELATIONSHIPS
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user2TvShow",
+            joinColumns = {@JoinColumn(name = "idUser")},
+            inverseJoinColumns = {@JoinColumn(name = "idTvShow")})
+    public Set<TvShow> Users2TvShow = new HashSet<TvShow>();
+
 
 }

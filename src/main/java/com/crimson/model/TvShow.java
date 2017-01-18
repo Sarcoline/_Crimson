@@ -1,8 +1,15 @@
 package com.crimson.model;
 
+import javassist.bytecode.ByteArray;
+import org.hibernate.type.descriptor.java.ByteArrayTypeDescriptor;
+import org.hibernate.type.descriptor.sql.VarbinaryTypeDescriptor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "TvShow")
@@ -40,6 +47,10 @@ public class TvShow {
 
     @Column(name = "slug")
     private String slug;
+
+    @Column(name = "picture")
+    private Byte picture;
+
 
 
     public String getSlug() {
@@ -116,6 +127,16 @@ public class TvShow {
         this.trailerUrl = trailerUrl;
     }
 
+    public Byte getPicture(){return picture;}
+    public void setPicture(Byte picture){this.picture = picture;}
+
+    //RELATIONSHIPS
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user2TvShow",
+            joinColumns = {@JoinColumn(name = "idUser")},
+            inverseJoinColumns = {@JoinColumn(name = "idTvShow")})
+    public Set<User> TvShows2User = new HashSet<User>();
 
 
 }
