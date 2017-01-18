@@ -22,7 +22,9 @@
     </http>
 
     <authentication-manager alias="authenticationManager">
-        <authentication-provider user-service-ref="customUserDetailsService"/>
+        <authentication-provider user-service-ref="customUserDetailsService">
+            <password-encoder hash="bcrypt"/>
+        </authentication-provider>
     </authentication-manager>
     <beans:bean id="customUserDetailsService" class="com.crimson.service.CustomUserDetailsService"/>
     <context:component-scan base-package="com.crimson"/>

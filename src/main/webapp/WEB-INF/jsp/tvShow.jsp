@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication var="name" property="name"/>
 <%--
   Created by IntelliJ IDEA.
   User: Meow
@@ -13,13 +14,13 @@
     <title>${tv.title}</title>
 </head>
 <body>
-<header style="background: url(<c:url value="/images/${tv.slug}/back"/>) center center;">
-    <figure style="background: url(<c:url value="/images/${tv.slug}/poster"/>) center center"></figure>
+<header style="background: url(<c:url value="/images/tv/${tv.slug}/back"/>) center center;">
+    <figure style="background: url(<c:url value="/images/tv/${tv.slug}/poster"/>) center center"></figure>
 </header>
 
 <h1 class="title">${tv.title}
     <sec:authorize access="isAuthenticated()">
-            <small><i class="fa fa-heart-o" aria-hidden="true" style="cursor: pointer"></i></small>
+            <small><a href="<c:url value="follow/${tv.id}"/> "><i class="fa fa-heart-o" aria-hidden="true" style="cursor: pointer"></i></a></small>
     </sec:authorize>
 </h1>
 <h3 class="subtitle uk-text-muted">${tv.genre} ${tv.releaseYear}</h3>
@@ -28,14 +29,14 @@
         <div class="gallery">
             <div class="uk-grid-small uk-grid-width-1-1" data-uk-grid-margin=" ">
 
-                <a href="<c:url value="/images/${tv.slug}/1"/>" data-lightbox-type="image"
-                   data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/${tv.slug}/1"/>"
+                <a href="<c:url value="/images/tv/${tv.slug}/1"/>" data-lightbox-type="image"
+                   data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/tv/${tv.slug}/1"/>"
                                                              width="200" height="200"> </a>
-                <a href="<c:url value="/images/${tv.slug}/2"/>" data-lightbox-type="image"
-                   data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/${tv.slug}/2"/>"
+                <a href="<c:url value="/images/tv/${tv.slug}/2"/>" data-lightbox-type="image"
+                   data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/tv/${tv.slug}/2"/>"
                                                              width="200" height="200"> </a>
-                <a href="<c:url value="/images/${tv.slug}/3"/>" data-lightbox-type="image"
-                   data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/${tv.slug}/3"/>"
+                <a href="<c:url value="/images/tv/${tv.slug}/3"/>" data-lightbox-type="image"
+                   data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/tv/${tv.slug}/3"/>"
                                                              width="200" height="200"> </a>
                 <%--<a href="<c:url value="/images/${tv.slug}/4"/>" data-lightbox-type="image"--%>
                 <%--data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/${tv.slug}/4"/>"--%>
@@ -142,7 +143,7 @@
                     <p></p>
                     <sec:authorize access="isAuthenticated()">
                         <div class="userRating">
-                            <img src="<c:url value="/images/user/meow"/>" class="userPicture">
+                            <img src="<c:url value="/images/user/${name}"/>" class="userPicture">
                             <i class="fa fa-star fa-lg rate" title="Rate!" aria-hidden="true"></i><span
                                 class="rateValue"></span>
                         </div>
@@ -189,6 +190,9 @@
 </div>
 <script>
     $(function () {
+    <c:if test="${follow == true}">
+        $('i.fa-heart-o').addClass('fa-heart').removeClass('fa-heart-o');
+    </c:if>
         <sec:authorize access="isAuthenticated()">
             $('a').click(function () {
                 $(this).find('i').toggleClass('fa-square-o fa-check-square-o');

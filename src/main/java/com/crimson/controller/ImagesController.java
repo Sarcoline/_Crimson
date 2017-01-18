@@ -1,6 +1,9 @@
 package com.crimson.controller;
 
-import org.apache.commons.io.IOUtils;
+import com.crimson.dao.TvShowDAO;
+import com.crimson.dao.UserDAO;
+import com.crimson.model.TvShow;
+import com.crimson.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -11,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletContext;
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Created by Meow on 30.12.2016.
@@ -22,10 +24,21 @@ public class ImagesController {
     @Autowired
     private ServletContext context;
 
+    @Autowired
+    private TvShowDAO tvShowDAO;
+    @Autowired
+    private UserDAO userDAO;
+
     @ResponseBody
-    @RequestMapping(value = "images/{name}/{image}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-    public byte[] GetImage(@PathVariable String image, @PathVariable String name) throws IOException {
-        InputStream in = context.getResourceAsStream(String.format("/images/%s/%s.jpg", name, image));
-        return IOUtils.toByteArray(in);
+    @RequestMapping(value = "/images/tv/{name}/{image}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] GetShowImage(@PathVariable String image, @PathVariable String name) throws IOException {
+        TvShow tv = tvShowDAO.getTvBySlug(name);
+        return tv.getPictures().get(image);
+    }
+    @ResponseBody
+    @RequestMapping(value = "/images/user/{name}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] GetUserImage(@PathVariable String name) throws IOException {
+        User user = userDAO.getUserByName(name);
+        return user.getProfilePic();
     }
 }

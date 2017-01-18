@@ -1,9 +1,7 @@
 package com.crimson.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -24,12 +22,19 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "profilePicLocation")
-    private String profilePicLocation;
-
     @Column(name = "role")
     private String role = "ROLE_USER";
 
+    public byte[] getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(byte[] profilePic) {
+        this.profilePic = profilePic;
+    }
+
+    @Lob
+    private byte[] profilePic;
 
     public Long getId() {
         return id;
@@ -63,11 +68,6 @@ public class User {
     }
 
 
-    public String getProfilePicLocation() {return profilePicLocation;}
-    public void setProfilePicLocation(String profilePicLocation) {
-        this.profilePicLocation = profilePicLocation;
-    }
-
     public String getRole() {
         return role;
     }
@@ -77,8 +77,9 @@ public class User {
 
     //RELATIONSHIPS
 
+
     //User2TvShow Relation
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user2TvShow",
             joinColumns = {@JoinColumn(name = "idUser")},
             inverseJoinColumns = {@JoinColumn(name = "idTvShow")})
@@ -91,5 +92,19 @@ public class User {
     inverseJoinColumns = {@JoinColumn(name = "idEpisode")})
     public Set<Episode> Users2Episode = new HashSet<>();
 
+    public Set<TvShow> getUsers2TvShow() {
+        return Users2TvShow;
+    }
 
+    public void setUsers2TvShow(Set<TvShow> users2TvShow) {
+        Users2TvShow = users2TvShow;
+    }
+
+    public Set<Episode> getUsers2Episode() {
+        return Users2Episode;
+    }
+
+    public void setUsers2Episode(Set<Episode> users2Episode) {
+        Users2Episode = users2Episode;
+    }
 }
