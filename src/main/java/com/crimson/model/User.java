@@ -1,5 +1,7 @@
 package com.crimson.model;
 
+import com.sun.media.jfxmedia.track.Track;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -77,19 +79,30 @@ public class User {
 
     //RELATIONSHIPS
 
-    //User2TvShow Relation
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user2TvShow",
-            joinColumns = {@JoinColumn(name = "idUser")},
-            inverseJoinColumns = {@JoinColumn(name = "idTvShow")})
-    public Set<TvShow> Users2TvShow = new HashSet<>();
+    //User2TvShow
+    @ManyToMany
+    @JoinTable(name = "User2TvShow",
+    joinColumns = @JoinColumn(name = "idUser"),
+    inverseJoinColumns = @JoinColumn(name = "idTvShow"))
+    private List<TvShow> userTvShowList = new ArrayList<>();
 
-    //EpisodeWatched(User2Episode) Relation
-    @ManyToMany(cascade = CascadeType.ALL)
+    public List<TvShow> getUserTvShowList(){return userTvShowList;}
+    public void setUserTvShowList(List<TvShow> userTvShowList){this.userTvShowList = userTvShowList;}
+
+    //User2Episode
+    @ManyToMany
     @JoinTable(name = "EpisodeWatched",
-    joinColumns = {@JoinColumn(name = "idUser")},
-    inverseJoinColumns = {@JoinColumn(name = "idEpisode")})
-    public Set<Episode> Users2Episode = new HashSet<>();
+    joinColumns = @JoinColumn(name = "idUser"),
+    inverseJoinColumns = @JoinColumn(name = "idEpisode"))
+    private List<Episode> userEpisodeList = new ArrayList<>();
 
+    public List<Episode> getUserEpisodeList(){return userEpisodeList;}
+    public void setUserEpisodeList(List<Episode> userEpisodeList){this.userEpisodeList = userEpisodeList;}
 
+    //Rating
+    @OneToMany(mappedBy = "userRating")
+    private List<Rating> userRatings = new ArrayList<>();
+
+    public  List<Rating> getUserRatings(){return userRatings;}
+    public  void setUserRatings(List<Rating> userRatings){this.userRatings = userRatings;}
 }

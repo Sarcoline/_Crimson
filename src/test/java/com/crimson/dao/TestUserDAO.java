@@ -49,8 +49,6 @@ public class TestUserDAO {
         tvShow.setTitle("Dr.House");
         tvShowDAO.saveTvShow(tvShow);
 
-        episode.setTitle("First Day");
-        episodeDAO.saveEpisode(episode);
     }
 
     @Test
@@ -108,59 +106,25 @@ public class TestUserDAO {
         Assert.assertEquals(getUserByNameTest.getName(), user.getName());
     }
 
-    //RELATIONSHIP TESTS
+   //RELATIONSHIP TESTS
 
-    //User2TvShow
     @Test
-    public void addUser2TvShowTest(){
-        int sizeOfUserTvShowsList = user.Users2TvShow.size();
-        int sizeOfTvShow2UserList = tvShow.TvShows2User.size();
+    public void addTvShow2User(){
+        int size = user.getUserTvShowList().size();
 
-        userDAO.addUser2TvShows(user,tvShow);
+        userDAO.addTvShow2User(user,tvShow);
 
-        Assert.assertEquals(tvShow.TvShows2User.size(), sizeOfTvShow2UserList+1);
-        Assert.assertEquals(user.Users2TvShow.size(), sizeOfUserTvShowsList+1);
+        Assert.assertEquals(size+1, user.getUserTvShowList().size());
     }
 
     @Test
-    public void deleteUser2TvShowTest()
-    {
-        addUser2TvShowTest();
+    public void deleteTvShowFromUser(){
+        addTvShow2User();
 
-        int sizeOfUserTvShowsList = user.Users2TvShow.size();
-        int sizeOfTvShow2UserList = tvShow.TvShows2User.size();
+        int size = user.getUserTvShowList().size();
 
-        userDAO.deleteUser2TvShow(user, tvShow);
+        userDAO.deleteTvShowFromUser(user, tvShow);
 
-        Assert.assertEquals(tvShow.TvShows2User.size(), sizeOfTvShow2UserList-1);
-        Assert.assertEquals(user.Users2TvShow.size(), sizeOfUserTvShowsList-1);
+        Assert.assertEquals(size-1, user.getUserTvShowList().size());
     }
-
-
-    //EpisodeWatched(User2Episode)
-
-    @Test
-    public void addUser2EpisodeTest(){
-        int sizeOfUser2EpisodeList = user.Users2Episode.size();
-        int sizeOfEpisode2UserList = episode.Episode2Users.size();
-
-        userDAO.addUser2Episode(user, episode);
-
-        Assert.assertEquals(sizeOfUser2EpisodeList+1, user.Users2Episode.size());
-        Assert.assertEquals(sizeOfEpisode2UserList+1, episode.Episode2Users.size());
-    }
-
-    @Test
-    public void deleteUser2EpisodeTest(){
-        addUser2EpisodeTest();
-
-        int sizeOfUser2EpisodeList = user.Users2Episode.size();
-        int sizeOfEpisode2UserList = episode.Episode2Users.size();
-
-        userDAO.delelteUser2Episode(user, episode);
-
-        Assert.assertEquals(sizeOfUser2EpisodeList-1, user.Users2Episode.size());
-        Assert.assertEquals(sizeOfEpisode2UserList-1, episode.Episode2Users.size());
-    }
-
 }

@@ -1,9 +1,7 @@
 package com.crimson.model;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 @Entity
@@ -95,10 +93,19 @@ public class Episode {
     //RELATIONSHIPS
 
     //EpisodeWatched(User2Episode) Relation
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "EpisodeWatched",
-            joinColumns = {@JoinColumn(name = "idUser")},
-            inverseJoinColumns = {@JoinColumn(name = "idEpisode")})
-    public Set<User> Episode2Users = new HashSet<>();
+    @ManyToMany(mappedBy = "userEpisodeList")
+    private List<User> episodeUserList = new ArrayList<>();
+
+    public List<User> getEpisodeUserList(){return episodeUserList;}
+    public void setEpisodeUserList(List<User> episodeUserList){this.episodeUserList = episodeUserList;}
+
+    //TvShow2Episode Relation
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idTvShow")
+    private TvShow episodeFromTvShow;
+
+    public TvShow getEpisodeFromTvShow(){return episodeFromTvShow;}
+    public void setEpisodeFromTvShow(TvShow episodeFromTvShow){this.episodeFromTvShow = episodeFromTvShow;}
+
 
 }

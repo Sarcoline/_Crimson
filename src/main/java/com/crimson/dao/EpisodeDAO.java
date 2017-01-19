@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.ManyToMany;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -51,22 +53,7 @@ public class EpisodeDAO {
 
     //RELATIONSHIPS
 
-    //EpisodeWatched(User2Episode)
-    public void addUser2Episode(User user, Episode episode){
-        if (!user.Users2Episode.contains(episode)){
-            user.Users2Episode.add(episode);
-        }
-        if (!episode.Episode2Users.contains(user)){
-            episode.Episode2Users.add(user);
-        }
-    }
+    @ManyToMany(mappedBy = "userEpisodeList")
+    public List<User> episodeUserList = new ArrayList<>();
 
-    public  void delelteUser2Episode(User user, Episode episode){
-        if (user.Users2Episode.contains(episode)){
-            user.Users2Episode.remove(episode);
-        }
-        if (episode.Episode2Users.contains(user)){
-            episode.Episode2Users.remove(user);
-        }
-    }
 }

@@ -1,12 +1,18 @@
 package com.crimson.dao;
 
 import com.crimson.model.Rating;
+import com.crimson.model.TvShow;
+import com.crimson.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import java.util.List;
 
 @Repository
@@ -51,4 +57,6 @@ public class RatingDAO {
         List<Rating> ratings = session.createQuery("SELECT a FROM  Rating a", Rating.class).getResultList();
         return ratings;
     }
+
+
 }

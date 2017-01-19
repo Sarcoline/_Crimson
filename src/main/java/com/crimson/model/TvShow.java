@@ -133,11 +133,30 @@ public class TvShow {
     //RELATIONSHIPS
 
     //User2TvShow Relation
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user2TvShow",
-            joinColumns = {@JoinColumn(name = "idUser")},
-            inverseJoinColumns = {@JoinColumn(name = "idTvShow")})
-    public Set<User> TvShows2User = new HashSet<User>();
+    @ManyToMany(mappedBy = "userTvShowList")
+    private List<User> tvShowUserList = new ArrayList<>();
 
+    public List<User> getTvShowUserList(){return tvShowUserList;}
+    public void setTvShowUserList(List<User> tvShowUserList){this.tvShowUserList = tvShowUserList;}
 
+    //TvShow2Genre
+    @ManyToMany(mappedBy = "genreTvShowList")
+    private List<Genre> tvShowGenreList = new ArrayList<>();
+
+    public List<Genre> getTvShowGenreList(){return tvShowGenreList;}
+    public void setTvShowGenreList(List<Genre> tvShowGenreList){this.tvShowGenreList = tvShowGenreList;}
+
+    //TvShowEpisode Relation
+    @OneToMany(mappedBy = "episodeFromTvShow")
+    private List<Episode> episodes = new ArrayList<>();
+
+    public List<Episode> getEpisodes(){return episodes;}
+    public void setEpisodes(List<Episode> episodes){this.episodes = episodes;}
+
+    //Rating
+    @OneToMany(mappedBy = "tvShowRating")
+    private List<Rating> tvShowRating = new ArrayList<>();
+
+    public List<Rating> getTvShowRating(){return tvShowRating;}
+    public void setTvShowRating(List<Rating> tvShowRating){this.tvShowRating = tvShowRating;}
 }

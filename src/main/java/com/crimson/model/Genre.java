@@ -1,7 +1,9 @@
 package com.crimson.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -44,5 +46,15 @@ public class Genre {
     public void setName(String name){
         this.name = name;
     }
+
+    //Genre2TvShow
+    @ManyToMany
+    @JoinTable(name = "Genre2TvShow",
+    joinColumns = @JoinColumn(name = "idGenre"),
+    inverseJoinColumns = @JoinColumn(name = "idTvShow"))
+    private List<TvShow> genreTvShowList = new ArrayList<>();
+
+    public List<TvShow> getGenreTvShowList(){return genreTvShowList;}
+    public void setGenreTvShowList(List<TvShow> genreTvShowList){this.genreTvShowList = genreTvShowList;}
 
 }
