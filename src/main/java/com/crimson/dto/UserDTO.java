@@ -23,6 +23,17 @@ public class UserDTO {
     @Size(min = 3, max= 100)
     private String password;
 
+    private byte[] profilePic;
+
+
+    public byte[] getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(byte[] profilePic) {
+        this.profilePic = profilePic;
+    }
+
 
     public Long getId() {
         return id;

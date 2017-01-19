@@ -1,8 +1,10 @@
 package com.crimson;
 
 import com.crimson.context.SpringCore;
+import com.crimson.dao.GenreDAO;
 import com.crimson.dao.TvShowDAO;
 import com.crimson.dao.UserDAO;
+import com.crimson.model.Genre;
 import com.crimson.model.TvShow;
 import com.crimson.model.User;
 import org.apache.commons.io.IOUtils;
@@ -28,12 +30,22 @@ public class populateDatabase {
 
         TvShowDAO tvShowDAO = applicationContext.getBean(TvShowDAO.class);
         UserDAO userDAO = applicationContext.getBean(UserDAO.class);
+        GenreDAO genreDAO = applicationContext.getBean(GenreDAO.class);
+        Genre fantasy = new Genre("Fantasy");
+        Genre drama = new Genre("Drama");
+        Genre comedy = new Genre("Comedy");
+        genreDAO.addGenre(fantasy);
+        genreDAO.addGenre(drama);
+        genreDAO.addGenre(comedy);
+
         if (tvShowDAO.getAllTvShows().size() < 1) {
             TvShow tv = new TvShow();
-            tv.setGenre("Fantasy");
+
+
             tv.setTitle("Game Of Thrones");
             tv.setNetwork("HBO");
             tv.setOverallRating(9.2);
+            tv.setGenre("Fantasy");
             tv.setTrailerUrl("https://www.youtube.com/watch?v=EI0ib1NErqg");
             tv.setCountry("USA");
             tv.setReleaseYear(2010);
@@ -63,8 +75,8 @@ public class populateDatabase {
                     "Eddard, suspecting that his predecessor had been murdered, accepts so that he can investigate further. It turns out more than one " +
                     "family is plotting to take the throne.");
             TvShow tv1 = new TvShow();
-            tv1.setGenre("Drama");
             tv1.setTitle("Shameless");
+            tv1.setGenre("Drama");
             tv1.setNetwork("Showtime");
             tv1.setOverallRating(8.5);
             tv1.setTrailerUrl("https://www.youtube.com/watch?v=ITsirWLf-W8");

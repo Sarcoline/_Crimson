@@ -1,4 +1,4 @@
-package com.crimson.mapper;
+package com.crimson.service;
 
 import com.crimson.dto.UserDTO;
 import com.crimson.model.User;
@@ -13,5 +13,10 @@ public class Mapper extends ConfigurableMapper {
         factory.classMap(User.class, UserDTO.class)
                 .byDefault()
                 .register();
+
+        // TODO mapper tvShow tvShowDTO
+//        factory.classMap(TvShow.class, TvShowDTO.class)
+//                .byDefault()
+//                .register();
     }
 }

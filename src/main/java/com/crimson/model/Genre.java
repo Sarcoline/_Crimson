@@ -2,9 +2,7 @@ package com.crimson.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 @Entity
@@ -21,9 +19,8 @@ public class Genre {
 
 
 
-    public Genre(Long id, String name){
+    public Genre(String name){
         super();
-        this.id = id;
         this.name = name;
     }
 

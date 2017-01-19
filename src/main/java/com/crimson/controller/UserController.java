@@ -1,17 +1,13 @@
 package com.crimson.controller;
 
-import com.crimson.dao.UserDAO;
 import com.crimson.dto.UserDTO;
-import com.crimson.model.User;
-import ma.glasnost.orika.MapperFacade;
-import org.apache.commons.io.IOUtils;
+import com.crimson.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,10 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Created by Meow on 30.12.2016.
@@ -31,11 +25,11 @@ import java.io.InputStream;
 public class UserController {
 
     @Autowired
-    private UserDAO userDAO;
-    @Autowired
-    private MapperFacade mapperFacade;
+    private UserService userService;
+
     @Autowired
     private AuthenticationManager authenticationManager;
+
     @Autowired
     ApplicationContext context;
 
@@ -70,23 +64,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String registration(@Valid UserDTO userDTO, BindingResult bindingResult, Model model, HttpServletRequest request) throws IOException {
+    public String registration(@Valid UserDTO userDTO, BindingResult bindingResult) throws IOException {
 
         if (bindingResult.hasErrors()) {
             return "register";
         }
 
-        User user = mapperFacade.map(userDTO, User.class);
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        user.setPassword(encoder.encode(user.getPassword()));
-        InputStream in = context.getResource("classpath:/images/user/user.jpg").getInputStream();
-        user.setProfilePic(IOUtils.toByteArray(in));
-        userDAO.saveUser(user);
-
-//        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getName(), user.getPassword());
-//        token.setDetails(new WebAuthenticationDetails(request));
-//        Authentication authenticatedUser = authenticationManager.authenticate(token);
-//        SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
+        userService.saveUser(userDTO);
 
         return "redirect:/login?registered";
     }
