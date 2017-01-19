@@ -26,6 +26,7 @@ public class Rating {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     public Long getId() {
@@ -36,7 +37,7 @@ public class Rating {
         this.id = id;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @PrimaryKeyJoinColumn(name = "idUser")
     private User userRating;
 

@@ -31,6 +31,9 @@ public class TestUserDAO {
     @Autowired
     private EpisodeDAO episodeDAO;
 
+    @Autowired
+    private RatingDAO ratingDAO;
+
     private User user = new User();
 
     private TvShow tvShow = new TvShow();
@@ -108,7 +111,6 @@ public class TestUserDAO {
         int size = user.getUserTvShowList().size();
 
         userDAO.addTvShow2User(user,tvShow);
-
         Assert.assertEquals(size+1, user.getUserTvShowList().size());
     }
 

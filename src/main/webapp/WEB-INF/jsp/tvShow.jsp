@@ -144,7 +144,7 @@
                     <sec:authorize access="isAuthenticated()">
                         <div class="userRating">
                             <img src="<c:url value="/images/user/${name}"/>" class="userPicture">
-                            <i class="fa fa-star fa-lg rate" title="Rate!" aria-hidden="true"></i><span
+                            <a href="/tv/rate/${tv.id}"><i class="fa fa-star fa-lg rate" title="Rate!" aria-hidden="true"></i></a><span
                                 class="rateValue"></span>
                         </div>
                         <fieldset class="rating uk-hidden">

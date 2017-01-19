@@ -1,10 +1,11 @@
 package com.crimson.controller;
 
+import com.crimson.dao.RatingDAO;
 import com.crimson.dao.TvShowDAO;
 import com.crimson.dao.UserDAO;
+import com.crimson.model.Rating;
 import com.crimson.model.TvShow;
 import com.crimson.model.User;
-import com.github.slugify.Slugify;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -18,8 +19,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Set;
+import java.util.List;
 
 @RequestMapping("/tv")
 @Controller
@@ -31,31 +33,32 @@ public class CrimsonController {
     private TvShowDAO tvShowDAO;
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    private RatingDAO ratingDAO;
 
     @Transactional
     @GetMapping("/{name}")
     public String displayTvShow(Model model, @PathVariable("name") String name) {
-        TvShow tv =  tvShowDAO.getTvBySlug(name);
+        TvShow tv = tvShowDAO.getTvBySlug(name);
         boolean follow = false;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             User user = userDAO.getUserByName(auth.getName());
-            if (user.getUsers2TvShow().contains(tv)) follow = true;
+            if (user.getUserTvShowList().contains(tv)) follow = true;
         }
 
-        model.addAttribute("tv",tv);
-        model.addAttribute("follow",follow);
+        model.addAttribute("tv", tv);
+        model.addAttribute("follow", follow);
         return "tvShow";
     }
 
     @Transactional(readOnly = true)
-    //@Secured("ROLE_USER")
     @GetMapping("/user/{kto}")
-    public String displayUser(Model model, @PathVariable("kto") String kto){
+    public String displayUser(Model model, @PathVariable("kto") String kto) {
         User user = userDAO.getUserByName(kto);
-        Set<TvShow> tvs = user.getUsers2TvShow();
+        List<TvShow> tvs = user.getUserTvShowList();
         model.addAttribute("tvshows", tvs);
-        model.addAttribute("user",user);
+        model.addAttribute("user", user);
         return "user";
     }
 
@@ -85,12 +88,37 @@ public class CrimsonController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByName(auth.getName());
         TvShow tv = tvShowDAO.getTvById(id);
-        if (user.getUsers2TvShow().contains(tv)) user.getUsers2TvShow().remove(tv);
-        else user.getUsers2TvShow().add(tv);
+        if (user.getUserTvShowList().contains(tv)) user.getUserTvShowList().remove(tv);
+        else user.getUserTvShowList().add(tv);
 
-        Slugify slg = new Slugify();
-        return "redirect:/tv/" + slg.slugify(tv.getTitle());
+
+        return "redirect:/tv/" + tv.getSlug();
     }
 
+    @RequestMapping(value = "/rate/{id}")
+    public String rate(Model model, @PathVariable("id") Long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userDAO.getUserByName(auth.getName());
+        TvShow tv = tvShowDAO.getTvById(id);
+        Rating rating = null;
+        try {
+            rating = ratingDAO.getR(tv.getId(), user.getId());
+        } catch (NoResultException e) {
+        }
+
+
+        if (rating != null) {
+            ratingDAO.deleteRating(rating);
+        } else {
+            Rating ratingNew = new Rating();
+            ratingNew.setUserRating(user);
+            ratingNew.setTvShowRating(tv);
+            ratingNew.setValue(6);
+            ratingDAO.saveRating(ratingNew);
+        }
+
+
+        return "redirect:/tv/" + tv.getSlug();
+    }
 
 }

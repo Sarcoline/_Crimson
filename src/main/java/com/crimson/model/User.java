@@ -2,9 +2,7 @@ package com.crimson.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "User")
@@ -70,10 +68,6 @@ public class User {
     }
 
 
-    public String getProfilePicLocation() {return profilePicLocation;}
-    public void setProfilePicLocation(String profilePicLocation) {
-        this.profilePicLocation = profilePicLocation;
-    }
 
     public String getRole() {
         return role;
@@ -85,7 +79,7 @@ public class User {
     //RELATIONSHIPS
 
     //User2TvShow
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "User2TvShow",
     joinColumns = @JoinColumn(name = "idUser"),
     inverseJoinColumns = @JoinColumn(name = "idTvShow"))
