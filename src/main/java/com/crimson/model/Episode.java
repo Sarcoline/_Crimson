@@ -1,9 +1,12 @@
 package com.crimson.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.*;
 
 
+@Data
 @Entity
 @Table(name = "Episode")
 public class Episode {
@@ -43,55 +46,6 @@ public class Episode {
     }
 
     public Episode(){
-
-    }
-
-    public Long getId(){
-        return id;
-    }
-
-    public void setId(Long id){
-        this.id = id;
-    }
-
-    public String getTitle(){
-        return title;
-    }
-
-    public void setTitle(String title){
-        this.title = title;
-    }
-
-    public String getSeason(){
-        return season;
-    }
-
-    public void setSeason(String season){
-        this.season = season;
-    }
-
-    public int getNumber(){
-        return number;
-    }
-
-    public void setNumber(int number){
-        this.number = number;
-    }
-
-    public Date getRealeaseData(){
-        return realeaseData;
-    }
-
-    public void setRealeaseData(Date realeaseData){
-        this.realeaseData = realeaseData;
-    }
-
-    public String getEpisodeSummary(){
-        return episodeSummary;
-    }
-
-    public void setEpisodeSummary(String episodeSummary){
-        this.episodeSummary = episodeSummary;
     }
 
     public Long getIdTvShow(){return idTvShow;}

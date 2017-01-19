@@ -1,16 +1,14 @@
 package com.crimson.model;
 
-import javassist.bytecode.ByteArray;
-import org.hibernate.type.descriptor.java.ByteArrayTypeDescriptor;
-import org.hibernate.type.descriptor.sql.VarbinaryTypeDescriptor;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "TvShow")
 public class TvShow {
@@ -33,6 +31,7 @@ public class TvShow {
     private String genre;
 
     @Column(name = "description")
+    @Lob
     @Length(max = 10000)
     private String description;
 
@@ -48,90 +47,12 @@ public class TvShow {
     @Column(name = "slug")
     private String slug;
 
+    @Lob
     @Column(name = "picture")
-    private Byte picture;
+    private HashMap<String, byte[]> pictures = new HashMap<>();
 
-
-
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
-
-    public int getReleaseYear() {
-        return releaseYear;
-    }
-
-    public void setReleaseYear(int releaseYear) {
-        this.releaseYear = releaseYear;
-    }
-
-
-    public Long getId(){
-        return id;
-    }
-    public void setId(Long id){
-        this.id = id;
-    }
-
-    public String getTitle(){
-        return title;
-    }
-    public void setTitle(String title){
-        this.title = title;
-    }
-
-    public String getNetwork(){
-        return network;
-    }
-    public void setNetwork(String network){
-        this.network = network;
-    }
-
-    public String getCountry(){
-        return country;
-    }
-    public void setCountry(String country){
-        this.country = country;
-    }
-
-    public String getGenre(){
-        return genre;
-    }
-    public void setGenre(String genre){
-        this.genre = genre;
-    }
-
-    public String getDescription(){
-        return description;
-    }
-    public  void setDescription(String description){
-        this.description = description;
-    }
-
-    public Double getOverallRating(){
-        return overallRating;
-    }
-    public void setOverallRating(double overallRating){
-        this.overallRating = overallRating;
-    }
-
-    public String getTrailerUrl(){
-        return trailerUrl;
-    }
-    public void setTrailerUrl(String trailerUrl){
-        this.trailerUrl = trailerUrl;
-    }
-
-    public Byte getPicture(){return picture;}
-    public void setPicture(Byte picture){this.picture = picture;}
 
     //RELATIONSHIPS
-
     //User2TvShow Relation
     @ManyToMany(mappedBy = "userTvShowList", cascade = CascadeType.ALL)
     private List<User> tvShowUserList = new ArrayList<>();

@@ -19,7 +19,7 @@
             <div class="login" style="padding: 10px; margin-bottom: 40px;">
                 <div>
                     <img src="http://www.iconsfind.com/wp-content/uploads/2015/08/20150831_55e46ad551392.png"
-                         width="200" height="200" class="center" style="margin-bottom: 10px;">
+                         width="200" height="200" class="center" style="margin-bottom: 20px;">
                 </div>
                 <ul class="uk-list uk-text-center " style="font-size: 1.8rem">
                     <li style="font-size: 2.5rem; margin-bottom: 5px;"><strong>${user.name}</strong></li>
@@ -31,57 +31,32 @@
                 <div class="uk-slider-container">
                     <ul class="uk-slider uk-grid-width-medium-1-4">
                         <li><a href="<c:url value="/tv/game-of-thrones"/>">
-                <span class="item1" style="background-image: url('<c:url value="/images/game-of-thrones/poster"/>')">
+                <span class="item1" style="background-image: url('<c:url value="/images/tv/game-of-thrones/poster"/>')">
                     <span class="overlay"><span class="item-header">Title</span> </span>
             </span>
                         </a></li>
                         <li><a href="<c:url value="/tv/game-of-thrones"/>">
-                <span class="item1" style="background-image: url('<c:url value="/images/game-of-thrones/poster"/>')">
+                <span class="item1" style="background-image: url('<c:url value="/images/tv/game-of-thrones/poster"/>')">
                     <span class="overlay"><span class="item-header">Title</span> </span>
             </span>
                         </a></li>
                         <li><a href="<c:url value="/tv/game-of-thrones"/>">
-                <span class="item1" style="background-image: url('<c:url value="/images/game-of-thrones/poster"/>')">
+                <span class="item1" style="background-image: url('<c:url value="/images/tv/game-of-thrones/poster"/>')">
                     <span class="overlay"><span class="item-header">Title</span> </span>
             </span>
                         </a></li>
                         <li><a href="<c:url value="/tv/game-of-thrones"/>">
-                <span class="item1" style="background-image: url('<c:url value="/images/game-of-thrones/poster"/>')">
+                <span class="item1" style="background-image: url('<c:url value="/images/tv/game-of-thrones/poster"/>')">
                     <span class="overlay"><span class="item-header">Title</span> </span>
             </span>
                         </a></li>
                         <li><a href="<c:url value="/tv/game-of-thrones"/>">
-                <span class="item1" style="background-image: url('<c:url value="/images/game-of-thrones/poster"/>')">
+                <span class="item1" style="background-image: url('<c:url value="/images/tv/game-of-thrones/poster"/>')">
                     <span class="overlay"><span class="item-header">Title</span> </span>
             </span>
                         </a></li>
                         <li><a href="<c:url value="/tv/game-of-thrones"/>">
-                <span class="item1" style="background-image: url('<c:url value="/images/game-of-thrones/poster"/>')">
-                    <span class="overlay"><span class="item-header">Title</span> </span>
-            </span>
-                        </a></li>
-                        <li><a href="<c:url value="/tv/game-of-thrones"/>">
-                <span class="item1" style="background-image: url('<c:url value="/images/game-of-thrones/poster"/>')">
-                    <span class="overlay"><span class="item-header">Title</span> </span>
-            </span>
-                        </a></li>
-                        <li><a href="<c:url value="/tv/game-of-thrones"/>">
-                <span class="item1" style="background-image: url('<c:url value="/images/game-of-thrones/poster"/>')">
-                    <span class="overlay"><span class="item-header">Title</span> </span>
-            </span>
-                        </a></li>
-                        <li><a href="<c:url value="/tv/game-of-thrones"/>">
-                <span class="item1" style="background-image: url('<c:url value="/images/game-of-thrones/poster"/>')">
-                    <span class="overlay"><span class="item-header">Title</span> </span>
-            </span>
-                        </a></li>
-                        <li><a href="<c:url value="/tv/game-of-thrones"/>">
-                <span class="item1" style="background-image: url('<c:url value="/images/game-of-thrones/poster"/>')">
-                    <span class="overlay"><span class="item-header">Title</span> </span>
-            </span>
-                        </a></li>
-                        <li><a href="<c:url value="/tv/game-of-thrones"/>">
-                <span class="item1" style="background-image: url('<c:url value="/images/game-of-thrones/poster"/>')">
+                <span class="item1" style="background-image: url('<c:url value="/images/tv/game-of-thrones/poster"/>')">
                     <span class="overlay"><span class="item-header">Title</span> </span>
             </span>
                         </a></li>
@@ -93,40 +68,17 @@
             </div>
         </div>
     </div>
-    <div class="uk-width-4-6 uk-margin-large-top" >
+    <div style="border-left: 2px solid #00a8e6;" class="uk-width-4-6 uk-margin-large-top" >
         <div class="uk-container uk-container-center">
-            <h2 class="uk-article-title" style="text-align:center">Moje seriale</h2>
+            <h2 class="uk-article-title" style="text-align:center">${user.name} TvShows</h2>
             <div class="genreList uk-margin-large-top">
-                <a href="<c:url value="/tv/game-of-thrones"/>"> <span class="item1" style="background-image: url('<c:url value="/images/game-of-thrones/poster"/>')">
-                               <span class="overlay">
-                        <span class="item-header">Game of Thrones</span> </span>
+                <c:forEach items="${tvshows}" var="tv">
+                    <a href="<c:url value="/tv/${tv.slug}"/>"> <span class="item1" style="background-image: url('<c:url value="/images/tv/${tv.slug}/poster"/>')">
+                    <span class="overlay">
+                        <span class="item-header">${tv.title}</span> </span>
             </span>
-                </a>
-                <a href="<c:url value="/tv/prison-break"/>"> <span class="item1" style="background-image: url('<c:url value="/images/prison-break/poster"/>')">
-                               <span class="overlay">
-                        <span class="item-header">Prison Break</span> </span>
-            </span>
-                </a>
-                <a href="<c:url value="/tv/shameless"/>"> <span class="item1" style="background-image: url('<c:url value="/images/news/1"/>')">
-                               <span class="overlay">
-                        <span class="item-header">Sherlock</span> </span>
-            </span>
-                </a>
-                <a href="<c:url value="/tv/shameless"/>"> <span class="item1" style="background-image: url('<c:url value="/images/news/2"/>')">
-                               <span class="overlay">
-                        <span class="item-header">Dr House</span> </span>
-            </span>
-                </a>
-                <a href="<c:url value="/tv/shameless"/>"> <span class="item1" style="background-image: url('<c:url value="/images/news/3"/>')">
-                               <span class="overlay">
-                        <span class="item-header">CSI</span> </span>
-            </span>
-                </a>
-                <a href="<c:url value="/tv/shameless"/>"> <span class="item1" style="background-image: url('<c:url value="/images/shameless/poster"/>')">
-                               <span class="overlay">
-                        <span class="item-header">Shameless</span> </span>
-            </span>
-                </a>
+                    </a>
+                </c:forEach>
             </div>
         </div>
 

@@ -5,7 +5,6 @@ import com.crimson.model.Episode;
 import com.crimson.model.Rating;
 import com.crimson.model.TvShow;
 import com.crimson.model.User;
-import com.sun.media.jfxmedia.track.Track;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,9 +15,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestSpringCore.class)
@@ -71,7 +67,6 @@ public class TestUserDAO {
         user.setName("Alex");
         user.setEmail("Alex@wp.pl");
         user.setPassword("1234");
-        user.setProfilePicLocation("google.pl");
         user.setRole("ROLE_ADMIN");
 
         userDAO.saveUser(user);
@@ -129,7 +124,6 @@ public class TestUserDAO {
         int size = user.getUserTvShowList().size();
 
         userDAO.addTvShow2User(user,tvShow);
-
         Assert.assertEquals(size+1, user.getUserTvShowList().size());
     }
 

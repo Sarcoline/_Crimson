@@ -9,16 +9,8 @@ public class Rating {
     @Column(name = "value")
     private int value;
 
-    @Column(name = "idUser")
-    private Long idUser;
-
-    @Column(name = "idTvShow")
-    private Long idTvShow;
-
-    public Rating(int value, Long idUser, Long idTvShow){
+    public Rating(int value){
         super();
-        this.idUser = idUser;
-        this.idTvShow = idTvShow;
         this.value = value;
     }
 
@@ -34,6 +26,7 @@ public class Rating {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     public Long getId() {
@@ -44,22 +37,16 @@ public class Rating {
         this.id = id;
     }
 
-    public Long getIdUser(){return idUser;}
-    public void setIdUser(Long idUser){this.idUser = idUser;}
-
-    public Long getIdTvShow(){return idTvShow;}
-    public void setIdTvShow(Long idTvShow){this.idTvShow = idTvShow;}
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "idUser", updatable = false, insertable = false)
-    private User userRating = new User();
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @PrimaryKeyJoinColumn(name = "idUser")
+    private User userRating;
 
     public User getUserRating(){return userRating;}
     public void setUserRating(User userRating){this.userRating = userRating;}
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "idTvShow", updatable = false, insertable = false)
-    private TvShow tvShowRating = new TvShow();
+    @ManyToOne
+    @PrimaryKeyJoinColumn(name = "idTvShow")
+    private TvShow tvShowRating;
 
     public TvShow getTvShowRating(){return tvShowRating;}
     public void setTvShowRating(TvShow tvShowRating){this.tvShowRating = tvShowRating;}
