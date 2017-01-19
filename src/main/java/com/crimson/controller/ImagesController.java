@@ -26,7 +26,7 @@ public class ImagesController {
     @ResponseBody
     @RequestMapping(value = "/images/tv/{name}/{image}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] GetShowImage(@PathVariable String image, @PathVariable String name) throws IOException {
-        return tvShowService.getTvBySlug(name).getPictures().get(image);
+        return tvShowService.getTvPictures(name).get(image);
     }
     @ResponseBody
     @RequestMapping(value = "/images/user/{name}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)

@@ -1,5 +1,6 @@
 package com.crimson.service;
 
+import com.crimson.dto.TvShowDTO;
 import com.crimson.dto.UserDTO;
 import com.crimson.model.Rating;
 
@@ -24,5 +25,5 @@ public interface RatingService {
     List<Rating> getAllRatings();
 
     Rating getR(long idtv, long iduser);
-    public void saveUserRating(UserDTO userDTO, Rating rating);
+    void saveUserRating(UserDTO userDTO, TvShowDTO tvShowDTO, int value);
 }

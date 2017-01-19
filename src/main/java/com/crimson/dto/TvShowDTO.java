@@ -4,7 +4,6 @@ import com.crimson.model.Episode;
 import lombok.Data;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -29,8 +28,9 @@ public class TvShowDTO {
 
     private int releaseYear;
 
+    private String genre;
+
     private String slug;
 
-    private HashMap<String, byte[]> pictures = new HashMap<>();
     private List<Episode> episodes = new ArrayList<>();
 }

@@ -48,18 +48,16 @@ public class RatingDAO {
 
     public List<Rating> getAllRatings(){
         Session session = sf.getCurrentSession();
-        List<Rating> ratings = session.createQuery("SELECT a FROM  Rating a", Rating.class).getResultList();
-        return ratings;
+        return session.createQuery("SELECT a FROM  Rating a", Rating.class).getResultList();
     }
 
     public Rating getR(long idtv, long iduser) {
         Session session = sf.getCurrentSession();
         String hql = "from Rating s where s.tvShowRating.id = ? and s.userRating.id = ?";
-        Rating result = (Rating) session.createQuery(hql)
+        return (Rating) session.createQuery(hql)
                 .setParameter(0, idtv)
                 .setParameter(1, iduser)
                 .getSingleResult();
-        return result;
     }
 
 }

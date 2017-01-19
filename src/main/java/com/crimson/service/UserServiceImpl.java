@@ -1,6 +1,9 @@
 package com.crimson.service;
 
+import com.crimson.dao.RatingDAO;
+import com.crimson.dao.TvShowDAO;
 import com.crimson.dao.UserDAO;
+import com.crimson.dto.TvShowDTO;
 import com.crimson.dto.UserDTO;
 import com.crimson.model.Episode;
 import com.crimson.model.Rating;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,9 +29,14 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    private TvShowDAO tvShowDAO;
 
     @Autowired
     private MapperFacade mapperFacade;
+
+    @Autowired
+    private RatingDAO ratingDAO;
 
     @Autowired
     private ApplicationContext context;
@@ -59,61 +68,68 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(User user){
+    public void deleteUser(User user) {
         userDAO.deleteUser(user);
     }
 
     @Override
-    public void updateUser(UserDTO userDTO){
+    public void updateUser(UserDTO userDTO) {
         User user = mapperFacade.map(userDTO, User.class);
         userDAO.updateUser(user);
     }
 
     @Override
-    public UserDTO getUserByName(String name){
+    public UserDTO getUserByName(String name) {
         return mapperFacade.map(userDAO.getUserByName(name), UserDTO.class);
 
     }
 
     @Override
-    public boolean checkFollow(UserDTO userDTO, TvShow tvShow ) {
-        return userDAO.getUserByName(userDTO.getName()).getUserTvShowList().contains(tvShow);
+    public boolean checkFollow(UserDTO userDTO, TvShowDTO tvShow) {
+        return userDAO.getUserByName(userDTO.getName()).getUserTvShowList().contains(tvShowDAO.getTvById(tvShow.getId()));
     }
 
     @Override
-    public void addTvShow2User(UserDTO userDTO, TvShow tvShow){
-        userDAO.getUserByName(userDTO.getName()).getUserTvShowList().add(tvShow);
+    public void addTvShow2User(UserDTO userDTO, TvShowDTO tvShow) {
+        userDAO.getUserByName(userDTO.getName()).getUserTvShowList().add(mapperFacade.map(tvShow, TvShow.class));
     }
 
     @Override
-    public void deleteTvShowFromUser(UserDTO userDTO, TvShow tvShow){
-        userDAO.getUserByName(userDTO.getName()).getUserTvShowList().remove(tvShow);
+    public void deleteTvShowFromUser(UserDTO userDTO, TvShowDTO tvShow) {
+        userDAO.getUserByName(userDTO.getName()).getUserTvShowList().remove(mapperFacade.map(tvShow, TvShow.class));
     }
 
     @Override
-    public List<TvShow> getUserTvShows(UserDTO userDTO){
-        return userDAO.getUserByName(userDTO.getName()).getUserTvShowList();
+    @SuppressWarnings("unchecked")
+    public List<TvShowDTO> getUserTvShows(UserDTO userDTO) {
+        List tvs = new ArrayList();
+        for (TvShow tv : userDAO.getUserByName(userDTO.getName()).getUserTvShowList()) {
+            tvs.add(mapperFacade.map(tv, TvShowDTO.class));
+        }
+        return tvs;
     }
+
     //User2Episode
+
     @Override
-    public void addEpisode2User(User user, Episode episode){
+    public void addEpisode2User(User user, Episode episode) {
         userDAO.addEpisode2User(user, episode);
     }
 
     @Override
-    public void deleteEpisodeFromUser(User user, Episode episode){
-        userDAO.deleteEpisodeFromUser(user,episode);
+    public void deleteEpisodeFromUser(User user, Episode episode) {
+        userDAO.deleteEpisodeFromUser(user, episode);
     }
 
     //Rating
 
     @Override
-    public void addRating2User(User user, Rating rating){
-        userDAO.addRating2User(user,rating);
+    public void addRating2User(User user, Rating rating) {
+        userDAO.addRating2User(user, rating);
     }
 
     @Override
-    public void deleteRatingFromUser(User user, Rating rating){
-        userDAO.deleteRatingFromUser(user,rating);
+    public void deleteRatingFromUser(User user, Rating rating) {
+        userDAO.deleteRatingFromUser(user, rating);
     }
 }

@@ -1,8 +1,7 @@
 package com.crimson.controller;
 
+import com.crimson.dto.TvShowDTO;
 import com.crimson.dto.UserDTO;
-import com.crimson.model.Rating;
-import com.crimson.model.TvShow;
 import com.crimson.service.GenreService;
 import com.crimson.service.RatingService;
 import com.crimson.service.TvShowService;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -39,7 +37,7 @@ public class CrimsonController {
     @Transactional
     @GetMapping("/{name}")
     public String displayTvShow(Model model, @PathVariable("name") String name) {
-        TvShow tv = tvShowService.getTvBySlug(name);
+        TvShowDTO tv = tvShowService.getTvBySlug(name);
         boolean follow = false;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
@@ -55,7 +53,7 @@ public class CrimsonController {
     @GetMapping("/user/{name}")
     public String displayUser(Model model, @PathVariable("name") String name) {
         UserDTO user = userService.getUserByName(name);
-        List<TvShow> tvs = userService.getUserTvShows(user);
+        List<TvShowDTO> tvs = userService.getUserTvShows(user);
         model.addAttribute("tvshows", tvs);
         model.addAttribute("user", user);
         return "user";
@@ -86,7 +84,7 @@ public class CrimsonController {
     public String follow(Model model, @PathVariable("id") Long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
-        TvShow tv = tvShowService.getTvById(id);
+        TvShowDTO tv = tvShowService.getTvById(id);
         if (userService.checkFollow(user,tv)) userService.deleteTvShowFromUser(user,tv);
         else userService.addTvShow2User(user, tv);
 
@@ -94,25 +92,14 @@ public class CrimsonController {
         return "redirect:/tv/" + tv.getSlug();
     }
 
+    @Transactional
     @RequestMapping(value = "/rate/{id}")
     public String rate(Model model, @PathVariable("id") Long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
-        TvShow tv = tvShowService.getTvById(id);
-        Rating rating = null;
-        try {
-            rating = ratingService.getR(tv.getId(), user.getId());
-        } catch (NoResultException e) {
-        }
+        TvShowDTO tv = tvShowService.getTvById(id);
+        ratingService.saveUserRating(user, tv, 7);
 
-        if (rating != null) {
-            ratingService.deleteRating(rating);
-        } else {
-            Rating ratingNew = new Rating();
-            ratingNew.setTvShowRating(tv);
-            ratingNew.setValue(6);
-            ratingService.saveUserRating(user,ratingNew);
-        }
         return "redirect:/tv/" + tv.getSlug();
     }
 

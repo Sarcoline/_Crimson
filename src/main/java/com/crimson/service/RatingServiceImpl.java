@@ -1,8 +1,10 @@
 package com.crimson.service;
 
 import com.crimson.dao.RatingDAO;
+import com.crimson.dto.TvShowDTO;
 import com.crimson.dto.UserDTO;
 import com.crimson.model.Rating;
+import com.crimson.model.TvShow;
 import com.crimson.model.User;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,9 +63,15 @@ public class RatingServiceImpl implements RatingService {
        return ratingDAO.getR(idtv,iduser);
     }
 
-    public void saveUserRating(UserDTO userDTO, Rating rating) {
+    //TODO ogarnąć żeby nie dodawało duplikatów
+    public void saveUserRating(UserDTO userDTO, TvShowDTO tvShowDTO, int value) {
         User user = mapperFacade.map(userDTO, User.class);
+        TvShow tvShow = mapperFacade.map(tvShowDTO, TvShow.class);
+
+        Rating rating = new Rating();
+        rating.setTvShowRating(tvShow);
         rating.setUserRating(user);
+        rating.setValue(value);
         ratingDAO.saveRating(rating);
     }
 }

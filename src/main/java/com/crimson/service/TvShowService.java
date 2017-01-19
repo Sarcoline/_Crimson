@@ -1,7 +1,9 @@
 package com.crimson.service;
 
+import com.crimson.dto.TvShowDTO;
 import com.crimson.model.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -12,17 +14,15 @@ public interface TvShowService {
 
     List<TvShow> getAllTvShows();
 
-    TvShow getTvById(Long id);
+    TvShowDTO getTvById(Long id);
 
-    TvShow getTvBySlug(String slug);
+    TvShowDTO getTvBySlug(String slug);
 
     List<TvShow> getTvByGenre(String genre);
 
     void deleteTvShow(TvShow tvshow);
 
     void updateTvShow(TvShow tvshow);
-
-    TvShow getTvShowBySlug(String slug);
 
     void addUser2TvShow(User user, TvShow tvShow);
 
@@ -37,6 +37,8 @@ public interface TvShowService {
     void deleteEpisodeFromTvShow(TvShow tvShow, Episode episode);
 
     void addRating2TvShow(TvShow tvShow, Rating rating);
+
+    HashMap<String, byte[]> getTvPictures(String slug);
 
     void deleteRatingFromTvShow(TvShow tvShow, Rating rating);
 }

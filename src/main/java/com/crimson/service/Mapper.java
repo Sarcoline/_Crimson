@@ -1,6 +1,8 @@
 package com.crimson.service;
 
+import com.crimson.dto.TvShowDTO;
 import com.crimson.dto.UserDTO;
+import com.crimson.model.TvShow;
 import com.crimson.model.User;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.ConfigurableMapper;
@@ -14,9 +16,8 @@ public class Mapper extends ConfigurableMapper {
                 .byDefault()
                 .register();
 
-        // TODO mapper tvShow tvShowDTO
-//        factory.classMap(TvShow.class, TvShowDTO.class)
-//                .byDefault()
-//                .register();
+        factory.classMap(TvShow.class, TvShowDTO.class)
+                .byDefault()
+                .register();
     }
 }

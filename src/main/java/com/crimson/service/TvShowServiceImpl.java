@@ -1,10 +1,13 @@
 package com.crimson.service;
 
 import com.crimson.dao.TvShowDAO;
+import com.crimson.dto.TvShowDTO;
 import com.crimson.model.*;
+import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -15,8 +18,8 @@ public class TvShowServiceImpl implements TvShowService {
 
     @Autowired
     private TvShowDAO tvShowDAO;
-//    @Autowired
-//    private MapperFacade mapperFacade;
+    @Autowired
+    private MapperFacade mapperFacade;
 
     @Override
     public void saveTvShow(TvShow tvShow) {
@@ -29,19 +32,24 @@ public class TvShowServiceImpl implements TvShowService {
     }
 
     @Override
-    public TvShow getTvById(Long id) {
-        return tvShowDAO.getTvById(id);
+    public TvShowDTO getTvById(Long id) {
+        return  mapperFacade.map(tvShowDAO.getTvById(id), TvShowDTO.class);
     }
 
     @Override
-    public TvShow getTvBySlug(String slug) {
-        return tvShowDAO.getTvBySlug(slug);
-        //return mapperFacade.map(tvShowDAO.getTvBySlug(slug), TvShowDTO.class);
+    public TvShowDTO getTvBySlug(String slug) {
+//        return tvShowDAO.getTvBySlug(slug);
+        return mapperFacade.map(tvShowDAO.getTvBySlug(slug), TvShowDTO.class);
     }
 
     @Override
     public List<TvShow> getTvByGenre(String genre) {
         return tvShowDAO.getTvByGenre(genre);
+    }
+
+    @Override
+    public HashMap<String, byte[]> getTvPictures(String slug) {
+        return tvShowDAO.getTvBySlug(slug).getPictures();
     }
 
     @Override
@@ -53,10 +61,6 @@ public class TvShowServiceImpl implements TvShowService {
         tvShowDAO.updateTvShow(tvshow);
     }
 
-    @Override
-    public TvShow getTvShowBySlug(String slug) {
-        return tvShowDAO.getTvBySlug(slug);
-    }
 
     //RELATIONSHIPS
 
