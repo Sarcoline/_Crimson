@@ -96,7 +96,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteTvShowFromUser(UserDTO userDTO, TvShowDTO tvShow) {
-        userDAO.getUserByName(userDTO.getName()).getUserTvShowList().remove(mapperFacade.map(tvShow, TvShow.class));
+        User user = userDAO.getUserByName(userDTO.getName());
+        TvShow tv = tvShowDAO.getTvById(tvShow.getId());
+        user.getUserTvShowList().remove(tv);
+
     }
 
     @Override

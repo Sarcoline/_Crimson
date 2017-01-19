@@ -85,9 +85,9 @@ public class CrimsonController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
         TvShowDTO tv = tvShowService.getTvById(id);
+
         if (userService.checkFollow(user,tv)) userService.deleteTvShowFromUser(user,tv);
         else userService.addTvShow2User(user, tv);
-
 
         return "redirect:/tv/" + tv.getSlug();
     }
