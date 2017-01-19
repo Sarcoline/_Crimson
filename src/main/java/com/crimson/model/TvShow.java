@@ -133,28 +133,28 @@ public class TvShow {
     //RELATIONSHIPS
 
     //User2TvShow Relation
-    @ManyToMany(mappedBy = "userTvShowList")
+    @ManyToMany(mappedBy = "userTvShowList", cascade = CascadeType.ALL)
     private List<User> tvShowUserList = new ArrayList<>();
 
     public List<User> getTvShowUserList(){return tvShowUserList;}
     public void setTvShowUserList(List<User> tvShowUserList){this.tvShowUserList = tvShowUserList;}
 
     //TvShow2Genre
-    @ManyToMany(mappedBy = "genreTvShowList")
+    @ManyToMany(mappedBy = "genreTvShowList", cascade = CascadeType.ALL)
     private List<Genre> tvShowGenreList = new ArrayList<>();
 
     public List<Genre> getTvShowGenreList(){return tvShowGenreList;}
     public void setTvShowGenreList(List<Genre> tvShowGenreList){this.tvShowGenreList = tvShowGenreList;}
 
     //TvShowEpisode Relation
-    @OneToMany(mappedBy = "episodeFromTvShow")
+    @OneToMany(mappedBy = "episodeFromTvShow", cascade = CascadeType.ALL)
     private List<Episode> episodes = new ArrayList<>();
 
     public List<Episode> getEpisodes(){return episodes;}
     public void setEpisodes(List<Episode> episodes){this.episodes = episodes;}
 
     //Rating
-    @OneToMany(mappedBy = "tvShowRating")
+    @OneToMany(mappedBy = "tvShowRating", cascade = CascadeType.ALL)
     private List<Rating> tvShowRating = new ArrayList<>();
 
     public List<Rating> getTvShowRating(){return tvShowRating;}

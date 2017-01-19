@@ -80,7 +80,7 @@ public class User {
     //RELATIONSHIPS
 
     //User2TvShow
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "User2TvShow",
     joinColumns = @JoinColumn(name = "idUser"),
     inverseJoinColumns = @JoinColumn(name = "idTvShow"))
@@ -90,7 +90,7 @@ public class User {
     public void setUserTvShowList(List<TvShow> userTvShowList){this.userTvShowList = userTvShowList;}
 
     //User2Episode
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "EpisodeWatched",
     joinColumns = @JoinColumn(name = "idUser"),
     inverseJoinColumns = @JoinColumn(name = "idEpisode"))
@@ -100,7 +100,7 @@ public class User {
     public void setUserEpisodeList(List<Episode> userEpisodeList){this.userEpisodeList = userEpisodeList;}
 
     //Rating
-    @OneToMany(mappedBy = "userRating")
+    @OneToMany(mappedBy = "userRating", cascade = CascadeType.ALL)
     private List<Rating> userRatings = new ArrayList<>();
 
     public  List<Rating> getUserRatings(){return userRatings;}

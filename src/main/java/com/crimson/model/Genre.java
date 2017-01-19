@@ -48,7 +48,7 @@ public class Genre {
     }
 
     //Genre2TvShow
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "Genre2TvShow",
     joinColumns = @JoinColumn(name = "idGenre"),
     inverseJoinColumns = @JoinColumn(name = "idTvShow"))

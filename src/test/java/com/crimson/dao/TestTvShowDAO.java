@@ -1,6 +1,8 @@
 package com.crimson.dao;
 
 import com.crimson.context.TestSpringCore;
+import com.crimson.model.Episode;
+import com.crimson.model.Genre;
 import com.crimson.model.TvShow;
 import com.crimson.model.User;
 import org.junit.Assert;
@@ -27,9 +29,19 @@ public class TestTvShowDAO {
     @Autowired
     private UserDAO userDAO;
 
+    @Autowired
+    private GenreDAO genreDAO;
+
+    @Autowired
+    private EpisodeDAO episodeDAO;
+
     private TvShow tvShow = new TvShow();
 
     private User user = new User();
+
+    private Genre genre = new Genre();
+
+    private Episode episode = new Episode();
 
     @Before
     public void setDB(){
@@ -44,9 +56,15 @@ public class TestTvShowDAO {
 
         tvShowDAO.saveTvShow(tvShow);
 
-
         user.setName("Alex");
         userDAO.saveUser(user);
+
+        genre.setName("Drama");
+        genreDAO.addGenre(genre);
+
+        episode.setTitle("EP1");
+        episode.setIdTvShow(tvShow.getId());
+        episodeDAO.saveEpisode(episode);
     }
 
     @Test
@@ -96,5 +114,68 @@ public class TestTvShowDAO {
 
     //RELATIONSHIP TESTS
 
+    //User2TvShow
+    @Test
+    public void addUser2TvShow(){
+        int size = tvShow.getTvShowUserList().size();
 
+        tvShowDAO.addUser2TvShow(user, tvShow);
+
+        Assert.assertEquals(size+1, tvShow.getTvShowUserList().size());
+    }
+
+    @Test
+    public void deleteUserFromTvShow(){
+        addUser2TvShow();
+
+        int size = tvShow.getTvShowUserList().size();
+
+        tvShowDAO.deleteUserFromTvShow(user, tvShow);
+
+        Assert.assertEquals(size-1, tvShow.getTvShowUserList().size());
+    }
+
+    //Genre2TvShow
+
+    @Test
+    public void addGenre2TvShow(){
+        int size = tvShow.getTvShowGenreList().size();
+
+        tvShowDAO.addGenre2TvShow(tvShow,genre);
+
+        Assert.assertEquals(size+1, tvShow.getTvShowGenreList().size());
+    }
+
+    @Test
+    public void deleteGenreFromTvShow(){
+        addGenre2TvShow();
+
+        int size = tvShow.getTvShowGenreList().size();
+
+        tvShowDAO.deleteGenreFromTvShow(tvShow,genre);
+
+        Assert.assertEquals(size-1, tvShow.getTvShowGenreList().size());
+    }
+
+    //TvShow2Episode
+
+    @Test
+    public void addEpisode2TvShow(){
+        int size = tvShow.getEpisodes().size();
+
+        tvShowDAO.addEpisode2TvShow(tvShow, episode);
+
+        Assert.assertEquals(size+1, tvShow.getEpisodes().size());
+    }
+
+    @Test
+    public void deleteEpisodeFromTvShow(){
+        addEpisode2TvShow();
+
+        int size = tvShow.getEpisodes().size();
+
+        tvShowDAO.deleteEpisodeFromTvShow(tvShow, episode);
+
+        Assert.assertEquals(size - 1, tvShow.getEpisodes().size());
+    }
 }

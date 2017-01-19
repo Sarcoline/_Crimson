@@ -1,6 +1,7 @@
 package com.crimson.dao;
 
 import com.crimson.model.Episode;
+import com.crimson.model.Rating;
 import com.crimson.model.TvShow;
 import com.crimson.model.User;
 import com.sun.istack.internal.Nullable;
@@ -68,4 +69,33 @@ public class UserDAO {
             user.getUserTvShowList().remove(tvShow);
         }
     }
+
+    //User2Episode
+    public void addEpisode2User(User user, Episode episode){
+        if (!user.getUserEpisodeList().contains(episode)){
+            user.getUserEpisodeList().add(episode);
+        }
+    }
+
+    public void deleteEpisodeFromUser(User user, Episode episode){
+        if (user.getUserEpisodeList().contains(episode)){
+            user.getUserEpisodeList().remove(episode);
+        }
+    }
+
+    //Rating
+
+    public void addRating2User(User user, Rating rating){
+        if (!user.getUserRatings().contains(rating)){
+            user.getUserRatings().add(rating);
+        }
+    }
+
+    public void deleteRatingFromUser(User user, Rating rating){
+        if (user.getUserRatings().contains(rating)){
+            user.getUserRatings().remove(rating);
+        }
+    }
+
+
 }

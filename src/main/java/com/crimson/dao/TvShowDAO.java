@@ -1,7 +1,6 @@
 package com.crimson.dao;
 
-import com.crimson.model.TvShow;
-import com.crimson.model.User;
+import com.crimson.model.*;
 import com.github.slugify.Slugify;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -76,6 +75,48 @@ public class TvShowDAO {
     public void deleteUserFromTvShow(User user, TvShow tvShow){
         if (tvShow.getTvShowUserList().contains(user)){
             tvShow.getTvShowUserList().remove(user);
+        }
+    }
+
+    //TvShow2Genre
+
+    public void addGenre2TvShow(TvShow tvShow, Genre genre){
+        if (!tvShow.getTvShowGenreList().contains(genre)){
+            tvShow.getTvShowGenreList().add(genre);
+        }
+    }
+
+    public void deleteGenreFromTvShow(TvShow tvShow, Genre genre){
+        if (tvShow.getTvShowGenreList().contains(genre)){
+            tvShow.getTvShowGenreList().remove(genre);
+        }
+    }
+
+    //TvShow2Episode
+
+    public void addEpisode2TvShow(TvShow tvShow, Episode episode){
+        if (!tvShow.getEpisodes().contains(episode)){
+            tvShow.getEpisodes().add(episode);
+        }
+    }
+
+    public void deleteEpisodeFromTvShow(TvShow tvShow, Episode episode){
+        if (tvShow.getEpisodes().contains(episode)){
+            tvShow.getEpisodes().remove(episode);
+        }
+    }
+
+    //TvShowRating
+
+    public void addRating2TvShow(TvShow tvShow, Rating rating){
+        if (!tvShow.getTvShowRating().contains(rating)){
+            tvShow.getTvShowRating().add(rating);
+        }
+    }
+
+    public void deleteRatingFromTvShow(TvShow tvShow, Rating rating){
+        if (tvShow.getTvShowRating().contains(rating)){
+            tvShow.getTvShowRating().remove(rating);
         }
     }
 

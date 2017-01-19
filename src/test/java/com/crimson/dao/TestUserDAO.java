@@ -2,6 +2,7 @@ package com.crimson.dao;
 
 import com.crimson.context.TestSpringCore;
 import com.crimson.model.Episode;
+import com.crimson.model.Rating;
 import com.crimson.model.TvShow;
 import com.crimson.model.User;
 import com.sun.media.jfxmedia.track.Track;
@@ -35,11 +36,16 @@ public class TestUserDAO {
     @Autowired
     private EpisodeDAO episodeDAO;
 
+    @Autowired
+    private RatingDAO ratingDAO;
+
     private User user = new User();
 
     private TvShow tvShow = new TvShow();
 
     private Episode episode = new Episode();
+
+    private Rating rating;
 
     @Before
     public void setDB(){
@@ -48,6 +54,15 @@ public class TestUserDAO {
 
         tvShow.setTitle("Dr.House");
         tvShowDAO.saveTvShow(tvShow);
+
+        episode.setTitle("EP1");
+        episode.setIdTvShow(tvShow.getId());
+        episodeDAO.saveEpisode(episode);
+
+        /*rating.setIdUser(user.getId());
+        rating.setIdTvShow(tvShow.getId());
+        rating.setValue(7);
+        ratingDAO.saveRating(rating);*/
 
     }
 
@@ -108,6 +123,7 @@ public class TestUserDAO {
 
    //RELATIONSHIP TESTS
 
+    //User2TvShow
     @Test
     public void addTvShow2User(){
         int size = user.getUserTvShowList().size();
@@ -127,4 +143,49 @@ public class TestUserDAO {
 
         Assert.assertEquals(size-1, user.getUserTvShowList().size());
     }
+
+    //User2Episode
+
+    @Test
+    public void addEpisode2User(){
+        int size = user.getUserEpisodeList().size();
+
+        userDAO.addEpisode2User(user, episode);
+
+        Assert.assertEquals(size+1, user.getUserEpisodeList().size());
+    }
+
+    @Test
+    public void deleteEpisodeFromUser(){
+        addEpisode2User();
+
+        int size = user.getUserEpisodeList().size();
+
+        userDAO.deleteEpisodeFromUser(user, episode);
+
+        Assert.assertEquals(size-1, user.getUserEpisodeList().size());
+    }
+
+    //Rating
+    /*@Test
+    public void addRating2User(){
+        int size = user.getUserRatings().size();
+
+        userDAO.addRating2User(user,rating);
+
+        Assert.assertEquals(size+1, user.getUserRatings().size());
+    }
+    @Test
+    public void deleteRatingFromUser(){
+        addRating2User();
+
+        int size = user.getUserRatings().size();
+
+        userDAO.deleteRatingFromUser(user, rating);
+
+        Assert.assertEquals(size-1, user.getUserRatings().size());
+    }*/
+
+
+
 }
