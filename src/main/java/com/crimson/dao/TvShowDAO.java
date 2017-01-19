@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.ManyToMany;
 import java.util.List;
 
 @Repository
@@ -65,22 +66,18 @@ public class TvShowDAO {
     //RELATIONSHIPS
 
     //User2TvShow
-    public void addUser2TvShows(User user, TvShow tvShow){
-        if (!user.Users2TvShow.contains(tvShow))
-        {
-            user.Users2TvShow.add(tvShow);
-        }
-        if (!tvShow.TvShows2User.contains(user)){
-            tvShow.TvShows2User.add(user);
+
+    public void addUser2TvShow(User user, TvShow tvShow){
+        if (!tvShow.getTvShowUserList().contains(user)){
+            tvShow.getTvShowUserList().add(user);
         }
     }
 
-    public void deleteUser2TvShow(User user, TvShow tvShow){
-        if(user.Users2TvShow.contains(tvShow)){
-            user.Users2TvShow.remove(tvShow);
-        }
-        if (tvShow.TvShows2User.contains(user)){
-            tvShow.TvShows2User.remove(user);
+    public void deleteUserFromTvShow(User user, TvShow tvShow){
+        if (tvShow.getTvShowUserList().contains(user)){
+            tvShow.getTvShowUserList().remove(user);
         }
     }
+
+
 }

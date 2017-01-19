@@ -56,46 +56,16 @@ public class UserDAO {
     //RELATIONSHIPS
 
     //User2TvShow
-    public void addUser2TvShows(User user, TvShow tvShow){
-        if (!user.Users2TvShow.contains(tvShow))
-        {
-            user.Users2TvShow.add(tvShow);
-        }
-        if (!tvShow.TvShows2User.contains(user)){
-            tvShow.TvShows2User.add(user);
+
+    public void addTvShow2User(User user, TvShow tvShow){
+        if (!user.getUserTvShowList().contains(tvShow)){
+            user.getUserTvShowList().add(tvShow);
         }
     }
 
-    public void deleteUser2TvShow(User user, TvShow tvShow){
-        if(user.Users2TvShow.contains(tvShow)){
-            user.Users2TvShow.remove(tvShow);
-        }
-        if (tvShow.TvShows2User.contains(user)){
-            tvShow.TvShows2User.remove(user);
+    public void deleteTvShowFromUser(User user, TvShow tvShow){
+        if (user.getUserTvShowList().contains(tvShow)){
+            user.getUserTvShowList().remove(tvShow);
         }
     }
-
-    //EpisodeWatched(User2Episode)
-    public void addUser2Episode(User user, Episode episode){
-        if (!user.Users2Episode.contains(episode)){
-            user.Users2Episode.add(episode);
-        }
-        if (!episode.Episode2Users.contains(user)){
-            episode.Episode2Users.add(user);
-        }
-    }
-
-    public  void delelteUser2Episode(User user, Episode episode){
-        if (user.Users2Episode.contains(episode)){
-            user.Users2Episode.remove(episode);
-        }
-        if (episode.Episode2Users.contains(user)){
-            episode.Episode2Users.remove(user);
-        }
-    }
-
-
-
-
-
 }

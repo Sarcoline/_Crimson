@@ -1,19 +1,11 @@
 package com.crimson.model;
 
-import lombok.Data;
+import javax.persistence.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Data
 @Entity
 @Table(name = "Rating")
 public class Rating {
 
-    @Id
-    private Long id;
     @Column(name = "value")
     private int value;
 
@@ -24,4 +16,37 @@ public class Rating {
 
     public Rating(){
     }
+
+    public int getValue(){
+        return value;
+    }
+
+    public void setValue(int value){
+        this.value = value;
+    }
+
+    @Id
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @ManyToOne
+    @PrimaryKeyJoinColumn(name = "idUser")
+    private User userRating;
+
+    public User getUserRating(){return userRating;}
+    public void setUserRating(User userRating){this.userRating = userRating;}
+
+    @ManyToOne
+    @PrimaryKeyJoinColumn(name = "idTvShow")
+    private TvShow tvShowRating;
+
+    public TvShow getTvShowRating(){return tvShowRating;}
+    public void setTvShowRating(TvShow tvShowRating){this.tvShowRating = tvShowRating;}
 }

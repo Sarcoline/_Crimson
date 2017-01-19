@@ -1,7 +1,9 @@
 package com.crimson.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -68,6 +70,11 @@ public class User {
     }
 
 
+    public String getProfilePicLocation() {return profilePicLocation;}
+    public void setProfilePicLocation(String profilePicLocation) {
+        this.profilePicLocation = profilePicLocation;
+    }
+
     public String getRole() {
         return role;
     }
@@ -77,34 +84,30 @@ public class User {
 
     //RELATIONSHIPS
 
+    //User2TvShow
+    @ManyToMany
+    @JoinTable(name = "User2TvShow",
+    joinColumns = @JoinColumn(name = "idUser"),
+    inverseJoinColumns = @JoinColumn(name = "idTvShow"))
+    private List<TvShow> userTvShowList = new ArrayList<>();
 
-    //User2TvShow Relation
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "user2TvShow",
-            joinColumns = {@JoinColumn(name = "idUser")},
-            inverseJoinColumns = {@JoinColumn(name = "idTvShow")})
-    public Set<TvShow> Users2TvShow = new HashSet<>();
+    public List<TvShow> getUserTvShowList(){return userTvShowList;}
+    public void setUserTvShowList(List<TvShow> userTvShowList){this.userTvShowList = userTvShowList;}
 
-    //EpisodeWatched(User2Episode) Relation
-    @ManyToMany(cascade = CascadeType.ALL)
+    //User2Episode
+    @ManyToMany
     @JoinTable(name = "EpisodeWatched",
-    joinColumns = {@JoinColumn(name = "idUser")},
-    inverseJoinColumns = {@JoinColumn(name = "idEpisode")})
-    public Set<Episode> Users2Episode = new HashSet<>();
+    joinColumns = @JoinColumn(name = "idUser"),
+    inverseJoinColumns = @JoinColumn(name = "idEpisode"))
+    private List<Episode> userEpisodeList = new ArrayList<>();
 
-    public Set<TvShow> getUsers2TvShow() {
-        return Users2TvShow;
-    }
+    public List<Episode> getUserEpisodeList(){return userEpisodeList;}
+    public void setUserEpisodeList(List<Episode> userEpisodeList){this.userEpisodeList = userEpisodeList;}
 
-    public void setUsers2TvShow(Set<TvShow> users2TvShow) {
-        Users2TvShow = users2TvShow;
-    }
+    //Rating
+    @OneToMany(mappedBy = "userRating")
+    private List<Rating> userRatings = new ArrayList<>();
 
-    public Set<Episode> getUsers2Episode() {
-        return Users2Episode;
-    }
-
-    public void setUsers2Episode(Set<Episode> users2Episode) {
-        Users2Episode = users2Episode;
-    }
+    public  List<Rating> getUserRatings(){return userRatings;}
+    public  void setUserRatings(List<Rating> userRatings){this.userRatings = userRatings;}
 }
