@@ -63,7 +63,7 @@ public class Episode {
     //TvShow2Episode Relation
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "idTvShow", insertable = false, updatable = false)
-    private TvShow episodeFromTvShow = new TvShow();
+    private TvShow episodeFromTvShow;
 
     public TvShow getEpisodeFromTvShow(){return episodeFromTvShow;}
     public void setEpisodeFromTvShow(TvShow episodeFromTvShow){this.episodeFromTvShow = episodeFromTvShow;}

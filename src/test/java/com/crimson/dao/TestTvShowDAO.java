@@ -1,10 +1,7 @@
 package com.crimson.dao;
 
 import com.crimson.context.TestSpringCore;
-import com.crimson.model.Episode;
-import com.crimson.model.Genre;
-import com.crimson.model.TvShow;
-import com.crimson.model.User;
+import com.crimson.model.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,6 +32,9 @@ public class TestTvShowDAO {
     @Autowired
     private EpisodeDAO episodeDAO;
 
+    @Autowired
+    private RatingDAO ratingDAO;
+
     private TvShow tvShow = new TvShow();
 
     private User user = new User();
@@ -42,6 +42,8 @@ public class TestTvShowDAO {
     private Genre genre = new Genre();
 
     private Episode episode = new Episode();
+
+    private Rating rating = new Rating();
 
     @Before
     public void setDB(){
@@ -65,6 +67,10 @@ public class TestTvShowDAO {
         episode.setTitle("EP1");
         episode.setIdTvShow(tvShow.getId());
         episodeDAO.saveEpisode(episode);
+
+        rating.setValue(6);
+        rating.setUserRating(user);
+        rating.setTvShowRating(tvShow);
     }
 
     @Test
@@ -177,5 +183,25 @@ public class TestTvShowDAO {
         tvShowDAO.deleteEpisodeFromTvShow(tvShow, episode);
 
         Assert.assertEquals(size - 1, tvShow.getEpisodes().size());
+    }
+
+    @Test
+    public void addRating2TvShow(){
+        int size = tvShow.getTvShowRating().size();
+
+        tvShowDAO.addRating2TvShow(tvShow, rating);
+
+        Assert.assertEquals(size+1, tvShow.getTvShowRating().size());
+    }
+
+    @Test
+    public void deleteRatingFromTvShow(){
+        addRating2TvShow();
+
+        int size = tvShow.getTvShowRating().size();
+
+        tvShowDAO.deleteRatingFromTvShow(tvShow, rating);
+
+        Assert.assertEquals(size-1, tvShow.getTvShowRating().size());
     }
 }

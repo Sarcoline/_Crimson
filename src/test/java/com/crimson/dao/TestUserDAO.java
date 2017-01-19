@@ -161,7 +161,7 @@ public class TestUserDAO {
     }
 
     //Rating
-    /*@Test
+    @Test
     public void addRating2User(){
         int size = user.getUserRatings().size();
 
@@ -178,7 +178,7 @@ public class TestUserDAO {
         userDAO.deleteRatingFromUser(user, rating);
 
         Assert.assertEquals(size-1, user.getUserRatings().size());
-    }*/
+    }
 
 
 

@@ -1,6 +1,7 @@
 package com.crimson.dao;
 
 import com.crimson.model.Genre;
+import com.crimson.model.TvShow;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,21 @@ public class GenreDAO {
     public Genre getGenreByName(String name){
         Session session = sf.getCurrentSession();
         return session.createQuery("Select a From Genre a where a.name like :custName", Genre.class).setParameter("custName", name).getSingleResult();
+    }
+
+    //RELATIONSHIPS
+
+    //Genre2TvShow
+
+    public void addTvShow2Genre(Genre genre, TvShow tvShow){
+        if (!genre.getGenreTvShowList().contains(tvShow)){
+            genre.getGenreTvShowList().add(tvShow);
+        }
+    }
+
+    public void deleteTvShowFromGenre(Genre genre, TvShow tvShow){
+        if (genre.getGenreTvShowList().contains(tvShow)){
+            genre.getGenreTvShowList().remove(tvShow);
+        }
     }
 }

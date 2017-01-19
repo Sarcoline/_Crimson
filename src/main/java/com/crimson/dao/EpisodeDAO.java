@@ -1,6 +1,7 @@
 package com.crimson.dao;
 
 import com.crimson.model.Episode;
+import com.crimson.model.TvShow;
 import com.crimson.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -53,7 +54,30 @@ public class EpisodeDAO {
 
     //RELATIONSHIPS
 
-    @ManyToMany(mappedBy = "userEpisodeList")
-    public List<User> episodeUserList = new ArrayList<>();
+    //EpisodeWatched(User2Episode)
+
+    public void addUser2Episode(User user, Episode episode){
+        if (!episode.getEpisodeUserList().contains(user)){
+            episode.getEpisodeUserList().add(user);
+        }
+    }
+
+    public void deleteUserFromEpisode(User user, Episode episode){
+        if (episode.getEpisodeUserList().contains(user)){
+            episode.getEpisodeUserList().remove(user);
+        }
+    }
+
+    //TvShow2Episode
+
+    public void addTvShow2Episode(TvShow tvShow, Episode episode){
+        episode.setEpisodeFromTvShow(tvShow);
+    }
+
+    public void deleteTvShowFromEpisode(TvShow tvShow, Episode episode){
+        if (episode.getEpisodeFromTvShow() == tvShow){
+            episode.setEpisodeFromTvShow(null);
+        }
+    }
 
 }

@@ -2,6 +2,7 @@ package com.crimson.dao;
 
 import com.crimson.context.TestSpringCore;
 import com.crimson.model.Genre;
+import com.crimson.model.TvShow;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,13 +24,28 @@ public class TestGenreDAO {
     @Autowired
     private GenreDAO genreDAO;
 
+    @Autowired TvShowDAO tvShowDAO;
+
     private Genre genre = new Genre();
+
+    private TvShow tvShow = new TvShow();
 
     @Before
     public void setDB(){
         genre.setName("Drama");
 
         genreDAO.addGenre(genre);
+
+        tvShow.setTitle("Gameów Of Alex");
+        tvShow.setCountry("Poland");
+        tvShow.setGenre("Drama");
+        tvShow.setReleaseYear(2017);
+        tvShow.setDescription("Test");
+        tvShow.setNetwork("Bojano INC");
+        tvShow.setOverallRating(7.1);
+        tvShow.setTrailerUrl("google.pl");
+
+        tvShowDAO.saveTvShow(tvShow);
     }
 
     @Test
@@ -74,6 +90,31 @@ public class TestGenreDAO {
         Genre test = genreDAO.getGenreByName(genre.getName());
 
         Assert.assertEquals(test.getId(),genre.getId());
+    }
+
+
+    //RELATIONSHIPS TEST
+
+    //Genre2TvShow
+
+    @Test
+    public void addTvShow2GenreTest(){
+        int size = genre.getGenreTvShowList().size();
+
+        genreDAO.addTvShow2Genre(genre, tvShow);
+
+        Assert.assertEquals(size+1, genre.getGenreTvShowList().size());
+    }
+
+    @Test
+    public void deleteTvShowFromGenre(){
+        addTvShow2GenreTest();
+
+        int size = genre.getGenreTvShowList().size();
+
+        genreDAO.deleteTvShowFromGenre(genre, tvShow);
+
+        Assert.assertEquals(size-1, genre.getGenreTvShowList().size());
     }
 
 }
