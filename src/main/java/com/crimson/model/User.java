@@ -76,6 +76,7 @@ public class User {
         this.role = role;
     }
 
+
     //RELATIONSHIPS
 
     //User2TvShow
