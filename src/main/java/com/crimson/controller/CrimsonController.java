@@ -13,12 +13,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @RequestMapping("/tv")
@@ -93,14 +92,17 @@ public class CrimsonController {
     }
 
     @Transactional
-    @RequestMapping(value = "/rate/{id}")
-    public String rate(Model model, @PathVariable("id") Long id) {
+    @RequestMapping(value = "/rate", method = RequestMethod.GET)
+    public void rate(HttpServletResponse response, @RequestParam("id") long id, @RequestParam("value") int value) throws IOException {
+//        long id = Long.parseLong(request.getParameter("id"));
+//        int value = Integer.parseInt(request.getParameter("value"));
+//        @RequestParam("id") long id, @RequestParam("value") int value
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
         TvShowDTO tv = tvShowService.getTvById(id);
-        ratingService.saveUserRating(user, tv, 7);
-
-        return "redirect:/tv/" + tv.getSlug();
+        ratingService.saveUserRating(user, tv, value);
+        response.getWriter().print("rated");
+        //return "redirect:/tv/" + tv.getSlug();
     }
 
 }

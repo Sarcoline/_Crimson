@@ -20,7 +20,8 @@
 
 <h1 class="title">${tv.title}
     <sec:authorize access="isAuthenticated()">
-            <small><a href="<c:url value="follow/${tv.id}"/> "><i class="fa fa-heart-o" aria-hidden="true" style="cursor: pointer"></i></a></small>
+        <small class="follow"><a href="<c:url value="follow/${tv.id}"/> "><i class="fa fa-heart-o" aria-hidden="true"
+                                                              style="cursor: pointer"></i></a></small>
     </sec:authorize>
 </h1>
 <h3 class="subtitle uk-text-muted">${tv.genre} ${tv.releaseYear}</h3>
@@ -73,54 +74,54 @@
                         <h3>Season 5</h3>
                         <ul class="uk-list uk-list-line">
                             <li>
-                                <p><strong> 1. </strong><a><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
+                                <p><strong> 1. </strong><a class="rateThis"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
                                     The Red Woman
                                     <small class="episodeDate uk-text-muted">24.04.2016</small>
                                 </p>
                             </li>
                             <li>
-                                <p><strong> 2. </strong><a><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
+                                <p><strong> 2. </strong><a class="rateThis"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
                                     Home
                                     <small class="episodeDate uk-text-muted">24.04.2016</small>
                                 </p>
                             </li>
                             <li>
-                                <p><strong> 3. </strong><a><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
+                                <p><strong> 3. </strong><a class="rateThis"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
                                     Oathbreaker
                                     <small class="episodeDate uk-text-muted">24.04.2016</small>
                                 </p>
                             </li>
                             <li>
-                                <p><strong> 4. </strong><a><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
+                                <p><strong> 4. </strong><a class="rateThis"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
                                     Book of the Stranger
                                     <small class="episodeDate uk-text-muted">24.04.2016</small>
                                 </p>
                             </li>
                             <li>
-                                <p><strong> 5. </strong><a><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
+                                <p><strong> 5. </strong><a class="rateThis"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
                                     The Door
                                     <small class="episodeDate uk-text-muted">24.04.2016</small>
                                 </p>
                             </li>
                             <li>
-                                <p><strong> 6. </strong><a><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
+                                <p><strong> 6. </strong><a class="rateThis"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
                                     Blood of My Blood
                                     <small class="episodeDate uk-text-muted">24.04.2016</small>
                                 </p>
                             </li>
                             <li>
-                                <p><strong> 7. </strong><a><i class="fa fa-square-o" aria-hidden="true"></i></a> The
+                                <p><strong> 7. </strong><a class="rateThis"><i class="fa fa-square-o" aria-hidden="true"></i></a> The
                                     Broken Man
                                     <small class="episodeDate uk-text-muted">24.04.2016</small>
                                 </p>
                             </li>
                             <li>
-                                <p><strong> 8. </strong><a><i class="fa fa-square-o" aria-hidden="true"></i></a> No One
+                                <p><strong> 8. </strong><a class="rateThis"><i class="fa fa-square-o" aria-hidden="true"></i></a> No One
                                     <small class="episodeDate uk-text-muted">24.04.2016</small>
                                 </p>
                             </li>
                             <li>
-                                <p><strong> 9. </strong><a><i class="fa fa-square-o" aria-hidden="true"></i></a> Battle
+                                <p><strong> 9. </strong><a class="rateThis"><i class="fa fa-square-o" aria-hidden="true"></i></a> Battle
                                     of Bastards
                                     <small class="episodeDate uk-text-muted">24.04.2016</small>
                                 </p>
@@ -136,7 +137,8 @@
             <div class="uk-width-large-1-1 uk-width-small-1-2">
                 <div class="ratebox">
                     <p class="overallrating">
-                        ${tv.overallRating}<small class="uk-text-muted" style="font-size: 2rem;">/10</small>
+                        ${tv.overallRating}
+                        <small class="uk-text-muted" style="font-size: 2rem;">/10</small>
                     </p>
                     <p class="uk-text-muted">253 rated</p>
                     <p class="uk-text-muted">1453 follows</p>
@@ -144,31 +146,10 @@
                     <sec:authorize access="isAuthenticated()">
                         <div class="userRating">
                             <img src="<c:url value="/images/user/${name}"/>" class="userPicture">
-                            <a href="/tv/rate/${tv.id}"><i class="fa fa-star fa-lg rate" title="Rate!" aria-hidden="true"></i></a><span
+                            <i class="fa fa-star fa-lg rate" data-uk-modal="{target:'#my-id'}" title="Rate!"
+                               aria-hidden="true"></i><span
                                 class="rateValue"></span>
                         </div>
-                        <fieldset class="rating uk-hidden">
-                            <input type="radio" id="star5" name="rating" value="10"/>
-                            <label class="full" for="star5" title="10"></label>
-                            <input type="radio" id="star4half" name="rating" value="9"/>
-                            <label class="half" for="star4half" title="9"></label>
-                            <input type="radio" id="star4" name="rating" value="8"/>
-                            <label class="full" for="star4" title="8"></label>
-                            <input type="radio" id="star3half" name="rating" value="7"/>
-                            <label class="half" for="star3half" title="7"></label>
-                            <input type="radio" id="star3" name="rating" value="6"/>
-                            <label class="full" for="star3" title="6"></label>
-                            <input type="radio" id="star2half" name="rating" value="5"/>
-                            <label class="half" for="star2half" title="5"></label>
-                            <input type="radio" id="star2" name="rating" value="4"/>
-                            <label class="full" for="star2" title="4"></label>
-                            <input type="radio" id="star1half" name="rating" value="3"/>
-                            <label class="half" for="star1half" title="3"></label>
-                            <input type="radio" id="star1" name="rating" value="2"/>
-                            <label class="full" for="star1" title="2"></label>
-                            <input type="radio" id="starhalf" name="rating" value="1"/>
-                            <label class="half" for="starhalf" title="1"></label>
-                        </fieldset>
                     </sec:authorize>
 
                 </div>
@@ -188,27 +169,72 @@
         </div>
     </div>
 </div>
+<div id="my-id" class="uk-modal">
+    <div class="uk-modal-dialog">
+        <a class="uk-modal-close uk-close"></a>
+        <div class="uk-modal-header">
+            <h2 class="uk-text-center">Rate ${tv.title}</h2>
+        </div>
+        <div class="uk-grid">
+            <div class="uk-width-1-2 uk-align-center">
+                <img src="<c:url value="/images/user/${name}"/>" class="userPictureRate">
+            </div>
+            <div class="uk-width-1-2 centerH">
+                <fieldset class="rating">
+                    <input type="radio" id="star5" name="rating" value="10"/>
+                    <label class="full" for="star5" title="10"></label>
+                    <input type="radio" id="star4half" name="rating" value="9"/>
+                    <label class="half" for="star4half" title="9"></label>
+                    <input type="radio" id="star4" name="rating" value="8"/>
+                    <label class="full" for="star4" title="8"></label>
+                    <input type="radio" id="star3half" name="rating" value="7"/>
+                    <label class="half" for="star3half" title="7"></label>
+                    <input type="radio" id="star3" name="rating" value="6"/>
+                    <label class="full" for="star3" title="6"></label>
+                    <input type="radio" id="star2half" name="rating" value="5"/>
+                    <label class="half" for="star2half" title="5"></label>
+                    <input type="radio" id="star2" name="rating" value="4"/>
+                    <label class="full" for="star2" title="4"></label>
+                    <input type="radio" id="star1half" name="rating" value="3"/>
+                    <label class="half" for="star1half" title="3"></label>
+                    <input type="radio" id="star1" name="rating" value="2"/>
+                    <label class="full" for="star1" title="2"></label>
+                    <input type="radio" id="starhalf" name="rating" value="1"/>
+                    <label class="half" for="starhalf" title="1"></label>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $(function () {
-    <c:if test="${follow == true}">
+        //$('.rateValue').html(" " + ${rate}});
+        <c:if test="${follow == true}">
         $('i.fa-heart-o').addClass('fa-heart').removeClass('fa-heart-o');
-    </c:if>
+        </c:if>
         <sec:authorize access="isAuthenticated()">
-            $('a').click(function () {
-                $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
-            });
+        $('a.rateThis').click(function () {
+            $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
+        });
         </sec:authorize>
 
-        $('small').click(function () {
+        $('small.follow').click(function () {
             $(this).find('i').toggleClass('fa-heart-o fa-heart');
         });
-        $('i.rate').on('click', function () {
-            $('fieldset.rating').toggleClass('uk-hidden')
-        });
+//        $('i.rate').on('click', function () {
+//            $('fieldset.rating').toggleClass('uk-hidden')
+//        });
+        var modal = UIkit.modal(".uk-modal");
         $('label').on('click', function () {
-            $('.rateValue').html(" " + $('input#' + $(this).attr('for')).val());
-            $('fieldset.rating').addClass('uk-hidden')
-        })
+            var i = $('input#' + $(this).attr('for')).val();
+            $('.rateValue').html(" " + i);
+            modal.hide();
+            $.ajax({
+                type: "get",
+                url: "rate",
+                data:  {id: ${tv.id}, value: i}
+            });
+    });
     });
 </script>
 </body>

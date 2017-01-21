@@ -160,25 +160,45 @@ header figure {
     cursor: pointer;
 }
 
-@media only screen and (max-width: 1920px) {
-    .rating {
-        border: none;
-        margin-right: 45px;
-    }
-}
+/*@media only screen and (min-width: 950px) {*/
+    /*.rating {*/
+        /*border: none;*/
+        /*margin-right: 45px;*/
+    /*}*/
+/*}*/
 
-@media only screen and (max-width: 950px) {
-    .rating {
-        border: none;
-        margin-right: 100px;
-    }
+/*@media only screen and (max-width: 950px) {*/
+    /*.rating {*/
+        /*border: none;*/
+        /*margin-right: 100px;*/
+    /*}*/
+/*}*/
+.centerH {
+    height: 10em;
+    position: relative
 }
-
+.rating {
+    border: none;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
 .userPicture {
     height: 3rem;
     width: 3rem;
     border-radius: 50%;
     margin-right: 10px;
+}
+
+.userPictureRate {
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    display: block;
+    margin: 0 auto
 }
 
 .rateValue {
@@ -189,35 +209,35 @@ header figure {
     display: none;
 }
 
-@media only screen and (max-width: 1530px) {
-    .rating > label:before {
-        margin: 5px;
-        font-size: 1.2rem;
-        font-family: FontAwesome;
-        display: inline-block;
-        content: "\f005";
-    }
-}
+/*@media only screen and (max-width: 1530px) {*/
+    /*.rating > label:before {*/
+        /*margin: 5px;*/
+        /*font-size: 1.2rem;*/
+        /*font-family: FontAwesome;*/
+        /*display: inline-block;*/
+        /*content: "\f005";*/
+    /*}*/
+/*}*/
 
-@media only screen and (min-width: 1530px) {
-    .rating > label:before {
-        margin: 5px;
-        font-size: 1.5rem;
-        font-family: FontAwesome;
-        display: inline-block;
-        content: "\f005";
-    }
-}
+/*@media only screen and (min-width: 1530px) {*/
+    /*.rating > label:before {*/
+        /*margin: 5px;*/
+        /*font-size: 1.5rem;*/
+        /*font-family: FontAwesome;*/
+        /*display: inline-block;*/
+        /*content: "\f005";*/
+    /*}*/
+/*}*/
 
-@media only screen and (max-width: 950px) {
+/*@media only screen and (max-width: 950px) {*/
     .rating > label:before {
         margin: 5px;
-        font-size: 1.5rem;
+        font-size: 3rem;
         font-family: FontAwesome;
         display: inline-block;
         content: "\f005";
     }
-}
+/*}*/
 
 .rating > .half:before {
     content: "\f089";
