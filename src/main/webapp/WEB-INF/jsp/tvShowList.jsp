@@ -18,7 +18,8 @@
     </c:if>
     <div class="genreList uk-margin-large-top">
         <c:forEach items="${tvshows}" var="tv">
-            <a href="<c:url value="/tv/${tv.slug}"/>"> <span class="item" style="background-image: url('<c:url value="/images/tv/${tv.slug}/poster"/>')">
+            <a href="<c:url value="/tv/${tv.slug}"/>"> <span class="item" style="background-image: url('<c:url
+                    value="/images/tv/${tv.slug}/poster"/>')">
                     <span class="overlay">
                         <span class="item-header">${tv.title}</span> </span>
             </span>

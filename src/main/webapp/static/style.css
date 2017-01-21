@@ -1,4 +1,5 @@
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
 html, body {
     min-height: 150vh;
     overflow-x: hidden;
@@ -57,6 +58,7 @@ a {
 .search:hover {
     color: #B50C3C;
 }
+
 /*tvShow header */
 header {
     position: relative;
@@ -117,17 +119,9 @@ header figure {
     font-size: 1.6rem;
 }
 
-.uk-article-lead {
-    font-size: 1.4rem;
-}
-
 .uk-article {
     margin-top: 20px;
     font-size: 1.2rem;
-}
-
-.uk-article p.uk-article-lead {
-    margin-bottom: 10px;
 }
 
 /*tvShow details*/
@@ -140,12 +134,12 @@ header figure {
 .details .info {
     line-height: 1.2;
     font-size: 1.3rem;
-
+    margin-top: -20px;
 }
 
-.ratebox {
-    margin-bottom: 30px;
-}
+/*.ratebox {*/
+/*margin-bottom: 20px;*/
+/*}*/
 
 .overallrating {
     font-size: 3.5rem;
@@ -161,34 +155,35 @@ header figure {
 }
 
 /*@media only screen and (min-width: 950px) {*/
-    /*.rating {*/
-        /*border: none;*/
-        /*margin-right: 45px;*/
-    /*}*/
+/*.rating {*/
+/*border: none;*/
+/*margin-right: 45px;*/
+/*}*/
 /*}*/
 
 /*@media only screen and (max-width: 950px) {*/
-    /*.rating {*/
-        /*border: none;*/
-        /*margin-right: 100px;*/
-    /*}*/
+/*.rating {*/
+/*border: none;*/
+/*margin-right: 100px;*/
+/*}*/
 /*}*/
 .centerH {
     height: 10em;
     position: relative
 }
+
 .rating {
     border: none;
-    margin: 0;
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-right: -50%;
+    margin: 0 -50% 0 0;
     transform: translate(-50%, -50%)
 }
+
 .userPicture {
-    height: 3rem;
-    width: 3rem;
+    height: 3.3rem;
+    width: 3.3rem;
     border-radius: 50%;
     margin-right: 10px;
 }
@@ -201,43 +196,25 @@ header figure {
     margin: 0 auto
 }
 
+.userRating {
+    margin-top: 20px;
+}
+
 .rateValue {
-    font-size: 1.8rem;
+    font-size: 2.2rem;
 }
 
 .rating > input {
     display: none;
 }
 
-/*@media only screen and (max-width: 1530px) {*/
-    /*.rating > label:before {*/
-        /*margin: 5px;*/
-        /*font-size: 1.2rem;*/
-        /*font-family: FontAwesome;*/
-        /*display: inline-block;*/
-        /*content: "\f005";*/
-    /*}*/
-/*}*/
-
-/*@media only screen and (min-width: 1530px) {*/
-    /*.rating > label:before {*/
-        /*margin: 5px;*/
-        /*font-size: 1.5rem;*/
-        /*font-family: FontAwesome;*/
-        /*display: inline-block;*/
-        /*content: "\f005";*/
-    /*}*/
-/*}*/
-
-/*@media only screen and (max-width: 950px) {*/
-    .rating > label:before {
-        margin: 5px;
-        font-size: 3rem;
-        font-family: FontAwesome;
-        display: inline-block;
-        content: "\f005";
-    }
-/*}*/
+.rating > label:before {
+    margin: 5px;
+    font-size: 3rem;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
+}
 
 .rating > .half:before {
     content: "\f089";
@@ -287,8 +264,9 @@ li.menu.uk-active a {
 .uk-list li {
     padding: 2px;
 }
+
 .uk-column {
-    width:1px;
+    width: 1px;
 }
 
 /*tvShow gallery */
@@ -300,10 +278,10 @@ li.menu.uk-active a {
 .gallery a img {
     margin-bottom: 10px;
 }
+
 img.center {
     display: block;
-    margin: 0 auto;
-    margin-top: 20px;
+    margin: 20px auto 0;
 }
 
 /*fontawesome*/
@@ -359,6 +337,7 @@ img.center {
     box-shadow: 3px 3px 6px #999;
 
 }
+
 .top {
     display: inline-block;
     background-color: black;
@@ -367,16 +346,6 @@ img.center {
     background-size: cover;
     margin: 5px;
     box-shadow: 3px 3px 6px #999;
-
-}
-#moje {
-    width : 500px;
-    height: 140px;
-}
-#my {
-    margin-top : 60px;
-    width : 500px;
-    height: 140px;
 
 }
 

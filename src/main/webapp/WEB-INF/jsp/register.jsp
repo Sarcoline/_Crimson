@@ -21,15 +21,18 @@
                 <form:errors cssClass="uk-alert uk-alert-danger" element="div"/>
                 <div class="uk-form-row">
                     <form:errors path="name" cssClass="uk-alert uk-alert-danger" element="div"/>
-                    <form:input path="name" value="" class="uk-width-1-1 uk-form-large" type="text" name='username' placeholder="Username" />
+                    <form:input path="name" value="" class="uk-width-1-1 uk-form-large" type="text" name='username'
+                                placeholder="Username"/>
                 </div>
                 <div class="uk-form-row">
                     <form:errors path="password" cssClass="uk-alert uk-alert-danger" element="div"/>
-                    <form:input path="password" value="" class="uk-width-1-1 uk-form-large" type="password" name='password' placeholder="Password" />
+                    <form:input path="password" value="" class="uk-width-1-1 uk-form-large" type="password"
+                                name='password' placeholder="Password"/>
                 </div>
                 <div class="uk-form-row">
                     <form:errors path="email" cssClass="uk-alert uk-alert-danger" element="div"/>
-                    <form:input path="email" value="" class="uk-width-1-1 uk-form-large" type="text" name='email' placeholder="Email" />
+                    <form:input path="email" value="" class="uk-width-1-1 uk-form-large" type="text" name='email'
+                                placeholder="Email"/>
                         <%--TODO zmienic wyświetlanie błędów--%>
                 </div>
                 <div class="uk-form-row">

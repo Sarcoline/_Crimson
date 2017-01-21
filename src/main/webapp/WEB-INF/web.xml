@@ -31,7 +31,7 @@
         </init-param>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>com.crimson.WebConfig</param-value>
+            <param-value>com.crimson.context.MvcApplicationContext</param-value>
         </init-param>
     </servlet>
 

@@ -1,12 +1,12 @@
 package com.crimson;
 
-import com.crimson.context.SpringCore;
-import com.crimson.dao.GenreDAO;
-import com.crimson.dao.TvShowDAO;
-import com.crimson.dao.UserDAO;
-import com.crimson.model.Genre;
-import com.crimson.model.TvShow;
-import com.crimson.model.User;
+import com.crimson.context.CoreApplicationContext;
+import com.crimson.core.dao.GenreDAO;
+import com.crimson.core.dao.TvShowDAO;
+import com.crimson.core.dao.UserDAO;
+import com.crimson.core.model.Genre;
+import com.crimson.core.model.TvShow;
+import com.crimson.core.model.User;
 import org.apache.commons.io.IOUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -24,9 +24,9 @@ import java.io.InputStream;
 public class populateDatabase {
 
 
-    public static void main( String[] args ) throws IOException {
+    public static void main(String[] args) throws IOException {
 
-        ApplicationContext applicationContext= new AnnotationConfigApplicationContext(SpringCore.class);
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(CoreApplicationContext.class);
 
         TvShowDAO tvShowDAO = applicationContext.getBean(TvShowDAO.class);
         UserDAO userDAO = applicationContext.getBean(UserDAO.class);
@@ -49,23 +49,23 @@ public class populateDatabase {
             tv.setTrailerUrl("https://www.youtube.com/watch?v=EI0ib1NErqg");
             tv.setCountry("USA");
             tv.setReleaseYear(2010);
-            Resource resource =  applicationContext.getResource("classpath:/images/game-of-thrones/poster.jpg");
+            Resource resource = applicationContext.getResource("classpath:/images/game-of-thrones/poster.jpg");
             InputStream in = resource.getInputStream();
             byte[] poster = IOUtils.toByteArray(in);
             tv.getPictures().put("poster", poster);
-            Resource resource1 =  applicationContext.getResource("classpath:/images/game-of-thrones/back.jpg");
+            Resource resource1 = applicationContext.getResource("classpath:/images/game-of-thrones/back.jpg");
             InputStream in1 = resource1.getInputStream();
             byte[] back = IOUtils.toByteArray(in1);
             tv.getPictures().put("back", back);
-            Resource resource2 =  applicationContext.getResource("classpath:/images/game-of-thrones/1.jpg");
+            Resource resource2 = applicationContext.getResource("classpath:/images/game-of-thrones/1.jpg");
             InputStream in2 = resource2.getInputStream();
             byte[] pic1 = IOUtils.toByteArray(in2);
             tv.getPictures().put("1", pic1);
-            Resource resource3 =  applicationContext.getResource("classpath:/images/game-of-thrones/2.jpg");
+            Resource resource3 = applicationContext.getResource("classpath:/images/game-of-thrones/2.jpg");
             InputStream in3 = resource3.getInputStream();
             byte[] pic2 = IOUtils.toByteArray(in3);
             tv.getPictures().put("2", pic2);
-            Resource resource4 =  applicationContext.getResource("classpath:/images/game-of-thrones/3.jpg");
+            Resource resource4 = applicationContext.getResource("classpath:/images/game-of-thrones/3.jpg");
             InputStream in4 = resource4.getInputStream();
             byte[] pic3 = IOUtils.toByteArray(in4);
             tv.getPictures().put("3", pic3);

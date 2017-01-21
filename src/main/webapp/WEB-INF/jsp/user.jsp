@@ -63,17 +63,19 @@
 
                     </ul>
                 </div>
-                <a href="/" class="uk-slidenav uk-slidenav-contrast uk-slidenav-previous" data-uk-slider-item="previous"></a>
+                <a href="/" class="uk-slidenav uk-slidenav-contrast uk-slidenav-previous"
+                   data-uk-slider-item="previous"></a>
                 <a href="/" class="uk-slidenav uk-slidenav-contrast uk-slidenav-next" data-uk-slider-item="next"></a>
             </div>
         </div>
     </div>
-    <div style="border-left: 2px solid #00a8e6;" class="uk-width-4-6 uk-margin-large-top" >
+    <div style="border-left: 2px solid #00a8e6;" class="uk-width-4-6 uk-margin-large-top">
         <div class="uk-container uk-container-center">
             <h2 class="uk-article-title" style="text-align:center">${user.name} TvShows</h2>
             <div class="genreList uk-margin-large-top">
                 <c:forEach items="${tvshows}" var="tv">
-                    <a href="<c:url value="/tv/${tv.slug}"/>"> <span class="item1" style="background-image: url('<c:url value="/images/tv/${tv.slug}/poster"/>')">
+                    <a href="<c:url value="/tv/${tv.slug}"/>"> <span class="item1" style="background-image: url('<c:url
+                            value="/images/tv/${tv.slug}/poster"/>')">
                     <span class="overlay">
                         <span class="item-header">${tv.title}</span> </span>
             </span>

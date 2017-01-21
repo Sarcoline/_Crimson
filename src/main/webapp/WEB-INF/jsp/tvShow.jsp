@@ -1,3 +1,5 @@
+<%--suppress JSUnresolvedFunction --%>
+<%--suppress JSUnresolvedFunction --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <sec:authentication var="name" property="name"/>
@@ -137,12 +139,10 @@
             <div class="uk-width-large-1-1 uk-width-small-1-2">
                 <div class="ratebox">
                     <p class="overallrating">
-                        ${tv.overallRating}
-                        <small class="uk-text-muted" style="font-size: 2rem;">/10</small>
+                        ${tv.overallRating}<small class="uk-text-muted" style="font-size: 2rem;">/10</small>
                     </p>
                     <p class="uk-text-muted">253 rated</p>
                     <p class="uk-text-muted">1453 follows</p>
-                    <p></p>
                     <sec:authorize access="isAuthenticated()">
                         <div class="userRating">
                             <img src="<c:url value="/images/user/${name}"/>" class="userPicture">
@@ -208,7 +208,8 @@
 </div>
 <script>
     $(function () {
-        //$('.rateValue').html(" " + ${rate}});
+        var rating = ${rating};
+        if(rating !=  0) $('.rateValue').html(" " + rating);
         <c:if test="${follow == true}">
         $('i.fa-heart-o').addClass('fa-heart').removeClass('fa-heart-o');
         </c:if>
