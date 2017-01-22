@@ -24,7 +24,5 @@ public interface RatingService {
 
     Rating getRating(long idtv, long iduser);
 
-    boolean checkIsRated(long idtv, long iduser);
-
     void saveUserRating(UserDTO userDTO, TvShowDTO tvShowDTO, int value);
 }

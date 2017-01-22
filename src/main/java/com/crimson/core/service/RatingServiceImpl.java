@@ -57,32 +57,17 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public boolean checkIsRated(long idtv, long iduser) {
-        return ratingDAO.checkIsRated(idtv, iduser);
-    }
-
-    @Override
     public Rating getRating(long idtv, long iduser) {
         return ratingDAO.getRating(idtv, iduser);
     }
 
-    //TODO ogarnąć żeby nie dodawało duplikatów
     public void saveUserRating(UserDTO userDTO, TvShowDTO tvShowDTO, int value) {
         User user = mapperFacade.map(userDTO, User.class);
         TvShow tvShow = mapperFacade.map(tvShowDTO, TvShow.class);
-        Rating rating;
-        if (ratingDAO.checkIsRated(tvShow.getId(), user.getId())) {
-            rating = ratingDAO.getRating(tvShow.getId(), user.getId());
-            rating.setValue(value);
-            ratingDAO.updateRating(rating);
-        } else {
-            rating = new Rating();
-            rating.setTvShowRating(tvShow);
-            rating.setUserRating(user);
-            rating.setValue(value);
-            ratingDAO.saveRating(rating);
-        }
-
-
+        Rating rating = ratingDAO.getRating(tvShow.getId(), user.getId());
+        rating.setValue(value);
+        rating.setUserRating(user);
+        rating.setTvShowRating(tvShow);
+        ratingDAO.saveRating(rating);
     }
 }

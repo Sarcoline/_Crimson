@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -41,9 +40,8 @@ public class CrimsonController {
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             UserDTO user = userService.getUserByName(auth.getName());
             follow = userService.checkFollow(user, tv);
-            if (ratingService.checkIsRated(tv.getId(), user.getId())) {
-                rating = ratingService.getRating(tv.getId(), user.getId()).getValue();
-            }
+            rating = ratingService.getRating(tv.getId(), user.getId()).getValue();
+
         }
         model.addAttribute("tv", tv);
         model.addAttribute("rating", rating);
@@ -96,7 +94,7 @@ public class CrimsonController {
 
     @Transactional
     @RequestMapping(value = "/rate", method = RequestMethod.GET)
-    public void rate(HttpServletResponse response, @RequestParam("id") long id, @RequestParam("value") int value) throws IOException {
+    public void rate(@RequestParam("id") long id, @RequestParam("value") int value) throws IOException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
         TvShowDTO tv = tvShowService.getTvById(id);

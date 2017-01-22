@@ -109,9 +109,5 @@ public class TestRatingDAO {
         rating.setTvShowRating(tvShow);
         rating.setUserRating(user);
         rating.setValue(6);
-        //
-        Assert.assertFalse(ratingService.checkIsRated(tvShow.getId(), user.getId()));
-        ratingDAO.saveRating(rating);
-        Assert.assertTrue(ratingService.checkIsRated(tvShow.getId(), user.getId()));
     }
 }

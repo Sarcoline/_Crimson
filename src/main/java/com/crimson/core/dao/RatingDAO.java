@@ -18,7 +18,7 @@ public class RatingDAO {
 
     public void saveRating(Rating rating) {
         Session session = sf.getCurrentSession();
-        session.persist(rating);
+        session.saveOrUpdate(rating);
     }
 
     public void deleteRating(Rating rating) {
@@ -51,22 +51,14 @@ public class RatingDAO {
         return session.createQuery("SELECT a FROM  Rating a", Rating.class).getResultList();
     }
 
-    public boolean checkIsRated(long idtv, long iduser) {
-        Session session = sf.getCurrentSession();
-        String hql = "from Rating s where s.tvShowRating.id = ? and s.userRating.id = ?";
-        int size = session.createQuery(hql)
-                .setParameter(0, idtv)
-                .setParameter(1, iduser)
-                .getResultList().size();
-        return size != 0;
-    }
-
     public Rating getRating(long idtv, long iduser) {
         Session session = sf.getCurrentSession();
         String hql = "from Rating s where s.tvShowRating.id = ? and s.userRating.id = ?";
-        return (Rating) session.createQuery(hql)
+        List rating = session.createQuery(hql)
                 .setParameter(0, idtv)
                 .setParameter(1, iduser)
-                .getSingleResult();
+                .getResultList();
+        if (rating.size() != 0) return (Rating) rating.get(0);
+        return new Rating();
     }
 }
