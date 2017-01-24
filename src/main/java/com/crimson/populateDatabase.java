@@ -119,17 +119,65 @@ public class populateDatabase {
                     "Due to a political conspiracy, an innocent man is sent to death row and his only hope is his brother, " +
                             "who makes it his mission to deliberately get himself sent to the same prison in order to break the both of them out, " +
                             "from the inside.");
+            TvShow tv3 = new TvShow();
+            tv3.setGenre("Comedy");
+            tv3.setTitle("Dr House");
+            tv3.setNetwork("Fox");
+            tv3.setOverallRating(9.5);
+            tv3.setTrailerUrl("https://www.youtube.com/watch?v=5DIADh4lMq8");
+            tv3.setCountry("USA");
+            tv3.setReleaseYear(2004);
+            InputStream in15 = applicationContext.getResource("classpath:/images/house/poster.jpg").getInputStream();
+            tv3.getPictures().put("poster", IOUtils.toByteArray(in15));
+            InputStream in16 = applicationContext.getResource("classpath:/images/house/back.jpg").getInputStream();
+            tv3.getPictures().put("back", IOUtils.toByteArray(in16));
+            InputStream in17 = applicationContext.getResource("classpath:/images/house/1.jpg").getInputStream();
+            tv3.getPictures().put("1", IOUtils.toByteArray(in17));
+            InputStream in18 = applicationContext.getResource("classpath:/images/house/2.jpg").getInputStream();
+            tv3.getPictures().put("2", IOUtils.toByteArray(in18));
+            InputStream in19 = applicationContext.getResource("classpath:/images/house/3.jpg").getInputStream();
+            tv3.getPictures().put("3", IOUtils.toByteArray(in19));
+            tv3.setDescription(
+                    "An antisocial maverick doctor who specializes in diagnostic medicine does whatever it takes to solve puzzling cases that  " +
+                            "come his way using his crack team of doctors and his wits. ");
+
+            TvShow tv4 = new TvShow();
+            tv4.setGenre("Comedy");
+            tv4.setTitle("Friends");
+            tv4.setNetwork("NBC");
+            tv4.setOverallRating(9.7);
+            tv4.setTrailerUrl("https://www.youtube.com/watch?v=hDNNmeeJs1Q");
+            tv4.setCountry("USA");
+            tv4.setReleaseYear(1994);
+            InputStream in20 = applicationContext.getResource("classpath:/images/friends/poster.jpg").getInputStream();
+            tv4.getPictures().put("poster", IOUtils.toByteArray(in20));
+            InputStream in21 = applicationContext.getResource("classpath:/images/friends/back.jpg").getInputStream();
+            tv4.getPictures().put("back", IOUtils.toByteArray(in21));
+            InputStream in22 = applicationContext.getResource("classpath:/images/friends/1.jpg").getInputStream();
+            tv4.getPictures().put("1", IOUtils.toByteArray(in22));
+            InputStream in23 = applicationContext.getResource("classpath:/images/friends/2.jpg").getInputStream();
+            tv4.getPictures().put("2", IOUtils.toByteArray(in23));
+            InputStream in24 = applicationContext.getResource("classpath:/images/friends/3.jpg").getInputStream();
+            tv4.getPictures().put("3", IOUtils.toByteArray(in24));
+            tv4.setDescription(
+                    "Rachel Green, Ross Geller, Monica Geller, Joey Tribbiani, Chandler Bing and Phoebe Buffay are all friends,  " +
+                            "living off of one another in the heart of New York City. Over the course of ten years, this average group of buddies goes through massive mayhem, " +
+                            "family trouble, past and future romances, fights, laughs, tears and surprises as they learn what it really means to be a friend.");
+
+
             User user = new User();
             user.setName("TestUser");
             user.setEmail("test@email.com");
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             user.setPassword(encoder.encode("123"));
-            InputStream in15 = applicationContext.getResource("classpath:/images/user/user.jpg").getInputStream();
+            InputStream in25 = applicationContext.getResource("classpath:/images/user/user.jpg").getInputStream();
             user.setProfilePic(IOUtils.toByteArray(in15));
             userDAO.saveUser(user);
             tvShowDAO.saveTvShow(tv);
             tvShowDAO.saveTvShow(tv1);
             tvShowDAO.saveTvShow(tv2);
+            tvShowDAO.saveTvShow(tv3);
+            tvShowDAO.saveTvShow(tv4);
         }
 
     }
