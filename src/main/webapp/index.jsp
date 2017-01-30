@@ -34,11 +34,14 @@
                     <span class="overlay"><span class="item-header">Title</span> </span>
             </span>
                 </a></li>
-                <li><a href="<c:url value="/tv/game-of-thrones"/>">
+
+                <li>
+                    <a href="<c:url value="/tv/game-of-thrones"/>">
                 <span class="item" style="background-image: url('<c:url value="/images/tv/house/poster"/>')">
                     <span class="overlay"><span class="item-header">Title</span> </span>
-            </span>
-                </a></li>
+                </span>
+                </a>
+               </li>
                 <li><a href="<c:url value="/tv/game-of-thrones"/>">
                 <span class="item" style="background-image: url('<c:url value="/images/news/2"/>')">
                     <span class="overlay"><span class="item-header">Title</span> </span>
@@ -103,6 +106,7 @@
         <a href="/" class="uk-slidenav uk-slidenav-contrast uk-slidenav-previous" data-uk-slider-item="previous"></a>
         <a href="/" class="uk-slidenav uk-slidenav-contrast uk-slidenav-next" data-uk-slider-item="next"></a>
     </div>
+
 </div>
 </body>
 </html>

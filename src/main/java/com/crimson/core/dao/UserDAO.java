@@ -4,95 +4,35 @@ import com.crimson.core.model.Episode;
 import com.crimson.core.model.Rating;
 import com.crimson.core.model.TvShow;
 import com.crimson.core.model.User;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Created by Meow on 30.01.2017.
+ */
+public interface UserDAO {
+    void saveUser(User user);
 
-@Repository
-@Transactional
-public class UserDAO {
+    List<User> getAllUsers();
 
-    @Autowired
-    private SessionFactory sf;
+    User getUserById(Long id);
 
+    void deleteUser(User user);
 
-    public void saveUser(User user) {
-        Session session = sf.getCurrentSession();
-        session.persist(user);
-    }
+    void updateUser(User user);
 
-    public List<User> getAllUsers() {
-        Session session = sf.getCurrentSession();
-        return session.createQuery("Select a From User a", User.class).getResultList();
-    }
+    User getUserByName(String name);
 
-    public User getUserById(Long id) {
-        Session session = sf.getCurrentSession();
-        return session.find(User.class, id);
-    }
+    void addTvShow2User(User user, TvShow tvShow);
 
-    public void deleteUser(User user) {
-        Session session = sf.getCurrentSession();
-        session.delete(user);
-    }
-
-    public void updateUser(User user) {
-        Session session = sf.getCurrentSession();
-        session.update(user);
-    }
-
-    public User getUserByName(String name) {
-        Session session = sf.getCurrentSession();
-        return session.createQuery("Select a From User a where a.name like :custName", User.class).setParameter("custName", name).getSingleResult();
-    }
-
-    //RELATIONSHIPS
-
-    //User2TvShow
-
-    public void addTvShow2User(User user, TvShow tvShow) {
-        if (!user.getUserTvShowList().contains(tvShow)) {
-            user.getUserTvShowList().add(tvShow);
-        }
-    }
-
-    public void deleteTvShowFromUser(User user, TvShow tvShow) {
-        if (user.getUserTvShowList().contains(tvShow)) {
-            user.getUserTvShowList().remove(tvShow);
-        }
-    }
+    void deleteTvShowFromUser(User user, TvShow tvShow);
 
     //User2Episode
-    public void addEpisode2User(User user, Episode episode) {
-        if (!user.getUserEpisodeList().contains(episode)) {
-            user.getUserEpisodeList().add(episode);
-        }
-    }
+    void addEpisode2User(User user, Episode episode);
 
-    public void deleteEpisodeFromUser(User user, Episode episode) {
-        if (user.getUserEpisodeList().contains(episode)) {
-            user.getUserEpisodeList().remove(episode);
-        }
-    }
+    void deleteEpisodeFromUser(User user, Episode episode);
 
-    //Rating
+    void addRating2User(User user, Rating rating);
 
-    public void addRating2User(User user, Rating rating) {
-        if (!user.getUserRatings().contains(rating)) {
-            user.getUserRatings().add(rating);
-        }
-    }
-
-    public void deleteRatingFromUser(User user, Rating rating) {
-        if (user.getUserRatings().contains(rating)) {
-            user.getUserRatings().remove(rating);
-        }
-    }
-
-
+    void deleteRatingFromUser(User user, Rating rating);
 }

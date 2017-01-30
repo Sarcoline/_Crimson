@@ -1,116 +1,40 @@
 package com.crimson.core.dao;
 
 import com.crimson.core.model.*;
-import com.github.slugify.Slugify;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Repository
-@Transactional
-public class TvShowDAO {
+/**
+ * Created by Meow on 30.01.2017.
+ */
+public interface TvShowDAO {
+    void saveTvShow(TvShow tv);
 
-    @Autowired
-    private SessionFactory sf;
+    List<TvShow> getAllTvShows();
 
-    public void saveTvShow(TvShow tv) {
-        Session session = sf.getCurrentSession();
-        Slugify slg = new Slugify();
-        tv.setSlug(slg.slugify(tv.getTitle()));
-        session.persist(tv);
-    }
+    TvShow getTvById(Long id);
 
-    public List<TvShow> getAllTvShows() {
-        Session session = sf.getCurrentSession();
-        return session.createQuery("Select a From TvShow a", TvShow.class).getResultList();
-    }
+    TvShow getTvBySlug(String slug);
 
-    public TvShow getTvById(Long id) {
-        Session session = sf.getCurrentSession();
-        return session.find(TvShow.class, id);
-    }
+    List<TvShow> getTvByGenre(String genre);
 
-    public TvShow getTvBySlug(String slug) {
-        Session session = sf.getCurrentSession();
-        return session.createQuery("Select a From TvShow a where a.slug like :custSlug", TvShow.class).setParameter("custSlug", slug).getSingleResult();
-    }
+    void deleteTvShow(TvShow tvshow);
 
-    public List<TvShow> getTvByGenre(String genre) {
-        Session session = sf.getCurrentSession();
-        return session.createQuery("Select a From TvShow a where a.genre like :custGenre", TvShow.class).setParameter("custGenre", genre).getResultList();
-    }
+    void updateTvShow(TvShow tvshow);
 
-    public void deleteTvShow(TvShow tvshow) {
-        Session session = sf.getCurrentSession();
-        session.delete(tvshow);
-    }
+    void addUser2TvShow(User user, TvShow tvShow);
 
-    public void updateTvShow(TvShow tvshow) {
-        Session session = sf.getCurrentSession();
-        session.update(tvshow);
-    }
+    void deleteUserFromTvShow(User user, TvShow tvShow);
 
-    //RELATIONSHIPS
+    void addGenre2TvShow(TvShow tvShow, Genre genre);
 
-    //User2TvShow
+    void deleteGenreFromTvShow(TvShow tvShow, Genre genre);
 
-    public void addUser2TvShow(User user, TvShow tvShow) {
-        if (!tvShow.getTvShowUserList().contains(user)) {
-            tvShow.getTvShowUserList().add(user);
-        }
-    }
+    void addEpisode2TvShow(TvShow tvShow, Episode episode);
 
-    public void deleteUserFromTvShow(User user, TvShow tvShow) {
-        if (tvShow.getTvShowUserList().contains(user)) {
-            tvShow.getTvShowUserList().remove(user);
-        }
-    }
+    void deleteEpisodeFromTvShow(TvShow tvShow, Episode episode);
 
-    //TvShow2Genre
+    void addRating2TvShow(TvShow tvShow, Rating rating);
 
-    public void addGenre2TvShow(TvShow tvShow, Genre genre) {
-        if (!tvShow.getTvShowGenreList().contains(genre)) {
-            tvShow.getTvShowGenreList().add(genre);
-        }
-    }
-
-    public void deleteGenreFromTvShow(TvShow tvShow, Genre genre) {
-        if (tvShow.getTvShowGenreList().contains(genre)) {
-            tvShow.getTvShowGenreList().remove(genre);
-        }
-    }
-
-    //TvShow2Episode
-
-    public void addEpisode2TvShow(TvShow tvShow, Episode episode) {
-        if (!tvShow.getEpisodes().contains(episode)) {
-            tvShow.getEpisodes().add(episode);
-        }
-    }
-
-    public void deleteEpisodeFromTvShow(TvShow tvShow, Episode episode) {
-        if (tvShow.getEpisodes().contains(episode)) {
-            tvShow.getEpisodes().remove(episode);
-        }
-    }
-
-    //TvShowRating
-
-    public void addRating2TvShow(TvShow tvShow, Rating rating) {
-        if (!tvShow.getTvShowRating().contains(rating)) {
-            tvShow.getTvShowRating().add(rating);
-        }
-    }
-
-    public void deleteRatingFromTvShow(TvShow tvShow, Rating rating) {
-        if (tvShow.getTvShowRating().contains(rating)) {
-            tvShow.getTvShowRating().remove(rating);
-        }
-    }
-
-
+    void deleteRatingFromTvShow(TvShow tvShow, Rating rating);
 }

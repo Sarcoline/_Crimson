@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,6 +23,7 @@ import java.util.List;
 
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -64,8 +66,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(UserDTO userDTO) {
-        User user = mapperFacade.map(userDTO, User.class);
-        userDAO.updateUser(user);
+        User user2 = userDAO.getUserById(userDTO.getId());
+        user2.setEmail(userDTO.getEmail());
+        //User user = mapperFacade.map(userDTO, User.class);
+        userDAO.updateUser(user2);
     }
 
     @Override

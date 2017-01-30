@@ -1,17 +1,14 @@
 package com.crimson;
 
 import com.crimson.context.CoreApplicationContext;
-import com.crimson.core.dao.GenreDAO;
-import com.crimson.core.dao.TvShowDAO;
-import com.crimson.core.dao.UserDAO;
-import com.crimson.core.model.Genre;
+import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.TvShow;
-import com.crimson.core.model.User;
+import com.crimson.core.service.TvShowService;
+import com.crimson.core.service.UserService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.io.Resource;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -21,22 +18,16 @@ import java.io.InputStream;
  * Created by Meow on 18.01.2017.
  */
 @Service
-public class populateDatabase {
+public class PopulateDatabase {
 
 
     public static void main(String[] args) throws IOException {
 
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(CoreApplicationContext.class);
 
-        TvShowDAO tvShowDAO = applicationContext.getBean(TvShowDAO.class);
-        UserDAO userDAO = applicationContext.getBean(UserDAO.class);
-        GenreDAO genreDAO = applicationContext.getBean(GenreDAO.class);
-        Genre fantasy = new Genre("Fantasy");
-        Genre drama = new Genre("Drama");
-        Genre comedy = new Genre("Comedy");
-        genreDAO.addGenre(fantasy);
-        genreDAO.addGenre(drama);
-        genreDAO.addGenre(comedy);
+        TvShowService tvShowDAO = applicationContext.getBean(TvShowService.class);
+        UserService userDAO = applicationContext.getBean(UserService.class);
+
 
         if (tvShowDAO.getAllTvShows().size() < 1) {
             TvShow tv = new TvShow();
@@ -165,13 +156,12 @@ public class populateDatabase {
                             "family trouble, past and future romances, fights, laughs, tears and surprises as they learn what it really means to be a friend.");
 
 
-            User user = new User();
+            UserDTO user = new UserDTO();
             user.setName("TestUser");
             user.setEmail("test@email.com");
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            user.setPassword(encoder.encode("123"));
+            user.setPassword("123");
             InputStream in25 = applicationContext.getResource("classpath:/images/user/user.jpg").getInputStream();
-            user.setProfilePic(IOUtils.toByteArray(in15));
+            user.setProfilePic(IOUtils.toByteArray(in25));
             userDAO.saveUser(user);
             tvShowDAO.saveTvShow(tv);
             tvShowDAO.saveTvShow(tv1);

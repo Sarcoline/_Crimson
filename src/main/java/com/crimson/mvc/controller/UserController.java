@@ -60,7 +60,6 @@ public class UserController {
         }
 
         userService.saveUser(userDTO);
-
         return "redirect:/login?registered";
     }
 }

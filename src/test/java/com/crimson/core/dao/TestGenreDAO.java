@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class TestGenreDAO {
 
     @Autowired
-    TvShowDAO tvShowDAO;
+    private TvShowDAO tvShowDAO;
     @Autowired
     private GenreDAO genreDAO;
     private Genre genre = new Genre();

@@ -1,12 +1,13 @@
 package com.crimson.context;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 //Konfiguracja spring security
 @Configuration
-@ImportResource("classpath:**/security-config.xml")
-public class SecurityApplicationContext {
+@EnableWebSecurity
+public class SecurityApplicationContext extends WebSecurityConfigurerAdapter {
 
 
 }

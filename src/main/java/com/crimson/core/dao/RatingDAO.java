@@ -1,64 +1,26 @@
 package com.crimson.core.dao;
 
 import com.crimson.core.model.Rating;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Repository
-@Transactional
-public class RatingDAO {
+/**
+ * Created by Meow on 30.01.2017.
+ */
+public interface RatingDAO {
+    void saveRating(Rating rating);
 
-    @Autowired
-    private SessionFactory sf;
+    void deleteRating(Rating rating);
 
-    public void saveRating(Rating rating) {
-        Session session = sf.getCurrentSession();
-        session.saveOrUpdate(rating);
-    }
+    void updateRating(Rating rating);
 
-    public void deleteRating(Rating rating) {
-        Session session = sf.getCurrentSession();
-        session.delete(rating);
-    }
+    Rating getRatingByIdUser(Long idUser);
 
-    public void updateRating(Rating rating) {
-        Session session = sf.getCurrentSession();
-        session.update(rating);
-    }
+    Rating getRatingByID(Long id);
 
-    public Rating getRatingByIdUser(Long idUser) {
-        Session session = sf.getCurrentSession();
-        return session.find(Rating.class, idUser);
-    }
+    Rating getRatingByIdTvShow(Long idTvShow);
 
-    public Rating getRatingByID(Long id) {
-        Session session = sf.getCurrentSession();
-        return session.find(Rating.class, id);
-    }
+    List<Rating> getAllRatings();
 
-    public Rating getRatingByIdTvShow(Long idTvShow) {
-        Session session = sf.getCurrentSession();
-        return session.find(Rating.class, idTvShow);
-    }
-
-    public List<Rating> getAllRatings() {
-        Session session = sf.getCurrentSession();
-        return session.createQuery("SELECT a FROM  Rating a", Rating.class).getResultList();
-    }
-
-    public Rating getRating(long idtv, long iduser) {
-        Session session = sf.getCurrentSession();
-        String hql = "from Rating s where s.tvShowRating.id = ? and s.userRating.id = ?";
-        List rating = session.createQuery(hql)
-                .setParameter(0, idtv)
-                .setParameter(1, iduser)
-                .getResultList();
-        if (rating.size() != 0) return (Rating) rating.get(0);
-        return new Rating();
-    }
+    Rating getRating(long idtv, long iduser);
 }
