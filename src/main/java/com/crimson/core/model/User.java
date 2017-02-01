@@ -29,6 +29,54 @@ public @Data class User {
     private String role = "ROLE_USER";
     @Lob
     private byte[] profilePic;
+
+    private User(){
+
+    }
+
+    private User(Builder builder){
+        name = builder.name;
+        email = builder.email;
+        password = builder.password;
+        role = builder.role;
+    }
+
+    public static class Builder{
+
+        private Long id;
+        private String name;
+        private String email;
+        private String password;
+        private String role;
+
+        public Builder name(String name){
+            this.name = name;
+            return this;
+        }
+
+        public Builder email(String email){
+            this.email = email;
+            return this;
+        }
+
+        public Builder password(String password){
+            this.password = password;
+            return this;
+        }
+
+        public Builder role(String role){
+            this.role = role;
+            return this;
+        }
+
+        public User build(){
+            return new User(this);
+        }
+    }
+
+
+
+
     //User2TvShow
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "User2TvShow",

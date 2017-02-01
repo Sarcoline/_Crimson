@@ -13,7 +13,7 @@ import java.util.List;
 public interface UserDAO {
     void saveUser(User user);
 
-    List<User> getAllUsers();
+    List<?> getAllUsers();
 
     User getUserById(Long id);
 

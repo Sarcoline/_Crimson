@@ -20,11 +20,24 @@ public @Data class Rating {
     @PrimaryKeyJoinColumn(name = "idTvShow")
     private TvShow tvShowRating;
 
-    public Rating(int value) {
-        super();
-        this.value = value;
+    private Rating() {
     }
 
-    public Rating() {
+    public Rating(Builder builder) {
+        value = builder.value;
+    }
+
+
+
+    public static class Builder{
+
+        private int value;
+
+        public Builder value(int value){
+            this.value = value;
+            return this;
+        }
+
+        public Rating build(){return new Rating(this);}
     }
 }

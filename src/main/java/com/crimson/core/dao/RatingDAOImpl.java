@@ -65,6 +65,6 @@ public class RatingDAOImpl implements RatingDAO {
                 .setParameter(1, iduser)
                 .getResultList();
         if (rating.size() != 0) return (Rating) rating.get(0);
-        return new Rating();
+        return new Rating.Builder().build();
     }
 }
