@@ -13,6 +13,8 @@ public interface TvShowService {
 
     TvShowDTO getTvById(Long id);
 
+    TvShowDTO getTvByIdWithEpisodes(Long id);
+
     TvShowDTO getTvBySlug(String slug);
 
     List<TvShow> getTvByGenre(String genre);

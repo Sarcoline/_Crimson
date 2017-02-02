@@ -60,9 +60,9 @@ public class CrimsonController {
         return "user";
     }
 
-    @GetMapping("/user/{name}/edit")
+    @GetMapping("/user/edit")
     @Secured("ROLE_USER")
-    public String editUser(@RequestParam(value = "error", required = false) String error, Model model, @PathVariable("name") String name) {
+    public String editUser(@RequestParam(value = "error", required = false) String error, Model model) {
 
         if (error != null) {
             model.addAttribute("error", "Error!");
@@ -76,11 +76,11 @@ public class CrimsonController {
     }
 
     //TODO głupio zrobione, poprawić
-    @RequestMapping(value = "/user/{username}/edit", method = RequestMethod.POST)
-    public String registration(@PathVariable("username") String username, @Valid UserDTO userDTO, BindingResult bindingResult) throws IOException {
+    @RequestMapping(value = "/user/edit", method = RequestMethod.POST)
+    public String registration(@Valid UserDTO userDTO, BindingResult bindingResult) throws IOException {
 
         if (bindingResult.hasErrors()) {
-            return String.format("redirect:/tv/user/%s/edit?error", username);
+            return String.format("redirect:/tv/user/%s/edit?error", userDTO.getName());
         }
         userService.updateUser(userDTO);
         return String.format("redirect:/tv/user/%s", userDTO.getName());

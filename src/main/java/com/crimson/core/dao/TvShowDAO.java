@@ -14,6 +14,8 @@ public interface TvShowDAO {
 
     TvShow getTvById(Long id);
 
+    TvShow getTvByIdWithEpisodes(Long id);
+
     TvShow getTvBySlug(String slug);
 
     List<TvShow> getTvByGenre(String genre);

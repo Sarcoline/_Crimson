@@ -6,6 +6,7 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class UserDTO {
     private Long id;
 
     @Size(min = 3, max = 30)
+    @Pattern(regexp = "[A-Za-z0-9]*")
     private String name;
 
     @NotEmpty

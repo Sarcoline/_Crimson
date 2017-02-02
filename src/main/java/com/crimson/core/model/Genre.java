@@ -3,6 +3,8 @@ package com.crimson.core.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +18,12 @@ public @Data class Genre {
     private Long id;
 
     @Column(name = "name")
+    @Size(min = 3, max = 20, message = "{invalid.size.genre}")
+    @Pattern(regexp = "[A-z][a-z]+", message = "{invalid.pattern.genre}")
     private String name;
+
     //Genre2TvShow
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "Genre2TvShow",
             joinColumns = @JoinColumn(name = "idGenre"),
             inverseJoinColumns = @JoinColumn(name = "idTvShow"))
