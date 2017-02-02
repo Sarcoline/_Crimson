@@ -6,7 +6,6 @@ import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -61,7 +60,7 @@ public @Data class TvShow {
 
     @Column(name = "slug")
     @Size(max = 20, message = "{invalid.size.slug}")
-    @Pattern(regexp = "[a-z]*", message = "{invalid.pattern.slug}")
+    //@Pattern(regexp = "[a-z]*", message = "{invalid.pattern.slug}")
     private String slug;
 
     @Lob
