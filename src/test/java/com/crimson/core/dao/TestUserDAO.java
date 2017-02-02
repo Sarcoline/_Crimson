@@ -13,10 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestSpringCore.class)
+@WebAppConfiguration
 @Transactional
 @Rollback(value = true)
 public class TestUserDAO {
@@ -33,32 +35,30 @@ public class TestUserDAO {
     @Autowired
     private RatingDAO ratingDAO;
 
-    private User user = new User.Builder()
-            .name("Aleks")
-            .email("Email@wp.pl")
-            .password("123")
-            .role("ROLE_USER")
-            .build();
+    private User user = new User();
 
-    private TvShow tvShow = new TvShow.Builder()
-            .title("Dr.House")
-            .network("Netflix")
-            .country("US")
-            .genre("Drama")
-            .build();
+    private TvShow tvShow = new TvShow();
 
-    private Episode episode = new Episode.Builder()
-            .title("Episode 1")
-            .build();
+    private Episode episode = new Episode();
 
     private Rating rating;
 
     @Before
     public void setDB() {
-
+        user.setName("Alex");
         userDAO.saveUser(user);
+
+        tvShow.setTitle("Dr.House");
         tvShowDAO.saveTvShow(tvShow);
+
+        episode.setTitle("EP1");
+        episode.setIdTvShow(tvShow.getId());
         episodeDAO.saveEpisode(episode);
+
+        /*rating.setIdUser(user.getId());
+        rating.setIdTvShow(tvShow.getId());
+        rating.setValue(7);
+        ratingDAO.saveRating(rating);*/
 
     }
 
@@ -111,7 +111,7 @@ public class TestUserDAO {
 
     @Test
     public void getUserByNameTest() {
-        User getUserByNameTest = userDAO.getUserByName("Aleks");
+        User getUserByNameTest = userDAO.getUserByName("Alex");
 
         Assert.assertEquals(getUserByNameTest.getName(), user.getName());
     }

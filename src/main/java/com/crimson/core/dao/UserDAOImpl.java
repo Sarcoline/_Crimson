@@ -7,7 +7,6 @@ import com.crimson.core.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,6 +14,7 @@ import java.util.List;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
+
     @Autowired
     private SessionFactory sf;
 

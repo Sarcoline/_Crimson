@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<?> getAllUsers() {
+    public List<User> getAllUsers() {
         return userDAO.getAllUsers();
     }
 
