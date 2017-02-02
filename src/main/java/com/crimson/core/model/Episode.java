@@ -1,6 +1,7 @@
 package com.crimson.core.model;
 
 import lombok.Data;
+import org.hibernate.annotations.OptimisticLockType;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -32,6 +33,10 @@ public @Data class Episode {
 
     @Column(name = "idTvShow")
     private Long idTvShow;
+
+    //Optimistic Locking
+    @Version
+    private Integer version;
 
 
     //EpisodeWatched(User2Episode) Relation

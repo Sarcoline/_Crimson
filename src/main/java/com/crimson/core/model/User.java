@@ -1,11 +1,11 @@
 package com.crimson.core.model;
 
 import lombok.Data;
+import org.hibernate.annotations.OptimisticLockType;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Entity
 @Table(name = "User")
@@ -29,6 +29,10 @@ public @Data class User {
     private String role = "ROLE_USER";
     @Lob
     private byte[] profilePic;
+
+    //Optimistic Locking
+    @Version
+    private Integer version;
 
     public User(){
 

@@ -20,6 +20,10 @@ public @Data class Rating {
     @PrimaryKeyJoinColumn(name = "idTvShow")
     private TvShow tvShowRating;
 
+    //Optimistic Locking
+    @Version
+    private Integer version;
+
     public Rating() {
     }
 

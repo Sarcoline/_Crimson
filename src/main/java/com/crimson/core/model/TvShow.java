@@ -1,6 +1,7 @@
 package com.crimson.core.model;
 
 import lombok.Data;
+import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -49,6 +50,10 @@ public @Data class TvShow {
     @Lob
     @Column(name = "picture")
     private HashMap<String, byte[]> pictures = new HashMap<>();
+
+    //Optimistic Locking
+    @Version
+    private Integer version;
 
 
     public TvShow(){

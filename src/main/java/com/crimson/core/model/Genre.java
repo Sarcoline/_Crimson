@@ -24,6 +24,10 @@ public @Data class Genre {
             inverseJoinColumns = @JoinColumn(name = "idTvShow"))
     private List<TvShow> genreTvShowList = new ArrayList<>();
 
+    //Optimistic Locking
+    @Version
+    private Integer version;
+
     public Genre() {
     }
 
