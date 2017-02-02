@@ -158,19 +158,43 @@ public class PopulateDatabase {
                             "living off of one another in the heart of New York City. Over the course of ten years, this average group of buddies goes through massive mayhem, " +
                             "family trouble, past and future romances, fights, laughs, tears and surprises as they learn what it really means to be a friend.");
 
+            TvShow tv5 = new TvShow();
+            tv4.setGenre("Drama");
+            tv4.setTitle("Belfer");
+            tv4.setNetwork("Canal+");
+            tv4.setOverallRating(9.7);
+            tv4.setTrailerUrl("https://www.youtube.com/watch?v=QJBo2ZAtWBA");
+            tv4.setCountry("Poland");
+            tv4.setReleaseYear(2016);
+            InputStream in25 = applicationContext.getResource("classpath:/images/belfer/poster.jpg").getInputStream();
+            tv4.getPictures().put("poster", IOUtils.toByteArray(in25));
+            InputStream in26 = applicationContext.getResource("classpath:/images/belfer/back.jpg").getInputStream();
+            tv4.getPictures().put("back", IOUtils.toByteArray(in26));
+            InputStream in27 = applicationContext.getResource("classpath:/images/belfer/1.jpg").getInputStream();
+            tv4.getPictures().put("1", IOUtils.toByteArray(in27));
+            InputStream in28 = applicationContext.getResource("classpath:/images/belfer/2.jpg").getInputStream();
+            tv4.getPictures().put("2", IOUtils.toByteArray(in28));
+            InputStream in29 = applicationContext.getResource("classpath:/images/belfer/3.jpg").getInputStream();
+            tv4.getPictures().put("3", IOUtils.toByteArray(in29));
+            tv4.setDescription(
+                    "The death of a young girl. To town comes a new teacher who begins his own investigation.  " +
+                            "Until the end no one knows who really is a murderer. ");
+
+
 
             UserDTO user = new UserDTO();
             user.setName("TestUser");
             user.setEmail("test@email.com");
             user.setPassword("123");
-            InputStream in25 = applicationContext.getResource("classpath:/images/user/user.jpg").getInputStream();
-            user.setProfilePic(IOUtils.toByteArray(in25));
+            InputStream in30 = applicationContext.getResource("classpath:/images/user/user.jpg").getInputStream();
+            user.setProfilePic(IOUtils.toByteArray(in30));
             userDAO.saveUser(user);
             tvShowDAO.saveTvShow(tv);
             tvShowDAO.saveTvShow(tv1);
             tvShowDAO.saveTvShow(tv2);
             tvShowDAO.saveTvShow(tv3);
             tvShowDAO.saveTvShow(tv4);
+            tvShowDAO.saveTvShow(tv5);
         }
     }
 }

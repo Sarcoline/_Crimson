@@ -120,6 +120,8 @@ public class CrimsonController {
     }
 
 
+
+
     @RequestMapping(value = "/rate", method = RequestMethod.GET)
     public void rate(@RequestParam("id") long id, @RequestParam("value") int value) throws IOException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
