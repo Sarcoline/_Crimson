@@ -13,10 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestSpringCore.class)
+@WebAppConfiguration
 @Transactional
 @Rollback(value = true)
 public class TestRatingDAO {
@@ -30,37 +32,33 @@ public class TestRatingDAO {
     @Autowired
     private RatingService ratingService;
 
-    private Rating rating = new Rating.Builder()
-            .value(5)
-            .build();
-
-    private TvShow tvShow = new TvShow.Builder()
-            .title("Dr.House")
-            .network("Netflix")
-            .country("US")
-            .genre("Drama")
-            .build();
-
-    private User user = new User.Builder()
-            .name("Aleks")
-            .email("Email@wp.pl")
-            .password("123")
-            .role("ROLE_USER")
-            .build();
+    private Rating rating = new Rating();
+    private TvShow tvShow = new TvShow();
+    private User user = new User();
 
     @Before
     public void setDB() {
+        tvShow.setTitle("Gameów Of Alex");
+        tvShow.setCountry("Poland");
+        tvShow.setGenre("Drama");
+        tvShow.setReleaseYear(2017);
+        tvShow.setDescription("Test");
+        tvShow.setNetwork("Bojano INC");
+        tvShow.setOverallRating(7.1);
+        tvShow.setTrailerUrl("google.pl");
         tvShowDAO.saveTvShow(tvShow);
+        user.setName("Alex");
         userDAO.saveUser(user);
+        rating.setValue(4);
+        rating.setTvShowRating(tvShow);
+        rating.setUserRating(user);
         ratingDAO.saveRating(rating);
     }
 
     @Test
     public void addRatingTest() {
         Assert.assertEquals(1, ratingDAO.getAllRatings().size());
-        Rating rating1 = new Rating.Builder()
-                .value(3)
-                .build();
+        Rating rating1 = new Rating();
         rating1.setValue(5);
         rating1.setTvShowRating(tvShow);
         rating1.setUserRating(user);
@@ -101,18 +99,13 @@ public class TestRatingDAO {
 
     @Test
     public void getRating() {
-        TvShow tvShow = new TvShow.Builder()
-                .title("Dr.House")
-                .network("Netflix")
-                .country("US")
-                .genre("Drama")
-                .build();
-
+        User user = new User();
+        user.setName("Kamil");
+        userDAO.saveUser(user);
+        TvShow tvShow = new TvShow();
         tvShow.setTitle("test");
         tvShowDAO.saveTvShow(tvShow);
-        Rating rating = new Rating.Builder()
-                .value(3)
-                .build();
+        Rating rating = new Rating();
         rating.setTvShowRating(tvShow);
         rating.setUserRating(user);
         rating.setValue(6);

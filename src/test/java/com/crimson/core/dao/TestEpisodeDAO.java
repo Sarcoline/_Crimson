@@ -20,8 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Rollback(value = true)
 public class TestEpisodeDAO {
 
-
-
     @Autowired
     private EpisodeDAO episodeDAO;
 
@@ -31,27 +29,33 @@ public class TestEpisodeDAO {
     @Autowired
     private TvShowDAO tvShowDAO;
 
-    private Episode episode = new Episode.Builder()
-            .title("Episode 1")
-            .build();
+    private Episode episode = new Episode();
 
-    private User user = new User.Builder()
-            .name("Aleks")
-            .email("Email@wp.pl")
-            .password("123")
-            .role("ROLE_USER")
-            .build();
+    private User user = new User();
 
-    private TvShow tvShow = new TvShow.Builder()
-            .title("Dr.House")
-            .network("Netflix")
-            .country("US")
-            .genre("Drama")
-            .build();
+    private TvShow tvShow = new TvShow();
 
     @Before
     public void setDB() {
+        episode.setTitle("Title");
+        episode.setSeason("first");
+        episode.setNumber(13);
+        episode.setEpisodeSummary("Summary");
+
         episodeDAO.saveEpisode(episode);
+
+        user.setName("AlexTheFrog");
+        userDAO.saveUser(user);
+
+        tvShow.setTitle("Gameów Of Alex");
+        tvShow.setCountry("Poland");
+        tvShow.setGenre("Drama");
+        tvShow.setReleaseYear(2017);
+        tvShow.setDescription("Test");
+        tvShow.setNetwork("Bojano INC");
+        tvShow.setOverallRating(7.1);
+        tvShow.setTrailerUrl("google.pl");
+
         tvShowDAO.saveTvShow(tvShow);
     }
 

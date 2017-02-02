@@ -13,7 +13,7 @@ import java.util.List;
 public interface UserService {
     void saveUser(UserDTO userDTO) throws IOException;
 
-    List<?> getAllUsers();
+    List<User> getAllUsers();
 
     User getUserById(Long id);
 
