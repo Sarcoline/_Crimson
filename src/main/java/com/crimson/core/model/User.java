@@ -1,7 +1,6 @@
 package com.crimson.core.model;
 
 import lombok.Data;
-import org.hibernate.annotations.OptimisticLockType;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ public @Data class User {
 
     //Optimistic Locking
     @Version
-    private Integer version;
+    private int version;
 
     public User(){
 

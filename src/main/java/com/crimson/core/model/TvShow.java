@@ -1,7 +1,6 @@
 package com.crimson.core.model;
 
 import lombok.Data;
-import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -53,7 +52,7 @@ public @Data class TvShow {
 
     //Optimistic Locking
     @Version
-    private Integer version;
+    private int version;
 
 
     public TvShow(){

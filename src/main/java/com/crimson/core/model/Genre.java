@@ -26,7 +26,7 @@ public @Data class Genre {
 
     //Optimistic Locking
     @Version
-    private Integer version;
+    private int version;
 
     public Genre() {
     }
