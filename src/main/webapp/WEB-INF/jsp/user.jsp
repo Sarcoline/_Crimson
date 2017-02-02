@@ -17,10 +17,12 @@
     <div class="uk-width-2-6 uk-margin-large-top" data-uk-grid-margin=" ">
         <div class="uk-container uk-container-center">
             <div class="login" style="padding: 10px; margin-bottom: 40px;">
-                <a href="/tv/user/${user.name}/edit"><i class="fa fa-cog fa-2x" style="color: #999;" aria-hidden="true"></i></a>
+                <sec:authorize access="isAuthenticated()">
+                <a href="<c:url value="/tv/user/edit" /> "><i class="fa fa-cog fa-2x" style="color: #999; margin-bottom: -20px;" aria-hidden="true"></i></a>
+                </sec:authorize>
                 <div>
                     <img src="http://www.iconsfind.com/wp-content/uploads/2015/08/20150831_55e46ad551392.png"
-                         width="200" height="200" class="center" style="margin-bottom: 20px; margin-top: -20px;">
+                         width="200" height="200" class="center" style="margin-bottom: 20px;">
                 </div>
                 <ul class="uk-list uk-text-center " style="font-size: 1.8rem">
                     <li style="font-size: 2.5rem; margin-bottom: 5px;"><strong>${user.name}</strong></li>
