@@ -18,7 +18,7 @@ public @Data class Genre {
     @Column(name = "name")
     private String name;
     //Genre2TvShow
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "Genre2TvShow",
             joinColumns = @JoinColumn(name = "idGenre"),
             inverseJoinColumns = @JoinColumn(name = "idTvShow"))

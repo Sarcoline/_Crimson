@@ -16,7 +16,7 @@ public @Data class Rating {
     @ManyToOne(cascade = CascadeType.MERGE)
     @PrimaryKeyJoinColumn(name = "idUser")
     private User userRating;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @PrimaryKeyJoinColumn(name = "idTvShow")
     private TvShow tvShowRating;
 

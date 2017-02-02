@@ -26,6 +26,7 @@ public @Data class User {
 
     @Column(name = "role")
     private String role = "ROLE_USER";
+
     @Lob
     private byte[] profilePic;
 
@@ -81,19 +82,19 @@ public @Data class User {
 
 
     //User2TvShow
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "User2TvShow",
             joinColumns = @JoinColumn(name = "idUser"),
             inverseJoinColumns = @JoinColumn(name = "idTvShow"))
     private List<TvShow> userTvShowList = new ArrayList<>();
     //User2Episode
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "EpisodeWatched",
             joinColumns = @JoinColumn(name = "idUser"),
             inverseJoinColumns = @JoinColumn(name = "idEpisode"))
     private List<Episode> userEpisodeList = new ArrayList<>();
     //Rating
-    @OneToMany(mappedBy = "userRating")
+    @OneToMany(mappedBy = "userRating", fetch = FetchType.LAZY)
     private List<Rating> userRatings = new ArrayList<>();
 
 }

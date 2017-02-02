@@ -133,16 +133,16 @@ public @Data class TvShow {
 
     //RELATIONSHIPS
     //User2TvShow Relation
-    @ManyToMany(mappedBy = "userTvShowList", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "userTvShowList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<User> tvShowUserList = new ArrayList<>();
     //TvShow2Genre
-    @ManyToMany(mappedBy = "genreTvShowList", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "genreTvShowList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Genre> tvShowGenreList = new ArrayList<>();
     //TvShowEpisode Relation
-    @OneToMany(mappedBy = "episodeFromTvShow", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "episodeFromTvShow", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Episode> episodes = new ArrayList<>();
     //Rating
-    @OneToMany(mappedBy = "tvShowRating", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tvShowRating", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Rating> tvShowRating = new ArrayList<>();
 
 }
