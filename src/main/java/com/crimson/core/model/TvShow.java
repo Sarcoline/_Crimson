@@ -2,8 +2,13 @@ package com.crimson.core.model;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,15 +23,23 @@ public @Data class TvShow {
     private Long id;
 
     @Column(name = "title")
+    @Size(min = 3, max = 30, message = "{invalid.size.title}")
+    @Pattern(regexp = "[A-Z][a-z]*(([ ]?[A-Za-z]+)?)*", message = "{invalid.pattern.title}")
     private String title;
 
     @Column(name = "network")
+    @Size(min = 3, max = 30, message = "{invalid.size.network}")
+    @Pattern(regexp = "[A-Za-z1-9]*(([ ]?[A-Za-z1-9]+)?)*", message = "{invalid.pattern.network}")
     private String network;
 
     @Column(name = "country")
+    @Size(min = 3, max = 30, message = "{invalid.size.country}")
+    @Pattern(regexp = "[A-z][a-z]*(([ ]?[A-Z][a-z]*)?)*", message = "{invalid.pattern.country}")
     private String country;
 
     @Column(name = "genre")
+    @Size(min = 3, max = 20, message = "{invalid.size.genre}")
+    @Pattern(regexp = "[A-z][a-z]+", message = "{invalid.pattern.genre}")
     private String genre;
 
     @Column(name = "description")
@@ -35,15 +48,20 @@ public @Data class TvShow {
     private String description;
 
     @Column(name = "overallRating")
-    private String trailerUrl;
-
-    @Column(name = "trailerUrl")
+    @Range(min = 0, max = 10, message = "{invalid.overallRating}")
     private Double overallRating;
 
+    @Column(name = "trailerUrl")
+    @URL(message = "{invalid.trailerUrl}")
+    private String trailerUrl;
+
     @Column(name = "releaseYear")
+    @Range(min = 1920, max = 2017,message = "{invalid.releaseYear}")
     private int releaseYear;
 
     @Column(name = "slug")
+    @Size(max = 20, message = "{invalid.size.slug}")
+    @Pattern(regexp = "[a-z]*", message = "{invalid.pattern.slug}")
     private String slug;
 
     @Lob

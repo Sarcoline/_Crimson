@@ -1,8 +1,13 @@
 package com.crimson.core.model;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Email;
 
+import javax.enterprise.inject.Default;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +21,16 @@ public @Data class User {
     private Long id;
 
     @Column(name = "name", unique = true)
+    @Size(min = 3, max = 30, message = "{invalid.size.name}")
+    @Pattern(regexp = "[A-Za-z1-9]*", message = "{invalid.pattern.name}")
     private String name;
 
     @Column(name = "email")
+    @Email(message = "{invalid.email}")
     private String email;
 
     @Column(name = "password")
+    @Size(min = 3, max = 100, message = "{invalid.password}")
     private String password;
 
     @Column(name = "role")
