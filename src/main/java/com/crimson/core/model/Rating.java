@@ -22,7 +22,7 @@ public @Data class Rating {
 
     //Optimistic Locking
     @Version
-    private Integer version;
+    private int version;
 
     public Rating() {
     }
