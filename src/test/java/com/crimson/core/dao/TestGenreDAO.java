@@ -11,12 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestSpringCore.class)
-@WebAppConfiguration
 @Transactional
 @Rollback(value = true)
 public class TestGenreDAO {
@@ -25,25 +23,21 @@ public class TestGenreDAO {
     private TvShowDAO tvShowDAO;
     @Autowired
     private GenreDAO genreDAO;
-    private Genre genre = new Genre();
 
-    private TvShow tvShow = new TvShow();
+    private Genre genre = new Genre.Builder()
+            .name("Drama")
+            .build();
+
+    private TvShow tvShow = new TvShow.Builder()
+            .title("Dr.House")
+            .network("Netflix")
+            .country("US")
+            .genre("Drama")
+            .build();
 
     @Before
     public void setDB() {
-        genre.setName("Drama");
-
         genreDAO.addGenre(genre);
-
-        tvShow.setTitle("Gameów Of Alex");
-        tvShow.setCountry("Poland");
-        tvShow.setGenre("Drama");
-        tvShow.setReleaseYear(2017);
-        tvShow.setDescription("Test");
-        tvShow.setNetwork("Bojano INC");
-        tvShow.setOverallRating(7.1);
-        tvShow.setTrailerUrl("google.pl");
-
         tvShowDAO.saveTvShow(tvShow);
     }
 

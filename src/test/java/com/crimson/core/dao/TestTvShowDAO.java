@@ -10,12 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestSpringCore.class)
-@WebAppConfiguration
 @Transactional
 @Rollback(value = true)
 public class TestTvShowDAO {
@@ -35,41 +33,37 @@ public class TestTvShowDAO {
     @Autowired
     private RatingDAO ratingDAO;
 
-    private TvShow tvShow = new TvShow();
+    private TvShow tvShow = new TvShow.Builder()
+            .title("Dr.House")
+            .network("Netflix")
+            .country("US")
+            .genre("Drama")
+            .build();
 
-    private User user = new User();
+    User user = new User.Builder()
+            .name("Aleks")
+            .email("Email@wp.pl")
+            .password("123")
+            .role("ROLE_USER")
+            .build();
 
-    private Genre genre = new Genre();
+    private Genre genre = new Genre.Builder()
+            .name("Drama")
+            .build();
 
-    private Episode episode = new Episode();
+    private Episode episode = new Episode.Builder()
+            .title("Episode 1")
+            .build();
 
-    private Rating rating = new Rating();
+    private Rating rating = new Rating.Builder()
+            .value(5)
+            .build();
 
     @Before
     public void setDB() {
-        tvShow.setTitle("Gameów Of Alex");
-        tvShow.setCountry("Poland");
-        tvShow.setGenre("Drama");
-        tvShow.setReleaseYear(2017);
-        tvShow.setDescription("Test");
-        tvShow.setNetwork("Bojano INC");
-        tvShow.setOverallRating(7.1);
-        tvShow.setTrailerUrl("google.pl");
-
         tvShowDAO.saveTvShow(tvShow);
-
-        user.setName("Alex");
-        userDAO.saveUser(user);
-
-        genre.setName("Drama");
         genreDAO.addGenre(genre);
-
-        episode.setTitle("EP1");
-        episode.setIdTvShow(tvShow.getId());
         episodeDAO.saveEpisode(episode);
-
-        rating.setValue(6);
-        rating.setUserRating(user);
         rating.setTvShowRating(tvShow);
     }
 
