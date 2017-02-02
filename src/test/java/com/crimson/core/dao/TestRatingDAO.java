@@ -1,6 +1,9 @@
 package com.crimson.core.dao;
 
 import com.crimson.context.TestSpringCore;
+import com.crimson.core.factory.RatingFactory;
+import com.crimson.core.factory.TvShowFactory;
+import com.crimson.core.factory.UserFactory;
 import com.crimson.core.model.Rating;
 import com.crimson.core.model.TvShow;
 import com.crimson.core.model.User;
@@ -30,23 +33,16 @@ public class TestRatingDAO {
     @Autowired
     private RatingService ratingService;
 
-    private Rating rating = new Rating.Builder()
-            .value(5)
-            .build();
+    private UserFactory userFactory = new UserFactory();
+    private TvShowFactory tvShowFactory = new TvShowFactory();
+    private RatingFactory ratingFactory = new RatingFactory();
 
-    private TvShow tvShow = new TvShow.Builder()
-            .title("Dr.House")
-            .network("Netflix")
-            .country("US")
-            .genre("Drama")
-            .build();
+    private User user = userFactory.getUser("Aleks");
 
-    private User user = new User.Builder()
-            .name("Aleks")
-            .email("Email@wp.pl")
-            .password("123")
-            .role("ROLE_USER")
-            .build();
+    private TvShow tvShow = tvShowFactory.getTvShow("Dr.House");
+
+
+    private Rating rating = ratingFactory.getRating(5);
 
     @Before
     public void setDB() {
