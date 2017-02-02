@@ -30,11 +30,11 @@ public @Data class User {
     @Lob
     private byte[] profilePic;
 
-    private User(){
+    public User(){
 
     }
 
-    private User(Builder builder){
+    public User(Builder builder){
         name = builder.name;
         email = builder.email;
         password = builder.password;
@@ -65,7 +65,7 @@ public @Data class User {
         }
 
         public Builder role(String role){
-            this.role = role;
+            this.role = "ROLE_USER";
             return this;
         }
 

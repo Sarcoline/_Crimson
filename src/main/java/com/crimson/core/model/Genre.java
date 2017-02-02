@@ -24,10 +24,10 @@ public @Data class Genre {
             inverseJoinColumns = @JoinColumn(name = "idTvShow"))
     private List<TvShow> genreTvShowList = new ArrayList<>();
 
-    private Genre() {
+    public Genre() {
     }
 
-    private Genre(Builder builder) {
+    public Genre(Builder builder) {
         name = builder.name;
     }
 

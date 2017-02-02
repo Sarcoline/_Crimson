@@ -51,11 +51,11 @@ public @Data class TvShow {
     private HashMap<String, byte[]> pictures = new HashMap<>();
 
 
-    private TvShow(){
+    public TvShow(){
 
     }
 
-    private TvShow(Builder builder){
+    public TvShow(Builder builder){
         title = builder.title;
         network = builder.network;
         country = builder.country;

@@ -20,7 +20,7 @@ public @Data class Rating {
     @PrimaryKeyJoinColumn(name = "idTvShow")
     private TvShow tvShowRating;
 
-    private Rating() {
+    public Rating() {
     }
 
     public Rating(Builder builder) {

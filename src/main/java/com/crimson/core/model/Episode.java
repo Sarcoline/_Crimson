@@ -42,10 +42,10 @@ public @Data class Episode {
     @JoinColumn(name = "idTvShow", insertable = false, updatable = false)
     private TvShow episodeFromTvShow;
 
-    private Episode() {
+    public Episode() {
     }
 
-    private Episode(Builder builder) {
+    public Episode(Builder builder) {
         title = builder.title;
         season = builder.season;
         number = builder.number;
