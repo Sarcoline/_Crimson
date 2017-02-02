@@ -29,7 +29,7 @@ public @Data class TvShow {
 
     @Column(name = "network")
     @Size(min = 3, max = 30, message = "{invalid.size.network}")
-    @Pattern(regexp = "[A-Za-z1-9]*(([ ]?[A-Za-z1-9]+)?)*", message = "{invalid.pattern.network}")
+    @Pattern(regexp = "[A-Za-z0-9]*(([ ]?[A-Za-z0-9]+)?)*", message = "{invalid.pattern.network}")
     private String network;
 
     @Column(name = "country")

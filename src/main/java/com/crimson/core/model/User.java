@@ -22,7 +22,7 @@ public @Data class User {
 
     @Column(name = "name", unique = true)
     @Size(min = 3, max = 30, message = "{invalid.size.name}")
-    @Pattern(regexp = "[A-Za-z1-9]*", message = "{invalid.pattern.name}")
+    @Pattern(regexp = "[A-Za-z0-9]*", message = "{invalid.pattern.name}")
     private String name;
 
     @Column(name = "email")

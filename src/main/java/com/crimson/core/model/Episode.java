@@ -26,7 +26,8 @@ public @Data class Episode {
     private String title;
 
     @Column(name = "season")
-    @Pattern(regexp = "[A-Za-z1-9]*")
+    @Size(min = 1, max = 10, message = "{invalid.size.season}")
+    @Pattern(regexp = "[A-Za-z0-9]*", message = "{invalid.pattern.season}")
     private String season;
 
     @Column(name = "number")
