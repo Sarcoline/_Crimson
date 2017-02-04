@@ -34,6 +34,7 @@ public class UserDTO {
     private List<Rating> userRatings;
 
     private List<TvShow> userTvShowList;
+
     private List<Episode> userEpisodeList;
 
 }

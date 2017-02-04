@@ -167,8 +167,16 @@
 </div>
 <script>
     $(function () {
+
         var rating = ${rating};
         if (rating != 0) $('.rateValue').html(" " + rating);
+
+        var watched = ${watchedEpisodesId}
+            $('.rateThis').each(function () {
+                console.log($(this).data('id'));
+                if ($.inArray($(this).data('id'),watched) != -1)  $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
+            });
+
         <c:if test="${follow == true}">
         $('i.fa-heart-o').addClass('fa-heart').removeClass('fa-heart-o');
         </c:if>
@@ -196,6 +204,7 @@
                 data: {id: ${tv.id}, value: i}
             });
         });
+
 
         $('.rateThis').on('click', function () {
             console.log($(this).data('id'));

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/tv")
@@ -48,7 +49,12 @@ public class CrimsonController {
             UserDTO user = userService.getUserByName(auth.getName());
             follow = userService.checkFollow(user, tv);
             rating = ratingService.getRating(tv.getId(), user.getId()).getValue();
-
+            model.addAttribute("user", user);
+            List watchedEpisodesId = new ArrayList();
+            for (Episode episode: user.getUserEpisodeList()) {
+                watchedEpisodesId.add(episode.getId());
+            }
+            model.addAttribute("watchedEpisodesId", watchedEpisodesId);
         }
         int seasons = 0;
         for (Episode episode: tv.getEpisodes()) {
@@ -64,14 +70,19 @@ public class CrimsonController {
 
 
     //TODO metoda która zwraca nieobejrzane odcinki uzytkownika/nadchodzace odcinki
-    //TODO getUserEpisodeList() nie dziala dobrze
     @GetMapping("/user/{name}")
     public String displayUser(Model model, @PathVariable("name") String name) {
         UserDTO user = userService.getUserByName(name);
         List<TvShowDTO> tvs = userService.getUserTvShows(user);
+        List<Episode> watchedEpisodes = user.getUserEpisodeList();
+        List watchedEpisodesId = new ArrayList();
+        for (Episode episode: watchedEpisodes) {
+            watchedEpisodesId.add(episode.getId());
+        }
         //userService.getUserUpcomingEpisodes(user);
         model.addAttribute("tvshows", tvs);
-        model.addAttribute("watchedEpisodes", Lists.reverse(user.getUserEpisodeList()));
+        model.addAttribute("watchedEpisodes", Lists.reverse(watchedEpisodes));
+        model.addAttribute("watchedEpisodesId", watchedEpisodesId);
         model.addAttribute("user", user);
         return "user";
     }

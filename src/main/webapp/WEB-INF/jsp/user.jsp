@@ -102,31 +102,32 @@
                         <c:forEach items="${tvshows}" var="tv">
                             <h3>${tv.title}</h3>
 
+                            <ul class="uk-list uk-list-line">
+                                <c:forEach items="${tv.episodes}" var="episode">
+                                    <li>
+                                        <p><strong> ${episode.number}. </strong>
+                                            <a class="rateThis" data-id="${episode.id}"><i class="fa fa-square-o"
+                                                                                           aria-hidden="true"></i></a>
+                                                ${episode.title}
+                                            <small class="episodeDate uk-text-muted">${episode.releaseDate}</small>
+                                        </p>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </c:forEach>
+                    </div>
+                    <div class="uk-width-1-2 ">
+                        <h2 style="text-align:center" class="uk-margin-large-bottom">Recently watched episodes</h2>
                         <ul class="uk-list uk-list-line">
-                            <c:forEach items="${tv.episodes}" var="episode">
+                            <c:forEach items="${watchedEpisodes}" var="episode" begin="0" end="9">
+
                                 <li>
-                                    <p><strong> ${episode.number}. </strong>
-                                        <a class="rateThis" data-id="${episode.id}"><i class="fa fa-square-o"
-                                                                                       aria-hidden="true"></i></a>
-                                            ${episode.title}
+                                    <p><strong>${episode.episodeFromTvShow.title} </strong> -
+                                        S${episode.season}E${episode.number} - ${episode.title}
                                         <small class="episodeDate uk-text-muted">${episode.releaseDate}</small>
                                     </p>
                                 </li>
                             </c:forEach>
-                        </ul>
-                        </c:forEach>
-                    </div>
-                    <div class="uk-width-1-2 ">
-                        <h2 style="text-align:center">Recently watched episodes</h2>
-                        <ul class="uk-list uk-list-line">
-                        <c:forEach items="${watchedEpisodes}" var="episode" begin="1" end="10">
-
-                            <li>
-                                <p><strong>${episode.episodeFromTvShow.title} </strong> - S${episode.season}E${episode.number} - ${episode.title}
-                                    <small class="episodeDate uk-text-muted">${episode.releaseDate}</small>
-                                </p>
-                            </li>
-                        </c:forEach>
                         </ul>
                     </div>
 
@@ -140,19 +141,24 @@
 
 <script>
     $(function () {
-    <sec:authorize access="isAuthenticated()">
-    $('a.rateThis').click(function () {
-        $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
-    });
-    </sec:authorize>
-    $('.rateThis').on('click', function () {
-        console.log($(this).data('id'));
-        $.ajax({
-            type: "get",
-            url: "/tv/watched",
-            data: {id: $(this).data('id')}
+        var watched = ${watchedEpisodesId}
+            $('.rateThis').each(function () {
+                console.log($(this).data('id'));
+                if ($.inArray($(this).data('id'), watched) != -1) $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
+            });
+        <sec:authorize access="isAuthenticated()">
+        $('a.rateThis').click(function () {
+            $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
         });
-    });
+        </sec:authorize>
+        $('.rateThis').on('click', function () {
+            console.log($(this).data('id'));
+            $.ajax({
+                type: "get",
+                url: "/tv/watched",
+                data: {id: $(this).data('id')}
+            });
+        });
     });
 </script>
 </body>

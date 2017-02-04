@@ -63,17 +63,15 @@ public class EpisodeServiceImpl implements EpisodeService {
     @Override
     public void addUser2Episode(UserDTO userDTO, Episode episode) {
         User user = userDAO.getUserById(userDTO.getId());
-        //episodeDAO.addUser2Episode(user, episode);
-        user.getUserEpisodeList().add(episode);
-        //episode.getEpisodeUserList().add(user);
-        userDAO.updateUser(user);
+        userDAO.addEpisode2User(user,episode);
+
     }
 
-    //TODO nie usuwa episode z usera
+    //TODO naprawic usuwanie episode z usera?
     @Override
     public void deleteUserFromEpisode(UserDTO userDTO, Episode episode) {
         User user = userDAO.getUserById(userDTO.getId());
-        user.getUserEpisodeList().remove(episode);
+        userDAO.deleteEpisodeFromUser(user,episode);
         userDAO.updateUser(user);
     }
 
