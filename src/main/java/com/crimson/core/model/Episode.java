@@ -5,7 +5,6 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,7 +34,6 @@ public @Data class Episode {
 
     @Column(name = "releaseDate")
     @Temporal(javax.persistence.TemporalType.DATE)
-    @Past(message = "{invalid.releaseDate}")
     private Date releaseDate;
 
     @Column(name = "episodeSummary")

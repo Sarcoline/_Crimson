@@ -65,6 +65,7 @@ public class EpisodeServiceImpl implements EpisodeService {
         User user = userDAO.getUserById(userDTO.getId());
         //episodeDAO.addUser2Episode(user, episode);
         user.getUserEpisodeList().add(episode);
+        //episode.getEpisodeUserList().add(user);
         userDAO.updateUser(user);
     }
 
@@ -73,7 +74,7 @@ public class EpisodeServiceImpl implements EpisodeService {
     public void deleteUserFromEpisode(UserDTO userDTO, Episode episode) {
         User user = userDAO.getUserById(userDTO.getId());
         user.getUserEpisodeList().remove(episode);
-        userDAO.saveUser(user);
+        userDAO.updateUser(user);
     }
 
     @Override

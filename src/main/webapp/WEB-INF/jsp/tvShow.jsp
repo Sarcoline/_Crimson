@@ -62,6 +62,7 @@
                 </ul>
             </div>
             <div class="uk-width-large-3-6 uk-width-small-4-6">
+                <%--Na razie wszystkie episody obserwowanych--%>
                 <ul id="tab-content" class="uk-switcher ">
                     <c:forEach begin="1" end="${seasons}" varStatus="count">
                         <li aria-hidden="false" class="">
@@ -74,6 +75,7 @@
                                                 <sec:authorize access="isAuthenticated()">
                                                     <a class="rateThis" data-id="${episode.id}"><i class="fa fa-square-o"
                                                                            aria-hidden="true"></i></a>
+
                                                 </sec:authorize>
                                                     ${episode.title}
                                                 <small class="episodeDate uk-text-muted">${episode.releaseDate}</small>
@@ -170,6 +172,7 @@
         <c:if test="${follow == true}">
         $('i.fa-heart-o').addClass('fa-heart').removeClass('fa-heart-o');
         </c:if>
+
         <sec:authorize access="isAuthenticated()">
         $('a.rateThis').click(function () {
             $(this).find('i').toggleClass('fa-square-o fa-check-square-o');

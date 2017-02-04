@@ -19,7 +19,9 @@
         <div class="uk-container uk-container-center">
             <div class="login" style="padding: 10px; margin-bottom: 40px;">
                 <c:if test="${user.name == name}">
-                    <a href="<c:url value="/tv/user/edit" /> "><i class="fa fa-cog fa-2x" style="color: #999; margin-bottom: -20px;" aria-hidden="true"></i></a>
+                    <a href="<c:url value="/tv/user/edit" /> "><i class="fa fa-cog fa-2x"
+                                                                  style="color: #999; margin-bottom: -40px;"
+                                                                  aria-hidden="true"></i></a>
                 </c:if>
                 <div>
                     <img src="http://www.iconsfind.com/wp-content/uploads/2015/08/20150831_55e46ad551392.png"
@@ -75,22 +77,83 @@
     </div>
     <div style="border-left: 2px solid #00a8e6;" class="uk-width-4-6 uk-margin-large-top">
         <div class="uk-container uk-container-center">
-            <h2 class="uk-article-title" style="text-align:center">${user.name} TvShows</h2>
-            <div class="genreList uk-margin-large-top">
-                <c:forEach items="${tvshows}" var="tv">
-                    <a href="<c:url value="/tv/${tv.slug}"/>"> <span class="item1" style="background-image: url('<c:url
-                            value="/images/tv/${tv.slug}/poster"/>')">
+            <div class="login" style="padding: 20px;">
+                <h1 style="text-align:center">TvShows followed by ${user.name} </h1>
+                <c:if test="${tvshows.size() == 0}">
+                    <h2 style="text-align: center">${user.name} is not following any tvshows :(</h2>
+                </c:if>
+                <div class="genreList uk-margin-large-top">
+                    <c:forEach items="${tvshows}" var="tv">
+                        <a href="<c:url value="/tv/${tv.slug}"/>"> <span class="item1"
+                                                                         style="background-image: url('<c:url
+                                                                                 value="/images/tv/${tv.slug}/poster"/>')">
                     <span class="overlay">
                         <span class="item-header">${tv.title}</span> </span>
             </span>
-                    </a>
-                </c:forEach>
+                        </a>
+                    </c:forEach>
+                </div>
             </div>
+            <c:if test="${user.name == name}">
+                <div class="uk-grid uk-margin-large-top">
+                    <div class="uk-width-1-2 ">
+                        <h2 style="text-align:center">Upcoming episodes</h2>
+
+                        <c:forEach items="${tvshows}" var="tv">
+                            <h3>${tv.title}</h3>
+
+                        <ul class="uk-list uk-list-line">
+                            <c:forEach items="${tv.episodes}" var="episode">
+                                <li>
+                                    <p><strong> ${episode.number}. </strong>
+                                        <a class="rateThis" data-id="${episode.id}"><i class="fa fa-square-o"
+                                                                                       aria-hidden="true"></i></a>
+                                            ${episode.title}
+                                        <small class="episodeDate uk-text-muted">${episode.releaseDate}</small>
+                                    </p>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                        </c:forEach>
+                    </div>
+                    <div class="uk-width-1-2 ">
+                        <h2 style="text-align:center">Recently watched episodes</h2>
+                        <ul class="uk-list uk-list-line">
+                        <c:forEach items="${watchedEpisodes}" var="episode" begin="1" end="10">
+
+                            <li>
+                                <p><strong>${episode.episodeFromTvShow.title} </strong> - S${episode.season}E${episode.number} - ${episode.title}
+                                    <small class="episodeDate uk-text-muted">${episode.releaseDate}</small>
+                                </p>
+                            </li>
+                        </c:forEach>
+                        </ul>
+                    </div>
+
+
+                </div>
+            </c:if>
         </div>
 
     </div>
 </div>
 
-
+<script>
+    $(function () {
+    <sec:authorize access="isAuthenticated()">
+    $('a.rateThis').click(function () {
+        $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
+    });
+    </sec:authorize>
+    $('.rateThis').on('click', function () {
+        console.log($(this).data('id'));
+        $.ajax({
+            type: "get",
+            url: "/tv/watched",
+            data: {id: $(this).data('id')}
+        });
+    });
+    });
+</script>
 </body>
 </html>

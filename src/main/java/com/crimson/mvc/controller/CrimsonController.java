@@ -7,7 +7,9 @@ import com.crimson.core.service.EpisodeService;
 import com.crimson.core.service.RatingService;
 import com.crimson.core.service.TvShowService;
 import com.crimson.core.service.UserService;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -61,11 +63,15 @@ public class CrimsonController {
     }
 
 
+    //TODO metoda która zwraca nieobejrzane odcinki uzytkownika/nadchodzace odcinki
+    //TODO getUserEpisodeList() nie dziala dobrze
     @GetMapping("/user/{name}")
     public String displayUser(Model model, @PathVariable("name") String name) {
         UserDTO user = userService.getUserByName(name);
         List<TvShowDTO> tvs = userService.getUserTvShows(user);
+        //userService.getUserUpcomingEpisodes(user);
         model.addAttribute("tvshows", tvs);
+        model.addAttribute("watchedEpisodes", Lists.reverse(user.getUserEpisodeList()));
         model.addAttribute("user", user);
         return "user";
     }
@@ -133,6 +139,7 @@ public class CrimsonController {
 
 
     @RequestMapping(value = "/rate", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
     public void rate(@RequestParam("id") long id, @RequestParam("value") int value) throws IOException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
@@ -141,6 +148,7 @@ public class CrimsonController {
     }
 
     @RequestMapping(value = "/watched", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
     public void watched(@RequestParam("id") long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());

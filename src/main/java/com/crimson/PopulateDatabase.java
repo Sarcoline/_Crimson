@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,7 +41,7 @@ public class PopulateDatabase {
     private UserService userDAO;
 
     @EventListener(ContextRefreshedEvent.class)
-    public void populate() throws IOException {
+    public void populate() throws IOException, ParseException {
         if (tvShowDAO.getAllTvShows().size() < 1) {
             TvShow tv = new TvShow();
 
@@ -51,6 +53,9 @@ public class PopulateDatabase {
             tv.setTrailerUrl("https://www.youtube.com/watch?v=EI0ib1NErqg");
             tv.setCountry("USA");
             tv.setReleaseYear(2010);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
+            String dateInString = "31-08-2020";
+            Date date = sdf.parse(dateInString);
             List<Episode> GameOfThronesEpisodes = new ArrayList();
             GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 1").number(1).releaseDate(new Date()).season(1).idTvShow(1L).episodeSummary("Summary 1").build());
             GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 2").number(2).releaseDate(new Date()).season(1).idTvShow(1L).episodeSummary("Summary 2").build());
@@ -61,10 +66,10 @@ public class PopulateDatabase {
             GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 2").number(2).releaseDate(new Date()).season(2).idTvShow(1L).episodeSummary("Summary 2").build());
             GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 3").number(3).releaseDate(new Date()).season(2).idTvShow(1L).episodeSummary("Summary 3").build());
             GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 4").number(4).releaseDate(new Date()).season(2).idTvShow(1L).episodeSummary("Summary 4").build());
-            GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 5").number(5).releaseDate(new Date()).season(2).idTvShow(1L).episodeSummary("Summary 5").build());
-            GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 1").number(1).releaseDate(new Date()).season(3).idTvShow(1L).episodeSummary("Summary 3").build());
-            GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 2").number(2).releaseDate(new Date()).season(3).idTvShow(1L).episodeSummary("Summary 4").build());
-            GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 3").number(3).releaseDate(new Date()).season(3).idTvShow(1L).episodeSummary("Summary 5").build());
+            GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 5").number(5).releaseDate(date).season(2).idTvShow(1L).episodeSummary("Summary 5").build());
+            GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 1").number(1).releaseDate(date).season(3).idTvShow(1L).episodeSummary("Summary 3").build());
+            GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 2").number(2).releaseDate(date).season(3).idTvShow(1L).episodeSummary("Summary 4").build());
+            GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 3").number(3).releaseDate(date).season(3).idTvShow(1L).episodeSummary("Summary 5").build());
             tv.setEpisodes(GameOfThronesEpisodes);
             Resource resource = applicationContext.getResource("classpath:/images/game-of-thrones/poster.jpg");
             InputStream in = resource.getInputStream();
