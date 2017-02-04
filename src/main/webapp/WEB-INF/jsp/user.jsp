@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication var="name" property="name"/>
 <%--
   Created by IntelliJ IDEA.
   User: adm
@@ -17,9 +18,9 @@
     <div class="uk-width-2-6 uk-margin-large-top" data-uk-grid-margin=" ">
         <div class="uk-container uk-container-center">
             <div class="login" style="padding: 10px; margin-bottom: 40px;">
-                <sec:authorize access="isAuthenticated()">
-                <a href="<c:url value="/tv/user/edit" /> "><i class="fa fa-cog fa-2x" style="color: #999; margin-bottom: -20px;" aria-hidden="true"></i></a>
-                </sec:authorize>
+                <c:if test="${user.name == name}">
+                    <a href="<c:url value="/tv/user/edit" /> "><i class="fa fa-cog fa-2x" style="color: #999; margin-bottom: -20px;" aria-hidden="true"></i></a>
+                </c:if>
                 <div>
                     <img src="http://www.iconsfind.com/wp-content/uploads/2015/08/20150831_55e46ad551392.png"
                          width="200" height="200" class="center" style="margin-bottom: 20px;">
