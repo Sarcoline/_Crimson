@@ -1,6 +1,7 @@
 package com.crimson.mvc.controller;
 
 import com.crimson.core.dto.UserDTO;
+import com.crimson.core.service.TvShowService;
 import com.crimson.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -21,6 +22,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private TvShowService tvShowService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(
@@ -61,5 +64,13 @@ public class UserController {
 
         userService.saveUser(userDTO);
         return "redirect:/login?registered";
+    }
+
+    //TODO metoda do zwracania najwyżej ocenionych seriali
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String index(Model model) throws IOException {
+
+        model.addAttribute("tvShows", tvShowService.getAllTvShows());
+        return "index";
     }
 }
