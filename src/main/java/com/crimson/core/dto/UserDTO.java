@@ -1,5 +1,6 @@
 package com.crimson.core.dto;
 
+import com.crimson.core.model.Episode;
 import com.crimson.core.model.Rating;
 import com.crimson.core.model.TvShow;
 import lombok.Data;
@@ -33,5 +34,6 @@ public class UserDTO {
     private List<Rating> userRatings;
 
     private List<TvShow> userTvShowList;
+    private List<Episode> userEpisodeList;
 
 }

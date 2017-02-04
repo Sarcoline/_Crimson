@@ -23,7 +23,7 @@
 <h1 class="title">${tv.title}
     <sec:authorize access="isAuthenticated()">
         <small class="follow"><a href="<c:url value="follow/${tv.id}"/> "><i class="fa fa-heart-o" aria-hidden="true"
-                                                              style="cursor: pointer"></i></a></small>
+                                                                             style="cursor: pointer"></i></a></small>
     </sec:authorize>
 </h1>
 <h3 class="subtitle uk-text-muted">${tv.genre} ${tv.releaseYear}</h3>
@@ -41,12 +41,6 @@
                 <a href="<c:url value="/images/tv/${tv.slug}/3"/>" data-lightbox-type="image"
                    data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/tv/${tv.slug}/3"/>"
                                                              width="200" height="200"> </a>
-                <%--<a href="<c:url value="/images/${tv.slug}/4"/>" data-lightbox-type="image"--%>
-                <%--data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/${tv.slug}/4"/>"--%>
-                <%--width="200" height="200"> </a>--%>
-                <%--<a href="<c:url value="/images/${tv.slug}/5"/>" data-lightbox-type="image"--%>
-                <%--data-uk-lightbox="{group:'group1'}"> <img src="<c:url value="/images/${tv.slug}/5"/>"--%>
-                <%--width="200" height="200"> </a>--%>
             </div>
         </div>
     </div>
@@ -60,76 +54,36 @@
         <div class="uk-grid episodes">
             <div class="uk-width-large-1-6 uk-width-small-2-6">
                 <ul class="uk-tab uk-tab-left" data-uk-tab="{connect:'#tab-content', animation: 'fade'}">
-                    <li aria-expanded="false" class="menu"><a href="#">Season 4</a></li>
-                    <li aria-expanded="false" class="menu uk-active"><a href="#">Season 5</a></li>
+                    <c:forEach begin="1" end="${seasons}" varStatus="count">
+                        <li aria-expanded="false" class="menu <c:if test="${count.last}">uk-active</c:if>"><a href="#">Season ${count.count}</a>
+                        </li>
+                        <%--<li aria-expanded="false" class="menu uk-active"><a href="#">Season 5</a></li>--%>
+                    </c:forEach>
                 </ul>
             </div>
             <div class="uk-width-large-3-6 uk-width-small-4-6">
                 <ul id="tab-content" class="uk-switcher ">
-                    <li aria-hidden="false" class="">
-                        <h3>Season 4</h3>
-                        <p>Episode title</p>
-                        <p>Episode title</p>
-                        <p>Episode title</p>
-                    </li>
-                    <li aria-hidden="false" class="">
-                        <h3>Season 5</h3>
-                        <ul class="uk-list uk-list-line">
-                            <li>
-                                <p><strong> 1. </strong><a class="rateThis"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
-                                    The Red Woman
-                                    <small class="episodeDate uk-text-muted">24.04.2016</small>
-                                </p>
-                            </li>
-                            <li>
-                                <p><strong> 2. </strong><a class="rateThis"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
-                                    Home
-                                    <small class="episodeDate uk-text-muted">24.04.2016</small>
-                                </p>
-                            </li>
-                            <li>
-                                <p><strong> 3. </strong><a class="rateThis"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
-                                    Oathbreaker
-                                    <small class="episodeDate uk-text-muted">24.04.2016</small>
-                                </p>
-                            </li>
-                            <li>
-                                <p><strong> 4. </strong><a class="rateThis"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
-                                    Book of the Stranger
-                                    <small class="episodeDate uk-text-muted">24.04.2016</small>
-                                </p>
-                            </li>
-                            <li>
-                                <p><strong> 5. </strong><a class="rateThis"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
-                                    The Door
-                                    <small class="episodeDate uk-text-muted">24.04.2016</small>
-                                </p>
-                            </li>
-                            <li>
-                                <p><strong> 6. </strong><a class="rateThis"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
-                                    Blood of My Blood
-                                    <small class="episodeDate uk-text-muted">24.04.2016</small>
-                                </p>
-                            </li>
-                            <li>
-                                <p><strong> 7. </strong><a class="rateThis"><i class="fa fa-square-o" aria-hidden="true"></i></a> The
-                                    Broken Man
-                                    <small class="episodeDate uk-text-muted">24.04.2016</small>
-                                </p>
-                            </li>
-                            <li>
-                                <p><strong> 8. </strong><a class="rateThis"><i class="fa fa-square-o" aria-hidden="true"></i></a> No One
-                                    <small class="episodeDate uk-text-muted">24.04.2016</small>
-                                </p>
-                            </li>
-                            <li>
-                                <p><strong> 9. </strong><a class="rateThis"><i class="fa fa-square-o" aria-hidden="true"></i></a> Battle
-                                    of Bastards
-                                    <small class="episodeDate uk-text-muted">24.04.2016</small>
-                                </p>
-                            </li>
-                        </ul>
-                    </li>
+                    <c:forEach begin="1" end="${seasons}" varStatus="count">
+                        <li aria-hidden="false" class="">
+                            <h3>Season ${count.count}</h3>
+                            <ul class="uk-list uk-list-line">
+                                <c:forEach items="${episodes}" var="episode">
+                                    <c:if test="${episode.season == count.count}">
+                                        <li>
+                                            <p><strong> ${episode.number}. </strong>
+                                                <sec:authorize access="isAuthenticated()">
+                                                    <a class="rateThis" data-id="${episode.id}"><i class="fa fa-square-o"
+                                                                           aria-hidden="true"></i></a>
+                                                </sec:authorize>
+                                                    ${episode.title}
+                                                <small class="episodeDate uk-text-muted">${episode.releaseDate}</small>
+                                            </p>
+                                        </li>
+                                    </c:if>
+                                </c:forEach>
+                            </ul>
+                        </li>
+                    </c:forEach>
                 </ul>
             </div>
         </div>
@@ -139,7 +93,8 @@
             <div class="uk-width-large-1-1 uk-width-small-1-2">
                 <div class="ratebox">
                     <p class="overallrating">
-                        ${tv.overallRating}<small class="uk-text-muted" style="font-size: 2rem;">/10</small>
+                        ${tv.overallRating}
+                        <small class="uk-text-muted" style="font-size: 2rem;">/10</small>
                     </p>
                     <p class="uk-text-muted">253 rated</p>
                     <p class="uk-text-muted">1453 follows</p>
@@ -177,7 +132,9 @@
         </div>
         <div class="uk-grid">
             <div class="uk-width-1-2 uk-align-center">
-                <img src="<c:url value="/images/user/${name}"/>" class="userPictureRate">
+                <sec:authorize access="isAuthenticated()">
+                    <img src="<c:url value="/images/user/${name}"/>" class="userPictureRate">
+                </sec:authorize>
             </div>
             <div class="uk-width-1-2 centerH">
                 <fieldset class="rating">
@@ -209,7 +166,7 @@
 <script>
     $(function () {
         var rating = ${rating};
-        if(rating !=  0) $('.rateValue').html(" " + rating);
+        if (rating != 0) $('.rateValue').html(" " + rating);
         <c:if test="${follow == true}">
         $('i.fa-heart-o').addClass('fa-heart').removeClass('fa-heart-o');
         </c:if>
@@ -233,9 +190,18 @@
             $.ajax({
                 type: "get",
                 url: "rate",
-                data:  {id: ${tv.id}, value: i}
+                data: {id: ${tv.id}, value: i}
             });
-    });
+        });
+
+        $('.rateThis').on('click', function () {
+            console.log($(this).data('id'));
+            $.ajax({
+                type: "get",
+                url: "watched",
+                data: {id: $(this).data('id')}
+            });
+        });
     });
 </script>
 </body>

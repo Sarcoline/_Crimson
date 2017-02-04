@@ -260,7 +260,8 @@ li.menu.uk-active a {
 }
 
 .episodeDate {
-    margin-right: 1rem;
+    margin-right: 0.2rem;
+    font-size: 1rem;
     float: right;
 }
 
@@ -304,10 +305,12 @@ img.center {
     color: #8cc14c;
     float: right;
     font-size: 1.4rem;
+    margin-left: 5px;
 }
 
 .fa-square-o {
     margin-right: 3px;
+    margin-left: 5px;
     float: right;
     font-size: 1.4rem;
     color: #999;

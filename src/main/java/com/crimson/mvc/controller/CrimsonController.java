@@ -2,6 +2,8 @@ package com.crimson.mvc.controller;
 
 import com.crimson.core.dto.TvShowDTO;
 import com.crimson.core.dto.UserDTO;
+import com.crimson.core.model.Episode;
+import com.crimson.core.service.EpisodeService;
 import com.crimson.core.service.RatingService;
 import com.crimson.core.service.TvShowService;
 import com.crimson.core.service.UserService;
@@ -30,6 +32,8 @@ public class CrimsonController {
     private UserService userService;
     @Autowired
     private RatingService ratingService;
+    @Autowired
+    private EpisodeService episodeService;
 
 
     @GetMapping("/{name}")
@@ -44,7 +48,13 @@ public class CrimsonController {
             rating = ratingService.getRating(tv.getId(), user.getId()).getValue();
 
         }
+        int seasons = 0;
+        for (Episode episode: tv.getEpisodes()) {
+            if (seasons < episode.getSeason()) seasons = episode.getSeason();
+        }
         model.addAttribute("tv", tv);
+        model.addAttribute("episodes", tv.getEpisodes());
+        model.addAttribute("seasons", seasons);
         model.addAttribute("rating", rating);
         model.addAttribute("follow", follow);
         return "tvShow";
@@ -128,5 +138,14 @@ public class CrimsonController {
         UserDTO user = userService.getUserByName(auth.getName());
         TvShowDTO tv = tvShowService.getTvById(id);
         ratingService.saveUserRating(user, tv, value);
+    }
+
+    @RequestMapping(value = "/watched", method = RequestMethod.GET)
+    public void watched(@RequestParam("id") long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDTO user = userService.getUserByName(auth.getName());
+        Episode episode = episodeService.getEpisodeById(id);
+        if (episodeService.checkWatched(user, episode)) episodeService.deleteUserFromEpisode(user, episode);
+        else episodeService.addUser2Episode(user, episode);
     }
 }
