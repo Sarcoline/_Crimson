@@ -1,6 +1,7 @@
 package com.crimson.core.service;
 
 import com.crimson.core.dao.RatingDAO;
+import com.crimson.core.dao.TvShowDAO;
 import com.crimson.core.dto.TvShowDTO;
 import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.Rating;
@@ -20,6 +21,8 @@ public class RatingServiceImpl implements RatingService {
 
     @Autowired
     private RatingDAO ratingDAO;
+    @Autowired
+    private TvShowDAO tvShowDAO;
     @Autowired
     private MapperFacade mapperFacade;
 
@@ -49,7 +52,7 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public Rating getRatingByIdTvShow(Long idTvShow) {
+    public List<Rating> getRatingByIdTvShow(Long idTvShow) {
         return ratingDAO.getRatingByIdTvShow(idTvShow);
     }
 
@@ -63,6 +66,7 @@ public class RatingServiceImpl implements RatingService {
         return ratingDAO.getRating(idtv, iduser);
     }
 
+    @Override
     public void saveUserRating(UserDTO userDTO, TvShowDTO tvShowDTO, int value) {
         User user = mapperFacade.map(userDTO, User.class);
         TvShow tvShow = mapperFacade.map(tvShowDTO, TvShow.class);
@@ -71,5 +75,18 @@ public class RatingServiceImpl implements RatingService {
         rating.setUserRating(user);
         rating.setTvShowRating(tvShow);
         ratingDAO.saveRating(rating);
+        calculateRating(tvShow.getId());
+    }
+
+    public void calculateRating(long id) {
+        TvShow tvShow = tvShowDAO.getTvById(id);
+        List<Rating> ratings = tvShow.getTvShowRating();
+        double overall = 0;
+        for (Rating rat: ratings) {
+            overall += rat.getValue();
+        }
+        overall /= ratings.size();
+        tvShow.setOverallRating(overall);
+        tvShowDAO.updateTvShow(tvShow);
     }
 }

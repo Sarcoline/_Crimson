@@ -147,8 +147,6 @@ public class CrimsonController {
     }
 
 
-
-
     @RequestMapping(value = "/rate", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     public void rate(@RequestParam("id") long id, @RequestParam("value") int value) throws IOException {
@@ -156,6 +154,7 @@ public class CrimsonController {
         UserDTO user = userService.getUserByName(auth.getName());
         TvShowDTO tv = tvShowService.getTvById(id);
         ratingService.saveUserRating(user, tv, value);
+
     }
 
     @RequestMapping(value = "/watched", method = RequestMethod.GET)

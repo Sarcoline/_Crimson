@@ -95,8 +95,7 @@
             <div class="uk-width-large-1-1 uk-width-small-1-2">
                 <div class="ratebox">
                     <p class="overallrating">
-                        ${tv.overallRating}
-                        <small class="uk-text-muted" style="font-size: 2rem;">/10</small>
+                        ${tv.overallRating}<small class="uk-text-muted" style="font-size: 2rem;">/10</small>
                     </p>
                     <p class="uk-text-muted">253 rated</p>
                     <p class="uk-text-muted">1453 follows</p>

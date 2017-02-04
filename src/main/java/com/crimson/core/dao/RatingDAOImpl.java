@@ -45,9 +45,13 @@ public class RatingDAOImpl implements RatingDAO {
     }
 
     @Override
-    public Rating getRatingByIdTvShow(Long idTvShow) {
+    public List<Rating> getRatingByIdTvShow(Long idTvShow) {
         Session session = sf.getCurrentSession();
-        return session.find(Rating.class, idTvShow);
+        String hql = "from Rating s where s.tvShowRating.id = ?";
+        List rating = session.createQuery(hql)
+                .setParameter(0, idTvShow)
+                .getResultList();
+        return rating;
     }
 
     @Override
