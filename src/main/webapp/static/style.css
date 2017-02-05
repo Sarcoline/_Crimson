@@ -285,9 +285,20 @@ li.menu.uk-active a {
 
 img.center {
     display: block;
-    margin: 20px auto 0;
+    margin-left: 100px;
 }
+.centerText {
+    height: 140px;
+    line-height: 140px;
+    text-align: center;
 
+}
+.centerText1 {
+    height: 90px;
+    line-height: 90px;
+    text-align: center;
+
+}
 /*fontawesome*/
 .fa-heart {
     font-size: 3rem;
@@ -341,6 +352,17 @@ img.center {
     background-size: cover;
     margin: 5px;
     box-shadow: 3px 3px 6px #999;
+
+}
+
+.item2 {
+    display: inline-block;
+    background-color: black;
+    width: 500px;
+    height: 90px;
+    background-size: cover;
+    box-shadow: 3px 3px 6px #999;
+    margin: 5px 5px 5px 25px;
 
 }
 
