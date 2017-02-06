@@ -1,6 +1,8 @@
 package com.crimson.core.model;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.URL;
@@ -14,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Entity
+@NoArgsConstructor
 @Table(name = "TvShow")
 public @Data class TvShow {
 
@@ -73,81 +76,20 @@ public @Data class TvShow {
     private int version;
 
 
-    public TvShow(){
-
+    @Builder
+    public TvShow(String title, String network, String country, String genre, String description, String trailerUrl, double overallRating, int releaseYear, String slug){
+        this.title = title;
+        this.network = network;
+        this.country = country;
+        this.genre = genre;
+        this.description = description;
+        this.trailerUrl = trailerUrl;
+        this.overallRating = overallRating;
+        this.releaseYear = releaseYear;
+        this.slug = slug;
     }
 
-    public TvShow(Builder builder){
-        title = builder.title;
-        network = builder.network;
-        country = builder.country;
-        genre = builder.genre;
-        description = builder.description;
-        trailerUrl = builder.trailerUrl;
-        overallRating = builder.overallRating;
-        releaseYear = builder.releaseYear;
-        slug = builder.slug;
-    }
 
-    public static class Builder{
-
-        private String title;
-        private String network;
-        private String country;
-        private String genre;
-        private String description;
-        private String trailerUrl;
-        private Double overallRating;
-        private int releaseYear;
-        private String slug;
-
-        public Builder title(String title){
-            this.title = title;
-            return this;
-        }
-
-        public Builder network(String network){
-            this.network = network;
-            return this;
-        }
-
-        public Builder country(String country){
-            this.country = country;
-            return this;
-        }
-
-        public Builder genre(String genre){
-            this.genre = genre;
-            return this;
-        }
-
-        public Builder description(String description){
-            this.description = description;
-            return this;
-        }
-
-        public Builder trailerUlr(String trailerUrl){
-            this.trailerUrl = trailerUrl;
-            return this;
-        }
-
-        public Builder overallRating(Double overallRating){
-            this.overallRating = overallRating;
-            return this;
-        }
-
-        public Builder releaseYear(int releaseYear){
-            this.releaseYear = releaseYear;
-            return this;
-        }
-
-        public Builder slug(String slug){
-            this.slug = slug;
-            return this;
-        }
-
-        public TvShow build(){return new TvShow(this);}
-    }
 
     //RELATIONSHIPS
     //User2TvShow Relation

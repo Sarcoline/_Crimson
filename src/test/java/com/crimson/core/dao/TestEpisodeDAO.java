@@ -31,18 +31,18 @@ public class TestEpisodeDAO {
     @Autowired
     private TvShowDAO tvShowDAO;
 
-    private Episode episode = new Episode.Builder()
+    private Episode episode = Episode.builder()
             .title("Episode 1")
             .build();
 
-    private User user = new User.Builder()
+    private User user =  User.builder()
             .name("Aleks")
             .email("Email@wp.pl")
             .password("123")
             .role("ROLE_USER")
             .build();
 
-    private TvShow tvShow = new TvShow.Builder()
+    private TvShow tvShow = TvShow.builder()
             .title("Dr.House")
             .network("Netflix")
             .country("US")

@@ -24,11 +24,11 @@ public class TestGenreDAO {
     @Autowired
     private GenreDAO genreDAO;
 
-    private Genre genre = new Genre.Builder()
+    private Genre genre = Genre.builder()
             .name("Drama")
             .build();
 
-    private TvShow tvShow = new TvShow.Builder()
+    private TvShow tvShow = TvShow.builder()
             .title("Dr.House")
             .network("Netflix")
             .country("US")

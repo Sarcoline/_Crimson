@@ -33,29 +33,29 @@ public class TestTvShowDAO {
     @Autowired
     private RatingDAO ratingDAO;
 
-    private TvShow tvShow = new TvShow.Builder()
+    private TvShow tvShow = TvShow.builder()
             .title("Dr.House")
             .network("Netflix")
             .country("US")
             .genre("Drama")
             .build();
 
-    User user = new User.Builder()
+    User user = User.builder()
             .name("Aleks")
             .email("Email@wp.pl")
             .password("123")
             .role("ROLE_USER")
             .build();
 
-    private Genre genre = new Genre.Builder()
+    private Genre genre = Genre.builder()
             .name("Drama")
             .build();
 
-    private Episode episode = new Episode.Builder()
+    private Episode episode = Episode.builder()
             .title("Episode 1")
             .build();
 
-    private Rating rating = new Rating.Builder()
+    private Rating rating = Rating.builder()
             .value(5)
             .build();
 

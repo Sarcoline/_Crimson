@@ -30,18 +30,18 @@ public class TestRatingDAO {
     @Autowired
     private RatingService ratingService;
 
-    private Rating rating = new Rating.Builder()
+    private Rating rating = Rating.builder()
             .value(5)
             .build();
 
-    private TvShow tvShow = new TvShow.Builder()
+    private TvShow tvShow = TvShow.builder()
             .title("Dr.House")
             .network("Netflix")
             .country("US")
             .genre("Drama")
             .build();
 
-    private User user = new User.Builder()
+    private User user =  User.builder()
             .name("Aleks")
             .email("Email@wp.pl")
             .password("123")
@@ -58,7 +58,7 @@ public class TestRatingDAO {
     @Test
     public void addRatingTest() {
         Assert.assertEquals(1, ratingDAO.getAllRatings().size());
-        Rating rating1 = new Rating.Builder()
+        Rating rating1 = Rating.builder()
                 .value(3)
                 .build();
         rating1.setValue(5);
@@ -101,7 +101,7 @@ public class TestRatingDAO {
 
     @Test
     public void getRating() {
-        TvShow tvShow = new TvShow.Builder()
+        TvShow tvShow = TvShow.builder()
                 .title("Dr.House")
                 .network("Netflix")
                 .country("US")
@@ -110,7 +110,7 @@ public class TestRatingDAO {
 
         tvShow.setTitle("test");
         tvShowDAO.saveTvShow(tvShow);
-        Rating rating = new Rating.Builder()
+        Rating rating = Rating.builder()
                 .value(3)
                 .build();
         rating.setTvShowRating(tvShow);

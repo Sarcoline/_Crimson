@@ -12,7 +12,7 @@ public class TvShowFactory {
 
         switch (title.toLowerCase()) {
             case "dr.house": {
-                tv = new TvShow.Builder()
+                tv = TvShow.builder()
                         .title("Dr.House")
                         .network("Netflix")
                         .country("US")
@@ -21,7 +21,7 @@ public class TvShowFactory {
                 break;
             }
             case "friends": {
-                tv = new TvShow.Builder()
+                tv = TvShow.builder()
                         .title("Friends")
                         .network("Network")
                         .country("US")

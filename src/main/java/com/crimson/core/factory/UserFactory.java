@@ -16,7 +16,7 @@ public class UserFactory {
 
         switch (name.toLowerCase()) {
             case "aleks": {
-                user = new User.Builder()
+                user =  User.builder()
                         .name("Aleks")
                         .email("Email@wp.pl")
                         .password("123")
@@ -25,7 +25,7 @@ public class UserFactory {
                 break;
             }
             case "kamil": {
-                user = new User.Builder()
+                user = User.builder()
                         .name("Kamil")
                         .email("kaamil.kot@gmail.com")
                         .password("123")

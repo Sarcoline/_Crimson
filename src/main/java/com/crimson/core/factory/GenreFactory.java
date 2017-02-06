@@ -9,7 +9,7 @@ public class GenreFactory {
 
         switch (name.toLowerCase()) {
             case "drama": {
-                genre = new Genre.Builder()
+                genre = Genre.builder()
                         .name("Drama")
                         .build();
                 break;

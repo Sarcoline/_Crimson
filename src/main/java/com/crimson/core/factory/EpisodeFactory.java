@@ -12,7 +12,7 @@ public class EpisodeFactory {
 
         switch (title.toLowerCase()) {
             case "episode 1": {
-                episode = new Episode.Builder()
+                episode = Episode.builder()
                         .title("Episode 1")
                         .build();
                 break;

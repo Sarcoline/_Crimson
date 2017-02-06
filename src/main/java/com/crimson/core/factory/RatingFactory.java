@@ -10,7 +10,7 @@ public class RatingFactory {
 
         switch (value) {
             case 5: {
-                rating = new Rating.Builder()
+                rating = Rating.builder()
                         .value(5)
                         .build();
                 break;
