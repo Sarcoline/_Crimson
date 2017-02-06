@@ -2,6 +2,7 @@ package com.crimson.core.dao;
 
 import com.crimson.core.model.*;
 import com.github.slugify.Slugify;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,17 @@ public class TvShowDAOImpl implements TvShowDAO {
     public TvShow getTvById(Long id) {
         Session session = sf.getCurrentSession();
         return session.find(TvShow.class, id);
+    }
+
+    @Override
+    public TvShow getTvByIdWithEpisodes(Long id) {
+
+        Session session = sf.getCurrentSession();
+
+        TvShow tvshow = session.find(TvShow.class, id);
+        Hibernate.initialize(tvshow.getEpisodes());
+
+        return tvshow;
     }
 
     @Override
