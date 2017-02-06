@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(UserDTO userDTO) {
-       // User user =  mapperFacade.map(userDTO, User.class);
+        // User user =  mapperFacade.map(userDTO, User.class);
         User user = userDAO.getUserById(userDTO.getId());
         userDAO.deleteUser(user);
     }

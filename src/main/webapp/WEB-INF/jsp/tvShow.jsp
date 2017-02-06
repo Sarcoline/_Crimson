@@ -172,7 +172,6 @@
 
         var watched = ${watchedEpisodesId}
             $('.rateThis').each(function () {
-                console.log($(this).data('id'));
                 if ($.inArray($(this).data('id'),watched) != -1)  $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
             });
 

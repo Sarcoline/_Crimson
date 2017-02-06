@@ -40,16 +40,18 @@ public @Data class Genre {
         name = builder.name;
     }
 
-    public static class Builder{
+    public static class Builder {
 
         private String name;
 
-        public Builder name(String name){
+        public Builder name(String name) {
             this.name = name;
             return this;
         }
 
-        public Genre build(){return new Genre(this);}
+        public Genre build() {
+            return new Genre(this);
+        }
     }
 
 

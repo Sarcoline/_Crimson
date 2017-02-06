@@ -3,9 +3,7 @@ package com.crimson.core.model;
 import lombok.Data;
 import org.hibernate.validator.constraints.Email;
 
-import javax.enterprise.inject.Default;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -42,54 +40,6 @@ public @Data class User {
     //Optimistic Locking
     @Version
     private int version;
-
-    public User(){
-
-    }
-
-    public User(Builder builder){
-        name = builder.name;
-        email = builder.email;
-        password = builder.password;
-        role = builder.role;
-    }
-
-    public static class Builder{
-
-        private Long id;
-        private String name;
-        private String email;
-        private String password;
-        private String role;
-
-        public Builder name(String name){
-            this.name = name;
-            return this;
-        }
-
-        public Builder email(String email){
-            this.email = email;
-            return this;
-        }
-
-        public Builder password(String password){
-            this.password = password;
-            return this;
-        }
-
-        public Builder role(String role){
-            this.role = "ROLE_USER";
-            return this;
-        }
-
-        public User build(){
-            return new User(this);
-        }
-    }
-
-
-
-
     //User2TvShow
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "User2TvShow",
@@ -103,7 +53,51 @@ public @Data class User {
             inverseJoinColumns = @JoinColumn(name = "idEpisode"))
     private List<Episode> userEpisodeList = new ArrayList<>();
     //Rating
-    @OneToMany(mappedBy = "userRating", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "userRating", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Rating> userRatings = new ArrayList<>();
+
+
+    public User() {
+
+    }
+    public User(Builder builder) {
+        name = builder.name;
+        email = builder.email;
+        password = builder.password;
+        role = builder.role;
+    }
+
+    public static class Builder {
+
+        private Long id;
+        private String name;
+        private String email;
+        private String password;
+        private String role;
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Builder role(String role) {
+            this.role = "ROLE_USER";
+            return this;
+        }
+
+        public User build() {
+            return new User(this);
+        }
+    }
 
 }

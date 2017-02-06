@@ -119,8 +119,8 @@ public class CrimsonController {
     public void deleteUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
-        request.logout();
         userService.deleteUser(user);
+        request.logout();
         response.sendRedirect("/");
     }
 

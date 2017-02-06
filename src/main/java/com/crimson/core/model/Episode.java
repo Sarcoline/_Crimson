@@ -69,7 +69,7 @@ public @Data class Episode {
         idTvShow = builder.idTvShow;
     }
 
-    public static class Builder{
+    public static class Builder {
 
         private String title;
         private int season;
@@ -78,37 +78,39 @@ public @Data class Episode {
         private String episodeSummary;
         private Long idTvShow;
 
-        public Builder title(String title){
+        public Builder title(String title) {
             this.title = title;
             return this;
         }
 
-        public Builder season(int season){
+        public Builder season(int season) {
             this.season = season;
             return this;
         }
 
-        public Builder number(int number){
+        public Builder number(int number) {
             this.number = number;
             return this;
         }
 
-        public Builder releaseDate(Date releaseDate){
-        this.releaseDate = releaseDate;
-        return this;
+        public Builder releaseDate(Date releaseDate) {
+            this.releaseDate = releaseDate;
+            return this;
         }
 
-        public Builder episodeSummary(String episodeSummary){
+        public Builder episodeSummary(String episodeSummary) {
             this.episodeSummary = episodeSummary;
             return this;
         }
 
-        public Builder idTvShow(Long idTvShow){
+        public Builder idTvShow(Long idTvShow) {
             this.idTvShow = idTvShow;
             return this;
         }
 
-        public Episode build(){return new Episode(this);}
+        public Episode build() {
+            return new Episode(this);
+        }
     }
 
 

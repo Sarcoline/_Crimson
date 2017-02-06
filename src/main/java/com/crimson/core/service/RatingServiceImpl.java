@@ -82,7 +82,7 @@ public class RatingServiceImpl implements RatingService {
         TvShow tvShow = tvShowDAO.getTvById(id);
         List<Rating> ratings = tvShow.getTvShowRating();
         double overall = 0;
-        for (Rating rat: ratings) {
+        for (Rating rat : ratings) {
             overall += rat.getValue();
         }
         overall /= ratings.size();

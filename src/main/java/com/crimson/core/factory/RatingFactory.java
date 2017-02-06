@@ -7,7 +7,7 @@ import com.crimson.core.model.Rating;
  */
 public class RatingFactory {
 
-    public Rating getRating(int value){
+    public Rating getRating(int value) {
         Rating rating = null;
 
         switch (value) {

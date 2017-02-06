@@ -55,7 +55,7 @@ public @Data class TvShow {
     private String trailerUrl;
 
     @Column(name = "releaseYear")
-    @Range(min = 1920, max = 2017,message = "{invalid.releaseYear}")
+    @Range(min = 1920, max = 2017, message = "{invalid.releaseYear}")
     private int releaseYear;
 
     @Column(name = "slug")
@@ -70,84 +70,6 @@ public @Data class TvShow {
     //Optimistic Locking
     @Version
     private int version;
-
-
-    public TvShow(){
-
-    }
-
-    public TvShow(Builder builder){
-        title = builder.title;
-        network = builder.network;
-        country = builder.country;
-        genre = builder.genre;
-        description = builder.description;
-        trailerUrl = builder.trailerUrl;
-        overallRating = builder.overallRating;
-        releaseYear = builder.releaseYear;
-        slug = builder.slug;
-    }
-
-    public static class Builder{
-
-        private String title;
-        private String network;
-        private String country;
-        private String genre;
-        private String description;
-        private String trailerUrl;
-        private Double overallRating;
-        private int releaseYear;
-        private String slug;
-
-        public Builder title(String title){
-            this.title = title;
-            return this;
-        }
-
-        public Builder network(String network){
-            this.network = network;
-            return this;
-        }
-
-        public Builder country(String country){
-            this.country = country;
-            return this;
-        }
-
-        public Builder genre(String genre){
-            this.genre = genre;
-            return this;
-        }
-
-        public Builder description(String description){
-            this.description = description;
-            return this;
-        }
-
-        public Builder trailerUlr(String trailerUrl){
-            this.trailerUrl = trailerUrl;
-            return this;
-        }
-
-        public Builder overallRating(Double overallRating){
-            this.overallRating = overallRating;
-            return this;
-        }
-
-        public Builder releaseYear(int releaseYear){
-            this.releaseYear = releaseYear;
-            return this;
-        }
-
-        public Builder slug(String slug){
-            this.slug = slug;
-            return this;
-        }
-
-        public TvShow build(){return new TvShow(this);}
-    }
-
     //RELATIONSHIPS
     //User2TvShow Relation
     @ManyToMany(mappedBy = "userTvShowList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -161,5 +83,83 @@ public @Data class TvShow {
     //Rating
     @OneToMany(mappedBy = "tvShowRating", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Rating> tvShowRating = new ArrayList<>();
+
+    public TvShow() {
+
+    }
+
+    public TvShow(Builder builder) {
+        title = builder.title;
+        network = builder.network;
+        country = builder.country;
+        genre = builder.genre;
+        description = builder.description;
+        trailerUrl = builder.trailerUrl;
+        overallRating = builder.overallRating;
+        releaseYear = builder.releaseYear;
+        slug = builder.slug;
+    }
+
+    public static class Builder {
+
+        private String title;
+        private String network;
+        private String country;
+        private String genre;
+        private String description;
+        private String trailerUrl;
+        private Double overallRating;
+        private int releaseYear;
+        private String slug;
+
+        public Builder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder network(String network) {
+            this.network = network;
+            return this;
+        }
+
+        public Builder country(String country) {
+            this.country = country;
+            return this;
+        }
+
+        public Builder genre(String genre) {
+            this.genre = genre;
+            return this;
+        }
+
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder trailerUlr(String trailerUrl) {
+            this.trailerUrl = trailerUrl;
+            return this;
+        }
+
+        public Builder overallRating(Double overallRating) {
+            this.overallRating = overallRating;
+            return this;
+        }
+
+        public Builder releaseYear(int releaseYear) {
+            this.releaseYear = releaseYear;
+            return this;
+        }
+
+        public Builder slug(String slug) {
+            this.slug = slug;
+            return this;
+        }
+
+        public TvShow build() {
+            return new TvShow(this);
+        }
+    }
 
 }
