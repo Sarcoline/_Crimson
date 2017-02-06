@@ -64,7 +64,7 @@ public class TestEpisodeDAO {
     @Test
     public void updateEpisodeTest() {
         episode.setTitle("UpdatedTitle");
-        episode.setSeason("second");
+        episode.setSeason(2);
 
         episodeDAO.updateEpisode(episode);
 

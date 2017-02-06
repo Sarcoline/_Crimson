@@ -5,8 +5,6 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,13 +20,13 @@ public @Data class Episode {
 
     @Column(name = "title")
     @Size(min = 3, max = 30, message = "{invalid.size.title}")
-    @Pattern(regexp = "[A-Z][a-z]*(([ ]?[A-Za-z]+)?)*", message = "{invalid.pattern.title}")
+    //@Pattern(regexp = "[A-Z][a-z]*(([ ]?[A-Za-z]+)?)*", message = "{invalid.pattern.title}")
     private String title;
 
     @Column(name = "season")
-    @Size(min = 1, max = 10, message = "{invalid.size.season}")
-    @Pattern(regexp = "[A-Za-z0-9]*", message = "{invalid.pattern.season}")
-    private String season;
+    @Range(max = 99, message = "{invalid.number}")
+    //@Pattern(regexp = "[A-Za-z0-9]*", message = "{invalid.pattern.season}")
+    private int season;
 
     @Column(name = "number")
     @Range(max = 99, message = "{invalid.number}")
@@ -36,8 +34,7 @@ public @Data class Episode {
 
     @Column(name = "releaseDate")
     @Temporal(javax.persistence.TemporalType.DATE)
-    @Past(message = "{invalid.releaseDate}")
-    private Date realeaseData;
+    private Date releaseDate;
 
     @Column(name = "episodeSummary")
     @Length(max = 1000)
@@ -67,7 +64,7 @@ public @Data class Episode {
         title = builder.title;
         season = builder.season;
         number = builder.number;
-        realeaseData = builder.realeaseData;
+        releaseDate = builder.releaseDate;
         episodeSummary = builder.episodeSummary;
         idTvShow = builder.idTvShow;
     }
@@ -75,9 +72,9 @@ public @Data class Episode {
     public static class Builder{
 
         private String title;
-        private String season;
+        private int season;
         private int number;
-        private Date realeaseData;
+        private Date releaseDate;
         private String episodeSummary;
         private Long idTvShow;
 
@@ -86,7 +83,7 @@ public @Data class Episode {
             return this;
         }
 
-        public Builder season(String season){
+        public Builder season(int season){
             this.season = season;
             return this;
         }
@@ -96,8 +93,8 @@ public @Data class Episode {
             return this;
         }
 
-        public Builder realeaseData(Date realeaseData){
-        this.realeaseData = realeaseData;
+        public Builder releaseDate(Date releaseDate){
+        this.releaseDate = releaseDate;
         return this;
         }
 

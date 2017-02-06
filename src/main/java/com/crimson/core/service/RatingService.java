@@ -18,11 +18,13 @@ public interface RatingService {
 
     Rating getRatingByID(Long id);
 
-    Rating getRatingByIdTvShow(Long idTvShow);
+    List<Rating> getRatingByIdTvShow(Long idTvShow);
 
     List<Rating> getAllRatings();
 
     Rating getRating(long idtv, long iduser);
 
     void saveUserRating(UserDTO userDTO, TvShowDTO tvShowDTO, int value);
+
+    void calculateRating(long id);
 }
