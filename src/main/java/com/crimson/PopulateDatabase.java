@@ -1,34 +1,37 @@
 package com.crimson;
 
-import com.crimson.context.CoreApplicationContext;
 import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.TvShow;
 import com.crimson.core.service.TvShowService;
 import com.crimson.core.service.UserService;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Created by Meow on 18.01.2017.
+ * Created by Meow on 02.02.2017.
  */
-@Service
+@Component
 public class PopulateDatabase {
 
+    @Autowired
+    private ApplicationContext applicationContext;
 
-    public static void main(String[] args) throws IOException {
+    @Autowired
+    private TvShowService tvShowDAO;
 
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(CoreApplicationContext.class);
+    @Autowired
+    private UserService userDAO;
 
-        TvShowService tvShowDAO = applicationContext.getBean(TvShowService.class);
-        UserService userDAO = applicationContext.getBean(UserService.class);
-
-
+    @EventListener(ContextRefreshedEvent.class)
+    public void populate() throws IOException {
         if (tvShowDAO.getAllTvShows().size() < 1) {
             TvShow tv = new TvShow();
 
@@ -169,6 +172,5 @@ public class PopulateDatabase {
             tvShowDAO.saveTvShow(tv3);
             tvShowDAO.saveTvShow(tv4);
         }
-
     }
 }

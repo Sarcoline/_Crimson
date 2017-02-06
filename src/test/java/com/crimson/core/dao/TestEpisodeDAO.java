@@ -1,6 +1,9 @@
 package com.crimson.core.dao;
 
 import com.crimson.context.TestSpringCore;
+import com.crimson.core.factory.EpisodeFactory;
+import com.crimson.core.factory.TvShowFactory;
+import com.crimson.core.factory.UserFactory;
 import com.crimson.core.model.Episode;
 import com.crimson.core.model.TvShow;
 import com.crimson.core.model.User;
@@ -21,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class TestEpisodeDAO {
 
 
-
     @Autowired
     private EpisodeDAO episodeDAO;
 
@@ -31,23 +33,16 @@ public class TestEpisodeDAO {
     @Autowired
     private TvShowDAO tvShowDAO;
 
-    private Episode episode = new Episode.Builder()
-            .title("Episode 1")
-            .build();
+    private UserFactory userFactory = new UserFactory();
+    private TvShowFactory tvShowFactory = new TvShowFactory();
+    private EpisodeFactory episodeFactory = new EpisodeFactory();
 
-    private User user = new User.Builder()
-            .name("Aleks")
-            .email("Email@wp.pl")
-            .password("123")
-            .role("ROLE_USER")
-            .build();
+    private User user = userFactory.getUser("Aleks");
 
-    private TvShow tvShow = new TvShow.Builder()
-            .title("Dr.House")
-            .network("Netflix")
-            .country("US")
-            .genre("Drama")
-            .build();
+    private TvShow tvShow = tvShowFactory.getTvShow("Dr.House");
+
+    private Episode episode = episodeFactory.getEpisode("Episode 1");
+
 
     @Before
     public void setDB() {
