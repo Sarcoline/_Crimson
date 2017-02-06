@@ -19,11 +19,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @RequestMapping("/tv")
 @Controller
@@ -114,12 +116,14 @@ public class CrimsonController {
     }
 
     //USUWANIE USERA
-    @RequestMapping(value="/user/delete", method = RequestMethod.POST)
+    @RequestMapping(value="/user/delete", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
-    public String deleteUser(){
+    public String deleteUser(HttpServletRequest request) throws ServletException{
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
+        request.logout();
         userService.deleteUser(user);
+
         return "redirect:/";
 
 

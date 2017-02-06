@@ -27,28 +27,31 @@
                 <form:errors cssClass="uk-alert uk-alert-danger" element="div"/>
                 <div class="uk-form-row">
                     <form:errors path="name" cssClass="uk-alert uk-alert-danger" element="div"/>
-                    <form:input path="name" value="${userDTO.name}" class="uk-width-1-1 uk-form-large" type="text" name='name'
+                    <form:input path="name" value="${userDTO.name}" class="uk-width-1-1 uk-form-large" type="text"
+                                name='name'
                                 placeholder="Username" readOnly="true"/>
                 </div>
                 <div class="uk-form-row">
                     <form:errors path="email" cssClass="uk-alert uk-alert-danger" element="div"/>
-                    <form:input path="email" value="${userDTO.email}" class="uk-width-1-1 uk-form-large" type="text" name='email'
+                    <form:input path="email" value="${userDTO.email}" class="uk-width-1-1 uk-form-large" type="text"
+                                name='email'
                                 placeholder="Email"/>
                         <%--TODO zmienic wyświetlanie błędów--%>
                 </div>
-                <div class="uk-form-row">
+
                 <form:input path="id" value="${userDTO.id}" type="hidden"/>
-                <form:input path="profilePic" value="${userDTO.profilePic}" type="hidden" />
-                <form:input path="password" value="${userDTO.password}" type="hidden"/>
+                <form:input path="profilePic" value="${userDTO.profilePic}" type="hidden"/>
+                <div class="uk-form-row">
+                    <form:input path="password" value="${userDTO.password}" type="hidden"/>
                 </div>
                 <div class="uk-form-row">
                     <input class="uk-width-1-1 uk-button uk-button-primary uk-button-large" name="submit" type="submit"
                            value="Save"/>
-                    <a href="<c:url value="/tv/user/delete" /> "><i class="fa fa-cog fa-2x"
-                                                                  style="color: #999; margin-bottom: -30px;"
-                                                                  aria-hidden="true"></i></a>
                 </div>
+
             </form:form>
+            <a class="uk-width-1-1 uk-button uk-button-danger uk-button-large"
+               href="<c:url value="/tv/user/delete/"/>">Delete</a>
         </div>
     </div>
 </div>
