@@ -113,6 +113,18 @@ public class CrimsonController {
         return String.format("redirect:/tv/user/%s", userDTO.getName());
     }
 
+    //USUWANIE USERA
+    @RequestMapping(value="/user/delete", method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.OK)
+    public String deleteUser(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDTO user = userService.getUserByName(auth.getName());
+        userService.deleteUser(user);
+        return "redirect:/";
+
+
+    }
+
     @GetMapping("/genre/{name}")
     public String displayGenre(@PathVariable String name, Model model) {
         name = Character.toUpperCase(name.charAt(0)) + name.substring(1);

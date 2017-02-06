@@ -44,6 +44,9 @@
                 <div class="uk-form-row">
                     <input class="uk-width-1-1 uk-button uk-button-primary uk-button-large" name="submit" type="submit"
                            value="Save"/>
+                    <a href="<c:url value="/tv/user/delete" /> "><i class="fa fa-cog fa-2x"
+                                                                  style="color: #999; margin-bottom: -30px;"
+                                                                  aria-hidden="true"></i></a>
                 </div>
             </form:form>
         </div>
