@@ -201,7 +201,7 @@ public class PopulateDatabase {
             TvShow tv5 = new TvShow();
             tv5.setGenre("Drama");
             tv5.setTitle("Belfer");
-            tv5.setNetwork("Canal Plus");
+            tv5.setNetwork("Canal+");
             tv5.setOverallRating(9.7);
             tv5.setTrailerUrl("https://www.youtube.com/watch?v=QJBo2ZAtWBA");
             tv5.setCountry("Poland");

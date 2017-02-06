@@ -6,6 +6,8 @@ import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
+
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -23,12 +25,12 @@ public @Data class TvShow {
 
     @Column(name = "title")
     @Size(min = 3, max = 30, message = "{invalid.size.title}")
-    @Pattern(regexp = "[A-Z][a-z]*(([ ]?[A-Za-z]+)?)*", message = "{invalid.pattern.title}")
+    @Pattern(regexp = "[A-Z][a-z]*(([ ]?[0-9]+)?([ ]?[A-Za-z]+)?)*", message = "{invalid.pattern.title}")
     private String title;
 
     @Column(name = "network")
     @Size(min = 3, max = 30, message = "{invalid.size.network}")
-    @Pattern(regexp = "[A-Za-z0-9]*(([ ]?[A-Za-z0-9]+)?)*", message = "{invalid.pattern.network}")
+    @Pattern(regexp = "[A-Za-z0-9]*([+]([ ]?[A-Za-z0-9]+)?)*", message = "{invalid.pattern.network}")
     private String network;
 
     @Column(name = "country")
@@ -60,7 +62,7 @@ public @Data class TvShow {
 
     @Column(name = "slug")
     @Size(max = 20, message = "{invalid.size.slug}")
-    //@Pattern(regexp = "[a-z]*", message = "{invalid.pattern.slug}")
+    @Pattern(regexp = "[a-z-]+", message = "{invalid.pattern.slug}")
     private String slug;
 
     @Lob

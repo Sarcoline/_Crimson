@@ -24,8 +24,7 @@ public @Data class Episode {
     private String title;
 
     @Column(name = "season")
-    @Range(max = 99, message = "{invalid.number}")
-    //@Pattern(regexp = "[A-Za-z0-9]*", message = "{invalid.pattern.season}")
+    @Range(max = 99, message = "{invalid.season}")
     private int season;
 
     @Column(name = "number")

@@ -106,4 +106,8 @@ public @Data class User {
     @OneToMany(mappedBy = "userRating", fetch = FetchType.LAZY)
     private List<Rating> userRatings = new ArrayList<>();
 
+    //Setting
+    @OneToOne(mappedBy = "userSetting", cascade = CascadeType.ALL)
+    private Setting settings;
+
 }
