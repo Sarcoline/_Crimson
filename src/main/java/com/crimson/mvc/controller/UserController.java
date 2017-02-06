@@ -66,10 +66,9 @@ public class UserController {
         return "redirect:/login?registered";
     }
 
-    //TODO metoda do zwracania najwyżej ocenionych seriali
+    //TODO metoda do zwracania seriali z najwyzszym overallRating
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index(Model model) throws IOException {
-
+    public String index(Model model) {
         model.addAttribute("tvShows", tvShowService.getAllTvShows());
         return "index";
     }

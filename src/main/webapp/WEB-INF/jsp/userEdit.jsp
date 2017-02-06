@@ -48,10 +48,9 @@
                     <input class="uk-width-1-1 uk-button uk-button-primary uk-button-large" name="submit" type="submit"
                            value="Save"/>
                 </div>
-
             </form:form>
-            <a class="uk-width-1-1 uk-button uk-button-danger uk-button-large"
-               href="<c:url value="/tv/user/delete/"/>">Delete</a>
+                <a class="uk-width-1-1 uk-button uk-button-danger uk-button-large"
+                   href="<c:url value="/tv/user/delete/"/>">Delete</a>
         </div>
     </div>
 </div>

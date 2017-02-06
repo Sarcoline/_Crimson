@@ -294,10 +294,15 @@ img.center {
 
 }
 .centerText1 {
-    height: 90px;
-    line-height: 90px;
+    height: 160px;
+    line-height: 160px;
     text-align: center;
 
+}
+.number {
+    padding: 50px;
+    border: solid black 1px;
+    border-radius: 50%;
 }
 /*fontawesome*/
 .fa-heart {

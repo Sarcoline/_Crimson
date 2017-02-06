@@ -31,11 +31,9 @@
                         </ul>
                     </div>
                     <div class="uk-width-1-3 centerText1">
-                        <ul class="uk-list" style="font-size: 1.8rem">
-                            <li>Following tvshows: <strong>${user.userTvShowList.size()}</strong></li>
-                            <li style="margin-top: -50px;">Watched episodes:
-                                <strong>${user.userEpisodeList.size()}</strong></li>
-                            <li style="margin-top: -50px;">Episodes to watch: <strong>48</strong></li>
+                        <ul class="uk-list">
+                            <li class="uk-text-muted"><strong style="font-size: 5rem;">${user.userTvShowList.size()}</strong></li>
+
                         </ul>
                     </div>
                 </div>

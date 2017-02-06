@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @RequestMapping("/tv")
 @Controller
@@ -70,8 +70,6 @@ public class CrimsonController {
         return "tvShow";
     }
 
-
-    //TODO metoda która zwraca nieobejrzane odcinki uzytkownika/nadchodzace odcinki
     @GetMapping("/user/{name}")
     public String displayUser(Model model, @PathVariable("name") String name) {
         UserDTO user = userService.getUserByName(name);
@@ -106,7 +104,7 @@ public class CrimsonController {
 
     //TODO głupio zrobione, poprawić
     @RequestMapping(value = "/user/edit", method = RequestMethod.POST)
-    public String registration(@Valid UserDTO userDTO, BindingResult bindingResult) throws IOException {
+    public String registration(@Valid UserDTO userDTO, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return String.format("redirect:/tv/user/%s/edit?error", userDTO.getName());
@@ -116,17 +114,14 @@ public class CrimsonController {
     }
 
     //USUWANIE USERA
-    @RequestMapping(value="/user/delete", method = RequestMethod.GET)
-    @ResponseStatus(value = HttpStatus.OK)
-    public String deleteUser(HttpServletRequest request) throws ServletException{
+    @RequestMapping(value="/user/delete/", method = RequestMethod.GET)
+    @Secured("ROLE_USER")
+    public void deleteUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
         request.logout();
         userService.deleteUser(user);
-
-        return "redirect:/";
-
-
+        response.sendRedirect("/");
     }
 
     @GetMapping("/genre/{name}")
@@ -151,7 +146,8 @@ public class CrimsonController {
 
 
     @RequestMapping(value = "/follow/{id}")
-    public String follow(Model model, @PathVariable("id") Long id) {
+    @Secured("ROLE_USER")
+    public String follow(@PathVariable("id") Long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
         TvShowDTO tv = tvShowService.getTvById(id);
@@ -165,7 +161,8 @@ public class CrimsonController {
 
     @RequestMapping(value = "/rate", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
-    public void rate(@RequestParam("id") long id, @RequestParam("value") int value) throws IOException {
+    @Secured("ROLE_USER")
+    public void rate(@RequestParam("id") long id, @RequestParam("value") int value) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
         TvShowDTO tv = tvShowService.getTvById(id);
@@ -175,6 +172,7 @@ public class CrimsonController {
 
     @RequestMapping(value = "/watched", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
+    @Secured("ROLE_USER")
     public void watched(@RequestParam("id") long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());

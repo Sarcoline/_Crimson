@@ -33,6 +33,7 @@
                 <ul class="uk-nav uk-nav-navbar">
                     <li><a href="<c:url value="/tv/genre/drama"/> ">Drama</a></li>
                     <li><a href="<c:url value="/tv/genre/fantasy"/> ">Fantasy</a></li>
+                    <li><a href="<c:url value="/tv/genre/comedy"/> ">Comedy</a></li>
                 </ul>
             </div>
         </li>
