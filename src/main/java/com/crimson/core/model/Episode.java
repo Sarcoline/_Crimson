@@ -1,20 +1,17 @@
 package com.crimson.core.model;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Singular;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "Episode")
-@Builder(builderMethodName = "hiddenBuilder", toBuilder = true)
+@Builder(builderMethodName = "hiddenBuilder", toBuilder = true) @NoArgsConstructor @AllArgsConstructor
 public @Data class Episode {
             @Id
             @GeneratedValue(strategy = GenerationType.IDENTITY)
