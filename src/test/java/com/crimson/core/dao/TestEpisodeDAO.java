@@ -48,6 +48,7 @@ public class TestEpisodeDAO {
     public void setDB() {
         episodeDAO.saveEpisode(episode);
         tvShowDAO.saveTvShow(tvShow);
+        userDAO.saveUser(user);
     }
 
     @Test
