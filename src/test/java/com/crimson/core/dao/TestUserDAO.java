@@ -15,10 +15,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestSpringCore.class)
 @Transactional
-@Rollback(value = true)
+@Rollback()
 public class TestUserDAO {
 
     @Autowired
@@ -46,10 +48,35 @@ public class TestUserDAO {
             .network("Netflix")
             .country("US")
             .genre("Drama")
+            .overallRating(6.7)
+            .build();
+
+    private TvShow tvShow2 = TvShow.builder()
+            .title("Dr.House")
+            .network("Netflix")
+            .country("US")
+            .genre("Drama")
+            .overallRating(8.7)
+            .build();
+
+    private TvShow tvShow3 = TvShow.builder()
+            .title("Dr.House")
+            .network("Netflix")
+            .country("US")
+            .genre("Drama")
+            .overallRating(7.7)
             .build();
 
     private Episode episode = Episode.builder()
             .title("Episode 1")
+            .build();
+
+    private Episode episode2 = Episode.builder()
+            .title("Episode 2")
+            .build();
+
+    private Episode episode3 = Episode.builder()
+            .title("Episode 3")
             .build();
 
     private Rating rating;
@@ -59,7 +86,11 @@ public class TestUserDAO {
 
         userDAO.saveUser(user);
         tvShowDAO.saveTvShow(tvShow);
+        tvShowDAO.saveTvShow(tvShow2);
+        tvShowDAO.saveTvShow(tvShow3);
         episodeDAO.saveEpisode(episode);
+        episodeDAO.saveEpisode(episode2);
+        episodeDAO.saveEpisode(episode3);
 
     }
 
@@ -115,6 +146,37 @@ public class TestUserDAO {
         User getUserByNameTest = userDAO.getUserByName("Aleks");
 
         Assert.assertEquals(getUserByNameTest.getName(), user.getName());
+    }
+
+    //Extra methods
+
+    @Test
+    public void getUserTvShowsSortedByMaxRating(){
+        userDAO.addTvShow2User(user, tvShow);
+        userDAO.addTvShow2User(user, tvShow2);
+        userDAO.addTvShow2User(user, tvShow3);
+
+        List<TvShow> userTvShowList = userDAO.getUserTvShowsSortedByMaxRating(user);
+
+        Assert.assertEquals(userTvShowList.size(), 3);
+        Assert.assertEquals(userTvShowList.get(0).getOverallRating(), tvShow2.getOverallRating());
+        Assert.assertEquals(userTvShowList.get(1).getOverallRating(), tvShow3.getOverallRating());
+        Assert.assertEquals(userTvShowList.get(2).getOverallRating(), tvShow.getOverallRating());
+    }
+
+    @Test
+    public void getAllUnwatchedEpisodes(){
+        userDAO.addEpisode2User(user, episode);
+        userDAO.addTvShow2User(user,tvShow);
+        tvShowDAO.addEpisode2TvShow(tvShow, episode);
+        tvShowDAO.addEpisode2TvShow(tvShow, episode2);
+        tvShowDAO.addEpisode2TvShow(tvShow, episode3);
+
+        List<Episode> allUnwatchedUserEpisodes = userDAO.getAllUnwatchedUserEpisodes(user);
+
+        Assert.assertEquals(allUnwatchedUserEpisodes.size(), 2);
+        Assert.assertEquals(allUnwatchedUserEpisodes.get(0).getTitle(), episode2.getTitle());
+        Assert.assertEquals(allUnwatchedUserEpisodes.get(1).getTitle(), episode3.getTitle());
     }
 
     //RELATIONSHIP TESTS

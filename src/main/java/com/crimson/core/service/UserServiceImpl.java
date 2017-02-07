@@ -129,4 +129,12 @@ public class UserServiceImpl implements UserService {
     public void deleteRatingFromUser(User user, Rating rating) {
         userDAO.deleteRatingFromUser(user, rating);
     }
+
+
+    //Extra Methods
+    @Override
+    public void getUserTvShowsSortedByMaxRating(User user){ userDAO.getUserTvShowsSortedByMaxRating(user);}
+
+    @Override
+    public void getAllUnwatchedUserEpisodes(User user){ userDAO.getAllUnwatchedUserEpisodes(user);}
 }

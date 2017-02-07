@@ -117,4 +117,9 @@ public class TvShowServiceImpl implements TvShowService {
     public void deleteRatingFromTvShow(TvShow tvShow, Rating rating) {
         tvShowDAO.deleteRatingFromTvShow(tvShow, rating);
     }
+
+    //Extra Methods
+
+    @Override
+    public void getAllTvShowByMaxRating(){tvShowDAO.getAllTvShowByMaxRating();}
 }

@@ -9,6 +9,9 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -54,6 +57,43 @@ public class UserDAOImpl implements UserDAO {
         Session session = sf.getCurrentSession();
         return session.createQuery("Select a From User a where a.name like :custName", User.class).setParameter("custName", name).getSingleResult();
     }
+
+    //Extra methods
+    @Override
+    public List<TvShow> getUserTvShowsSortedByMaxRating(User user){
+        List<TvShow> unsortedList = user.getUserTvShowList();
+
+        Collections.sort(unsortedList, new Comparator<TvShow>() {
+            @Override
+            public int compare(TvShow o1, TvShow o2) {
+                return o1.getOverallRating().compareTo(o2.getOverallRating());
+            }
+        });
+
+        Collections.reverse(unsortedList);
+        return unsortedList;
+    }
+
+    @Override
+    public List<Episode> getAllUnwatchedUserEpisodes(User user){
+
+        List<TvShow> allFollowedUserTvShows = user.getUserTvShowList();
+
+        List<Episode> allUnwatchedUserEpisodes = new ArrayList<>();
+
+        List<Episode> allWatchedUserEpisodes = user.getUserEpisodeList();
+
+        for (TvShow tvShow : allFollowedUserTvShows){
+            List<Episode> tvShowEpisodes = tvShow.getEpisodes();
+            for (Episode episode : tvShowEpisodes){
+                if (!allWatchedUserEpisodes.contains(episode)){
+                    allUnwatchedUserEpisodes.add(episode);
+                }
+            }
+        }
+        return allUnwatchedUserEpisodes;
+    }
+
 
     //RELATIONSHIPS
 

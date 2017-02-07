@@ -67,4 +67,5 @@ public class RatingDAOImpl implements RatingDAO {
         if (rating.size() != 0) return (Rating) rating.get(0);
         return new Rating();
     }
+
 }

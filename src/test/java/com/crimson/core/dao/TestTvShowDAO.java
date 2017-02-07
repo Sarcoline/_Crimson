@@ -12,10 +12,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestSpringCore.class)
 @Transactional
-@Rollback(value = true)
+@Rollback()
 public class TestTvShowDAO {
 
     @Autowired
@@ -38,9 +40,26 @@ public class TestTvShowDAO {
             .network("Netflix")
             .country("US")
             .genre("Drama")
+            .overallRating(6.7)
             .build();
 
-    User user = User.builder()
+    private TvShow tvShow2 = TvShow.builder()
+            .title("Dr.House")
+            .network("Netflix")
+            .country("US")
+            .genre("Drama")
+            .overallRating(8.7)
+            .build();
+
+    private TvShow tvShow3 = TvShow.builder()
+            .title("Dr.House")
+            .network("Netflix")
+            .country("US")
+            .genre("Drama")
+            .overallRating(7.7)
+            .build();
+
+    private User user = User.builder()
             .name("Aleks")
             .email("Email@wp.pl")
             .password("123")
@@ -62,6 +81,8 @@ public class TestTvShowDAO {
     @Before
     public void setDB() {
         tvShowDAO.saveTvShow(tvShow);
+        tvShowDAO.saveTvShow(tvShow2);
+        tvShowDAO.saveTvShow(tvShow3);
         genreDAO.addGenre(genre);
         episodeDAO.saveEpisode(episode);
         rating.setTvShowRating(tvShow);
@@ -102,7 +123,7 @@ public class TestTvShowDAO {
     public void getAllTvShowsTest() {
         int sizeListTvShows = tvShowDAO.getAllTvShows().size();
 
-        Assert.assertEquals(1, sizeListTvShows);
+        Assert.assertEquals(3, sizeListTvShows);
     }
 
     @Test
@@ -110,6 +131,17 @@ public class TestTvShowDAO {
         TvShow getTvShowByIdTest = tvShowDAO.getTvById(tvShow.getId());
 
         Assert.assertEquals(getTvShowByIdTest.getTitle(), tvShow.getTitle());
+    }
+
+    //Extra Methods
+
+    @Test
+    public void getAllTvShowByMaxRating(){
+        List<TvShow> sortedList = tvShowDAO.getAllTvShowByMaxRating();
+
+        Assert.assertEquals(sortedList.get(0).getOverallRating(), tvShow2.getOverallRating());
+        Assert.assertEquals(sortedList.get(1).getOverallRating(), tvShow3.getOverallRating());
+        Assert.assertEquals(sortedList.get(2).getOverallRating(), tvShow.getOverallRating());
     }
 
     //RELATIONSHIP TESTS
