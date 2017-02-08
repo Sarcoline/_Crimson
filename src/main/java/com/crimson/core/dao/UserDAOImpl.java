@@ -9,10 +9,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 
 @Repository
@@ -61,7 +58,12 @@ public class UserDAOImpl implements UserDAO {
     //Extra methods
     @Override
     public List<TvShow> getUserTvShowsSortedByMaxRating(User user){
-        List<TvShow> unsortedList = user.getUserTvShowList();
+
+        List<TvShow> unsortedList = new ArrayList<>();
+
+        for (Rating rating: user.getUserRatings()) {
+            if(!unsortedList.contains(rating.getTvShowRating())) unsortedList.add(rating.getTvShowRating());
+        }
 
         Collections.sort(unsortedList, new Comparator<TvShow>() {
             @Override
@@ -86,7 +88,7 @@ public class UserDAOImpl implements UserDAO {
         for (TvShow tvShow : allFollowedUserTvShows){
             List<Episode> tvShowEpisodes = tvShow.getEpisodes();
             for (Episode episode : tvShowEpisodes){
-                if (!allWatchedUserEpisodes.contains(episode)){
+                if (!allWatchedUserEpisodes.contains(episode) && episode.getReleaseDate().after(new Date())){
                     allUnwatchedUserEpisodes.add(episode);
                 }
             }

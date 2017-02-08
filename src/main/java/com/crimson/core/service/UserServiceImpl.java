@@ -135,8 +135,12 @@ public class UserServiceImpl implements UserService {
 
     //Extra Methods
     @Override
-    public void getUserTvShowsSortedByMaxRating(User user){ userDAO.getUserTvShowsSortedByMaxRating(user);}
+    public List<TvShow> getUserTvShowsSortedByMaxRating(UserDTO userDTO){
+        User user = userDAO.getUserById(userDTO.getId());
+        return userDAO.getUserTvShowsSortedByMaxRating(user);}
 
     @Override
-    public void getAllUnwatchedUserEpisodes(User user){ userDAO.getAllUnwatchedUserEpisodes(user);}
+    public List<Episode> getAllUnwatchedUserEpisodes(UserDTO userDTO){
+        User user = userDAO.getUserById(userDTO.getId());
+        return userDAO.getAllUnwatchedUserEpisodes(user);}
 }

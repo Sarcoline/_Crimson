@@ -4,6 +4,7 @@ import com.crimson.core.dto.TvShowDTO;
 import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.Episode;
 import com.crimson.core.model.Rating;
+import com.crimson.core.model.TvShow;
 import com.crimson.core.model.User;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public interface UserService {
     void deleteRatingFromUser(User user, Rating rating);
 
     //Extra Methods
-    void getUserTvShowsSortedByMaxRating(User user);
+    List<TvShow> getUserTvShowsSortedByMaxRating(UserDTO user);
 
-    void getAllUnwatchedUserEpisodes(User user);
+    List<Episode> getAllUnwatchedUserEpisodes(UserDTO user);
 }

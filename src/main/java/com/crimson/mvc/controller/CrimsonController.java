@@ -3,6 +3,7 @@ package com.crimson.mvc.controller;
 import com.crimson.core.dto.TvShowDTO;
 import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.Episode;
+import com.crimson.core.model.TvShow;
 import com.crimson.core.service.EpisodeService;
 import com.crimson.core.service.RatingService;
 import com.crimson.core.service.TvShowService;
@@ -75,6 +76,7 @@ public class CrimsonController {
     public String displayUser(Model model, @PathVariable("name") String name) {
         UserDTO user = userService.getUserByName(name);
         List<TvShowDTO> tvs = userService.getUserTvShows(user);
+        List<TvShow> favorites = userService.getUserTvShowsSortedByMaxRating(user);
         List<Episode> watchedEpisodes = user.getUserEpisodeList();
         List watchedEpisodesId = new ArrayList();
         for (Episode episode: watchedEpisodes) {
@@ -84,6 +86,8 @@ public class CrimsonController {
         model.addAttribute("tvshows", tvs);
         model.addAttribute("watchedEpisodes", Lists.reverse(watchedEpisodes));
         model.addAttribute("watchedEpisodesId", watchedEpisodesId);
+        model.addAttribute("upcomimgEpisodes", userService.getAllUnwatchedUserEpisodes(user));
+        model.addAttribute("favorites", favorites);
         model.addAttribute("user", user);
         return "user";
     }

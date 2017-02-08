@@ -42,5 +42,5 @@ public interface TvShowService {
     void deleteRatingFromTvShow(TvShow tvShow, Rating rating);
 
     //Extra Methods
-    void getAllTvShowByMaxRating();
+    List<TvShow> getAllTvShowByMaxRating();
 }

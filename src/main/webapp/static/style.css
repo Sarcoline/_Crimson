@@ -16,7 +16,12 @@ h5 {
 }
 
 a {
-    color: #00a8e6;
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    text-decoration: none;
 }
 
 .index {

@@ -11,7 +11,7 @@
 <div class="uk-grid">
     <div class="uk-width-4-6 uk-margin-large-top" data-uk-grid-margin=" ">
         <div class="uk-container uk-container-center">
-            <div class="login" style="padding: 10px; margin-bottom: 40px;">
+            <div class="login" style="padding: 10px; ">
                 <div class="uk-grid">
                     <div class="uk-width-1-3">
                         <c:if test="${user.name == name}">
@@ -32,14 +32,14 @@
                     </div>
                     <div class="uk-width-1-3 centerText1">
                         <ul class="uk-list">
-                            <li class="uk-text-muted"><strong style="font-size: 5rem;">${user.userTvShowList.size()}</strong></li>
+                            <li class="uk-text-muted"><strong
+                                    style="font-size: 5rem;">${user.userTvShowList.size()}</strong></li>
 
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="" style="padding: 20px;">
-                <h1 style="text-align:center">TvShows followed by ${user.name} </h1>
                 <c:if test="${tvshows.size() == 0}">
                     <h2 style="text-align: center">${user.name} is not following any tvshows :(</h2>
                 </c:if>
@@ -56,25 +56,22 @@
                 </div>
             </div>
             <c:if test="${user.name == name}">
-                <div class="uk-width-1-1 ">
-                    <h2 style="text-align:center">Upcoming episodes</h2>
-
-                    <c:forEach items="${tvshows}" var="tv">
-                        <h3>${tv.title}</h3>
-
-                        <ul class="uk-list uk-list-line">
-                            <c:forEach items="${tv.episodes}" var="episode">
-                                <li>
-                                    <p><strong> ${episode.number}. </strong>
-                                        <a class="rateThis" data-id="${episode.id}"><i class="fa fa-square-o"
-                                                                                       aria-hidden="true"></i></a>
-                                            ${episode.title}
-                                        <small class="episodeDate uk-text-muted">${episode.releaseDate}</small>
-                                    </p>
-                                </li>
-                            </c:forEach>
-                        </ul>
-                    </c:forEach>
+                <div class="uk-width-1-1 uk-margin-large-top">
+                    <h2>Upcoming episodes</h2>
+                    <ul class="uk-list uk-list-line" style="font-size: 1.2rem">
+                        <c:forEach items="${upcomimgEpisodes}" var="episode">
+                            <li>
+                                <p><strong><a href="<c:url value="/tv/${episode.episodeFromTvShow.slug}" /> ">
+                                        ${episode.episodeFromTvShow.title} </a> - S${episode.season}E${episode.number} -
+                                </strong>
+                                    <a class="rateThis" data-id="${episode.id}"><i class="fa fa-square-o"
+                                                                                   aria-hidden="true"></i></a>
+                                        ${episode.title}
+                                    <small class="episodeDate uk-text-muted">${episode.releaseDate}</small>
+                                </p>
+                            </li>
+                        </c:forEach>
+                    </ul>
                 </div>
             </c:if>
         </div>
@@ -85,7 +82,7 @@
             <div class="uk-grid">
                 <div class="uk-width-1-1 uk-margin-large-top ">
                     <h2 style="text-align: center">Favorites</h2>
-                    <c:forEach items="${tvshows}" var="tv">
+                    <c:forEach items="${favorites}" var="tv" begin="0" end="4">
                         <a href="<c:url value="/tv/${tv.slug}"/>"> <span class="item2"
                                                                          style="background-image: url('<c:url
                                                                                  value="/images/tv/${tv.slug}/back"/>'); ">
@@ -102,7 +99,8 @@
                         <c:forEach items="${watchedEpisodes}" var="episode" begin="0" end="9">
 
                             <li>
-                                <p><strong>${episode.episodeFromTvShow.title} </strong> -
+                                <p><strong><a href="<c:url value="/tv/${episode.episodeFromTvShow.slug}" /> ">
+                                        ${episode.episodeFromTvShow.title}</a> </strong> -
                                     S${episode.season}E${episode.number} - ${episode.title}
                                 </p>
                             </li>
