@@ -43,5 +43,4 @@ public @Data class Genre {
     private List<TvShow> genreTvShowList = new ArrayList<>();
 
 
-
 }

@@ -49,7 +49,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void updateUser(User user) {
         Session session = sf.getCurrentSession();
-        session.update(user);
+        session.saveOrUpdate(user);
     }
 
     @Override

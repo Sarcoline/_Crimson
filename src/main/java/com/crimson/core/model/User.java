@@ -5,10 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Email;
 
 import javax.enterprise.inject.Default;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -25,7 +28,7 @@ public @Data class User {
 
     @Column(name = "name", unique = true)
     @Size(min = 3, max = 30, message = "{invalid.size.name}")
-    @Pattern(regexp = "[A-Za-z1-9]*", message = "{invalid.pattern.name}")
+    @Pattern(regexp = "[A-Za-z0-9]*", message = "{invalid.pattern.name}")
     private String name;
 
     @Column(name = "email")
@@ -46,18 +49,6 @@ public @Data class User {
     @Version
     private int version;
 
-
-    @Builder
-    public User(String name, String email, String password, String role, byte[] profilePic, int version){
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.profilePic = profilePic;
-        this.version = version;
-    }
-
-
     //User2TvShow
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "User2TvShow",
@@ -71,11 +62,19 @@ public @Data class User {
             inverseJoinColumns = @JoinColumn(name = "idEpisode"))
     private List<Episode> userEpisodeList = new ArrayList<>();
     //Rating
-    @OneToMany(mappedBy = "userRating", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "userRating", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Rating> userRatings = new ArrayList<>();
 
-    //Setting
-    @OneToOne(mappedBy = "userSetting", cascade = CascadeType.ALL)
-    private Setting settings;
+
+
+    @Builder
+    public User(String name, String email, String password, String role, byte[] profilePic, int version){
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.profilePic = profilePic;
+        this.version = version;
+    }
 
 }

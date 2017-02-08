@@ -1,34 +1,47 @@
 package com.crimson;
 
-import com.crimson.context.CoreApplicationContext;
 import com.crimson.core.dto.UserDTO;
+import com.crimson.core.model.Episode;
 import com.crimson.core.model.TvShow;
+import com.crimson.core.service.EpisodeService;
 import com.crimson.core.service.TvShowService;
 import com.crimson.core.service.UserService;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
- * Created by Meow on 18.01.2017.
+ * Created by Meow on 02.02.2017.
  */
-@Service
+@Component
 public class PopulateDatabase {
 
+    @Autowired
+    private ApplicationContext applicationContext;
 
-    public static void main(String[] args) throws IOException {
+    @Autowired
+    private TvShowService tvShowDAO;
 
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(CoreApplicationContext.class);
+    @Autowired
+    private EpisodeService episodeService;
 
-        TvShowService tvShowDAO = applicationContext.getBean(TvShowService.class);
-        UserService userDAO = applicationContext.getBean(UserService.class);
+    @Autowired
+    private UserService userDAO;
 
-
+    @EventListener(ContextRefreshedEvent.class)
+    public void populate() throws IOException, ParseException {
         if (tvShowDAO.getAllTvShows().size() < 1) {
             TvShow tv = new TvShow();
 
@@ -40,6 +53,24 @@ public class PopulateDatabase {
             tv.setTrailerUrl("https://www.youtube.com/watch?v=EI0ib1NErqg");
             tv.setCountry("USA");
             tv.setReleaseYear(2010);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
+            String dateInString = "31-08-2020";
+            Date date = sdf.parse(dateInString);
+            List<Episode> GameOfThronesEpisodes = new ArrayList();
+            GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 1").number(1).releaseDate(new Date()).season(1).idTvShow(1L).episodeSummary("Summary 1").build());
+            GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 2").number(2).releaseDate(new Date()).season(1).idTvShow(1L).episodeSummary("Summary 2").build());
+            GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 3").number(3).releaseDate(new Date()).season(1).idTvShow(1L).episodeSummary("Summary 3").build());
+            GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 4").number(4).releaseDate(new Date()).season(1).idTvShow(1L).episodeSummary("Summary 4").build());
+            GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 5").number(5).releaseDate(new Date()).season(1).idTvShow(1L).episodeSummary("Summary 5").build());
+            GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 1").number(1).releaseDate(new Date()).season(2).idTvShow(1L).episodeSummary("Summary 1").build());
+            GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 2").number(2).releaseDate(new Date()).season(2).idTvShow(1L).episodeSummary("Summary 2").build());
+            GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 3").number(3).releaseDate(new Date()).season(2).idTvShow(1L).episodeSummary("Summary 3").build());
+            GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 4").number(4).releaseDate(new Date()).season(2).idTvShow(1L).episodeSummary("Summary 4").build());
+            GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 5").number(5).releaseDate(date).season(2).idTvShow(1L).episodeSummary("Summary 5").build());
+            GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 1").number(1).releaseDate(date).season(3).idTvShow(1L).episodeSummary("Summary 3").build());
+            GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 2").number(2).releaseDate(date).season(3).idTvShow(1L).episodeSummary("Summary 4").build());
+            GameOfThronesEpisodes.add(new Episode.Builder().title("Episode 3").number(3).releaseDate(date).season(3).idTvShow(1L).episodeSummary("Summary 5").build());
+            tv.setEpisodes(GameOfThronesEpisodes);
             Resource resource = applicationContext.getResource("classpath:/images/game-of-thrones/poster.jpg");
             InputStream in = resource.getInputStream();
             byte[] poster = IOUtils.toByteArray(in);
@@ -73,6 +104,18 @@ public class PopulateDatabase {
             tv1.setTrailerUrl("https://www.youtube.com/watch?v=ITsirWLf-W8");
             tv1.setCountry("USA");
             tv1.setReleaseYear(2008);
+            List<Episode> ShamelessEpisodes = new ArrayList();
+            ShamelessEpisodes.add(new Episode.Builder().title("Episode 1").number(1).releaseDate(new Date()).season(1).idTvShow(2L).episodeSummary("Summary 1").build());
+            ShamelessEpisodes.add(new Episode.Builder().title("Episode 2").number(2).releaseDate(new Date()).season(1).idTvShow(2L).episodeSummary("Summary 2").build());
+            ShamelessEpisodes.add(new Episode.Builder().title("Episode 3").number(3).releaseDate(new Date()).season(1).idTvShow(2L).episodeSummary("Summary 3").build());
+            ShamelessEpisodes.add(new Episode.Builder().title("Episode 4").number(4).releaseDate(new Date()).season(1).idTvShow(2L).episodeSummary("Summary 4").build());
+            ShamelessEpisodes.add(new Episode.Builder().title("Episode 5").number(5).releaseDate(new Date()).season(1).idTvShow(2L).episodeSummary("Summary 5").build());
+            ShamelessEpisodes.add(new Episode.Builder().title("Episode 1").number(1).releaseDate(new Date()).season(2).idTvShow(2L).episodeSummary("Summary 1").build());
+            ShamelessEpisodes.add(new Episode.Builder().title("Episode 2").number(2).releaseDate(new Date()).season(2).idTvShow(2L).episodeSummary("Summary 2").build());
+            ShamelessEpisodes.add(new Episode.Builder().title("Episode 3").number(3).releaseDate(new Date()).season(2).idTvShow(2L).episodeSummary("Summary 3").build());
+            ShamelessEpisodes.add(new Episode.Builder().title("Episode 4").number(4).releaseDate(new Date()).season(2).idTvShow(2L).episodeSummary("Summary 4").build());
+            ShamelessEpisodes.add(new Episode.Builder().title("Episode 5").number(5).releaseDate(new Date()).season(2).idTvShow(2L).episodeSummary("Summary 5").build());
+            tv1.setEpisodes(ShamelessEpisodes);
             InputStream in5 = applicationContext.getResource("classpath:/images/shameless/poster.jpg").getInputStream();
             tv1.getPictures().put("poster", IOUtils.toByteArray(in5));
             InputStream in6 = applicationContext.getResource("classpath:/images/shameless/back.jpg").getInputStream();
@@ -155,20 +198,44 @@ public class PopulateDatabase {
                             "living off of one another in the heart of New York City. Over the course of ten years, this average group of buddies goes through massive mayhem, " +
                             "family trouble, past and future romances, fights, laughs, tears and surprises as they learn what it really means to be a friend.");
 
+            TvShow tv5 = new TvShow();
+            tv5.setGenre("Drama");
+            tv5.setTitle("Belfer");
+            tv5.setNetwork("Canal Plus");
+            tv5.setOverallRating(9.7);
+            tv5.setTrailerUrl("https://www.youtube.com/watch?v=QJBo2ZAtWBA");
+            tv5.setCountry("Poland");
+            tv5.setReleaseYear(2016);
+            InputStream in25 = applicationContext.getResource("classpath:/images/belfer/poster.jpg").getInputStream();
+            tv5.getPictures().put("poster", IOUtils.toByteArray(in25));
+            InputStream in26 = applicationContext.getResource("classpath:/images/belfer/back.jpg").getInputStream();
+            tv5.getPictures().put("back", IOUtils.toByteArray(in26));
+            InputStream in27 = applicationContext.getResource("classpath:/images/belfer/1.jpg").getInputStream();
+            tv5.getPictures().put("1", IOUtils.toByteArray(in27));
+            InputStream in28 = applicationContext.getResource("classpath:/images/belfer/2.jpg").getInputStream();
+            tv5.getPictures().put("2", IOUtils.toByteArray(in28));
+            InputStream in29 = applicationContext.getResource("classpath:/images/belfer/3.jpg").getInputStream();
+            tv5.getPictures().put("3", IOUtils.toByteArray(in29));
+            tv5.setDescription(
+                    "The death of a young girl. To town comes a new teacher who begins his own investigation.  " +
+                            "Until the end no one knows who really is a murderer. ");
+
+
+
 
             UserDTO user = new UserDTO();
             user.setName("TestUser");
             user.setEmail("test@email.com");
             user.setPassword("123");
-            InputStream in25 = applicationContext.getResource("classpath:/images/user/user.jpg").getInputStream();
-            user.setProfilePic(IOUtils.toByteArray(in25));
+            InputStream in30 = applicationContext.getResource("classpath:/images/user/user.jpg").getInputStream();
+            user.setProfilePic(IOUtils.toByteArray(in30));
             userDAO.saveUser(user);
             tvShowDAO.saveTvShow(tv);
             tvShowDAO.saveTvShow(tv1);
             tvShowDAO.saveTvShow(tv2);
             tvShowDAO.saveTvShow(tv3);
             tvShowDAO.saveTvShow(tv4);
+            tvShowDAO.saveTvShow(tv5);
         }
-
     }
 }

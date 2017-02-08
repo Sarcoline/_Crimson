@@ -1,6 +1,8 @@
 package com.crimson.core.dao;
 
 import com.crimson.context.TestSpringCore;
+import com.crimson.core.factory.GenreFactory;
+import com.crimson.core.factory.TvShowFactory;
 import com.crimson.core.model.Genre;
 import com.crimson.core.model.TvShow;
 import org.junit.Assert;

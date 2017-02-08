@@ -260,7 +260,8 @@ li.menu.uk-active a {
 }
 
 .episodeDate {
-    margin-right: 1rem;
+    margin-right: 0.2rem;
+    font-size: 1rem;
     float: right;
 }
 
@@ -284,9 +285,25 @@ li.menu.uk-active a {
 
 img.center {
     display: block;
-    margin: 20px auto 0;
+    margin-left: 100px;
 }
+.centerText {
+    height: 140px;
+    line-height: 140px;
+    text-align: center;
 
+}
+.centerText1 {
+    height: 160px;
+    line-height: 160px;
+    text-align: center;
+
+}
+.number {
+    padding: 50px;
+    border: solid black 1px;
+    border-radius: 50%;
+}
 /*fontawesome*/
 .fa-heart {
     font-size: 3rem;
@@ -304,10 +321,12 @@ img.center {
     color: #8cc14c;
     float: right;
     font-size: 1.4rem;
+    margin-left: 5px;
 }
 
 .fa-square-o {
     margin-right: 3px;
+    margin-left: 5px;
     float: right;
     font-size: 1.4rem;
     color: #999;
@@ -338,6 +357,17 @@ img.center {
     background-size: cover;
     margin: 5px;
     box-shadow: 3px 3px 6px #999;
+
+}
+
+.item2 {
+    display: inline-block;
+    background-color: black;
+    width: 500px;
+    height: 90px;
+    background-size: cover;
+    box-shadow: 3px 3px 6px #999;
+    margin: 5px 5px 5px 25px;
 
 }
 

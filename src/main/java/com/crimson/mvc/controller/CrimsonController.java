@@ -2,10 +2,14 @@ package com.crimson.mvc.controller;
 
 import com.crimson.core.dto.TvShowDTO;
 import com.crimson.core.dto.UserDTO;
+import com.crimson.core.model.Episode;
+import com.crimson.core.service.EpisodeService;
 import com.crimson.core.service.RatingService;
 import com.crimson.core.service.TvShowService;
 import com.crimson.core.service.UserService;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,9 +19,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/tv")
@@ -30,6 +37,8 @@ public class CrimsonController {
     private UserService userService;
     @Autowired
     private RatingService ratingService;
+    @Autowired
+    private EpisodeService episodeService;
 
 
     @GetMapping("/{name}")
@@ -42,27 +51,45 @@ public class CrimsonController {
             UserDTO user = userService.getUserByName(auth.getName());
             follow = userService.checkFollow(user, tv);
             rating = ratingService.getRating(tv.getId(), user.getId()).getValue();
-
+            model.addAttribute("user", user);
+            List watchedEpisodesId = new ArrayList();
+            for (Episode episode: user.getUserEpisodeList()) {
+                watchedEpisodesId.add(episode.getId());
+            }
+            model.addAttribute("watchedEpisodesId", watchedEpisodesId);
+        }
+        int seasons = 0;
+        for (Episode episode: tv.getEpisodes()) {
+            if (seasons < episode.getSeason()) seasons = episode.getSeason();
         }
         model.addAttribute("tv", tv);
+        model.addAttribute("episodes", tv.getEpisodes());
+        model.addAttribute("seasons", seasons);
         model.addAttribute("rating", rating);
         model.addAttribute("follow", follow);
         return "tvShow";
     }
 
-
     @GetMapping("/user/{name}")
     public String displayUser(Model model, @PathVariable("name") String name) {
         UserDTO user = userService.getUserByName(name);
         List<TvShowDTO> tvs = userService.getUserTvShows(user);
+        List<Episode> watchedEpisodes = user.getUserEpisodeList();
+        List watchedEpisodesId = new ArrayList();
+        for (Episode episode: watchedEpisodes) {
+            watchedEpisodesId.add(episode.getId());
+        }
+        //userService.getUserUpcomingEpisodes(user);
         model.addAttribute("tvshows", tvs);
+        model.addAttribute("watchedEpisodes", Lists.reverse(watchedEpisodes));
+        model.addAttribute("watchedEpisodesId", watchedEpisodesId);
         model.addAttribute("user", user);
         return "user";
     }
 
-    @GetMapping("/user/{name}/edit")
+    @GetMapping("/user/edit")
     @Secured("ROLE_USER")
-    public String editUser(@RequestParam(value = "error", required = false) String error, Model model, @PathVariable("name") String name) {
+    public String editUser(@RequestParam(value = "error", required = false) String error, Model model) {
 
         if (error != null) {
             model.addAttribute("error", "Error!");
@@ -76,14 +103,25 @@ public class CrimsonController {
     }
 
     //TODO głupio zrobione, poprawić
-    @RequestMapping(value = "/user/{username}/edit", method = RequestMethod.POST)
-    public String registration(@PathVariable("username") String username, @Valid UserDTO userDTO, BindingResult bindingResult) throws IOException {
+    @RequestMapping(value = "/user/edit", method = RequestMethod.POST)
+    public String registration(@Valid UserDTO userDTO, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return String.format("redirect:/tv/user/%s/edit?error", username);
+            return String.format("redirect:/tv/user/%s/edit?error", userDTO.getName());
         }
         userService.updateUser(userDTO);
         return String.format("redirect:/tv/user/%s", userDTO.getName());
+    }
+
+    //USUWANIE USERA
+    @RequestMapping(value="/user/delete/", method = RequestMethod.GET)
+    @Secured("ROLE_USER")
+    public void deleteUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDTO user = userService.getUserByName(auth.getName());
+        userService.deleteUser(user);
+        request.logout();
+        response.sendRedirect("/");
     }
 
     @GetMapping("/genre/{name}")
@@ -108,7 +146,8 @@ public class CrimsonController {
 
 
     @RequestMapping(value = "/follow/{id}")
-    public String follow(Model model, @PathVariable("id") Long id) {
+    @Secured("ROLE_USER")
+    public String follow(@PathVariable("id") Long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
         TvShowDTO tv = tvShowService.getTvById(id);
@@ -121,10 +160,24 @@ public class CrimsonController {
 
 
     @RequestMapping(value = "/rate", method = RequestMethod.GET)
-    public void rate(@RequestParam("id") long id, @RequestParam("value") int value) throws IOException {
+    @ResponseStatus(value = HttpStatus.OK)
+    @Secured("ROLE_USER")
+    public void rate(@RequestParam("id") long id, @RequestParam("value") int value) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
         TvShowDTO tv = tvShowService.getTvById(id);
         ratingService.saveUserRating(user, tv, value);
+
+    }
+
+    @RequestMapping(value = "/watched", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
+    @Secured("ROLE_USER")
+    public void watched(@RequestParam("id") long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDTO user = userService.getUserByName(auth.getName());
+        Episode episode = episodeService.getEpisodeById(id);
+        if (episodeService.checkWatched(user, episode)) episodeService.deleteUserFromEpisode(user, episode);
+        else episodeService.addUser2Episode(user, episode);
     }
 }

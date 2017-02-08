@@ -18,7 +18,7 @@ public interface RatingDAO {
 
     Rating getRatingByID(Long id);
 
-    Rating getRatingByIdTvShow(Long idTvShow);
+    List<Rating> getRatingByIdTvShow(Long idTvShow);
 
     List<Rating> getAllRatings();
 

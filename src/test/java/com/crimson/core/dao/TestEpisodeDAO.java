@@ -1,6 +1,9 @@
 package com.crimson.core.dao;
 
 import com.crimson.context.TestSpringCore;
+import com.crimson.core.factory.EpisodeFactory;
+import com.crimson.core.factory.TvShowFactory;
+import com.crimson.core.factory.UserFactory;
 import com.crimson.core.model.Episode;
 import com.crimson.core.model.TvShow;
 import com.crimson.core.model.User;
@@ -19,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Rollback(value = true)
 public class TestEpisodeDAO {
-
 
 
     @Autowired
@@ -69,7 +71,7 @@ public class TestEpisodeDAO {
     @Test
     public void updateEpisodeTest() {
         episode.setTitle("UpdatedTitle");
-        episode.setSeason("second");
+        episode.setSeason(2);
 
         episodeDAO.updateEpisode(episode);
 

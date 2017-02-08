@@ -8,7 +8,6 @@ import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ public @Data class TvShow {
 
     @Column(name = "network")
     @Size(min = 3, max = 30, message = "{invalid.size.network}")
-    @Pattern(regexp = "[A-Za-z1-9]*(([ ]?[A-Za-z1-9]+)?)*", message = "{invalid.pattern.network}")
+    @Pattern(regexp = "[A-Za-z0-9]*(([ ]?[A-Za-z0-9]+)?)*", message = "{invalid.pattern.network}")
     private String network;
 
     @Column(name = "country")
@@ -59,12 +58,12 @@ public @Data class TvShow {
     private String trailerUrl;
 
     @Column(name = "releaseYear")
-    @Range(min = 1920, max = 2017,message = "{invalid.releaseYear}")
+    @Range(min = 1920, max = 2017, message = "{invalid.releaseYear}")
     private int releaseYear;
 
     @Column(name = "slug")
     @Size(max = 20, message = "{invalid.size.slug}")
-    @Pattern(regexp = "[a-z]*", message = "{invalid.pattern.slug}")
+    //@Pattern(regexp = "[a-z]*", message = "{invalid.pattern.slug}")
     private String slug;
 
     @Lob
@@ -74,22 +73,6 @@ public @Data class TvShow {
     //Optimistic Locking
     @Version
     private int version;
-
-
-    @Builder
-    public TvShow(String title, String network, String country, String genre, String description, String trailerUrl, double overallRating, int releaseYear, String slug){
-        this.title = title;
-        this.network = network;
-        this.country = country;
-        this.genre = genre;
-        this.description = description;
-        this.trailerUrl = trailerUrl;
-        this.overallRating = overallRating;
-        this.releaseYear = releaseYear;
-        this.slug = slug;
-    }
-
-
 
     //RELATIONSHIPS
     //User2TvShow Relation
@@ -104,5 +87,18 @@ public @Data class TvShow {
     //Rating
     @OneToMany(mappedBy = "tvShowRating", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Rating> tvShowRating = new ArrayList<>();
+
+    @Builder
+    public TvShow(String title, String network, String country, String genre, String description, String trailerUrl, double overallRating, int releaseYear, String slug){
+        this.title = title;
+        this.network = network;
+        this.country = country;
+        this.genre = genre;
+        this.description = description;
+        this.trailerUrl = trailerUrl;
+        this.overallRating = overallRating;
+        this.releaseYear = releaseYear;
+        this.slug = slug;
+    }
 
 }

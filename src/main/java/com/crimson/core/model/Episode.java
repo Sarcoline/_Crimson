@@ -5,10 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,12 +25,13 @@ public @Data class Episode {
 
     @Column(name = "title")
     @Size(min = 3, max = 30, message = "{invalid.size.title}")
-    @Pattern(regexp = "[A-Z][a-z]*(([ ]?[A-Za-z]+)?)*", message = "{invalid.pattern.title}")
+    //@Pattern(regexp = "[A-Z][a-z]*(([ ]?[A-Za-z]+)?)*", message = "{invalid.pattern.title}")
     private String title;
 
     @Column(name = "season")
-    @Pattern(regexp = "[A-Za-z1-9]*")
-    private String season;
+    @Range(max = 99, message = "{invalid.number}")
+    //@Pattern(regexp = "[A-Za-z0-9]*", message = "{invalid.pattern.season}")
+    private int season;
 
     @Column(name = "number")
     @Range(max = 99, message = "{invalid.number}")
@@ -38,8 +39,7 @@ public @Data class Episode {
 
     @Column(name = "releaseDate")
     @Temporal(javax.persistence.TemporalType.DATE)
-    @Past(message = "{invalid.releaseDate}")
-    private Date realeaseData;
+    private Date releaseDate;
 
     @Column(name = "episodeSummary")
     @Length(max = 1000)
@@ -50,21 +50,18 @@ public @Data class Episode {
 
     //Optimistic Locking
     @Version
-    private int version;
+    private Integer version;
 
     @Builder
-    public Episode(String title, String season, int number, Date realeaseData, String episodeSummary, Long idTvShow) {
+    public Episode(String title, int season, int number, Date realeaseData, String episodeSummary, Long idTvShow) {
         this.title = title;
         this.season = season;
         this.number = number;
-        this.realeaseData = realeaseData;
+        this.releaseDate = realeaseData;
         this.episodeSummary = episodeSummary;
         this.idTvShow = idTvShow;
     }
 
-    //EpisodeWatched(User2Episode) Relation
-    @ManyToMany(mappedBy = "userEpisodeList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<User> episodeUserList = new ArrayList<>();
 
     //TvShow2Episode Relation
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
