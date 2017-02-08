@@ -100,7 +100,7 @@ public @Data class User {
             inverseJoinColumns = @JoinColumn(name = "idEpisode"))
     private List<Episode> userEpisodeList = new ArrayList<>();
     //Rating
-    @OneToMany(mappedBy = "userRating", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "userRating", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Rating> userRatings = new ArrayList<>();
 
     //Setting

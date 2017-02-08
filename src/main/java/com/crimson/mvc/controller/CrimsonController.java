@@ -15,6 +15,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -173,6 +174,7 @@ public class CrimsonController {
     @RequestMapping(value = "/watched", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     @Secured("ROLE_USER")
+    @Transactional
     public void watched(@RequestParam("id") long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
