@@ -59,21 +59,22 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public List<TvShow> getUserTvShowsSortedByMaxRating(User user){
 
-        List<TvShow> unsortedList = new ArrayList<>();
+        List<TvShow> sortedList = new ArrayList<>();
+        List<Rating> unsortedList = user.getUserRatings();
 
-        for (Rating rating: user.getUserRatings()) {
-            if(!unsortedList.contains(rating.getTvShowRating())) unsortedList.add(rating.getTvShowRating());
-        }
-
-        Collections.sort(unsortedList, new Comparator<TvShow>() {
+        Collections.sort(user.getUserRatings(), new Comparator<Rating>() {
             @Override
-            public int compare(TvShow o1, TvShow o2) {
-                return o1.getOverallRating().compareTo(o2.getOverallRating());
+            public int compare(Rating o1, Rating o2) {
+                return o1.getValue() - o2.getValue();
             }
         });
 
-        Collections.reverse(unsortedList);
-        return unsortedList;
+        for (Rating rating: unsortedList) {
+            if(!sortedList.contains(rating.getTvShowRating())) sortedList.add(rating.getTvShowRating());
+        }
+
+        Collections.reverse(sortedList);
+        return sortedList;
     }
 
     @Override
@@ -154,9 +155,11 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void addRating2User(User user, Rating rating) {
+        Session session = sf.getCurrentSession();
         if (!user.getUserRatings().contains(rating)) {
             user.getUserRatings().add(rating);
         }
+        session.saveOrUpdate(user);
     }
 
     @Override
