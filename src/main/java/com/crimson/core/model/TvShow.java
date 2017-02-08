@@ -1,13 +1,13 @@
 package com.crimson.core.model;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
-
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Entity
+@NoArgsConstructor
 @Table(name = "TvShow")
 public @Data class TvShow {
 
@@ -25,12 +26,12 @@ public @Data class TvShow {
 
     @Column(name = "title")
     @Size(min = 3, max = 30, message = "{invalid.size.title}")
-    @Pattern(regexp = "[A-Z][a-z]*(([ ]?[0-9]+)?([ ]?[A-Za-z]+)?)*", message = "{invalid.pattern.title}")
+    @Pattern(regexp = "[A-Z][a-z]*(([ ]?[A-Za-z]+)?)*", message = "{invalid.pattern.title}")
     private String title;
 
     @Column(name = "network")
     @Size(min = 3, max = 30, message = "{invalid.size.network}")
-    @Pattern(regexp = "[A-Za-z0-9]*([+]([ ]?[A-Za-z0-9]+)?)*", message = "{invalid.pattern.network}")
+    @Pattern(regexp = "[A-Za-z0-9]*(([ ]?[A-Za-z0-9]+)?)*", message = "{invalid.pattern.network}")
     private String network;
 
     @Column(name = "country")
@@ -62,7 +63,7 @@ public @Data class TvShow {
 
     @Column(name = "slug")
     @Size(max = 20, message = "{invalid.size.slug}")
-    @Pattern(regexp = "[a-z-]+", message = "{invalid.pattern.slug}")
+    //@Pattern(regexp = "[a-z]*", message = "{invalid.pattern.slug}")
     private String slug;
 
     @Lob
@@ -72,6 +73,7 @@ public @Data class TvShow {
     //Optimistic Locking
     @Version
     private int version;
+
     //RELATIONSHIPS
     //User2TvShow Relation
     @ManyToMany(mappedBy = "userTvShowList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -86,82 +88,17 @@ public @Data class TvShow {
     @OneToMany(mappedBy = "tvShowRating", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Rating> tvShowRating = new ArrayList<>();
 
-    public TvShow() {
-
-    }
-
-    public TvShow(Builder builder) {
-        title = builder.title;
-        network = builder.network;
-        country = builder.country;
-        genre = builder.genre;
-        description = builder.description;
-        trailerUrl = builder.trailerUrl;
-        overallRating = builder.overallRating;
-        releaseYear = builder.releaseYear;
-        slug = builder.slug;
-    }
-
-    public static class Builder {
-
-        private String title;
-        private String network;
-        private String country;
-        private String genre;
-        private String description;
-        private String trailerUrl;
-        private Double overallRating;
-        private int releaseYear;
-        private String slug;
-
-        public Builder title(String title) {
-            this.title = title;
-            return this;
-        }
-
-        public Builder network(String network) {
-            this.network = network;
-            return this;
-        }
-
-        public Builder country(String country) {
-            this.country = country;
-            return this;
-        }
-
-        public Builder genre(String genre) {
-            this.genre = genre;
-            return this;
-        }
-
-        public Builder description(String description) {
-            this.description = description;
-            return this;
-        }
-
-        public Builder trailerUlr(String trailerUrl) {
-            this.trailerUrl = trailerUrl;
-            return this;
-        }
-
-        public Builder overallRating(Double overallRating) {
-            this.overallRating = overallRating;
-            return this;
-        }
-
-        public Builder releaseYear(int releaseYear) {
-            this.releaseYear = releaseYear;
-            return this;
-        }
-
-        public Builder slug(String slug) {
-            this.slug = slug;
-            return this;
-        }
-
-        public TvShow build() {
-            return new TvShow(this);
-        }
+    @Builder
+    public TvShow(String title, String network, String country, String genre, String description, String trailerUrl, double overallRating, int releaseYear, String slug){
+        this.title = title;
+        this.network = network;
+        this.country = country;
+        this.genre = genre;
+        this.description = description;
+        this.trailerUrl = trailerUrl;
+        this.overallRating = overallRating;
+        this.releaseYear = releaseYear;
+        this.slug = slug;
     }
 
 }

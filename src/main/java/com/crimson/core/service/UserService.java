@@ -39,4 +39,9 @@ public interface UserService {
     boolean checkFollow(UserDTO userDTO, TvShowDTO tvShow);
 
     void deleteRatingFromUser(User user, Rating rating);
+
+    //Extra Methods
+    void getUserTvShowsSortedByMaxRating(User user);
+
+    void getAllUnwatchedUserEpisodes(User user);
 }

@@ -1,9 +1,6 @@
 package com.crimson.core.dao;
 
 import com.crimson.context.TestSpringCore;
-import com.crimson.core.factory.RatingFactory;
-import com.crimson.core.factory.TvShowFactory;
-import com.crimson.core.factory.UserFactory;
 import com.crimson.core.model.Rating;
 import com.crimson.core.model.TvShow;
 import com.crimson.core.model.User;
@@ -33,16 +30,23 @@ public class TestRatingDAO {
     @Autowired
     private RatingService ratingService;
 
-    private UserFactory userFactory = new UserFactory();
-    private TvShowFactory tvShowFactory = new TvShowFactory();
-    private RatingFactory ratingFactory = new RatingFactory();
+    private Rating rating = Rating.builder()
+            .value(5)
+            .build();
 
-    private User user = userFactory.getUser("Aleks");
+    private TvShow tvShow = TvShow.builder()
+            .title("Dr.House")
+            .network("Netflix")
+            .country("US")
+            .genre("Drama")
+            .build();
 
-    private TvShow tvShow = tvShowFactory.getTvShow("Dr.House");
-
-
-    private Rating rating = ratingFactory.getRating(5);
+    private User user =  User.builder()
+            .name("Aleks")
+            .email("Email@wp.pl")
+            .password("123")
+            .role("ROLE_USER")
+            .build();
 
     @Before
     public void setDB() {
@@ -54,7 +58,7 @@ public class TestRatingDAO {
     @Test
     public void addRatingTest() {
         Assert.assertEquals(1, ratingDAO.getAllRatings().size());
-        Rating rating1 = new Rating.Builder()
+        Rating rating1 = Rating.builder()
                 .value(3)
                 .build();
         rating1.setValue(5);
@@ -97,7 +101,7 @@ public class TestRatingDAO {
 
     @Test
     public void getRating() {
-        TvShow tvShow = new TvShow.Builder()
+        TvShow tvShow = TvShow.builder()
                 .title("Dr.House")
                 .network("Netflix")
                 .country("US")
@@ -106,7 +110,7 @@ public class TestRatingDAO {
 
         tvShow.setTitle("test");
         tvShowDAO.saveTvShow(tvShow);
-        Rating rating = new Rating.Builder()
+        Rating rating = Rating.builder()
                 .value(3)
                 .build();
         rating.setTvShowRating(tvShow);

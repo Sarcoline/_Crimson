@@ -1,6 +1,8 @@
 package com.crimson.core.model;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@NoArgsConstructor
 @Table(name = "User")
 public @Data class User {
 
@@ -41,52 +44,6 @@ public @Data class User {
     @Version
     private int version;
 
-    public User() {
-
-    }
-    public User(Builder builder) {
-        name = builder.name;
-        email = builder.email;
-        password = builder.password;
-        role = builder.role;
-    }
-
-    public static class Builder {
-
-        private Long id;
-        private String name;
-        private String email;
-        private String password;
-        private String role;
-
-        public Builder name(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder email(String email) {
-            this.email = email;
-            return this;
-        }
-
-        public Builder password(String password) {
-            this.password = password;
-            return this;
-        }
-
-        public Builder role(String role) {
-            this.role = "ROLE_USER";
-            return this;
-        }
-
-        public User build() {
-            return new User(this);
-        }
-    }
-
-
-
-
     //User2TvShow
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "User2TvShow",
@@ -103,8 +60,16 @@ public @Data class User {
     @OneToMany(mappedBy = "userRating", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Rating> userRatings = new ArrayList<>();
 
-    //Setting
-    @OneToOne(mappedBy = "userSetting", cascade = CascadeType.ALL)
-    private Setting settings;
+
+
+    @Builder
+    public User(String name, String email, String password, String role, byte[] profilePic, int version){
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.profilePic = profilePic;
+        this.version = version;
+    }
 
 }

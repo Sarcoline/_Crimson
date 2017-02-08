@@ -1,7 +1,6 @@
 package com.crimson.core.dao;
 
 import com.crimson.context.TestSpringCore;
-import com.crimson.core.factory.*;
 import com.crimson.core.model.*;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,10 +12,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestSpringCore.class)
 @Transactional
-@Rollback(value = true)
+@Rollback()
 public class TestTvShowDAO {
 
     @Autowired
@@ -34,25 +35,54 @@ public class TestTvShowDAO {
     @Autowired
     private RatingDAO ratingDAO;
 
-    private UserFactory userFactory = new UserFactory();
-    private TvShowFactory tvShowFactory = new TvShowFactory();
-    private EpisodeFactory episodeFactory = new EpisodeFactory();
-    private GenreFactory genreFactory = new GenreFactory();
-    private RatingFactory ratingFactory = new RatingFactory();
+    private TvShow tvShow = TvShow.builder()
+            .title("Dr.House")
+            .network("Netflix")
+            .country("US")
+            .genre("Drama")
+            .overallRating(6.7)
+            .build();
 
-    private User user = userFactory.getUser("Aleks");
+    private TvShow tvShow2 = TvShow.builder()
+            .title("Dr.House")
+            .network("Netflix")
+            .country("US")
+            .genre("Drama")
+            .overallRating(8.7)
+            .build();
 
-    private TvShow tvShow = tvShowFactory.getTvShow("Dr.House");
+    private TvShow tvShow3 = TvShow.builder()
+            .title("Dr.House")
+            .network("Netflix")
+            .country("US")
+            .genre("Drama")
+            .overallRating(7.7)
+            .build();
 
-    private Episode episode = episodeFactory.getEpisode("Episode 1");
+    private User user = User.builder()
+            .name("Aleks")
+            .email("Email@wp.pl")
+            .password("123")
+            .role("ROLE_USER")
+            .build();
 
-    private Genre genre = genreFactory.getGenre("Drama");
+    private Genre genre = Genre.builder()
+            .name("Drama")
+            .build();
 
-    private Rating rating = ratingFactory.getRating(5);
+    private Episode episode = Episode.builder()
+            .title("Episode 1")
+            .build();
+
+    private Rating rating = Rating.builder()
+            .value(5)
+            .build();
 
     @Before
     public void setDB() {
         tvShowDAO.saveTvShow(tvShow);
+        tvShowDAO.saveTvShow(tvShow2);
+        tvShowDAO.saveTvShow(tvShow3);
         genreDAO.addGenre(genre);
         episodeDAO.saveEpisode(episode);
         rating.setTvShowRating(tvShow);
@@ -93,7 +123,7 @@ public class TestTvShowDAO {
     public void getAllTvShowsTest() {
         int sizeListTvShows = tvShowDAO.getAllTvShows().size();
 
-        Assert.assertEquals(1, sizeListTvShows);
+        Assert.assertEquals(3, sizeListTvShows);
     }
 
     @Test
@@ -101,6 +131,17 @@ public class TestTvShowDAO {
         TvShow getTvShowByIdTest = tvShowDAO.getTvById(tvShow.getId());
 
         Assert.assertEquals(getTvShowByIdTest.getTitle(), tvShow.getTitle());
+    }
+
+    //Extra Methods
+
+    @Test
+    public void getAllTvShowByMaxRating(){
+        List<TvShow> sortedList = tvShowDAO.getAllTvShowByMaxRating();
+
+        Assert.assertEquals(sortedList.get(0).getOverallRating(), tvShow2.getOverallRating());
+        Assert.assertEquals(sortedList.get(1).getOverallRating(), tvShow3.getOverallRating());
+        Assert.assertEquals(sortedList.get(2).getOverallRating(), tvShow.getOverallRating());
     }
 
     //RELATIONSHIP TESTS

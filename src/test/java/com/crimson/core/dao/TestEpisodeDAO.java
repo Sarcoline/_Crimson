@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestSpringCore.class)
 @Transactional
-@Rollback(value = true)
+@Rollback()
 public class TestEpisodeDAO {
 
 
@@ -33,16 +33,23 @@ public class TestEpisodeDAO {
     @Autowired
     private TvShowDAO tvShowDAO;
 
-    private UserFactory userFactory = new UserFactory();
-    private TvShowFactory tvShowFactory = new TvShowFactory();
-    private EpisodeFactory episodeFactory = new EpisodeFactory();
+    private Episode episode = Episode.builder()
+            .title("Episode 1")
+            .build();
 
-    private User user = userFactory.getUser("Aleks");
+    private User user =  User.builder()
+            .name("Aleks")
+            .email("Email@wp.pl")
+            .password("123")
+            .role("ROLE_USER")
+            .build();
 
-    private TvShow tvShow = tvShowFactory.getTvShow("Dr.House");
-
-    private Episode episode = episodeFactory.getEpisode("Episode 1");
-
+    private TvShow tvShow = TvShow.builder()
+            .title("Dr.House")
+            .network("Netflix")
+            .country("US")
+            .genre("Drama")
+            .build();
 
     @Before
     public void setDB() {

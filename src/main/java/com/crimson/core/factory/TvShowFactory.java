@@ -2,9 +2,7 @@ package com.crimson.core.factory;
 
 import com.crimson.core.model.TvShow;
 
-/**
- * Created by Meow on 02.02.2017.
- */
+
 public class TvShowFactory {
 
     public TvShow getTvShow(String title) {
@@ -14,7 +12,7 @@ public class TvShowFactory {
 
         switch (title.toLowerCase()) {
             case "dr.house": {
-                tv = new TvShow.Builder()
+                tv = TvShow.builder()
                         .title("Dr.House")
                         .network("Netflix")
                         .country("US")
@@ -23,7 +21,7 @@ public class TvShowFactory {
                 break;
             }
             case "friends": {
-                tv = new TvShow.Builder()
+                tv = TvShow.builder()
                         .title("Friends")
                         .network("Network")
                         .country("US")

@@ -2,10 +2,6 @@ package com.crimson.core.factory;
 
 import com.crimson.core.model.Genre;
 
-/**
- * Created by Meow on 02.02.2017.
- */
-
 public class GenreFactory {
 
     public Genre getGenre(String name) {
@@ -13,7 +9,7 @@ public class GenreFactory {
 
         switch (name.toLowerCase()) {
             case "drama": {
-                genre = new Genre.Builder()
+                genre = Genre.builder()
                         .name("Drama")
                         .build();
                 break;

@@ -1,11 +1,14 @@
 package com.crimson.core.model;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
 @Table(name = "Rating")
 public @Data class Rating {
 
@@ -31,24 +34,9 @@ public @Data class Rating {
     @Version
     private int version;
 
-    public Rating() {
-    }
-
-    public Rating(Builder builder) {
-        value = builder.value;
-    }
-
-
-
-    public static class Builder{
-
-        private int value;
-
-        public Builder value(int value){
-            this.value = value;
-            return this;
-        }
-
-        public Rating build(){return new Rating(this);}
+    @Builder
+    public Rating(int value, int version) {
+        this.value = value;
+        this.version = version;
     }
 }

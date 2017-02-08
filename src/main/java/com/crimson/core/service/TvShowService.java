@@ -40,4 +40,7 @@ public interface TvShowService {
     ImageDTO getTvPictures(String slug);
 
     void deleteRatingFromTvShow(TvShow tvShow, Rating rating);
+
+    //Extra Methods
+    void getAllTvShowByMaxRating();
 }

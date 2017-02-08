@@ -1,10 +1,13 @@
 package com.crimson.core.model;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
 @Table(name = "Setting")
 public @Data class Setting {
 
@@ -22,8 +25,11 @@ public @Data class Setting {
     @Version
     int version;
 
-    public Setting(){
-
+    @Builder
+    public Setting(Boolean episodesFromBegining, int numberOfEpisodesOnUserPage, int version){
+        this.episodesFromBegining = episodesFromBegining;
+        this.numberOfEpisodesOnUserPage = numberOfEpisodesOnUserPage;
+        this.version = version;
     }
 
     @OneToOne

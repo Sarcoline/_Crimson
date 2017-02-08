@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestSpringCore.class)
 @Transactional
-@Rollback(value = true)
+@Rollback()
 public class TestGenreDAO {
 
     @Autowired
@@ -26,15 +26,16 @@ public class TestGenreDAO {
     @Autowired
     private GenreDAO genreDAO;
 
-    private TvShowFactory tvShowFactory = new TvShowFactory();
+    private Genre genre = Genre.builder()
+            .name("Drama")
+            .build();
 
-    private GenreFactory genreFactory = new GenreFactory();
-
-
-    private TvShow tvShow = tvShowFactory.getTvShow("Dr.House");
-
-    private Genre genre = genreFactory.getGenre("Drama");
-
+    private TvShow tvShow = TvShow.builder()
+            .title("Dr.House")
+            .network("Netflix")
+            .country("US")
+            .genre("Drama")
+            .build();
 
     @Before
     public void setDB() {

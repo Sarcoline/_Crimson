@@ -8,6 +8,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Repository
@@ -69,6 +71,23 @@ public class TvShowDAOImpl implements TvShowDAO {
     public void updateTvShow(TvShow tvshow) {
         Session session = sf.getCurrentSession();
         session.update(tvshow);
+    }
+
+
+    //Extra Methods
+
+    @Override
+    public List<TvShow> getAllTvShowByMaxRating(){
+        List<TvShow> unsortedList = getAllTvShows();
+        Collections.sort(unsortedList, new Comparator<TvShow>() {
+            @Override
+            public int compare(TvShow o1, TvShow o2) {
+                return o1.getOverallRating().compareTo(o2.getOverallRating());
+            }
+        });
+
+        Collections.reverse(unsortedList);
+        return unsortedList;
     }
 
     //RELATIONSHIPS

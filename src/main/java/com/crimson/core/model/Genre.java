@@ -1,6 +1,8 @@
 package com.crimson.core.model;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@NoArgsConstructor
 @Table(name = "Genre")
 public @Data class Genre {
 
@@ -22,37 +25,22 @@ public @Data class Genre {
     @Pattern(regexp = "[A-z][a-z]+", message = "{invalid.pattern.genre}")
     private String name;
 
+    //Optimistic Locking
+    @Version
+    private int version;
+
+    @Builder
+    public Genre(String name, int version) {
+        this.name = name;
+        this.version = version;
+    }
+
     //Genre2TvShow
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "Genre2TvShow",
             joinColumns = @JoinColumn(name = "idGenre"),
             inverseJoinColumns = @JoinColumn(name = "idTvShow"))
     private List<TvShow> genreTvShowList = new ArrayList<>();
-
-    //Optimistic Locking
-    @Version
-    private int version;
-
-    public Genre() {
-    }
-
-    public Genre(Builder builder) {
-        name = builder.name;
-    }
-
-    public static class Builder {
-
-        private String name;
-
-        public Builder name(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Genre build() {
-            return new Genre(this);
-        }
-    }
 
 
 }

@@ -21,6 +21,11 @@ public interface UserDAO {
 
     User getUserByName(String name);
 
+    //Extra methods
+    List<TvShow> getUserTvShowsSortedByMaxRating(User user);
+
+    List<Episode> getAllUnwatchedUserEpisodes(User user);
+
     void addTvShow2User(User user, TvShow tvShow);
 
     void deleteTvShowFromUser(User user, TvShow tvShow);
