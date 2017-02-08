@@ -22,7 +22,7 @@
 
 <h1 class="title">${tv.title}
     <sec:authorize access="isAuthenticated()">
-        <small class="follow"><a href="<c:url value="follow/${tv.id}"/> "><i class="fa fa-heart-o" aria-hidden="true"
+        <small class="follow"><a id="follow"><i class="fa fa-heart-o" aria-hidden="true"
                                                                              style="cursor: pointer"></i></a></small>
     </sec:authorize>
 </h1>
@@ -203,9 +203,15 @@
             });
         });
 
+        $('#follow').on('click',function () {
+           $.ajax({
+               type: "get",
+               url: "follow",
+               data: {id: ${tv.id}}
+           })
+        });
 
         $('.rateThis').on('click', function () {
-            console.log($(this).data('id'));
             $.ajax({
                 type: "get",
                 url: "watched",

@@ -224,7 +224,7 @@ public class PopulateDatabase {
             user.setName("TestUser");
             user.setEmail("test@email.com");
             user.setPassword("123");
-            InputStream in30 = applicationContext.getResource("classpath:/images/user/user.jpg").getInputStream();
+            InputStream in30 = applicationContext.getResource("classpath:/images/user/meow.jpg").getInputStream();
             user.setProfilePic(IOUtils.toByteArray(in30));
             userDAO.saveUser(user);
             tvShowDAO.saveTvShow(tv);

@@ -150,9 +150,9 @@ public class CrimsonController {
     }
 
 
-    @RequestMapping(value = "/follow/{id}")
+    @RequestMapping(value = "/follow")
     @Secured("ROLE_USER")
-    public String follow(@PathVariable("id") Long id) {
+    public String follow(@RequestParam("id") Long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
         TvShowDTO tv = tvShowService.getTvById(id);

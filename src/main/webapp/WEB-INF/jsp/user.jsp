@@ -20,8 +20,8 @@
                                                                           aria-hidden="true"></i></a>
                         </c:if>
                         <div>
-                            <img src="http://www.iconsfind.com/wp-content/uploads/2015/08/20150831_55e46ad551392.png"
-                                 width="200" height="200" class="center">
+                            <img src="<c:url value="/images/user/${name}"/>"
+                                 width="200" height="200" class="center" style="border-radius: 50%;">
                         </div>
                     </div>
                     <div class="uk-width-1-3 centerText">

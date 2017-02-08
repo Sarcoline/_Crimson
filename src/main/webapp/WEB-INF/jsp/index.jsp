@@ -19,10 +19,10 @@
     <div class="uk-slidenav-position" data-uk-slider="{infinite: true}">
         <div class="uk-slider-container">
             <ul class="uk-slider uk-grid-width-medium-1-5">
-                <c:forEach items="${tvShows}" var="tvShow">
+                <c:forEach items="${tvShows}" var="tvShow" varStatus="status">
                 <li><a href="<c:url value="/tv/${tvShow.slug}"/>">
                 <span class="item" style="background-image: url('<c:url value="/images/tv/${tvShow.slug}/poster"/>')">
-                    <span class="overlay"><span class="item-header">${tvShow.title}</span> </span>
+                    <span class="overlay"><span class="item-header">${status.count}. ${tvShow.title}</span> </span>
             </span>
                 </a></li>
                 </c:forEach>

@@ -9,7 +9,10 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 
 @Repository
@@ -56,23 +59,38 @@ public class UserDAOImpl implements UserDAO {
     }
 
     //Extra methods
+//    @Override
+//    public List<TvShow> getUserTvShowsSortedByMaxRating(User user){
+//
+//        List<TvShow> unsortedList = new ArrayList<>();
+//
+//        for (Rating rating: user.getUserRatings()) unsortedList.add(rating.getTvShowRating());
+//
+//
+//        Collections.sort(unsortedList, new Comparator<TvShow>() {
+//            @Override
+//            public int compare(TvShow o1, TvShow o2) {
+//                return o1.getOverallRating().compareTo(o2.getOverallRating());
+//            }
+//        });
+//
+//        Collections.reverse(unsortedList);
+//        return unsortedList;
+//    }
     @Override
     public List<TvShow> getUserTvShowsSortedByMaxRating(User user){
 
-        List<TvShow> unsortedList = new ArrayList<>();
+        List<TvShow> sortedList = new ArrayList<>();
+        List<Rating> unsortedList = user.getUserRatings();
 
-        for (Rating rating: user.getUserRatings()) unsortedList.add(rating.getTvShowRating());
+        (user.getUserRatings()).sort((o1, o2) -> o1.getValue() - o2.getValue());
 
+        for (Rating rating: unsortedList) {
+            if(!sortedList.contains(rating.getTvShowRating())) sortedList.add(rating.getTvShowRating());
+        }
 
-        Collections.sort(unsortedList, new Comparator<TvShow>() {
-            @Override
-            public int compare(TvShow o1, TvShow o2) {
-                return o1.getOverallRating().compareTo(o2.getOverallRating());
-            }
-        });
-
-        Collections.reverse(unsortedList);
-        return unsortedList;
+        Collections.reverse(sortedList);
+        return sortedList;
     }
 
     @Override

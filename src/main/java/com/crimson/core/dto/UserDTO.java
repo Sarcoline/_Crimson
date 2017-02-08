@@ -29,6 +29,7 @@ public class UserDTO {
     private String password;
 
     private byte[] profilePic;
+
     private String role = "ROLE_USER";
 
     private List<Rating> userRatings;
