@@ -45,4 +45,6 @@ public interface UserService {
     List<TvShow> getUserTvShowsSortedByMaxRating(UserDTO user);
 
     List<Episode> getAllUnwatchedUserEpisodes(UserDTO user);
+
+    List<Episode> getAllUpcomingUserEpisodes(UserDTO userDTO);
 }

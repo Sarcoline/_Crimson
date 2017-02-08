@@ -58,7 +58,7 @@
             <c:if test="${user.name == name}">
                 <div class="uk-width-1-1 uk-margin-large-top">
                     <h2>Upcoming episodes</h2>
-                    <ul class="uk-list uk-list-line" style="font-size: 1.2rem">
+                    <ul class="uk-list uk-list-line" style="font-size: 1.1rem">
                         <c:forEach items="${upcomimgEpisodes}" var="episode">
                             <li>
                                 <p><strong><a href="<c:url value="/tv/${episode.episodeFromTvShow.slug}" /> ">

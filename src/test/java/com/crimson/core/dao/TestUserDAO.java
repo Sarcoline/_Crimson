@@ -155,7 +155,6 @@ public class TestUserDAO {
         userDAO.addTvShow2User(user, tvShow);
         userDAO.addTvShow2User(user, tvShow2);
         userDAO.addTvShow2User(user, tvShow3);
-
         List<TvShow> userTvShowList = userDAO.getUserTvShowsSortedByMaxRating(user);
 
         Assert.assertEquals(userTvShowList.size(), 3);

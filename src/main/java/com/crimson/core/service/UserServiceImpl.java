@@ -143,4 +143,9 @@ public class UserServiceImpl implements UserService {
     public List<Episode> getAllUnwatchedUserEpisodes(UserDTO userDTO){
         User user = userDAO.getUserById(userDTO.getId());
         return userDAO.getAllUnwatchedUserEpisodes(user);}
+
+    @Override
+    public List<Episode> getAllUpcomingUserEpisodes(UserDTO userDTO){
+        User user = userDAO.getUserById(userDTO.getId());
+        return userDAO.getAllUpcomingUserEpisodes(user);}
 }

@@ -86,7 +86,7 @@ public class CrimsonController {
         model.addAttribute("tvshows", tvs);
         model.addAttribute("watchedEpisodes", Lists.reverse(watchedEpisodes));
         model.addAttribute("watchedEpisodesId", watchedEpisodesId);
-        model.addAttribute("upcomimgEpisodes", userService.getAllUnwatchedUserEpisodes(user));
+        model.addAttribute("upcomimgEpisodes", userService.getAllUpcomingUserEpisodes(user));
         model.addAttribute("favorites", favorites);
         model.addAttribute("user", user);
         return "user";

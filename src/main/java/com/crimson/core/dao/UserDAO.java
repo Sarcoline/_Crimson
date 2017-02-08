@@ -26,6 +26,8 @@ public interface UserDAO {
 
     List<Episode> getAllUnwatchedUserEpisodes(User user);
 
+    List<Episode> getAllUpcomingUserEpisodes(User user);
+
     void addTvShow2User(User user, TvShow tvShow);
 
     void deleteTvShowFromUser(User user, TvShow tvShow);

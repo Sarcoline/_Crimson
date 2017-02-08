@@ -88,6 +88,26 @@ public class UserDAOImpl implements UserDAO {
         for (TvShow tvShow : allFollowedUserTvShows){
             List<Episode> tvShowEpisodes = tvShow.getEpisodes();
             for (Episode episode : tvShowEpisodes){
+                if (!allWatchedUserEpisodes.contains(episode)){
+                    allUnwatchedUserEpisodes.add(episode);
+                }
+            }
+        }
+        return allUnwatchedUserEpisodes;
+    }
+
+    @Override
+    public List<Episode> getAllUpcomingUserEpisodes(User user){
+
+        List<TvShow> allFollowedUserTvShows = user.getUserTvShowList();
+
+        List<Episode> allUnwatchedUserEpisodes = new ArrayList<>();
+
+        List<Episode> allWatchedUserEpisodes = user.getUserEpisodeList();
+
+        for (TvShow tvShow : allFollowedUserTvShows){
+            List<Episode> tvShowEpisodes = tvShow.getEpisodes();
+            for (Episode episode : tvShowEpisodes){
                 if (!allWatchedUserEpisodes.contains(episode) && episode.getReleaseDate().after(new Date())){
                     allUnwatchedUserEpisodes.add(episode);
                 }
