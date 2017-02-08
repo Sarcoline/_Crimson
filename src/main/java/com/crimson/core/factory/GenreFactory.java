@@ -5,6 +5,7 @@ import com.crimson.core.model.Genre;
 /**
  * Created by Meow on 02.02.2017.
  */
+
 public class GenreFactory {
 
     public Genre getGenre(String name) {

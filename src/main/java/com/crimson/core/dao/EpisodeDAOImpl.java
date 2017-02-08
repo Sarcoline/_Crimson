@@ -8,6 +8,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -60,7 +62,10 @@ public class EpisodeDAOImpl implements EpisodeDAO {
     @Override
     public void addUser2Episode(User user, Episode episode) {
         if (!episode.getEpisodeUserList().contains(user)) {
-            episode.getEpisodeUserList().add(user);
+            List<User> episodes = new ArrayList<>();
+            episodes.addAll(episode.getEpisodeUserList());
+            episodes.add(user);
+            episode.setEpisodeUserList(episodes);
         }
     }
 

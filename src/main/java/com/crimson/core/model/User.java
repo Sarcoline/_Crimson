@@ -40,22 +40,6 @@ public @Data class User {
     //Optimistic Locking
     @Version
     private int version;
-    //User2TvShow
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "User2TvShow",
-            joinColumns = @JoinColumn(name = "idUser"),
-            inverseJoinColumns = @JoinColumn(name = "idTvShow"))
-    private List<TvShow> userTvShowList = new ArrayList<>();
-    //User2Episode
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "EpisodeWatched",
-            joinColumns = @JoinColumn(name = "idUser"),
-            inverseJoinColumns = @JoinColumn(name = "idEpisode"))
-    private List<Episode> userEpisodeList = new ArrayList<>();
-    //Rating
-    @OneToMany(mappedBy = "userRating", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Rating> userRatings = new ArrayList<>();
-
 
     public User() {
 
@@ -99,5 +83,28 @@ public @Data class User {
             return new User(this);
         }
     }
+
+
+
+
+    //User2TvShow
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "User2TvShow",
+            joinColumns = @JoinColumn(name = "idUser"),
+            inverseJoinColumns = @JoinColumn(name = "idTvShow"))
+    private List<TvShow> userTvShowList = new ArrayList<>();
+    //User2Episode
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "EpisodeWatched",
+            joinColumns = @JoinColumn(name = "idUser"),
+            inverseJoinColumns = @JoinColumn(name = "idEpisode"))
+    private List<Episode> userEpisodeList = new ArrayList<>();
+    //Rating
+    @OneToMany(mappedBy = "userRating", fetch = FetchType.LAZY)
+    private List<Rating> userRatings = new ArrayList<>();
+
+    //Setting
+    @OneToOne(mappedBy = "userSetting", cascade = CascadeType.ALL)
+    private Setting settings;
 
 }
