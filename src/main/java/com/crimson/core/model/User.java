@@ -1,23 +1,18 @@
 package com.crimson.core.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Email;
 
-import javax.enterprise.inject.Default;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@NoArgsConstructor
 @Table(name = "User")
 public @Data class User {
 

@@ -2,9 +2,7 @@ package com.crimson.core.factory;
 
 import com.crimson.core.model.User;
 
-/**
- * Created by Meow on 02.02.2017.
- */
+
 
 public class UserFactory {
 

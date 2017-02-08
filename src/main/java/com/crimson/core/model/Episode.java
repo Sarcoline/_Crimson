@@ -52,16 +52,20 @@ public @Data class Episode {
     @Version
     private Integer version;
 
+
     @Builder
-    public Episode(String title, int season, int number, Date realeaseData, String episodeSummary, Long idTvShow) {
+    public Episode(String title, int season, int number, Date releaseDate, String episodeSummary, Long idTvShow) {
         this.title = title;
         this.season = season;
         this.number = number;
-        this.releaseDate = realeaseData;
+        this.releaseDate = releaseDate;
         this.episodeSummary = episodeSummary;
         this.idTvShow = idTvShow;
     }
 
+    //EpisodeWatched(User2Episode) Relation
+    @ManyToMany(mappedBy = "userEpisodeList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<User> episodeUserList = new ArrayList<>();
 
     //TvShow2Episode Relation
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

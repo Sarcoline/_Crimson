@@ -2,7 +2,6 @@ package com.crimson.core.model;
 
 import lombok.Builder;
 import lombok.Data;
-import org.hibernate.validator.constraints.Range;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 

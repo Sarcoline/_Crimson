@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestSpringCore.class)
 @Transactional
-@Rollback(value = true)
+@Rollback()
 public class TestEpisodeDAO {
 
 
