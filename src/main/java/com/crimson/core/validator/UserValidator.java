@@ -1,16 +1,21 @@
 package com.crimson.core.validator;
 
 
-import com.crimson.core.dao.UserDAO;
+import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.User;
+import com.crimson.core.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import java.util.List;
 
+@Component
 public class UserValidator implements Validator {
 
-    private UserDAO userDAO;
+    @Autowired
+    private UserService userService;
 
     @Override
     public boolean supports(Class clazz){
@@ -19,19 +24,16 @@ public class UserValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors){
-        User user = (User) target;
-
-        List<User> userList = userDAO.getAllUsers();
-
+        UserDTO userDTO = (UserDTO) target;
+        List<User> userList = userService.getAllUsers();
         for(User userTmp : userList){
-            if (userTmp.getName().contains(user.getName())){
-                errors.rejectValue("name", "Name already exists!");
+            if (userTmp.getName().contains(userDTO.getName())){
+                errors.rejectValue("name", "", "Name already exist");
             }
-            if (userTmp.getEmail().contains(user.getEmail())){
-                errors.rejectValue("email", "Email already exists!");
+            if (userTmp.getEmail().contains(userDTO.getEmail())){
+                errors.rejectValue("email", "","Email already exists!");
             }
         }
-
     }
 
     //HOW TO USE THIS VALIDATION

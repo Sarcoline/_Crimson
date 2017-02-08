@@ -3,6 +3,7 @@ package com.crimson.mvc.controller;
 import com.crimson.core.dto.UserDTO;
 import com.crimson.core.service.TvShowService;
 import com.crimson.core.service.UserService;
+import com.crimson.core.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,8 +23,12 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
     @Autowired
     private TvShowService tvShowService;
+
+    @Autowired
+    private UserValidator userValidator;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(
@@ -57,7 +62,7 @@ public class UserController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String registration(@Valid UserDTO userDTO, BindingResult bindingResult) throws IOException {
-
+        userValidator.validate(userDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             return "register";
         }

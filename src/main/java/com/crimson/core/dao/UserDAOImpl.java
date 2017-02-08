@@ -61,9 +61,8 @@ public class UserDAOImpl implements UserDAO {
 
         List<TvShow> unsortedList = new ArrayList<>();
 
-        for (Rating rating: user.getUserRatings()) {
-            if(!unsortedList.contains(rating.getTvShowRating())) unsortedList.add(rating.getTvShowRating());
-        }
+        for (Rating rating: user.getUserRatings()) unsortedList.add(rating.getTvShowRating());
+
 
         Collections.sort(unsortedList, new Comparator<TvShow>() {
             @Override
