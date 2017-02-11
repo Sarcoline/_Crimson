@@ -22,7 +22,7 @@
 </head>
 <body>
 <nav class="uk-navbar">
-    <ul class="uk-navbar-nav"><a href="/" class="uk-navbar-brand">_Crimson</a>
+    <ul class="uk-navbar-nav uk-"><a href="/" class="uk-navbar-brand">_Crimson</a>
         <sec:authorize access="isAuthenticated()">
             <li><a href="<c:url value="/tv/user/${name}" />">Dashboard</a></li>
         </sec:authorize>

@@ -30,37 +30,38 @@ a:hover {
 /*Navbar*/
 
 .uk-navbar {
-    background: #F9FBFC;
-    border-bottom: 1px solid #eee;
+    background-color: #444;
     padding: 5px;
 }
 
 .uk-navbar-nav li a:hover {
+    background: none;
     color: #B50C3C;
 
 }
 
 .uk-navbar-nav li a {
+    color: #F9FBFC;
     font-size: 1.1rem;
     font-weight: bold;
+
 }
 
 .uk-navbar-brand {
+    color: #F9FBFC;
     font-family: 'Montserrat', sans-serif;
     font-size: 1.5rem;
-
 }
 
 .uk-navbar-brand:hover {
     color: #B50C3C;
 }
-
-.uk-nav-navbar li a:hover {
-    background-color: inherit;
+.uk-dropdown {
+    background-color: #444;
 }
 
 .search {
-    color: inherit;
+    color: #F9FBFC;
 }
 
 .search:hover {
