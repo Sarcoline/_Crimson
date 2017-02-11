@@ -45,6 +45,7 @@ public class RatingDAOImpl implements RatingDAO {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<Rating> getRatingByIdTvShow(Long idTvShow) {
         Session session = sf.getCurrentSession();
         String hql = "from Rating s where s.tvShowRating.id = ?";

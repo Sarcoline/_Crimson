@@ -61,7 +61,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(UserDTO userDTO) {
-        // User user =  mapperFacade.map(userDTO, User.class);
         User user = userDAO.getUserById(userDTO.getId());
         userDAO.deleteUser(user);
     }
@@ -70,7 +69,6 @@ public class UserServiceImpl implements UserService {
     public void updateUser(UserDTO userDTO) {
         User user2 = userDAO.getUserById(userDTO.getId());
         user2.setEmail(userDTO.getEmail());
-        //User user = mapperFacade.map(userDTO, User.class);
         userDAO.updateUser(user2);
     }
 
@@ -102,9 +100,8 @@ public class UserServiceImpl implements UserService {
     @SuppressWarnings("unchecked")
     public List<TvShowDTO> getUserTvShows(UserDTO userDTO) {
         List tvs = new ArrayList();
-        for (TvShow tv : userDAO.getUserByName(userDTO.getName()).getUserTvShowList()) {
-            tvs.add(mapperFacade.map(tv, TvShowDTO.class));
-        }
+        userDAO.getUserByName(userDTO.getName()).getUserTvShowList().forEach(
+                tv -> tvs.add(mapperFacade.map(tv, TvShowDTO.class)));
         return tvs;
     }
 

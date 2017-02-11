@@ -6,7 +6,6 @@ import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.Episode;
 import com.crimson.core.model.TvShow;
 import com.crimson.core.model.User;
-import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,8 +21,6 @@ public class EpisodeServiceImpl implements EpisodeService {
     private EpisodeDAO episodeDAO;
     @Autowired
     private UserDAO userDAO;
-    @Autowired
-    private MapperFacade mapperFacade;
 
     @Override
     public void saveEpisode(Episode episode) {

@@ -44,6 +44,7 @@ public class CrimsonController {
 
 
     @GetMapping("/{name}")
+    @SuppressWarnings("unchecked")
     public String displayTvShow(Model model, @PathVariable("name") String name) {
         TvShowDTO tv = tvShowService.getTvBySlug(name);
         boolean follow = false;
@@ -55,9 +56,7 @@ public class CrimsonController {
             rating = ratingService.getRating(tv.getId(), user.getId()).getValue();
             model.addAttribute("user", user);
             List watchedEpisodesId = new ArrayList();
-            for (Episode episode: user.getUserEpisodeList()) {
-                watchedEpisodesId.add(episode.getId());
-            }
+            user.getUserEpisodeList().forEach(episode -> watchedEpisodesId.add(episode.getId()));
             model.addAttribute("watchedEpisodesId", watchedEpisodesId);
         }
         int seasons = 0;
@@ -73,16 +72,14 @@ public class CrimsonController {
     }
 
     @GetMapping("/user/{name}")
+    @SuppressWarnings("unchecked")
     public String displayUser(Model model, @PathVariable("name") String name) {
         UserDTO user = userService.getUserByName(name);
         List<TvShowDTO> tvs = userService.getUserTvShows(user);
         List<TvShow> favorites = userService.getUserTvShowsSortedByMaxRating(user);
         List<Episode> watchedEpisodes = user.getUserEpisodeList();
         List watchedEpisodesId = new ArrayList();
-        for (Episode episode: watchedEpisodes) {
-            watchedEpisodesId.add(episode.getId());
-        }
-        //userService.getUserUpcomingEpisodes(user);
+        watchedEpisodes.forEach(episode -> watchedEpisodesId.add(episode.getId()));
         model.addAttribute("tvshows", tvs);
         model.addAttribute("watchedEpisodes", Lists.reverse(watchedEpisodes));
         model.addAttribute("watchedEpisodesId", watchedEpisodesId);

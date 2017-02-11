@@ -9,10 +9,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @Repository
@@ -58,43 +55,22 @@ public class UserDAOImpl implements UserDAO {
         return session.createQuery("Select a From User a where a.name like :custName", User.class).setParameter("custName", name).getSingleResult();
     }
 
-    //Extra methods
-//    @Override
-//    public List<TvShow> getUserTvShowsSortedByMaxRating(User user){
-//
-//        List<TvShow> unsortedList = new ArrayList<>();
-//
-//        for (Rating rating: user.getUserRatings()) unsortedList.add(rating.getTvShowRating());
-//
-//
-//        Collections.sort(unsortedList, new Comparator<TvShow>() {
-//            @Override
-//            public int compare(TvShow o1, TvShow o2) {
-//                return o1.getOverallRating().compareTo(o2.getOverallRating());
-//            }
-//        });
-//
-//        Collections.reverse(unsortedList);
-//        return unsortedList;
-//    }
+
     @Override
-    public List<TvShow> getUserTvShowsSortedByMaxRating(User user){
+    public List<TvShow> getUserTvShowsSortedByMaxRating(User user) {
 
         List<TvShow> sortedList = new ArrayList<>();
         List<Rating> unsortedList = user.getUserRatings();
 
-        (user.getUserRatings()).sort((o1, o2) -> o1.getValue() - o2.getValue());
-
-        for (Rating rating: unsortedList) {
-            if(!sortedList.contains(rating.getTvShowRating())) sortedList.add(rating.getTvShowRating());
-        }
+        (user.getUserRatings()).sort(Comparator.comparingInt(Rating::getValue));
+        unsortedList.forEach(rating -> sortedList.add(rating.getTvShowRating()));
 
         Collections.reverse(sortedList);
         return sortedList;
     }
 
     @Override
-    public List<Episode> getAllUnwatchedUserEpisodes(User user){
+    public List<Episode> getAllUnwatchedUserEpisodes(User user) {
 
         List<TvShow> allFollowedUserTvShows = user.getUserTvShowList();
 
@@ -102,35 +78,24 @@ public class UserDAOImpl implements UserDAO {
 
         List<Episode> allWatchedUserEpisodes = user.getUserEpisodeList();
 
-        for (TvShow tvShow : allFollowedUserTvShows){
+        allFollowedUserTvShows.forEach(tvShow -> {
             List<Episode> tvShowEpisodes = tvShow.getEpisodes();
-            for (Episode episode : tvShowEpisodes){
-                if (!allWatchedUserEpisodes.contains(episode)){
-                    allUnwatchedUserEpisodes.add(episode);
-                }
-            }
-        }
+            tvShowEpisodes.forEach(episode -> {
+                if (!allWatchedUserEpisodes.contains(episode)) allUnwatchedUserEpisodes.add(episode);
+            });
+        });
         return allUnwatchedUserEpisodes;
     }
 
     @Override
-    public List<Episode> getAllUpcomingUserEpisodes(User user){
+    public List<Episode> getAllUpcomingUserEpisodes(User user) {
 
-        List<TvShow> allFollowedUserTvShows = user.getUserTvShowList();
+        List<Episode> allFutureUserEpisodes = new ArrayList<>();
 
-        List<Episode> allUnwatchedUserEpisodes = new ArrayList<>();
-
-        List<Episode> allWatchedUserEpisodes = user.getUserEpisodeList();
-
-        for (TvShow tvShow : allFollowedUserTvShows){
-            List<Episode> tvShowEpisodes = tvShow.getEpisodes();
-            for (Episode episode : tvShowEpisodes){
-                if (!allWatchedUserEpisodes.contains(episode) && episode.getReleaseDate().after(new Date())){
-                    allUnwatchedUserEpisodes.add(episode);
-                }
-            }
-        }
-        return allUnwatchedUserEpisodes;
+        getAllUnwatchedUserEpisodes(user).forEach(episode -> {
+            if (episode.getReleaseDate().after(new Date())) allFutureUserEpisodes.add(episode);
+        });
+        return allFutureUserEpisodes;
     }
 
 

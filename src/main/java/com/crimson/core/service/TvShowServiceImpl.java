@@ -43,7 +43,6 @@ public class TvShowServiceImpl implements TvShowService {
 
     @Override
     public TvShowDTO getTvBySlug(String slug) {
-//        return tvShowDAO.getTvBySlug(slug);
         return mapperFacade.map(tvShowDAO.getTvBySlug(slug), TvShowDTO.class);
     }
 

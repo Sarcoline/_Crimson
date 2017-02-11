@@ -40,7 +40,6 @@ public class TvShowDAOImpl implements TvShowDAO {
 
     @Override
     public TvShow getTvByIdWithEpisodes(Long id) {
-
         Session session = sf.getCurrentSession();
 
         TvShow tvshow = session.find(TvShow.class, id);
@@ -79,13 +78,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     @Override
     public List<TvShow> getAllTvShowByMaxRating(){
         List<TvShow> unsortedList = getAllTvShows();
-        Collections.sort(unsortedList, new Comparator<TvShow>() {
-            @Override
-            public int compare(TvShow o1, TvShow o2) {
-                return o1.getOverallRating().compareTo(o2.getOverallRating());
-            }
-        });
-
+        unsortedList.sort(Comparator.comparing(TvShow::getOverallRating));
         Collections.reverse(unsortedList);
         return unsortedList;
     }
