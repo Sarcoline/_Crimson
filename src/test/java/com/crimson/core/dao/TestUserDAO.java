@@ -20,7 +20,7 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestSpringCore.class)
 @Transactional
-@Rollback()
+@Rollback
 public class TestUserDAO {
 
     @Autowired
@@ -79,7 +79,10 @@ public class TestUserDAO {
             .title("Episode 3")
             .build();
 
-    private Rating rating;
+    private Rating rating = Rating.builder()
+            .value(6)
+            .build();
+
 
     @Before
     public void setDB() {
@@ -91,7 +94,7 @@ public class TestUserDAO {
         episodeDAO.saveEpisode(episode);
         episodeDAO.saveEpisode(episode2);
         episodeDAO.saveEpisode(episode3);
-
+        ratingDAO.saveRating(rating);
     }
 
     @Test
@@ -155,12 +158,21 @@ public class TestUserDAO {
         userDAO.addTvShow2User(user, tvShow);
         userDAO.addTvShow2User(user, tvShow2);
         userDAO.addTvShow2User(user, tvShow3);
+        Rating rating = new Rating();
+        rating.setValue(5);
+        rating.setTvShowRating(tvShow);
+        rating.setUserRating(user);
+        Rating rating2 = new Rating();
+        rating2.setValue(8);
+        rating2.setTvShowRating(tvShow2);
+        rating2.setUserRating(user);
+        user.getUserRatings().add(rating);
+        user.getUserRatings().add(rating2);
         List<TvShow> userTvShowList = userDAO.getUserTvShowsSortedByMaxRating(user);
 
-        Assert.assertEquals(userTvShowList.size(), 3);
-        Assert.assertEquals(userTvShowList.get(0).getOverallRating(), tvShow2.getOverallRating());
-        Assert.assertEquals(userTvShowList.get(1).getOverallRating(), tvShow3.getOverallRating());
-        Assert.assertEquals(userTvShowList.get(2).getOverallRating(), tvShow.getOverallRating());
+        Assert.assertEquals(userTvShowList.size(), 2);
+        Assert.assertEquals(user.getUserRatings().get(0).getValue(), rating.getValue());
+        Assert.assertEquals(user.getUserRatings().get(1).getValue(), rating2.getValue());
     }
 
     @Test

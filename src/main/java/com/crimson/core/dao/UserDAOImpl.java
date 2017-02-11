@@ -136,9 +136,11 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void addRating2User(User user, Rating rating) {
+        Session session = sf.getCurrentSession();
         if (!user.getUserRatings().contains(rating)) {
             user.getUserRatings().add(rating);
         }
+        session.saveOrUpdate(user);
     }
 
     @Override
