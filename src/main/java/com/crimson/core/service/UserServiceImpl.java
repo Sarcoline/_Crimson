@@ -38,10 +38,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private ApplicationContext context;
 
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
     @Override
     public void saveUser(UserDTO userDTO) throws IOException {
         User user = mapperFacade.map(userDTO, User.class);
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
         InputStream in = context.getResource("classpath:/images/user/user.jpg").getInputStream();
         user.setProfilePic(IOUtils.toByteArray(in));
@@ -145,4 +146,16 @@ public class UserServiceImpl implements UserService {
     public List<Episode> getAllUpcomingUserEpisodes(UserDTO userDTO){
         User user = userDAO.getUserById(userDTO.getId());
         return userDAO.getAllUpcomingUserEpisodes(user);}
+
+    @Override
+    public void updatePassword(UserDTO userDTO, String password) {
+        User user = userDAO.getUserById(userDTO.getId());
+        user.setPassword(encoder.encode(password));
+        userDAO.updateUser(user);
+    }
+
+    @Override
+    public boolean checkOldPassword(UserDTO userDTO, String password) {
+        return encoder.matches(password, userDTO.getPassword());
+    }
 }

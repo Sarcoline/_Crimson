@@ -28,6 +28,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RequestMapping("/tv")
 @Controller
@@ -60,7 +61,7 @@ public class CrimsonController {
             model.addAttribute("watchedEpisodesId", watchedEpisodesId);
         }
         int seasons = 0;
-        for (Episode episode: tv.getEpisodes()) {
+        for (Episode episode : tv.getEpisodes()) {
             if (seasons < episode.getSeason()) seasons = episode.getSeason();
         }
         model.addAttribute("tv", tv);
@@ -109,14 +110,14 @@ public class CrimsonController {
     public String registration(@Valid UserDTO userDTO, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return String.format("redirect:/tv/user/%s/edit?error", userDTO.getName());
+            return "redirect:/tv/user/edit?error";
         }
         userService.updateUser(userDTO);
         return String.format("redirect:/tv/user/%s", userDTO.getName());
     }
 
     //USUWANIE USERA
-    @RequestMapping(value="/user/delete/", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/delete/", method = RequestMethod.GET)
     @Secured("ROLE_USER")
     public void deleteUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -182,5 +183,30 @@ public class CrimsonController {
         Episode episode = episodeService.getEpisodeById(id);
         if (episodeService.checkWatched(user, episode)) episodeService.deleteUserFromEpisode(user, episode);
         else episodeService.addUser2Episode(user, episode);
+    }
+
+    @RequestMapping(value = "/user/updatePassword", method = RequestMethod.POST)
+    public String changeUserPassword(@RequestParam("oldPassword") String oldPassword,
+                                     @RequestParam("password") String password,
+                                     @RequestParam("passwordConfirm") String passwordConfirm) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDTO user = userService.getUserByName(auth.getName());
+        if (!userService.checkOldPassword(user, oldPassword)) return "redirect:/tv/user/updatePassword?wrongPassword";
+        if (!Objects.equals(password, passwordConfirm)) return "redirect:/tv/user/updatePassword?mismatch";
+        else userService.updatePassword(user, password);
+
+        return String.format("redirect:/tv/user/%s", user.getName());
+    }
+
+    @RequestMapping(value = "/user/updatePassword", method = RequestMethod.GET)
+    public String displayChangeUserPassword(@RequestParam(value = "wrongPassword", required = false) String wrongPassword,
+                                            @RequestParam(value = "mismatch", required = false) String mismatch, Model model) {
+        if (mismatch != null) {
+            model.addAttribute("error", "Password mismatch");
+        }
+        if (wrongPassword != null) {
+            model.addAttribute("error", "Wrong password");
+        }
+        return "changePassword";
     }
 }

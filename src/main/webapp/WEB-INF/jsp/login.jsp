@@ -14,7 +14,6 @@
 <body>
 <div class="uk-container uk-container-center uk-margin-large-top">
     <div class=" uk-text-center">
-
         <div class="uk-panel uk-panel-box uk-vertical-align-middle uk-margin-top login" style="width: 300px;">
             <h1>Log In!</h1>
             <c:if test="${not empty error}">
@@ -39,6 +38,10 @@
                 <div class="uk-form-row">
                     <input class="uk-width-1-1 uk-button uk-button-primary uk-button-large" name="submit" type="submit"
                            value="Login"/>
+                </div>
+                <div class="uk-form-row uk-text-small">
+                    <label class="uk-float-left"><input type="checkbox" name="remember-me"> Remember Me</label>
+                    <a class="uk-float-right" href="#">Forgot Password?</a>
                 </div>
                 <input type="hidden" name="${_csrf.parameterName}"
                        value="${_csrf.token}"/>

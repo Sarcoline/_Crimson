@@ -3,6 +3,7 @@ package com.crimson.core.dto;
 import com.crimson.core.model.Episode;
 import com.crimson.core.model.Rating;
 import com.crimson.core.model.TvShow;
+import com.crimson.core.validator.PasswordMatches;
 import lombok.Data;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -12,6 +13,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
+@PasswordMatches
 public class UserDTO {
 
     private Long id;
@@ -27,6 +29,8 @@ public class UserDTO {
     @NotEmpty
     @Size(min = 3, max = 100)
     private String password;
+
+    private String matchingPassword;
 
     private byte[] profilePic;
 

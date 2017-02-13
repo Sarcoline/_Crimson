@@ -31,6 +31,11 @@
                                 name='password' placeholder="Password"/>
                 </div>
                 <div class="uk-form-row">
+                    <form:errors path="matchingPassword" cssClass="uk-alert uk-alert-danger" element="div"/>
+                    <form:input path="matchingPassword" value="" class="uk-width-1-1 uk-form-large" type="password"
+                                name='matchingPassword' placeholder="Confirm password"/>
+                </div>
+                <div class="uk-form-row">
                     <form:errors path="email" cssClass="uk-alert uk-alert-danger" element="div"/>
                     <form:input path="email" value="" class="uk-width-1-1 uk-form-large" type="text" name='email'
                                 placeholder="Email"/>

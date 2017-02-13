@@ -38,11 +38,14 @@
                                 placeholder="Email"/>
                         <%--TODO zmienic wyświetlanie błędów--%>
                 </div>
-
+                <form:input path="matchingPassword" value="${userDTO.password}" type="hidden"/>
                 <form:input path="id" value="${userDTO.id}" type="hidden"/>
                 <form:input path="profilePic" value="${userDTO.profilePic}" type="hidden"/>
                 <div class="uk-form-row">
                     <form:input path="password" value="${userDTO.password}" type="hidden"/>
+                </div>
+                <div class="uk-form-row uk-text-small">
+                    <a class="uk-float-left" href="<c:url value="/tv/user/updatePassword"/> ">Change Password</a>
                 </div>
                 <div class="uk-form-row">
                     <input class="uk-width-1-1 uk-button uk-button-primary uk-button-large" name="submit" type="submit"

@@ -81,11 +81,7 @@ public class RatingServiceImpl implements RatingService {
     public void calculateRating(long id) {
         TvShow tvShow = tvShowDAO.getTvById(id);
         List<Rating> ratings = tvShow.getTvShowRating();
-        double overall = 0;
-        for (Rating rat : ratings) {
-            overall += rat.getValue();
-        }
-        overall /= ratings.size();
+        double overall = ratings.stream().mapToDouble(Rating::getValue).average().getAsDouble();
         tvShow.setOverallRating(overall);
         tvShowDAO.updateTvShow(tvShow);
     }

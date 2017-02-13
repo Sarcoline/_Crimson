@@ -47,4 +47,8 @@ public interface UserService {
     List<Episode> getAllUnwatchedUserEpisodes(UserDTO user);
 
     List<Episode> getAllUpcomingUserEpisodes(UserDTO userDTO);
+
+    void updatePassword(UserDTO user, String password);
+
+    boolean checkOldPassword(UserDTO userDTO, String password);
 }
