@@ -10,21 +10,29 @@
 <div class="uk-container uk-container-center uk-margin-large-top">
     <div class=" uk-text-center">
         <div class="uk-panel uk-panel-box uk-vertical-align-middle uk-margin-top login" style="width: 300px;">
+            <h1>Change password</h1>
             <c:if test="${not empty error}">
                 <div class="uk-alert uk-alert-danger" data-uk-alert="">
                     <a href="" class="uk-alert-close uk-close"></a>
                     <p>${error}</p>
                 </div>
             </c:if>
-            <form class="uk-form" id="form" action="<c:url value="/tv/user/updatePassword"/>" method="post">
+            <form:form modelAttribute="passwordDTO" action="/tv/user/updatePassword" method="POST" enctype="utf8" class="uk-form uk-form-stacked" >
+                <form:errors cssClass="uk-alert uk-alert-danger" element="div"/>
                 <div class="uk-form-row">
-                    <input class="uk-width-1-1 uk-form-large" id="oldPassword" name="oldPassword" type="password" placeholder="Old password" required/>
+                    <form:errors path="oldPassword" cssClass="uk-alert uk-alert-danger" element="div"/>
+                <form:input path="oldPassword" value="" class="uk-width-1-1 uk-form-large" type="password" name='oldPassword'
+                            placeholder="Old password"/>
                 </div>
                 <div class="uk-form-row">
-                    <input class="uk-width-1-1 uk-form-large" id="pass" name="password" type="password" placeholder="New password" required/>
+                    <form:errors path="password" cssClass="uk-alert uk-alert-danger" element="div"/>
+                <form:input path="password" value="" class="uk-width-1-1 uk-form-large" type="password" name='password'
+                            placeholder="New password"/>
                 </div>
                 <div class="uk-form-row">
-                    <input class="uk-width-1-1 uk-form-large" name="passwordConfirm" id="passConfirm" type="password" placeholder="New password confirmation" required/>
+                    <form:errors path="matchingPassword" cssClass="uk-alert uk-alert-danger" element="div"/>
+                <form:input path="matchingPassword" value="" class="uk-width-1-1 uk-form-large" type="password" name='matchingPassword'
+                            placeholder="Confirm new password"/>
                 </div>
                 <div class="uk-form-row">
                     <input class="uk-width-1-1 uk-button uk-button-primary uk-button-large" name="submit" type="submit"
@@ -32,7 +40,7 @@
                 </div>
                 <input type="hidden" name="${_csrf.parameterName}"
                        value="${_csrf.token}"/>
-            </form>
+            </form:form>
         </div>
     </div>
 </div>

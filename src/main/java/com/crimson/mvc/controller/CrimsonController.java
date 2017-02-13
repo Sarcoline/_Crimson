@@ -1,5 +1,6 @@
 package com.crimson.mvc.controller;
 
+import com.crimson.core.dto.PasswordDTO;
 import com.crimson.core.dto.TvShowDTO;
 import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.Episode;
@@ -186,14 +187,15 @@ public class CrimsonController {
     }
 
     @RequestMapping(value = "/user/updatePassword", method = RequestMethod.POST)
-    public String changeUserPassword(@RequestParam("oldPassword") String oldPassword,
-                                     @RequestParam("password") String password,
-                                     @RequestParam("passwordConfirm") String passwordConfirm) {
+    public String changeUserPassword(@Valid PasswordDTO passwordDTO, BindingResult bindingResult ) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
-        if (!userService.checkOldPassword(user, oldPassword)) return "redirect:/tv/user/updatePassword?wrongPassword";
-        if (!Objects.equals(password, passwordConfirm)) return "redirect:/tv/user/updatePassword?mismatch";
-        else userService.updatePassword(user, password);
+        if (bindingResult.hasErrors()) {
+            return "changePassword";
+        }
+        if (!userService.checkOldPassword(user, passwordDTO.getOldPassword())) return "redirect:/tv/user/updatePassword?wrongPassword";
+        if (!Objects.equals(passwordDTO.getPassword(), passwordDTO.getMatchingPassword())) return "redirect:/tv/user/updatePassword?mismatch";
+        else userService.updatePassword(user, passwordDTO.getPassword());
 
         return String.format("redirect:/tv/user/%s", user.getName());
     }
@@ -207,6 +209,7 @@ public class CrimsonController {
         if (wrongPassword != null) {
             model.addAttribute("error", "Wrong password");
         }
+        model.addAttribute("passwordDTO", new PasswordDTO());
         return "changePassword";
     }
 }
