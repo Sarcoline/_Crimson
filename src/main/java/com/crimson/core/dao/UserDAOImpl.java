@@ -1,9 +1,6 @@
 package com.crimson.core.dao;
 
-import com.crimson.core.model.Episode;
-import com.crimson.core.model.Rating;
-import com.crimson.core.model.TvShow;
-import com.crimson.core.model.User;
+import com.crimson.core.model.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -148,6 +145,44 @@ public class UserDAOImpl implements UserDAO {
         if (user.getUserRatings().contains(rating)) {
             user.getUserRatings().remove(rating);
         }
+    }
+
+    //User2Setting
+
+    @Override
+    public void addSetting2User(User user, Setting setting){
+        Session session = sf.getCurrentSession();
+        user.setSetting(setting);
+        session.saveOrUpdate(user);
+    }
+
+    @Override
+    public void deleteSettingFromUser(User user, Setting setting){
+        Session session = sf.getCurrentSession();
+        if (user.getSetting() == setting){
+            user.setSetting(null);
+        }
+        session.saveOrUpdate(user);
+    }
+
+    //User2Role
+
+    @Override
+    public void addRole2User(User user, Role role){
+        Session session = sf.getCurrentSession();
+        if (!user.getRoles().contains(role)){
+            user.getRoles().add(role);
+        }
+        session.saveOrUpdate(user);
+    }
+
+    @Override
+    public void deleteRoleFromUser(User user, Role role){
+        Session session = sf.getCurrentSession();
+        if (user.getRoles().contains(role)){
+            user.getRoles().remove(role);
+        }
+        session.saveOrUpdate(user);
     }
 
 

@@ -2,6 +2,7 @@ package com.crimson.core.service;
 
 import com.crimson.core.dao.SettingsDAO;
 import com.crimson.core.model.Setting;
+import com.crimson.core.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,4 +40,15 @@ public class SettingsServiceImpl implements  SettingsService{
     public void updateSetting(Setting setting) {
         settingsDAO.updateSetting(setting);
     }
+
+    //RELATIONSHIPS
+
+    //User2Setting
+
+    @Override
+    public void addUser2Setting(User user, Setting setting){settingsDAO.addUser2Setting(user, setting);}
+
+    @Override
+    public void deleteUserFromSetting(User user, Setting setting){settingsDAO.deleteUserFromSetting(user, setting);}
+
 }

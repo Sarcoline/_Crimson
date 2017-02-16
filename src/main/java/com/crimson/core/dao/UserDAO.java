@@ -1,9 +1,6 @@
 package com.crimson.core.dao;
 
-import com.crimson.core.model.Episode;
-import com.crimson.core.model.Rating;
-import com.crimson.core.model.TvShow;
-import com.crimson.core.model.User;
+import com.crimson.core.model.*;
 
 import java.util.List;
 
@@ -40,4 +37,12 @@ public interface UserDAO {
     void addRating2User(User user, Rating rating);
 
     void deleteRatingFromUser(User user, Rating rating);
+
+    void addSetting2User(User user, Setting setting);
+
+    void deleteSettingFromUser(User user, Setting setting);
+
+    void addRole2User(User user, Role role);
+
+    void deleteRoleFromUser(User user, Role role);
 }

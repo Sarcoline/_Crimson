@@ -1,6 +1,7 @@
 package com.crimson.core.dao;
 
 import com.crimson.core.model.Setting;
+import com.crimson.core.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,25 @@ public class SettingsDAOImpl implements SettingsDAO {
     public void updateSetting(Setting setting) {
         Session session = sessionFactory.getCurrentSession();
         session.update(setting);
+    }
+
+    //RELATIONSHIPS
+
+
+    //User2Setting
+    @Override
+    public void addUser2Setting(User user, Setting setting){
+        Session session = sessionFactory.getCurrentSession();
+        setting.setUser2Setting(user);
+        session.saveOrUpdate(setting);
+    }
+
+    @Override
+    public void deleteUserFromSetting(User user, Setting setting){
+        Session session = sessionFactory.getCurrentSession();
+        if (setting.getUser2Setting() == user){
+            setting.setUser2Setting(null);
+        }
+        session.saveOrUpdate(session);
     }
 }

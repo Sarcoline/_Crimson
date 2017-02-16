@@ -4,10 +4,7 @@ import com.crimson.core.dao.TvShowDAO;
 import com.crimson.core.dao.UserDAO;
 import com.crimson.core.dto.TvShowDTO;
 import com.crimson.core.dto.UserDTO;
-import com.crimson.core.model.Episode;
-import com.crimson.core.model.Rating;
-import com.crimson.core.model.TvShow;
-import com.crimson.core.model.User;
+import com.crimson.core.model.*;
 import ma.glasnost.orika.MapperFacade;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,6 +126,22 @@ public class UserServiceImpl implements UserService {
     public void deleteRatingFromUser(User user, Rating rating) {
         userDAO.deleteRatingFromUser(user, rating);
     }
+
+    //User2Setting
+    @Override
+    public void addSetting2User(User user, Setting setting){userDAO.addSetting2User(user, setting);}
+
+    @Override
+    public void deleteSettingFromUser(User user, Setting setting){userDAO.deleteSettingFromUser(user, setting);}
+
+    //User2Role
+
+    @Override
+    public void addRole2User(User user, Role role){ userDAO.addRole2User(user, role);}
+
+    @Override
+    public void deleteRoleFromUser(User user, Role role){userDAO.deleteRoleFromUser(user, role);}
+
 
 
     //Extra Methods

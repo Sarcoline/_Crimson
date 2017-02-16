@@ -1,6 +1,7 @@
 package com.crimson.core.dao;
 
 import com.crimson.context.TestSpringCore;
+import com.crimson.core.factory.TvShowFactory;
 import com.crimson.core.model.*;
 import org.junit.Assert;
 import org.junit.Before;
@@ -35,29 +36,8 @@ public class TestTvShowDAO {
     @Autowired
     private RatingDAO ratingDAO;
 
-    private TvShow tvShow = TvShow.builder()
-            .title("Dr.House")
-            .network("Netflix")
-            .country("US")
-            .genre("Drama")
-            .overallRating(6.7)
-            .build();
+    private TvShowFactory tvShowFactory = new TvShowFactory();
 
-    private TvShow tvShow2 = TvShow.builder()
-            .title("Dr.House")
-            .network("Netflix")
-            .country("US")
-            .genre("Drama")
-            .overallRating(8.7)
-            .build();
-
-    private TvShow tvShow3 = TvShow.builder()
-            .title("Dr.House")
-            .network("Netflix")
-            .country("US")
-            .genre("Drama")
-            .overallRating(7.7)
-            .build();
 
     private User user = User.builder()
             .name("Aleks")
@@ -78,11 +58,31 @@ public class TestTvShowDAO {
             .value(5)
             .build();
 
+    private TvShow tvShow = tvShowFactory.getTvShow("test1");
+    private TvShow tvShow2 = tvShowFactory.getTvShow("test2");
+    private TvShow tvShow3 = tvShowFactory.getTvShow("test3");
+    private TvShow tvShow4 = tvShowFactory.getTvShow("test4");
+    private TvShow tvShow5 = tvShowFactory.getTvShow("test5");
+    private TvShow tvShow6 = tvShowFactory.getTvShow("test6");
+    private TvShow tvShow7 = tvShowFactory.getTvShow("test7");
+    private TvShow tvShow8 = tvShowFactory.getTvShow("test8");
+    private TvShow tvShow9 = tvShowFactory.getTvShow("test9");
+    private TvShow tvShow10 = tvShowFactory.getTvShow("test10");
+
+
     @Before
     public void setDB() {
         tvShowDAO.saveTvShow(tvShow);
         tvShowDAO.saveTvShow(tvShow2);
         tvShowDAO.saveTvShow(tvShow3);
+        tvShowDAO.saveTvShow(tvShow4);
+        tvShowDAO.saveTvShow(tvShow5);
+        tvShowDAO.saveTvShow(tvShow6);
+        tvShowDAO.saveTvShow(tvShow7);
+        tvShowDAO.saveTvShow(tvShow8);
+        tvShowDAO.saveTvShow(tvShow9);
+        tvShowDAO.saveTvShow(tvShow10);
+
         genreDAO.addGenre(genre);
         episodeDAO.saveEpisode(episode);
         rating.setTvShowRating(tvShow);
@@ -123,7 +123,7 @@ public class TestTvShowDAO {
     public void getAllTvShowsTest() {
         int sizeListTvShows = tvShowDAO.getAllTvShows().size();
 
-        Assert.assertEquals(3, sizeListTvShows);
+        Assert.assertEquals(10, sizeListTvShows);
     }
 
     @Test
@@ -143,6 +143,25 @@ public class TestTvShowDAO {
         Assert.assertEquals(sortedList.get(1).getOverallRating(), tvShow3.getOverallRating());
         Assert.assertEquals(sortedList.get(2).getOverallRating(), tvShow.getOverallRating());
     }
+
+    @Test
+    public void getTvShowsSortedByNumberOnList(){
+        List<TvShow> gettedList = tvShowDAO.getTvShowsSortedByNumberOnList(10,1);
+
+
+        Assert.assertEquals(gettedList.get(9), tvShow10);
+        Assert.assertEquals(gettedList.get(8), tvShow9);
+        Assert.assertEquals(gettedList.get(7), tvShow8);
+        Assert.assertEquals(gettedList.get(6), tvShow7);
+        Assert.assertEquals(gettedList.get(5), tvShow6);
+        Assert.assertEquals(gettedList.get(4), tvShow5);
+        Assert.assertEquals(gettedList.get(3), tvShow4);
+        Assert.assertEquals(gettedList.get(2), tvShow3);
+        Assert.assertEquals(gettedList.get(1), tvShow2);
+        Assert.assertEquals(gettedList.get(0), tvShow);
+
+    }
+
 
     //RELATIONSHIP TESTS
 

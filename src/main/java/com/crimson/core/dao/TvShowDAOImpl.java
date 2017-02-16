@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -82,6 +83,44 @@ public class TvShowDAOImpl implements TvShowDAO {
         Collections.reverse(unsortedList);
         return unsortedList;
     }
+
+    //Wyrzuca listę TvShow dzieląc cała listę na podany przedział przez użytkownika na stronie np. ma wyświetlić tylko 10 tvShows na jednej podstronie
+    @Override
+    public List<TvShow> getTvShowsSortedByNumberOnList(int userChoosedNumberOnList, int pageNumber){
+        List<TvShow> allTvShows = getAllTvShows();
+        List<TvShow> listToReturn = new ArrayList<>();
+
+        try{
+            int counter, sizeOfAllTvShows = getAllTvShows().size();
+            //Od jakiego tvshow startuje
+            int startFrom = userChoosedNumberOnList*(pageNumber-1);
+            //Sprawdza czy na żądanej stronie baza nie posiada za mało Tvshows do wyświetlenia
+            if (sizeOfAllTvShows - (userChoosedNumberOnList*pageNumber) <= 0){
+                //jesli tak to oblicza ilosc tvshow ktorych brakuje
+                int tmp = sizeOfAllTvShows -(userChoosedNumberOnList*pageNumber);
+                //ustawia licznik na ilosc TvShow do zwrócenia na danej
+                counter = userChoosedNumberOnList+tmp-1;
+            }
+            else {
+                counter = userChoosedNumberOnList-1;
+            }
+
+            while (counter >= 0){
+                listToReturn.add(allTvShows.get(startFrom+counter));
+                counter--;
+            }
+
+            Collections.reverse(listToReturn);
+            return listToReturn;
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+
+//    public List<TvShow> getTvShowsSortedByUserNumberToShow(List<TvShow> allTvShows, int userChoosedNumberOnList, int pageNumber){
+//
+//    }
 
     //RELATIONSHIPS
 

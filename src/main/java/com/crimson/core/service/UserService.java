@@ -2,10 +2,7 @@ package com.crimson.core.service;
 
 import com.crimson.core.dto.TvShowDTO;
 import com.crimson.core.dto.UserDTO;
-import com.crimson.core.model.Episode;
-import com.crimson.core.model.Rating;
-import com.crimson.core.model.TvShow;
-import com.crimson.core.model.User;
+import com.crimson.core.model.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -40,6 +37,15 @@ public interface UserService {
     boolean checkFollow(UserDTO userDTO, TvShowDTO tvShow);
 
     void deleteRatingFromUser(User user, Rating rating);
+
+    //User2Setting
+    void addSetting2User(User user, Setting setting);
+
+    void deleteSettingFromUser(User user, Setting setting);
+
+    void addRole2User(User user, Role role);
+
+    void deleteRoleFromUser(User user, Role role);
 
     //Extra Methods
     List<TvShow> getUserTvShowsSortedByMaxRating(UserDTO user);

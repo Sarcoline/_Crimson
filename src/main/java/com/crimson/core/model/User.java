@@ -56,9 +56,18 @@ public @Data class User {
             joinColumns = @JoinColumn(name = "idUser"),
             inverseJoinColumns = @JoinColumn(name = "idEpisode"))
     private List<Episode> userEpisodeList = new ArrayList<>();
+
     //Rating
     @OneToMany(mappedBy = "userRating", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Rating> userRatings = new ArrayList<>();
+
+    //User2Setting
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user2Setting", cascade = CascadeType.ALL)
+    private Setting setting;
+
+    //User2Role
+    @OneToMany(mappedBy = "roleFromUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Role> roles = new ArrayList<>();
 
 
 

@@ -23,6 +23,8 @@ public interface TvShowDAO {
 
     void updateTvShow(TvShow tvshow);
 
+    List<TvShow> getTvShowsSortedByNumberOnList(int userChoosedNumberOnList, int pageNumber);
+
     void addUser2TvShow(User user, TvShow tvShow);
 
     void deleteUserFromTvShow(User user, TvShow tvShow);
