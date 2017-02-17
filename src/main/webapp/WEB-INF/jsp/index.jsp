@@ -12,6 +12,9 @@
     <sec:authorize access="isAuthenticated()">
         <h1>Hello ${name}!</h1>
     </sec:authorize>
+    <sec:authorize access="hasRole('ROLE_ADMIN')">
+        <h2>You are admin!</h2>
+    </sec:authorize>
     <sec:authorize access="isAnonymous()">
         <h1 id="hej">Hello World!</h1>
     </sec:authorize>

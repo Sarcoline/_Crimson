@@ -43,7 +43,6 @@ public class TestTvShowDAO {
             .name("Aleks")
             .email("Email@wp.pl")
             .password("123")
-            .role("ROLE_USER")
             .build();
 
     private Genre genre = Genre.builder()

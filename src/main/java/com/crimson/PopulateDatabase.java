@@ -2,8 +2,10 @@ package com.crimson;
 
 import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.Episode;
+import com.crimson.core.model.Role;
 import com.crimson.core.model.TvShow;
 import com.crimson.core.service.EpisodeService;
+import com.crimson.core.service.RoleService;
 import com.crimson.core.service.TvShowService;
 import com.crimson.core.service.UserService;
 import org.apache.commons.io.IOUtils;
@@ -36,6 +38,9 @@ public class PopulateDatabase {
 
     @Autowired
     private UserService userDAO;
+
+    @Autowired
+    private RoleService roleService;
 
     @EventListener(ContextRefreshedEvent.class)
     public void populate() throws IOException, ParseException {
@@ -219,11 +224,15 @@ public class PopulateDatabase {
 
 
 
-
+            Role role = new Role("USER");
+            Role role1 = new Role("ADMIN");
+            roleService.saveRole(role);
+            roleService.saveRole(role1);
             UserDTO user = new UserDTO();
             user.setName("TestUser");
             user.setEmail("test@email.com");
             user.setPassword("123");
+            user.getRoles().add(roleService.getAllRoles().get(1));
             InputStream in30 = applicationContext.getResource("classpath:/images/user/meow.jpg").getInputStream();
             user.setProfilePic(IOUtils.toByteArray(in30));
             userDAO.saveUser(user);

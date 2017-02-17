@@ -18,7 +18,6 @@ public class UserFactory {
                         .name("Aleks")
                         .email("Email@wp.pl")
                         .password("123")
-                        .role("ROLE_USER")
                         .build();
                 break;
             }
@@ -27,7 +26,6 @@ public class UserFactory {
                         .name("Kamil")
                         .email("kaamil.kot@gmail.com")
                         .password("123")
-                        .role("ROLE_USER")
                         .build();
                 break;
             }

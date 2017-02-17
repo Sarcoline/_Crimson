@@ -2,6 +2,7 @@ package com.crimson.core.dto;
 
 import com.crimson.core.model.Episode;
 import com.crimson.core.model.Rating;
+import com.crimson.core.model.Role;
 import com.crimson.core.model.TvShow;
 import com.crimson.core.validator.PasswordMatches;
 import lombok.Data;
@@ -10,6 +11,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -34,7 +36,7 @@ public class UserDTO {
 
     private byte[] profilePic;
 
-    private String role = "ROLE_USER";
+    private List<Role> roles = new ArrayList<>();
 
     private List<Rating> userRatings;
 

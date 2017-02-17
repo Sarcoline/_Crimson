@@ -4,15 +4,17 @@ import com.crimson.core.dao.RoleDAO;
 import com.crimson.core.model.Role;
 import com.crimson.core.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Transactional
+@Service
 public class RoleServiceImpl implements RoleService{
 
     @Autowired
-    RoleDAO roleDAO;
+    private RoleDAO roleDAO;
 
     @Override
     public void saveRole(Role role) {

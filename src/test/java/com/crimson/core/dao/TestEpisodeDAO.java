@@ -1,9 +1,6 @@
 package com.crimson.core.dao;
 
 import com.crimson.context.TestSpringCore;
-import com.crimson.core.factory.EpisodeFactory;
-import com.crimson.core.factory.TvShowFactory;
-import com.crimson.core.factory.UserFactory;
 import com.crimson.core.model.Episode;
 import com.crimson.core.model.TvShow;
 import com.crimson.core.model.User;
@@ -41,7 +38,6 @@ public class TestEpisodeDAO {
             .name("Aleks")
             .email("Email@wp.pl")
             .password("123")
-            .role("ROLE_USER")
             .build();
 
     private TvShow tvShow = TvShow.builder()

@@ -45,7 +45,6 @@ public class TestRatingDAO {
             .name("Aleks")
             .email("Email@wp.pl")
             .password("123")
-            .role("ROLE_USER")
             .build();
 
     @Before

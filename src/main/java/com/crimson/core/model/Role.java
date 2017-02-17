@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Entity
@@ -24,8 +26,7 @@ public @Data class Role {
         this.roleName = roleName;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "idUser", insertable = false, updatable = false)
-    private User roleFromUser;
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<User> roleUsers = new ArrayList<>();
 
 }

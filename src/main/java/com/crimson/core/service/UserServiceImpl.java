@@ -1,5 +1,6 @@
 package com.crimson.core.service;
 
+import com.crimson.core.dao.RoleDAO;
 import com.crimson.core.dao.TvShowDAO;
 import com.crimson.core.dao.UserDAO;
 import com.crimson.core.dto.TvShowDTO;
@@ -35,12 +36,18 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private ApplicationContext context;
 
+    @Autowired
+    private RoleDAO roleDAO;
+
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Override
     public void saveUser(UserDTO userDTO) throws IOException {
+        Role role = roleDAO.getAllRoles().get(0);
         User user = mapperFacade.map(userDTO, User.class);
         user.setPassword(encoder.encode(user.getPassword()));
+        user.getRoles().add(role);
+        role.getRoleUsers().add(user);
         InputStream in = context.getResource("classpath:/images/user/user.jpg").getInputStream();
         user.setProfilePic(IOUtils.toByteArray(in));
         userDAO.saveUser(user);
