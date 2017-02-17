@@ -1,5 +1,6 @@
 package com.crimson.core.service;
 
+import com.crimson.core.dto.EpisodeDTO;
 import com.crimson.core.dto.TvShowDTO;
 import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.*;
@@ -48,11 +49,11 @@ public interface UserService {
     void deleteRoleFromUser(User user, Role role);
 
     //Extra Methods
-    List<TvShow> getUserTvShowsSortedByMaxRating(UserDTO user);
+    List<TvShowDTO> getUserTvShowsSortedByMaxRating(UserDTO user);
 
-    List<Episode> getAllUnwatchedUserEpisodes(UserDTO user);
+    List<EpisodeDTO> getAllUnwatchedUserEpisodes(UserDTO user);
 
-    List<Episode> getAllUpcomingUserEpisodes(UserDTO userDTO);
+    List<EpisodeDTO> getAllUpcomingUserEpisodes(UserDTO userDTO);
 
     void updatePassword(UserDTO user, String password);
 

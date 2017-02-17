@@ -3,6 +3,7 @@ package com.crimson.core.service;
 import com.crimson.core.dao.RoleDAO;
 import com.crimson.core.dao.TvShowDAO;
 import com.crimson.core.dao.UserDAO;
+import com.crimson.core.dto.EpisodeDTO;
 import com.crimson.core.dto.TvShowDTO;
 import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.*;
@@ -153,19 +154,32 @@ public class UserServiceImpl implements UserService {
 
     //Extra Methods
     @Override
-    public List<TvShow> getUserTvShowsSortedByMaxRating(UserDTO userDTO){
+    public List<TvShowDTO> getUserTvShowsSortedByMaxRating(UserDTO userDTO){
         User user = userDAO.getUserById(userDTO.getId());
-        return userDAO.getUserTvShowsSortedByMaxRating(user);}
+        List<TvShowDTO> tvs = new ArrayList<>();
+
+        userDAO.getUserTvShowsSortedByMaxRating(user).forEach(
+                tv -> tvs.add(mapperFacade.map(tv, TvShowDTO.class))
+        );
+        return tvs;}
 
     @Override
-    public List<Episode> getAllUnwatchedUserEpisodes(UserDTO userDTO){
+    public List<EpisodeDTO> getAllUnwatchedUserEpisodes(UserDTO userDTO){
         User user = userDAO.getUserById(userDTO.getId());
-        return userDAO.getAllUnwatchedUserEpisodes(user);}
+        List<EpisodeDTO> eps = new ArrayList<>();
+        userDAO.getAllUnwatchedUserEpisodes(user).forEach(episode ->
+                eps.add(mapperFacade.map(episode, EpisodeDTO.class)));
+        return eps;
+    }
 
     @Override
-    public List<Episode> getAllUpcomingUserEpisodes(UserDTO userDTO){
+    public List<EpisodeDTO> getAllUpcomingUserEpisodes(UserDTO userDTO){
         User user = userDAO.getUserById(userDTO.getId());
-        return userDAO.getAllUpcomingUserEpisodes(user);}
+        List<EpisodeDTO> eps = new ArrayList<>();
+        userDAO.getAllUpcomingUserEpisodes(user).forEach(episode ->
+            eps.add(mapperFacade.map(episode, EpisodeDTO.class)));
+        return eps;
+    }
 
     @Override
     public void updatePassword(UserDTO userDTO, String password) {

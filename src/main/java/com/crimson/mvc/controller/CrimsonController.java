@@ -1,10 +1,10 @@
 package com.crimson.mvc.controller;
 
+import com.crimson.core.dto.EpisodeDTO;
 import com.crimson.core.dto.PasswordDTO;
 import com.crimson.core.dto.TvShowDTO;
 import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.Episode;
-import com.crimson.core.model.TvShow;
 import com.crimson.core.service.EpisodeService;
 import com.crimson.core.service.RatingService;
 import com.crimson.core.service.TvShowService;
@@ -62,7 +62,7 @@ public class CrimsonController {
             model.addAttribute("watchedEpisodesId", watchedEpisodesId);
         }
         int seasons = 0;
-        for (Episode episode : tv.getEpisodes()) {
+        for (EpisodeDTO episode : tv.getEpisodes()) {
             if (seasons < episode.getSeason()) seasons = episode.getSeason();
         }
         model.addAttribute("tv", tv);
@@ -78,8 +78,8 @@ public class CrimsonController {
     public String displayUser(Model model, @PathVariable("name") String name) {
         UserDTO user = userService.getUserByName(name);
         List<TvShowDTO> tvs = userService.getUserTvShows(user);
-        List<TvShow> favorites = userService.getUserTvShowsSortedByMaxRating(user);
-        List<Episode> watchedEpisodes = user.getUserEpisodeList();
+        List<TvShowDTO> favorites = userService.getUserTvShowsSortedByMaxRating(user);
+        List<EpisodeDTO> watchedEpisodes = user.getUserEpisodeList();
         List watchedEpisodesId = new ArrayList();
         watchedEpisodes.forEach(episode -> watchedEpisodesId.add(episode.getId()));
         model.addAttribute("tvshows", tvs);

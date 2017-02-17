@@ -5,9 +5,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Size;
 
-/**
- * Created by Meow on 13.02.2017.
- */
 public @Data class PasswordDTO {
 
 

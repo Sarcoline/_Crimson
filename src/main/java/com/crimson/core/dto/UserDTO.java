@@ -1,9 +1,7 @@
 package com.crimson.core.dto;
 
-import com.crimson.core.model.Episode;
 import com.crimson.core.model.Rating;
 import com.crimson.core.model.Role;
-import com.crimson.core.model.TvShow;
 import com.crimson.core.validator.PasswordMatches;
 import lombok.Data;
 import org.hibernate.validator.constraints.Email;
@@ -14,9 +12,8 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 @PasswordMatches
-public class UserDTO {
+public @Data class UserDTO {
 
     private Long id;
 
@@ -40,8 +37,8 @@ public class UserDTO {
 
     private List<Rating> userRatings;
 
-    private List<TvShow> userTvShowList;
+    private List<TvShowDTO> userTvShowList;
 
-    private List<Episode> userEpisodeList;
+    private List<EpisodeDTO> userEpisodeList;
 
 }
