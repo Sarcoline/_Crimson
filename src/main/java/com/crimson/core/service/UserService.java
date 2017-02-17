@@ -4,6 +4,7 @@ import com.crimson.core.dto.EpisodeDTO;
 import com.crimson.core.dto.TvShowDTO;
 import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,7 +19,9 @@ public interface UserService {
 
     void deleteUser(UserDTO userDTO);
 
-    void updateUser(UserDTO userDTO);
+    void updateUser(UserDTO userDTO) throws IOException;
+
+    void changeProfilePic(UserDTO userDTO, MultipartFile file) throws IOException;
 
     UserDTO getUserByName(String name);
 

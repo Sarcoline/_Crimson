@@ -11,7 +11,7 @@ import java.util.List;
 
 @Transactional
 @Service
-public class RoleServiceImpl implements RoleService{
+public class RoleServiceImpl implements RoleService {
 
     @Autowired
     private RoleDAO roleDAO;
@@ -42,8 +42,12 @@ public class RoleServiceImpl implements RoleService{
     }
 
     @Override
-    public void addUser2Role(User user, Role role){roleDAO.addUser2Role(user,role);}
+    public void addUser2Role(User user, Role role) {
+        roleDAO.addUser2Role(user, role);
+    }
 
     @Override
-    public void deleteUserFromRole(User user, Role role){roleDAO.deleteUserFromRole(user,role);}
+    public void deleteUserFromRole(User user, Role role) {
+        roleDAO.deleteUserFromRole(user, role);
+    }
 }

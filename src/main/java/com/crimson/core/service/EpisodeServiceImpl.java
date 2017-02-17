@@ -2,10 +2,12 @@ package com.crimson.core.service;
 
 import com.crimson.core.dao.EpisodeDAO;
 import com.crimson.core.dao.UserDAO;
+import com.crimson.core.dto.EpisodeDTO;
 import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.Episode;
 import com.crimson.core.model.TvShow;
 import com.crimson.core.model.User;
+import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +23,8 @@ public class EpisodeServiceImpl implements EpisodeService {
     private EpisodeDAO episodeDAO;
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    private MapperFacade mapperFacade;
 
     @Override
     public void saveEpisode(Episode episode) {
@@ -38,8 +42,9 @@ public class EpisodeServiceImpl implements EpisodeService {
     }
 
     @Override
-    public Episode getEpisodeById(Long idEpisode) {
-        return episodeDAO.getEpisodeById(idEpisode);
+    public EpisodeDTO getEpisodeById(Long idEpisode) {
+        EpisodeDTO episode = mapperFacade.map(episodeDAO.getEpisodeById(idEpisode), EpisodeDTO.class);
+        return episode;
     }
 
     @Override
@@ -58,21 +63,24 @@ public class EpisodeServiceImpl implements EpisodeService {
     //EpisodeWatched(User2Episode)
 
     @Override
-    public void addUser2Episode(UserDTO userDTO, Episode episode) {
+    public void addUser2Episode(UserDTO userDTO, EpisodeDTO episodeDTO) {
         User user = userDAO.getUserById(userDTO.getId());
+        Episode episode = episodeDAO.getEpisodeById(episodeDTO.getId());
         userDAO.addEpisode2User(user, episode);
 
     }
 
     //TODO naprawic usuwanie episode z usera?
     @Override
-    public void deleteUserFromEpisode(UserDTO userDTO, Episode episode) {
+    public void deleteUserFromEpisode(UserDTO userDTO, EpisodeDTO episodeDTO) {
+        Episode episode = episodeDAO.getEpisodeById(episodeDTO.getId());
         User user = userDAO.getUserById(userDTO.getId());
         userDAO.deleteEpisodeFromUser(user, episode);
     }
 
     @Override
-    public boolean checkWatched(UserDTO userDTO, Episode episode) {
+    public boolean checkWatched(UserDTO userDTO, EpisodeDTO episodeDTO) {
+        Episode episode = episodeDAO.getEpisodeById(episodeDTO.getId());
         return userDAO.getUserByName(userDTO.getName()).getUserEpisodeList().contains(episodeDAO.getEpisodeById(episode.getId()));
     }
 

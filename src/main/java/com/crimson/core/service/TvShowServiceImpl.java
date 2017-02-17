@@ -120,5 +120,7 @@ public class TvShowServiceImpl implements TvShowService {
     //Extra Methods
 
     @Override
-    public List<TvShow> getAllTvShowByMaxRating(){ return tvShowDAO.getAllTvShowByMaxRating();}
+    public List<TvShow> getAllTvShowByMaxRating() {
+        return tvShowDAO.getAllTvShowByMaxRating();
+    }
 }

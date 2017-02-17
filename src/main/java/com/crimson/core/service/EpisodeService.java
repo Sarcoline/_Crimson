@@ -1,5 +1,6 @@
 package com.crimson.core.service;
 
+import com.crimson.core.dto.EpisodeDTO;
 import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.Episode;
 import com.crimson.core.model.TvShow;
@@ -13,17 +14,18 @@ public interface EpisodeService {
 
     void updateEpisode(Episode episode);
 
-    Episode getEpisodeById(Long idEpisode);
+    EpisodeDTO getEpisodeById(Long idEpisode);
 
     List<Episode> getAllEpisodes();
 
     Episode getEpisodeByTitle(String title);
 
-    void addUser2Episode(UserDTO userDTO, Episode episode);
+    void addUser2Episode(UserDTO userDTO, EpisodeDTO episode);
 
-    void deleteUserFromEpisode(UserDTO userDTO, Episode episode);
 
-    boolean checkWatched(UserDTO userDTO, Episode episode);
+    void deleteUserFromEpisode(UserDTO userDTO, EpisodeDTO episodeDTO);
+
+    boolean checkWatched(UserDTO userDTO, EpisodeDTO episodeDTO);
 
     void addTvShow2Episode(TvShow tvShow, Episode episode);
 

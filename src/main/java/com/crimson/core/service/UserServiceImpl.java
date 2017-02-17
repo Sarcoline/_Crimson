@@ -14,6 +14,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,6 +43,7 @@ public class UserServiceImpl implements UserService {
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
+
     @Override
     public void saveUser(UserDTO userDTO) throws IOException {
         Role role = roleDAO.getAllRoles().get(0);
@@ -49,8 +51,14 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encoder.encode(user.getPassword()));
         user.getRoles().add(role);
         role.getRoleUsers().add(user);
-        InputStream in = context.getResource("classpath:/images/user/user.jpg").getInputStream();
-        user.setProfilePic(IOUtils.toByteArray(in));
+        if (userDTO.getUploadedPic() != null) {
+            user.setProfilePic(userDTO.getUploadedPic().getBytes());
+        } else {
+            InputStream in = context.getResource("classpath:/images/user/user.jpg").getInputStream();
+            user.setProfilePic(IOUtils.toByteArray(in));
+        }
+
+
         userDAO.saveUser(user);
     }
 
@@ -72,10 +80,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(UserDTO userDTO) {
+    public void updateUser(UserDTO userDTO) throws IOException {
         User user2 = userDAO.getUserById(userDTO.getId());
         user2.setEmail(userDTO.getEmail());
         userDAO.updateUser(user2);
+    }
+
+    @Override
+    public void changeProfilePic(UserDTO userDTO, MultipartFile file) throws IOException {
+        User user2 = userDAO.getUserById(userDTO.getId());
+        user2.setProfilePic(file.getBytes());
     }
 
     @Override
@@ -137,34 +151,42 @@ public class UserServiceImpl implements UserService {
 
     //User2Setting
     @Override
-    public void addSetting2User(User user, Setting setting){userDAO.addSetting2User(user, setting);}
+    public void addSetting2User(User user, Setting setting) {
+        userDAO.addSetting2User(user, setting);
+    }
 
     @Override
-    public void deleteSettingFromUser(User user, Setting setting){userDAO.deleteSettingFromUser(user, setting);}
+    public void deleteSettingFromUser(User user, Setting setting) {
+        userDAO.deleteSettingFromUser(user, setting);
+    }
 
     //User2Role
 
     @Override
-    public void addRole2User(User user, Role role){ userDAO.addRole2User(user, role);}
+    public void addRole2User(User user, Role role) {
+        userDAO.addRole2User(user, role);
+    }
 
     @Override
-    public void deleteRoleFromUser(User user, Role role){userDAO.deleteRoleFromUser(user, role);}
-
+    public void deleteRoleFromUser(User user, Role role) {
+        userDAO.deleteRoleFromUser(user, role);
+    }
 
 
     //Extra Methods
     @Override
-    public List<TvShowDTO> getUserTvShowsSortedByMaxRating(UserDTO userDTO){
+    public List<TvShowDTO> getUserTvShowsSortedByMaxRating(UserDTO userDTO) {
         User user = userDAO.getUserById(userDTO.getId());
         List<TvShowDTO> tvs = new ArrayList<>();
 
         userDAO.getUserTvShowsSortedByMaxRating(user).forEach(
                 tv -> tvs.add(mapperFacade.map(tv, TvShowDTO.class))
         );
-        return tvs;}
+        return tvs;
+    }
 
     @Override
-    public List<EpisodeDTO> getAllUnwatchedUserEpisodes(UserDTO userDTO){
+    public List<EpisodeDTO> getAllUnwatchedUserEpisodes(UserDTO userDTO) {
         User user = userDAO.getUserById(userDTO.getId());
         List<EpisodeDTO> eps = new ArrayList<>();
         userDAO.getAllUnwatchedUserEpisodes(user).forEach(episode ->
@@ -173,11 +195,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<EpisodeDTO> getAllUpcomingUserEpisodes(UserDTO userDTO){
+    public List<EpisodeDTO> getAllUpcomingUserEpisodes(UserDTO userDTO) {
         User user = userDAO.getUserById(userDTO.getId());
         List<EpisodeDTO> eps = new ArrayList<>();
         userDAO.getAllUpcomingUserEpisodes(user).forEach(episode ->
-            eps.add(mapperFacade.map(episode, EpisodeDTO.class)));
+                eps.add(mapperFacade.map(episode, EpisodeDTO.class)));
         return eps;
     }
 

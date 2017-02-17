@@ -4,7 +4,6 @@ import com.crimson.core.dto.EpisodeDTO;
 import com.crimson.core.dto.PasswordDTO;
 import com.crimson.core.dto.TvShowDTO;
 import com.crimson.core.dto.UserDTO;
-import com.crimson.core.model.Episode;
 import com.crimson.core.service.EpisodeService;
 import com.crimson.core.service.RatingService;
 import com.crimson.core.service.TvShowService;
@@ -17,7 +16,6 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -108,7 +106,8 @@ public class CrimsonController {
 
     //TODO głupio zrobione, poprawić
     @RequestMapping(value = "/user/edit", method = RequestMethod.POST)
-    public String registration(@Valid UserDTO userDTO, BindingResult bindingResult) {
+    @Secured("ROLE_USER")
+    public String registration(@Valid UserDTO userDTO, BindingResult bindingResult) throws IOException {
 
         if (bindingResult.hasErrors()) {
             return "redirect:/tv/user/edit?error";
@@ -177,24 +176,25 @@ public class CrimsonController {
     @RequestMapping(value = "/watched", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     @Secured("ROLE_USER")
-    @Transactional
     public void watched(@RequestParam("id") long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
-        Episode episode = episodeService.getEpisodeById(id);
+        EpisodeDTO episode = episodeService.getEpisodeById(id);
         if (episodeService.checkWatched(user, episode)) episodeService.deleteUserFromEpisode(user, episode);
         else episodeService.addUser2Episode(user, episode);
     }
 
     @RequestMapping(value = "/user/updatePassword", method = RequestMethod.POST)
-    public String changeUserPassword(@Valid PasswordDTO passwordDTO, BindingResult bindingResult ) {
+    public String changeUserPassword(@Valid PasswordDTO passwordDTO, BindingResult bindingResult) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
         if (bindingResult.hasErrors()) {
             return "changePassword";
         }
-        if (!userService.checkOldPassword(user, passwordDTO.getOldPassword())) return "redirect:/tv/user/updatePassword?wrongPassword";
-        if (!Objects.equals(passwordDTO.getPassword(), passwordDTO.getMatchingPassword())) return "redirect:/tv/user/updatePassword?mismatch";
+        if (!userService.checkOldPassword(user, passwordDTO.getOldPassword()))
+            return "redirect:/tv/user/updatePassword?wrongPassword";
+        if (!Objects.equals(passwordDTO.getPassword(), passwordDTO.getMatchingPassword()))
+            return "redirect:/tv/user/updatePassword?mismatch";
         else userService.updatePassword(user, passwordDTO.getPassword());
 
         return String.format("redirect:/tv/user/%s", user.getName());

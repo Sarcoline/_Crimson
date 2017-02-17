@@ -3,7 +3,6 @@ package com.crimson.core.factory;
 import com.crimson.core.model.User;
 
 
-
 public class UserFactory {
 
 
@@ -14,7 +13,7 @@ public class UserFactory {
 
         switch (name.toLowerCase()) {
             case "aleks": {
-                user =  User.builder()
+                user = User.builder()
                         .name("Aleks")
                         .email("Email@wp.pl")
                         .password("123")

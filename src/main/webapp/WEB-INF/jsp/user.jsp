@@ -20,7 +20,7 @@
                                                                           aria-hidden="true"></i></a>
                         </c:if>
                         <div>
-                            <img src="<c:url value="/images/user/${name}"/>"
+                            <img src="<c:url value="/images/user/${user.name}"/>"
                                  width="200" height="200" class="center" style="border-radius: 50%;">
                         </div>
                     </div>
@@ -56,8 +56,11 @@
                 </div>
             </div>
             <c:if test="${user.name == name}">
-                <div class="uk-width-1-1 uk-margin-large-top">
+                <div class="uk-width-1-2 uk-margin-large-top">
                     <h2>Upcoming episodes</h2>
+                    <c:if test="${upcomimgEpisodes.size() <= 0}">
+                        <h3 class="uk-text-muted">There's no upcoming episodes</h3>
+                    </c:if>
                     <ul class="uk-list uk-list-line" style="font-size: 1.1rem">
                         <c:forEach items="${upcomimgEpisodes}" var="episode">
                             <li>
@@ -81,6 +84,7 @@
 
             <div class="uk-grid">
                 <div class="uk-width-1-1 uk-margin-large-top ">
+                    <c:if test="${favorites.size() > 0}">
                     <h2 style="text-align: center">Favorites</h2>
                     <c:forEach items="${favorites}" var="tv" begin="0" end="4">
                         <a href="<c:url value="/tv/${tv.slug}"/>"> <span class="item2"
@@ -91,9 +95,11 @@
             </span>
                         </a>
                     </c:forEach>
+                    </c:if>
                 </div>
                 <c:if test="${user.name == name}">
                 <div class="uk-width-1-1 uk-margin-large-top">
+                    <c:if test="${watchedEpisodesId.size() > 0}">
                     <h2 class="uk-margin-large-bottom uk-text-center">Recently watched</h2>
                     <ul class="uk-list uk-margin-large-left">
                         <c:forEach items="${watchedEpisodes}" var="episode" begin="0" end="9">
@@ -106,6 +112,7 @@
                             </li>
                         </c:forEach>
                     </ul>
+                    </c:if>
                 </div>
             </div>
             </c:if>

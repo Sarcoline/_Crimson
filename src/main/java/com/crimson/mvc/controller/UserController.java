@@ -63,10 +63,13 @@ public class UserController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String registration(@Valid UserDTO userDTO, BindingResult bindingResult) throws IOException {
         userValidator.validate(userDTO, bindingResult);
+
         if (bindingResult.hasErrors()) {
             return "register";
         }
-
+        if (userDTO.getUploadedPic().isEmpty()) {
+            userDTO.setUploadedPic(null);
+        }
         userService.saveUser(userDTO);
         return "redirect:/login?registered";
     }
@@ -76,4 +79,20 @@ public class UserController {
         model.addAttribute("tvShows", tvShowService.getAllTvShowByMaxRating());
         return "index";
     }
+
+//    @RequestMapping(value = "/upload", method = RequestMethod.GET)
+//    public String showUploadForm(HttpServletRequest request, Model model) {
+//        return "upload";
+//    }
+//
+//    @RequestMapping(value = "/doUpload", method = RequestMethod.POST)
+//    public String handleFileUpload(HttpServletRequest request,
+//                                   @RequestParam("fileUpload") MultipartFile dto) throws Exception {
+//
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        UserDTO user = userService.getUserByName(auth.getName());
+//        user.setProfilePic(dto.getBytes());
+//        userService.updateUser(user);
+//        return "redirect:/";
+//    }
 }

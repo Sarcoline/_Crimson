@@ -35,7 +35,7 @@ public class RoleDAOImpl implements RoleDAO {
 
     @Override
     public void deleteRole(Role role) {
-        Session session =  sessionFactory.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         session.delete(role);
     }
 
@@ -49,16 +49,16 @@ public class RoleDAOImpl implements RoleDAO {
 
     //User2Role
     @Override
-    public void addUser2Role(User user, Role role){
+    public void addUser2Role(User user, Role role) {
         Session session = sessionFactory.getCurrentSession();
         role.getRoleUsers().add(user);
         session.saveOrUpdate(role);
     }
 
     @Override
-    public void deleteUserFromRole(User user, Role role){
+    public void deleteUserFromRole(User user, Role role) {
         Session session = sessionFactory.getCurrentSession();
-        if (role.getRoleUsers().contains(user)){
+        if (role.getRoleUsers().contains(user)) {
             role.getRoleUsers().remove(user);
         }
         session.saveOrUpdate(role);
