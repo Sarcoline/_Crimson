@@ -22,7 +22,6 @@ public interface EpisodeService {
 
     void addUser2Episode(UserDTO userDTO, EpisodeDTO episode);
 
-
     void deleteUserFromEpisode(UserDTO userDTO, EpisodeDTO episodeDTO);
 
     boolean checkWatched(UserDTO userDTO, EpisodeDTO episodeDTO);

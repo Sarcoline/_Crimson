@@ -90,6 +90,7 @@ public class UserServiceImpl implements UserService {
     public void changeProfilePic(UserDTO userDTO, MultipartFile file) throws IOException {
         User user2 = userDAO.getUserById(userDTO.getId());
         user2.setProfilePic(file.getBytes());
+        userDAO.updateUser(user2);
     }
 
     @Override

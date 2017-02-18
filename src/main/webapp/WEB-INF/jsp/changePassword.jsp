@@ -17,7 +17,7 @@
                     <p>${error}</p>
                 </div>
             </c:if>
-            <form:form modelAttribute="passwordDTO" action="/tv/user/updatePassword" method="POST" enctype="utf8" class="uk-form uk-form-stacked" >
+            <form:form modelAttribute="passwordDTO" action="/user/updatePassword" method="POST" enctype="utf8" class="uk-form uk-form-stacked" >
                 <form:errors cssClass="uk-alert uk-alert-danger" element="div"/>
                 <div class="uk-form-row">
                     <form:errors path="oldPassword" cssClass="uk-alert uk-alert-danger" element="div"/>

@@ -1,5 +1,6 @@
 package com.crimson.core.dto;
 
+import com.crimson.core.model.Rating;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -32,4 +33,8 @@ public class TvShowDTO {
     private List<EpisodeDTO> episodes = new ArrayList<>();
 
     private HashMap<String, byte[]> pictures = new HashMap<>();
+
+    private List<UserDTO> tvShowUserList = new ArrayList<>();
+
+    private List<Rating> tvShowRating = new ArrayList<>();
 }

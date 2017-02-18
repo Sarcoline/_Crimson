@@ -11,20 +11,21 @@
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/uikit.min.css' />">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/font-awesome-4.7.0/css/font-awesome.min.css'/>">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/slidenav.css' />">
+    <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/slider.min.css' />">
+    <link rel="stylesheet" type="text/css" href="<c:url value='/static/style.css' />">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"
             type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/uikit.min.js' />" type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/components/lightbox.min.js' />" type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/components/slider.min.js' />" type="application/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/slider.min.css' />">
-    <link rel="stylesheet" type="text/css" href="<c:url value='/static/style.css' />">
+
     <title><decorator:title/></title>
 </head>
 <body>
 <nav class="uk-navbar">
     <ul class="uk-navbar-nav uk-"><a href="/" class="uk-navbar-brand">_Crimson</a>
         <sec:authorize access="isAuthenticated()">
-            <li><a href="<c:url value="/tv/user/${name}" />">Dashboard</a></li>
+            <li><a href="<c:url value="/user/${name}" />">Dashboard</a></li>
         </sec:authorize>
         <li class="uk-parent"><a href="<c:url value="/tv/list"/> ">TvShows</a></li>
         <li class="uk-parent" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false">

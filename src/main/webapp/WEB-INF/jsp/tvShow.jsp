@@ -97,8 +97,8 @@
                     <p class="overallrating">
                         ${tv.overallRating}<small class="uk-text-muted" style="font-size: 2rem;">/10</small>
                     </p>
-                    <p class="uk-text-muted">253 rated</p>
-                    <p class="uk-text-muted">1453 follows</p>
+                    <p class="uk-text-muted">${tv.tvShowRating.size()} ratings</p>
+                    <p class="uk-text-muted">${tv.tvShowUserList.size()} follows</p>
                     <sec:authorize access="isAuthenticated()">
                         <div class="userRating">
                             <img src="<c:url value="/images/user/${name}"/>" class="userPicture">
