@@ -39,7 +39,7 @@
             </div>
         </li>
         <div class="uk-navbar-content uk-hidden-small">
-            <form class="searchForm uk-form uk-margin-remove uk-display-inline-block" action="<c:url value="/tv/search"/> " method="post">
+            <form class="searchForm uk-form uk-margin-remove uk-display-inline-block" action="<c:url value="/tv/search"/> " method="POST">
                 <input name="search" type="text" placeholder="Search"> <a class="search"><i class="fa fa-search fa-lg"></i></a>
                 <input type="hidden" name="${_csrf.parameterName}"
                        value="${_csrf.token}"/>

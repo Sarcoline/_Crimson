@@ -42,5 +42,7 @@ public interface TvShowService {
     void deleteRatingFromTvShow(TvShow tvShow, Rating rating);
 
     //Extra Methods
-    List<TvShow> getAllTvShowByMaxRating();
+    List<TvShowDTO> getAllTvShowByMaxRating();
+
+    List<TvShowDTO> searchTvShow(String pattern);
 }

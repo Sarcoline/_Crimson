@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -120,7 +121,19 @@ public class TvShowServiceImpl implements TvShowService {
     //Extra Methods
 
     @Override
-    public List<TvShow> getAllTvShowByMaxRating() {
-        return tvShowDAO.getAllTvShowByMaxRating();
+    public List<TvShowDTO> getAllTvShowByMaxRating() {
+        List tvs = new ArrayList();
+        tvShowDAO.getAllTvShowByMaxRating().forEach(
+                tv -> tvs.add(mapperFacade.map(tv, TvShowDTO.class)));
+        return tvs;
+    }
+
+    @Override
+    public List<TvShowDTO> searchTvShow (String pattern) {
+        List tvs = new ArrayList();
+        tvShowDAO.searchTvShow(pattern).forEach(
+                tv -> tvs.add(mapperFacade.map(tv, TvShowDTO.class))
+        );
+        return tvs;
     }
 }

@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -82,6 +83,15 @@ public class TvShowDAOImpl implements TvShowDAO {
         unsortedList.sort(Comparator.comparing(TvShow::getOverallRating));
         Collections.reverse(unsortedList);
         return unsortedList;
+    }
+
+    @Override
+    public List<TvShow> searchTvShow(String pattern) {
+        Session session = sf.getCurrentSession();
+        String hql = "FROM TvShow t WHERE title like :pattern";
+        Query query = session.createQuery(hql);
+        query.setParameter("pattern", String.format("%%%s%%", pattern));
+        return query.getResultList();
     }
 
     //Wyrzuca listę TvShow dzieląc cała listę na podany przedział przez użytkownika na stronie np. ma wyświetlić tylko 10 tvShows na jednej podstronie
