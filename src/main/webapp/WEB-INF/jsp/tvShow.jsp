@@ -23,8 +23,9 @@
 <h1 class="title">${tv.title}
     <sec:authorize access="isAuthenticated()">
         <small class="follow"><a id="follow"><i class="fa fa-heart-o" aria-hidden="true"
-                                                                             style="cursor: pointer"></i></a></small>
+                                                style="cursor: pointer"></i></a></small>
     </sec:authorize>
+
 </h1>
 <h3 class="subtitle uk-text-muted">${tv.genre} ${tv.releaseYear}</h3>
 <div class="uk-grid">
@@ -46,7 +47,12 @@
     </div>
     <div class="uk-width-large-4-6 uk-width-medium-1-1">
         <article class="uk-article">
-            <h2 class="uk-article-title">Summary of <strong>${tv.title}</strong></h2>
+            <h2 class="uk-article-title">Summary of <strong>${tv.title}</strong>
+                <sec:authorize access="hasRole('ROLE_ADMIN')">
+                    <small><a href="/tv/${tv.slug}/edit"><i class="fa fa-cog uk-text-muted" aria-hidden="true"
+                                                            style="cursor: pointer; font-size: 2rem"></i></a></small>
+                </sec:authorize>
+            </h2>
             <p>${tv.description}</p>
 
         </article>
@@ -73,8 +79,9 @@
                                         <li>
                                             <p><strong> ${episode.number}. </strong>
                                                 <sec:authorize access="isAuthenticated()">
-                                                    <a class="rateThis" data-id="${episode.id}"><i class="fa fa-square-o"
-                                                                           aria-hidden="true"></i></a>
+                                                    <a class="rateThis" data-id="${episode.id}"><i
+                                                            class="fa fa-square-o"
+                                                            aria-hidden="true"></i></a>
 
                                                 </sec:authorize>
                                                     ${episode.title}
@@ -95,7 +102,7 @@
             <div class="uk-width-large-1-1 uk-width-small-1-2">
                 <div class="ratebox">
                     <p class="overallrating">
-                        ${tv.overallRating}<small class="uk-text-muted" style="font-size: 2rem;">/10</small>
+                    ${tv.overallRating}<small class="uk-text-muted" style="font-size: 2rem;">/10</small>
                     </p>
                     <p class="uk-text-muted">${tv.tvShowRating.size()} ratings</p>
                     <p class="uk-text-muted">${tv.tvShowUserList.size()} follows</p>
@@ -166,13 +173,12 @@
 </div>
 <script>
     $(function () {
-
         var rating = ${rating};
         if (rating != 0) $('.rateValue').html(" " + rating);
 
         var watched = ${watchedEpisodesId}
             $('.rateThis').each(function () {
-                if ($.inArray($(this).data('id'),watched) != -1)  $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
+                if ($.inArray($(this).data('id'), watched) != -1) $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
             });
 
         <c:if test="${follow == true}">
@@ -203,20 +209,20 @@
             });
         });
 
-        $('#follow').on('click',function () {
-           $.ajax({
-               type: "get",
-               url: "follow",
-               data: {id: ${tv.id}}
-           })
-        });
-
-        $('.rateThis').on('click', function () {
+        $('#follow').on('click', function () {
             $.ajax({
                 type: "get",
-                url: "watched",
-                data: {id: $(this).data('id')}
-            });
+                url: "follow",
+                data: {id: ${tv.id}}
+            })
+        })
+    });
+
+    $('.rateThis').on('click', function () {
+        $.ajax({
+            type: "get",
+            url: "watched",
+            data: {id: $(this).data('id')}
         });
     });
 </script>

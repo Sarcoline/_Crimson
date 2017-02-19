@@ -5,6 +5,7 @@ import com.crimson.core.dto.ImageDTO;
 import com.crimson.core.dto.TvShowDTO;
 import com.crimson.core.dto.TvShowSearchDTO;
 import com.crimson.core.model.*;
+import com.github.slugify.Slugify;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,8 +65,17 @@ public class TvShowServiceImpl implements TvShowService {
     }
 
     @Override
-    public void updateTvShow(TvShow tvshow) {
-        tvShowDAO.updateTvShow(tvshow);
+    public void updateTvShow(TvShowDTO tvshow) {
+        Slugify slugify = new Slugify();
+        TvShow tv = tvShowDAO.getTvById(tvshow.getId());
+        tv.setCountry(tvshow.getCountry());
+        tv.setNetwork(tvshow.getNetwork());
+        tv.setDescription(tvshow.getDescription());
+        tv.setReleaseYear(tvshow.getReleaseYear());
+        tv.setGenre(tvshow.getGenre());
+        tv.setTitle(tvshow.getTitle());
+        tv.setSlug(slugify.slugify(tvshow.getTitle()));
+        tvShowDAO.updateTvShow(tv);
     }
 
 

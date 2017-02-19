@@ -22,7 +22,7 @@ public interface TvShowService {
 
     void deleteTvShow(TvShow tvshow);
 
-    void updateTvShow(TvShow tvshow);
+    void updateTvShow(TvShowDTO tvshow);
 
     void addUser2TvShow(User user, TvShow tvShow);
 

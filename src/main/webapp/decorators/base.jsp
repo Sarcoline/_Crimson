@@ -13,12 +13,16 @@
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/font-awesome-4.7.0/css/font-awesome.min.css'/>">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/slidenav.css' />">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/slider.min.css' />">
+    <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/notify.min.css' />">
+    <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/sortable.min.css' />">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/style.css' />">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"
             type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/uikit.min.js' />" type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/components/lightbox.min.js' />" type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/components/slider.min.js' />" type="application/javascript"></script>
+    <script src="<c:url value='/static/uikit/js/components/sortable.min.js' />" type="application/javascript"></script>
+    <script src="<c:url value='/static/uikit/js/components/notify.min.js' />" type="application/javascript"></script>
 
     <title><decorator:title/></title>
 </head>

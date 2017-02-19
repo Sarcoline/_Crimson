@@ -119,7 +119,6 @@
 
     </div>
 </div>
-
 <script>
     $(function () {
         var watched = ${watchedEpisodesId}

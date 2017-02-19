@@ -97,7 +97,7 @@ public class UserController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
         userService.changeProfilePic(user,dto);
-        return String.format("redirect:/user/%s", user.getName());
+        return "redirect:/user/edit";
     }
 
     @RequestMapping(value = "/updateSettings", method = RequestMethod.POST)
@@ -106,7 +106,7 @@ public class UserController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
         userService.updateSettings(user, days);
-        return String.format("redirect:/user/%s", user.getName());
+        return "redirect:/user/edit";
     }
 
     @GetMapping("/user/{name}")
@@ -151,7 +151,7 @@ public class UserController {
             return "redirect:/tv/user/edit?error";
         }
         userService.updateUser(userDTO);
-        return String.format("redirect:/user/%s", userDTO.getName());
+        return "redirect:/user/edit";
     }
 
     @RequestMapping(value = "/user/delete/", method = RequestMethod.GET)

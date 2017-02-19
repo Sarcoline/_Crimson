@@ -57,12 +57,12 @@
                                         type="text"
                                         name='email'
                                         placeholder="Email"/>
-                                <%--TODO zmienic wyświetlanie błędów--%>
                         </div>
-
                         <form:input path="profilePic" value="${userDTO.profilePic}" type="hidden"/>
                         <form:input path="matchingPassword" value="${userDTO.password}" type="hidden"/>
                         <form:input path="id" value="${userDTO.id}" type="hidden"/>
+                        <input type="hidden" name="${_csrf.parameterName}"
+                               value="${_csrf.token}"/>
                         <div class="uk-form-row">
                             <form:input path="password" value="${userDTO.password}" type="hidden"/>
                         </div>
@@ -98,6 +98,14 @@
             preview.src = "<c:url value="/images/user/${userDTO.name}"/> ";
         }
     }
+
+    <%--success: function () {--%>
+        <%--UIkit.notify({--%>
+            <%--message : 'Your are following ${tv.title}',--%>
+            <%--status  : 'info',--%>
+            <%--timeout : 5000,--%>
+            <%--pos     : 'top-center'--%>
+        <%--});--%>
 </script>
 </body>
 </html>

@@ -7,6 +7,7 @@ import com.crimson.core.service.EpisodeService;
 import com.crimson.core.service.RatingService;
 import com.crimson.core.service.TvShowService;
 import com.crimson.core.service.UserService;
+import com.github.slugify.Slugify;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
@@ -15,9 +16,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +66,29 @@ public class CrimsonController {
         return "tvShow";
     }
 
+    @GetMapping("/{name}/edit")
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
+    public String displayEditTvShow(@RequestParam(value = "error", required = false) String error,
+                                    @PathVariable("name") String name, Model model) {
+        if (error != null) {
+            model.addAttribute("error", "Error!");
+        }
+        TvShowDTO tv = tvShowService.getTvBySlug(name);
+        model.addAttribute("tv", tv);
+        return "tvShowEdit";
+    }
+
+    @RequestMapping(value = "/{name}/edit", method = RequestMethod.POST)
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
+    public String postEditTvShow(@Valid TvShowDTO tvShowDTO, @PathVariable("name") String name, BindingResult bindingResult) {
+        Slugify slugify = new Slugify();
+        if (bindingResult.hasErrors()) {
+            return String.format("redirect:/%s/edit?error", name);
+        }
+        tvShowService.updateTvShow(tvShowDTO);
+        return String.format("redirect:/tv/%s", slugify.slugify(tvShowDTO.getTitle()));
+    }
+
     @GetMapping("/genre/{name}")
     public String displayGenre(@PathVariable String name, Model model) {
         name = Character.toUpperCase(name.charAt(0)) + name.substring(1);
@@ -74,7 +100,7 @@ public class CrimsonController {
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String searchResult(Model model, HttpServletRequest request) {
         List tvs = tvShowService.getAllTvShows();
-        model.addAttribute("tvshows",tvs );
+        model.addAttribute("tvshows", tvs);
         return "searchResult";
     }
 
