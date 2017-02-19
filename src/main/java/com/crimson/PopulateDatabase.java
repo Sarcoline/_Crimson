@@ -3,6 +3,7 @@ package com.crimson;
 import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.Episode;
 import com.crimson.core.model.Role;
+import com.crimson.core.model.Setting;
 import com.crimson.core.model.TvShow;
 import com.crimson.core.service.EpisodeService;
 import com.crimson.core.service.RoleService;
@@ -19,7 +20,8 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -55,9 +57,14 @@ public class PopulateDatabase {
             tv.setTrailerUrl("https://www.youtube.com/watch?v=EI0ib1NErqg");
             tv.setCountry("USA");
             tv.setReleaseYear(2010);
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
-            String dateInString = "31-08-2020";
-            Date date = sdf.parse(dateInString);
+
+            Date currentDate = new Date();
+            LocalDateTime localDateTime = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+            localDateTime = localDateTime.plusDays(5);
+            Date date = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+            localDateTime = localDateTime.plusDays(5);
+            Date date1 = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+
             List<Episode> GameOfThronesEpisodes = new ArrayList();
             GameOfThronesEpisodes.add(Episode.builder().title("Episode 1").number(1).releaseDate(new Date()).season(1).idTvShow(1L).episodeSummary("Summary 1").build());
             GameOfThronesEpisodes.add(Episode.builder().title("Episode 2").number(2).releaseDate(new Date()).season(1).idTvShow(1L).episodeSummary("Summary 2").build());
@@ -66,12 +73,12 @@ public class PopulateDatabase {
             GameOfThronesEpisodes.add(Episode.builder().title("Episode 5").number(5).releaseDate(new Date()).season(1).idTvShow(1L).episodeSummary("Summary 5").build());
             GameOfThronesEpisodes.add(Episode.builder().title("Episode 1").number(1).releaseDate(new Date()).season(2).idTvShow(1L).episodeSummary("Summary 1").build());
             GameOfThronesEpisodes.add(Episode.builder().title("Episode 2").number(2).releaseDate(new Date()).season(2).idTvShow(1L).episodeSummary("Summary 2").build());
-            GameOfThronesEpisodes.add(Episode.builder().title("Episode 3").number(3).releaseDate(new Date()).season(2).idTvShow(1L).episodeSummary("Summary 3").build());
-            GameOfThronesEpisodes.add(Episode.builder().title("Episode 4").number(4).releaseDate(new Date()).season(2).idTvShow(1L).episodeSummary("Summary 4").build());
+            GameOfThronesEpisodes.add(Episode.builder().title("Episode 3").number(3).releaseDate(date).season(2).idTvShow(1L).episodeSummary("Summary 3").build());
+            GameOfThronesEpisodes.add(Episode.builder().title("Episode 4").number(4).releaseDate(date).season(2).idTvShow(1L).episodeSummary("Summary 4").build());
             GameOfThronesEpisodes.add(Episode.builder().title("Episode 5").number(5).releaseDate(date).season(2).idTvShow(1L).episodeSummary("Summary 5").build());
             GameOfThronesEpisodes.add(Episode.builder().title("Episode 1").number(1).releaseDate(date).season(3).idTvShow(1L).episodeSummary("Summary 3").build());
-            GameOfThronesEpisodes.add(Episode.builder().title("Episode 2").number(2).releaseDate(date).season(3).idTvShow(1L).episodeSummary("Summary 4").build());
-            GameOfThronesEpisodes.add(Episode.builder().title("Episode 3").number(3).releaseDate(date).season(3).idTvShow(1L).episodeSummary("Summary 5").build());
+            GameOfThronesEpisodes.add(Episode.builder().title("Episode 2").number(2).releaseDate(date1).season(3).idTvShow(1L).episodeSummary("Summary 4").build());
+            GameOfThronesEpisodes.add(Episode.builder().title("Episode 3").number(3).releaseDate(date1).season(3).idTvShow(1L).episodeSummary("Summary 5").build());
             tv.setEpisodes(GameOfThronesEpisodes);
             Resource resource = applicationContext.getResource("classpath:/images/game-of-thrones/poster.jpg");
             InputStream in = resource.getInputStream();
@@ -106,17 +113,21 @@ public class PopulateDatabase {
             tv1.setTrailerUrl("https://www.youtube.com/watch?v=ITsirWLf-W8");
             tv1.setCountry("USA");
             tv1.setReleaseYear(2008);
+
+
+
+
             List<Episode> ShamelessEpisodes = new ArrayList();
             ShamelessEpisodes.add(Episode.builder().title("Episode 1").number(1).releaseDate(new Date()).season(1).idTvShow(2L).episodeSummary("Summary 1").build());
             ShamelessEpisodes.add(Episode.builder().title("Episode 2").number(2).releaseDate(new Date()).season(1).idTvShow(2L).episodeSummary("Summary 2").build());
             ShamelessEpisodes.add(Episode.builder().title("Episode 3").number(3).releaseDate(new Date()).season(1).idTvShow(2L).episodeSummary("Summary 3").build());
             ShamelessEpisodes.add(Episode.builder().title("Episode 4").number(4).releaseDate(new Date()).season(1).idTvShow(2L).episodeSummary("Summary 4").build());
-            ShamelessEpisodes.add(Episode.builder().title("Episode 5").number(5).releaseDate(new Date()).season(1).idTvShow(2L).episodeSummary("Summary 5").build());
-            ShamelessEpisodes.add(Episode.builder().title("Episode 1").number(1).releaseDate(new Date()).season(2).idTvShow(2L).episodeSummary("Summary 1").build());
-            ShamelessEpisodes.add(Episode.builder().title("Episode 2").number(2).releaseDate(new Date()).season(2).idTvShow(2L).episodeSummary("Summary 2").build());
-            ShamelessEpisodes.add(Episode.builder().title("Episode 3").number(3).releaseDate(new Date()).season(2).idTvShow(2L).episodeSummary("Summary 3").build());
-            ShamelessEpisodes.add(Episode.builder().title("Episode 4").number(4).releaseDate(new Date()).season(2).idTvShow(2L).episodeSummary("Summary 4").build());
-            ShamelessEpisodes.add(Episode.builder().title("Episode 5").number(5).releaseDate(new Date()).season(2).idTvShow(2L).episodeSummary("Summary 5").build());
+            ShamelessEpisodes.add(Episode.builder().title("Episode 5").number(5).releaseDate(date).season(1).idTvShow(2L).episodeSummary("Summary 5").build());
+            ShamelessEpisodes.add(Episode.builder().title("Episode 1").number(1).releaseDate(date).season(2).idTvShow(2L).episodeSummary("Summary 1").build());
+            ShamelessEpisodes.add(Episode.builder().title("Episode 2").number(2).releaseDate(date).season(2).idTvShow(2L).episodeSummary("Summary 2").build());
+            ShamelessEpisodes.add(Episode.builder().title("Episode 3").number(3).releaseDate(date).season(2).idTvShow(2L).episodeSummary("Summary 3").build());
+            ShamelessEpisodes.add(Episode.builder().title("Episode 4").number(4).releaseDate(date1).season(2).idTvShow(2L).episodeSummary("Summary 4").build());
+            ShamelessEpisodes.add(Episode.builder().title("Episode 5").number(5).releaseDate(date1).season(2).idTvShow(2L).episodeSummary("Summary 5").build());
             tv1.setEpisodes(ShamelessEpisodes);
             InputStream in5 = applicationContext.getResource("classpath:/images/shameless/poster.jpg").getInputStream();
             tv1.getPictures().put("poster", IOUtils.toByteArray(in5));
@@ -233,6 +244,7 @@ public class PopulateDatabase {
             user.setEmail("test@email.com");
             user.setPassword("123");
             user.getRoles().add(roleService.getAllRoles().get(1));
+            user.setSetting(new Setting(true, 10, 7));
             InputStream in30 = applicationContext.getResource("classpath:/images/user/meow.jpg").getInputStream();
             user.setProfilePic(IOUtils.toByteArray(in30));
             userDAO.saveUser(user);

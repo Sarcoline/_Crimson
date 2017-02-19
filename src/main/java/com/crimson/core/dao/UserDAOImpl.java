@@ -6,6 +6,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 
@@ -88,10 +90,19 @@ public class UserDAOImpl implements UserDAO {
     public List<Episode> getAllUpcomingUserEpisodes(User user) {
 
         List<Episode> allFutureUserEpisodes = new ArrayList<>();
+        int days = user.getSetting().getDaysOfUpcomingEpisodes();
+        Date currentDate = new Date();
+        LocalDateTime localDateTime = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        localDateTime = localDateTime.plusDays(days);
+        Date lastDate = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
 
-        getAllUnwatchedUserEpisodes(user).forEach(episode -> {
-            if (episode.getReleaseDate().after(new Date())) allFutureUserEpisodes.add(episode);
-        });
+        for (Episode episode: getAllUnwatchedUserEpisodes(user)) {
+            Date episodeDate = episode.getReleaseDate();
+            if(episodeDate.after(currentDate) && episodeDate.before(lastDate))allFutureUserEpisodes.add(episode);
+
+        }
+
+        allFutureUserEpisodes.sort(Comparator.comparing(Episode::getReleaseDate));
         return allFutureUserEpisodes;
     }
 

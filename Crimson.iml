@@ -112,5 +112,6 @@
     <orderEntry type="library" name="Maven: com.github.slugify:slugify:2.1.7" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:21.0" level="project" />
     <orderEntry type="library" name="jQuery-2.0.0" level="application" />
+    <orderEntry type="library" name="jquery" level="application" />
   </component>
 </module>

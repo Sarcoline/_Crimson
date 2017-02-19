@@ -101,7 +101,6 @@
                     result.push(found);
 
                 });
-                console.log(result);
                 $('#found').html(result);
             })
         }

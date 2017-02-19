@@ -22,14 +22,16 @@ public @Data class Setting {
     @Column(name = "numberOfEpisodesOnUserPage")
     private int numberOfEpisodesOnUserPage;
 
+    private int daysOfUpcomingEpisodes;
+
     @Version
     int version;
 
     @Builder
-    public Setting(Boolean episodesFromBegining, int numberOfEpisodesOnUserPage, int version){
+    public Setting(Boolean episodesFromBegining, int numberOfEpisodesOnUserPage, int daysOfUpcomingEpisodes){
         this.episodesFromBegining = episodesFromBegining;
         this.numberOfEpisodesOnUserPage = numberOfEpisodesOnUserPage;
-        this.version = version;
+        this.daysOfUpcomingEpisodes = daysOfUpcomingEpisodes;
     }
 
     @OneToOne

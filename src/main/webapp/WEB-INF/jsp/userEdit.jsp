@@ -17,13 +17,20 @@
     <div class=" uk-text-center">
         <div class="uk-grid">
             <div class="uk-width-1-2">
+                <h2 class="">Change profile picture</h2>
                 <img src="<c:url value="/images/user/${userDTO.name}"/> " alt="" width="300" height="300">
                 <form class="uk-form uk-margin-top" method="post" action="<c:url value="/updatePicture" />" enctype="multipart/form-data">
                     <input type="file" name="fileUpload" size="50" onchange="previewFile()"/>
                     <input type="hidden" name="${_csrf.parameterName}"
                            value="${_csrf.token}"/>
                     <input class="uk-button uk-button-primary" type="submit" value="Save"/>
-
+                </form>
+                <h2 class="uk-margin-large-top">Edit settings </h2>
+                <form class="uk-form " method="post" action="<c:url value="/updateSettings" />">
+                    <input type="number" name="days" placeholder="Days of upcoming episodes" value="${settings.daysOfUpcomingEpisodes}"/>
+                    <input type="hidden" name="${_csrf.parameterName}"
+                           value="${_csrf.token}"/>
+                    <input class="uk-button uk-button-primary" type="submit" value="Save"/>
                 </form>
             </div>
             <div class="uk-width-1-2">
@@ -77,16 +84,16 @@
 </div>
 <script>
     function previewFile(){
-        var preview = document.querySelector('img'); //selects the query named img
-        var file    = document.querySelector('input[type=file]').files[0]; //sames as here
+        var preview = document.querySelector('img');
+        var file    = document.querySelector('input[type=file]').files[0];
         var reader  = new FileReader();
 
         reader.onloadend = function () {
             preview.src = reader.result;
-        }
+        };
 
         if (file) {
-            reader.readAsDataURL(file); //reads the data as a URL
+            reader.readAsDataURL(file);
         } else {
             preview.src = "<c:url value="/images/user/${userDTO.name}"/> ";
         }

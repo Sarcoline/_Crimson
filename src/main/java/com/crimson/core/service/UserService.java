@@ -61,4 +61,6 @@ public interface UserService {
     void updatePassword(UserDTO user, String password);
 
     boolean checkOldPassword(UserDTO userDTO, String password);
+
+    void updateSettings(UserDTO user, int days);
 }

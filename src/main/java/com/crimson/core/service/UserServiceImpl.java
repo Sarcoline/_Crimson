@@ -215,4 +215,11 @@ public class UserServiceImpl implements UserService {
     public boolean checkOldPassword(UserDTO userDTO, String password) {
         return encoder.matches(password, userDTO.getPassword());
     }
+
+    @Override
+    public void updateSettings(UserDTO userDTO, int days) {
+        User user = userDAO.getUserById(userDTO.getId());
+        user.getSetting().setDaysOfUpcomingEpisodes(days);
+        userDAO.updateUser(user);
+    }
 }

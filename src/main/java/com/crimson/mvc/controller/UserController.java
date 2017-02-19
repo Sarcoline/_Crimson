@@ -40,6 +40,7 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("tvShows", tvShowService.getAllTvShowByMaxRating());
@@ -91,11 +92,20 @@ public class UserController {
     }
 
     @RequestMapping(value = "/updatePicture", method = RequestMethod.POST)
-    public String handleFileUpload(@RequestParam("fileUpload") MultipartFile dto) throws Exception {
+    public String updatePicture(@RequestParam("fileUpload") MultipartFile dto) throws Exception {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
         userService.changeProfilePic(user,dto);
+        return String.format("redirect:/user/%s", user.getName());
+    }
+
+    @RequestMapping(value = "/updateSettings", method = RequestMethod.POST)
+    public String updateSettings(@RequestParam("days") int days) throws Exception {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDTO user = userService.getUserByName(auth.getName());
+        userService.updateSettings(user, days);
         return String.format("redirect:/user/%s", user.getName());
     }
 
@@ -128,6 +138,7 @@ public class UserController {
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             UserDTO userDTO = userService.getUserByName(auth.getName());
             model.addAttribute("userDTO", userDTO);
+            model.addAttribute("settings", userDTO.getSetting());
             return "userEdit";
         } else return "redirect:/";
     }

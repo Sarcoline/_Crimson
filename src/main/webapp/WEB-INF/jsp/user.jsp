@@ -56,7 +56,7 @@
             </div>
             <c:if test="${user.name == name}">
                 <div class="uk-width-4-5 uk-margin-large-top">
-                    <h2>Upcoming episodes</h2>
+                    <h2>Upcoming episodes <small class="uk-text-muted">${user.setting.daysOfUpcomingEpisodes} days</small></h2>
                     <c:if test="${upcomimgEpisodes.size() <= 0}">
                         <h3 class="uk-text-muted">There's no upcoming episodes</h3>
                     </c:if>

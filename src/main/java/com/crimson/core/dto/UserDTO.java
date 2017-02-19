@@ -2,6 +2,7 @@ package com.crimson.core.dto;
 
 import com.crimson.core.model.Rating;
 import com.crimson.core.model.Role;
+import com.crimson.core.model.Setting;
 import com.crimson.core.validator.PasswordMatches;
 import lombok.Data;
 import org.hibernate.validator.constraints.Email;
@@ -35,6 +36,8 @@ public @Data class UserDTO {
     private byte[] profilePic;
 
     private MultipartFile uploadedPic;
+
+    private Setting setting;
 
     private List<Role> roles = new ArrayList<>();
 
