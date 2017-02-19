@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
         User user = mapperFacade.map(userDTO, User.class);
         user.setPassword(encoder.encode(user.getPassword()));
         user.getRoles().add(role);
-        role.getRoleUsers().add(user);
+        user.setSetting(new Setting(false,10,7));
         if (userDTO.getUploadedPic() != null) {
             user.setProfilePic(userDTO.getUploadedPic().getBytes());
         } else {

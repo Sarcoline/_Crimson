@@ -190,7 +190,7 @@ public class PopulateDatabase {
 
             TvShow tv4 = new TvShow();
             tv4.setGenre("Comedy");
-            tv4.setTitle("Friends");
+            tv4.setTitle("Game of Friends");
             tv4.setNetwork("NBC");
             tv4.setOverallRating(3d);
             tv4.setTrailerUrl("https://www.youtube.com/watch?v=hDNNmeeJs1Q");
