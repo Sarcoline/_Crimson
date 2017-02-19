@@ -50,7 +50,7 @@ public class PopulateDatabase {
 
             tv.setTitle("Game Of Thrones");
             tv.setNetwork("HBO");
-            tv.setOverallRating(9.2);
+            tv.setOverallRating(10d);
             tv.setGenre("Fantasy");
             tv.setTrailerUrl("https://www.youtube.com/watch?v=EI0ib1NErqg");
             tv.setCountry("USA");
@@ -102,7 +102,7 @@ public class PopulateDatabase {
             tv1.setTitle("Shameless");
             tv1.setGenre("Drama");
             tv1.setNetwork("Showtime");
-            tv1.setOverallRating(8.5);
+            tv1.setOverallRating(9d);
             tv1.setTrailerUrl("https://www.youtube.com/watch?v=ITsirWLf-W8");
             tv1.setCountry("USA");
             tv1.setReleaseYear(2008);
@@ -137,7 +137,7 @@ public class PopulateDatabase {
             tv2.setGenre("Drama");
             tv2.setTitle("Prison Break");
             tv2.setNetwork("Fox");
-            tv2.setOverallRating(7.7);
+            tv2.setOverallRating(7d);
             tv2.setTrailerUrl("https://www.youtube.com/watch?v=AL9zLctDJaU");
             tv2.setCountry("USA");
             tv2.setReleaseYear(2004);
@@ -159,7 +159,7 @@ public class PopulateDatabase {
             tv3.setGenre("Comedy");
             tv3.setTitle("Dr House");
             tv3.setNetwork("Fox");
-            tv3.setOverallRating(9.5);
+            tv3.setOverallRating(1d);
             tv3.setTrailerUrl("https://www.youtube.com/watch?v=5DIADh4lMq8");
             tv3.setCountry("USA");
             tv3.setReleaseYear(2004);
@@ -181,7 +181,7 @@ public class PopulateDatabase {
             tv4.setGenre("Comedy");
             tv4.setTitle("Friends");
             tv4.setNetwork("NBC");
-            tv4.setOverallRating(9.7);
+            tv4.setOverallRating(3d);
             tv4.setTrailerUrl("https://www.youtube.com/watch?v=hDNNmeeJs1Q");
             tv4.setCountry("USA");
             tv4.setReleaseYear(1994);
@@ -204,7 +204,7 @@ public class PopulateDatabase {
             tv5.setGenre("Drama");
             tv5.setTitle("Belfer");
             tv5.setNetwork("Canal Plus");
-            tv5.setOverallRating(9.7);
+            tv5.setOverallRating(5d);
             tv5.setTrailerUrl("https://www.youtube.com/watch?v=QJBo2ZAtWBA");
             tv5.setCountry("Poland");
             tv5.setReleaseYear(2016);

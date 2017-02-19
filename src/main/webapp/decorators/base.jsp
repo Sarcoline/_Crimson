@@ -44,6 +44,14 @@
                 <input type="hidden" name="${_csrf.parameterName}"
                        value="${_csrf.token}"/>
             </form>
+            <div class="genreList" style="z-index: 9999; position: absolute;">
+                    <%--<a href="<c:url value="/tv/shameless"/>"> <span class="itemSearch" style="background-image: url('<c:url--%>
+                            <%--value="/images/tv/shameless/poster"/>')">--%>
+                    <%--<span class="overlay">--%>
+                        <%--<span class="item-header">shameless</span> </span>--%>
+            <%--</span>--%>
+                    <%--</a>--%>
+            </div>
         </div>
     </ul>
     <div class="uk-navbar-flip">

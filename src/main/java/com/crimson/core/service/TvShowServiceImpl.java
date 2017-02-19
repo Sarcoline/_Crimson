@@ -3,6 +3,7 @@ package com.crimson.core.service;
 import com.crimson.core.dao.TvShowDAO;
 import com.crimson.core.dto.ImageDTO;
 import com.crimson.core.dto.TvShowDTO;
+import com.crimson.core.dto.TvShowSearchDTO;
 import com.crimson.core.model.*;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,10 +130,19 @@ public class TvShowServiceImpl implements TvShowService {
     }
 
     @Override
-    public List<TvShowDTO> searchTvShow (String pattern) {
+    public List<TvShowSearchDTO> searchTvShow(String pattern) {
         List tvs = new ArrayList();
         tvShowDAO.searchTvShow(pattern).forEach(
-                tv -> tvs.add(mapperFacade.map(tv, TvShowDTO.class))
+                tv -> tvs.add(mapperFacade.map(tv, TvShowSearchDTO.class))
+        );
+        return tvs;
+    }
+
+    @Override
+    public List<TvShowSearchDTO> filterTvShows(double min, double max) {
+        List tvs = new ArrayList();
+        tvShowDAO.filterTvShows(min,max).forEach(
+                tv -> tvs.add(mapperFacade.map(tv, TvShowSearchDTO.class))
         );
         return tvs;
     }

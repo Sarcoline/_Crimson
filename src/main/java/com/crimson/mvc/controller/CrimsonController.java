@@ -73,7 +73,7 @@ public class CrimsonController {
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String searchResult(Model model, HttpServletRequest request) {
-        List tvs = tvShowService.searchTvShow(request.getParameter("search"));
+        List tvs = tvShowService.getAllTvShows();
         model.addAttribute("tvshows",tvs );
         return "searchResult";
     }

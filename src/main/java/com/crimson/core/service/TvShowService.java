@@ -2,6 +2,7 @@ package com.crimson.core.service;
 
 import com.crimson.core.dto.ImageDTO;
 import com.crimson.core.dto.TvShowDTO;
+import com.crimson.core.dto.TvShowSearchDTO;
 import com.crimson.core.model.*;
 
 import java.util.List;
@@ -44,5 +45,7 @@ public interface TvShowService {
     //Extra Methods
     List<TvShowDTO> getAllTvShowByMaxRating();
 
-    List<TvShowDTO> searchTvShow(String pattern);
+    List<TvShowSearchDTO> searchTvShow(String pattern);
+
+    List<TvShowSearchDTO> filterTvShows(double min, double max);
 }

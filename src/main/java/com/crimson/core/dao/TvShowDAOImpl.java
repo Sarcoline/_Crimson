@@ -91,6 +91,17 @@ public class TvShowDAOImpl implements TvShowDAO {
         String hql = "FROM TvShow t WHERE title like :pattern";
         Query query = session.createQuery(hql);
         query.setParameter("pattern", String.format("%%%s%%", pattern));
+        query.setMaxResults(5);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<TvShow> filterTvShows(double min, double max) {
+        Session session = sf.getCurrentSession();
+        String hql = "from TvShow t WHERE overallRating between :start and :finish";
+        Query query = session.createQuery(hql);
+        query.setParameter("start", min);
+        query.setParameter("finish", max);
         return query.getResultList();
     }
 

@@ -25,6 +25,8 @@ public interface TvShowDAO {
 
     List<TvShow> searchTvShow(String pattern);
 
+    List<TvShow> filterTvShows(double min, double max);
+
     List<TvShow> getTvShowsSortedByNumberOnList(int userChoosedNumberOnList, int pageNumber);
 
     void addUser2TvShow(User user, TvShow tvShow);
