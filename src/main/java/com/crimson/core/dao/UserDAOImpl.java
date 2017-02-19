@@ -6,9 +6,11 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 
 @Repository
@@ -91,14 +93,13 @@ public class UserDAOImpl implements UserDAO {
 
         List<Episode> allFutureUserEpisodes = new ArrayList<>();
         int days = user.getSetting().getDaysOfUpcomingEpisodes();
-        Date currentDate = new Date();
-        LocalDateTime localDateTime = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-        localDateTime = localDateTime.plusDays(days);
-        Date lastDate = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+
+        LocalDate currentDate = LocalDate.now();
+        LocalDate lastDate = LocalDate.now().plusDays(days);
 
         for (Episode episode: getAllUnwatchedUserEpisodes(user)) {
-            Date episodeDate = episode.getReleaseDate();
-            if(episodeDate.after(currentDate) && episodeDate.before(lastDate))allFutureUserEpisodes.add(episode);
+            LocalDate episodeDate = episode.getReleaseDate();
+            if(episodeDate.isAfter(currentDate) && episodeDate.isBefore(lastDate)) allFutureUserEpisodes.add(episode);
 
         }
 

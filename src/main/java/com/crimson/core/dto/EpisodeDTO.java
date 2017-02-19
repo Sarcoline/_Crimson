@@ -7,8 +7,8 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -25,7 +25,7 @@ public @Data class EpisodeDTO {
     @Range(max = 99, message = "{invalid.number}")
     private int number;
 
-    private Date releaseDate;
+    private LocalDate releaseDate;
 
     @Length(max = 1000)
     private String episodeSummary;

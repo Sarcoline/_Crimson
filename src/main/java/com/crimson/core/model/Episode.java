@@ -5,13 +5,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -38,8 +36,7 @@ public @Data class Episode {
     private int number;
 
     @Column(name = "releaseDate")
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date releaseDate;
+    private LocalDate releaseDate;
 
     @Column(name = "episodeSummary")
     @Length(max = 1000)
@@ -54,7 +51,7 @@ public @Data class Episode {
 
 
     @Builder
-    public Episode(String title, int season, int number, Date releaseDate, String episodeSummary, Long idTvShow) {
+    public Episode(String title, int season, int number, LocalDate releaseDate, String episodeSummary, Long idTvShow) {
         this.title = title;
         this.season = season;
         this.number = number;

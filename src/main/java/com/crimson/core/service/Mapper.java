@@ -28,5 +28,6 @@ public class Mapper extends ConfigurableMapper {
         factory.classMap(TvShow.class, TvShowSearchDTO.class)
                 .byDefault()
                 .register();
+        factory.getConverterFactory().registerConverter(new LocalDateConverter());
     }
 }
