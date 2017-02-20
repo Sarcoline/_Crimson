@@ -41,7 +41,7 @@
                 </div>
                 <div class="uk-form-row uk-text-small">
                     <label class="uk-float-left"><input type="checkbox" name="remember-me"> Remember Me</label>
-                    <a class="uk-float-right" href="#">Forgot Password?</a>
+                    <a class="uk-float-right" href="<c:url value="/user/resetPassword"/>">Forgot Password?</a>
                 </div>
                 <input type="hidden" name="${_csrf.parameterName}"
                        value="${_csrf.token}"/>

@@ -1,6 +1,7 @@
 package com.crimson.mvc.controller;
 
 import com.crimson.core.dto.EpisodeDTO;
+import com.crimson.core.dto.EpisodeFormDTO;
 import com.crimson.core.dto.TvShowDTO;
 import com.crimson.core.dto.UserDTO;
 import com.crimson.core.service.EpisodeService;
@@ -82,13 +83,57 @@ public class CrimsonController {
 
     @RequestMapping(value = "/{name}/edit", method = RequestMethod.POST)
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
-    public String postEditTvShow(@Valid TvShowDTO tvShowDTO, BindingResult bindingResult, @PathVariable("name") String name) {
+    public String postEditTvShow(@ModelAttribute("tv") @Valid TvShowDTO tvShowDTO, BindingResult bindingResult, @PathVariable("name") String name) {
         if (bindingResult.hasErrors()) {
-            return String.format("redirect:/tv/%s/edit?error", name);
+            return "tvShowEdit";
         }
         Slugify slugify = new Slugify();
         tvShowService.updateTvShow(tvShowDTO);
         return String.format("redirect:/tv/%s", slugify.slugify(tvShowDTO.getTitle()));
+    }
+
+    @GetMapping("/{name}/edit/episodes")
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
+    public String displayTvShowEpisodes(@RequestParam(value = "error", required = false) String error,
+                                    @PathVariable("name") String name, Model model) {
+        TvShowDTO tv = tvShowService.getTvBySlug(name);
+        List<EpisodeDTO> episodes = tv.getEpisodes();
+        if (error != null) {
+            model.addAttribute("error", "Error!");
+        }
+        int seasons = 0;
+        for (EpisodeDTO episode : episodes) {
+            if (seasons < episode.getSeason()) seasons = episode.getSeason();
+        }
+        model.addAttribute("seasons", seasons);
+        model.addAttribute("episodes", episodes);
+        return "tvShowEpisodes";
+    }
+
+    @GetMapping("/{name}/edit/episodes/{id}")
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
+    public String displayEditTvShowEpisodes(@RequestParam(value = "error", required = false) String error,
+                                            @PathVariable("id") String sid, Model model) {
+        Long id = Long.parseLong(sid);
+        EpisodeDTO episodeDTO = episodeService.getEpisodeById(id);
+        EpisodeFormDTO episodeFormDTO = episodeService.getEisodeForm(id);
+        if (error != null) {
+            model.addAttribute("error", "Error!");
+        }
+        model.addAttribute("episode", episodeFormDTO);
+        return "tvShowEditEpisode";
+    }
+
+    @RequestMapping(value = "/{name}/edit/episodes/{id}", method = RequestMethod.POST)
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
+    public String postEditTvShowEpisodes(@ModelAttribute("episode") @Valid EpisodeFormDTO episodeFormDTO, BindingResult bindingResult,
+                                         @PathVariable("id") long id,
+                                         @PathVariable("name") String name, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "tvShowEditEpisode";
+        }
+        episodeService.updateEpisodeFromForm(episodeFormDTO);
+        return String.format("redirect:/tv/%s/edit/episodes", name);
     }
 
     @GetMapping(value = "/add")
@@ -103,9 +148,9 @@ public class CrimsonController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
-    public String addTvShow(@Valid TvShowDTO tvShowDTO, BindingResult bindingResult) throws IOException {
+    public String addTvShow(@ModelAttribute("tv") @Valid TvShowDTO tvShowDTO, BindingResult bindingResult) throws IOException {
         if (bindingResult.hasErrors()) {
-            return "redirect:/tv/add?error";
+            return "addTvShow";
         }
         tvShowService.saveTvShowDTO(tvShowDTO);
         return "redirect:/";

@@ -3,6 +3,7 @@ package com.crimson.core.service;
 import com.crimson.core.dao.EpisodeDAO;
 import com.crimson.core.dao.UserDAO;
 import com.crimson.core.dto.EpisodeDTO;
+import com.crimson.core.dto.EpisodeFormDTO;
 import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.Episode;
 import com.crimson.core.model.TvShow;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -37,14 +39,13 @@ public class EpisodeServiceImpl implements EpisodeService {
     }
 
     @Override
-    public void updateEpisode(Episode episode) {
-        episodeDAO.updateEpisode(episode);
+    public void updateEpisode(EpisodeDTO episode) {
+        episodeDAO.updateEpisode(mapperFacade.map(episode, Episode.class));
     }
 
     @Override
     public EpisodeDTO getEpisodeById(Long idEpisode) {
-        EpisodeDTO episode = mapperFacade.map(episodeDAO.getEpisodeById(idEpisode), EpisodeDTO.class);
-        return episode;
+        return mapperFacade.map(episodeDAO.getEpisodeById(idEpisode), EpisodeDTO.class);
     }
 
     @Override
@@ -94,5 +95,22 @@ public class EpisodeServiceImpl implements EpisodeService {
     @Override
     public void deleteTvShowFromEpisode(TvShow tvShow, Episode episode) {
         episodeDAO.deleteTvShowFromEpisode(tvShow, episode);
+    }
+
+
+    @Override
+    public EpisodeFormDTO getEisodeForm(Long id) {
+        return mapperFacade.map(episodeDAO.getEpisodeById(id), EpisodeFormDTO.class);
+    }
+
+    @Override
+    public void updateEpisodeFromForm(EpisodeFormDTO episodeFormDTO) {
+       Episode ep  = episodeDAO.getEpisodeById(episodeFormDTO.getId());
+        ep.setReleaseDate(LocalDate.parse(episodeFormDTO.getReleaseDate()));
+        ep.setTitle(episodeFormDTO.getTitle());
+        ep.setSeason(episodeFormDTO.getSeason());
+        ep.setNumber(episodeFormDTO.getNumber());
+        ep.setEpisodeSummary(episodeFormDTO.getEpisodeSummary());
+        episodeDAO.updateEpisode(ep);
     }
 }

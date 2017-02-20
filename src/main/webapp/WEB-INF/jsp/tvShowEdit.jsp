@@ -81,9 +81,11 @@
                 <input type="hidden" name="${_csrf.parameterName}"
                        value="${_csrf.token}"/>
                 <div class="uk-form-row uk-margin-top">
-                    <input class="uk-width-1-1 uk-button uk-button-primary uk-button-large" name="submit"
+                    <input class="uk-width-1-1 uk-button uk-button-success uk-button-large" name="submit"
                            type="submit"
                            value="Save"/>
+                    <a href="<c:url value="/tv/${tv.slug}/edit/episodes"/>" class="uk-width-1-1 uk-button
+                    uk-button-primary uk-button-large">Episodes</a>
                     <a href="<c:url value="/tv/${tv.slug}"/>" class="uk-width-1-1 uk-button uk-button-large">Back</a>
                 </div>
             </form:form>

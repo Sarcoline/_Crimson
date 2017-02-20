@@ -14,14 +14,14 @@
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/slidenav.css' />">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/slider.min.css' />">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/notify.min.css' />">
-    <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/sortable.min.css' />">
+    <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/datepicker.min.css' />">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/style.css' />">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"
             type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/uikit.min.js' />" type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/components/lightbox.min.js' />" type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/components/slider.min.js' />" type="application/javascript"></script>
-    <script src="<c:url value='/static/uikit/js/components/sortable.min.js' />" type="application/javascript"></script>
+    <script src="<c:url value='/static/uikit/js/components/datepicker.min.js' />" type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/components/notify.min.js' />" type="application/javascript"></script>
 
     <title><decorator:title/></title>
@@ -35,7 +35,7 @@
         <li class="uk-parent"><a href="<c:url value="/tv/list"/> ">TvShows</a></li>
         <li class="uk-parent" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false">
             <a href="">Genre</a>
-            <div class="uk-dropdown uk-dropdown-navbar uk-dropdown-bottom">
+            <div class="uk-dropdown uk-dropdown-navbar uk-dropdown-bottom navDropdown">
                 <ul class="uk-nav uk-nav-navbar">
                     <li><a href="<c:url value="/tv/genre/drama"/> ">Drama</a></li>
                     <li><a href="<c:url value="/tv/genre/fantasy"/> ">Fantasy</a></li>
@@ -53,7 +53,7 @@
         <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_ADMIN')">
             <li class="uk-parent" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false">
                 <a href="">Manage</a>
-                <div class="uk-dropdown uk-dropdown-navbar uk-dropdown-bottom">
+                <div class="uk-dropdown uk-dropdown-navbar uk-dropdown-bottom navDropdown">
                     <ul class="uk-nav uk-nav-navbar">
                         <li><a href="<c:url value="/tv/add"/> ">Add TvShow</a></li>
                     </ul>
@@ -83,10 +83,6 @@
     function formSubmit() {
         document.getElementById('logoutForm').submit();
     }
-    $('.search').on('click', function () {
-        $('.searchForm').submit();
-    });
-
 
     function createFound(slug, title) {
         var a = document.createElement('a');
