@@ -64,6 +64,12 @@ public class TvShowServiceImpl implements TvShowService {
     }
 
     @Override
+    public List<TvShow> getTvByCountry(String country) {
+        return tvShowDAO.getTvByCountry(country);
+    }
+
+
+    @Override
     public ImageDTO getTvPictures(String slug) {
         return mapperFacade.map(tvShowDAO.getTvBySlug(slug), ImageDTO.class);
     }

@@ -60,7 +60,16 @@ public class TvShowDAOImpl implements TvShowDAO {
     public List<TvShow> getTvByGenre(String genre) {
         Session session = sf.getCurrentSession();
         return session.createQuery("Select a From TvShow a where a.genre like :custGenre", TvShow.class).setParameter("custGenre", genre).getResultList();
+
     }
+
+    @Override
+    public List<TvShow> getTvByCountry(String country) {
+        Session session = sf.getCurrentSession();
+        return session.createQuery("Select a From TvShow a where a.country like :custCountry", TvShow.class).setParameter("custCountry", country).getResultList();
+    }
+
+
 
     @Override
     public void deleteTvShow(TvShow tvshow) {
@@ -104,6 +113,8 @@ public class TvShowDAOImpl implements TvShowDAO {
         query.setParameter("finish", max);
         return query.getResultList();
     }
+
+
 
     //Wyrzuca listę TvShow dzieląc cała listę na podany przedział przez użytkownika na stronie np. ma wyświetlić tylko 10 tvShows na jednej podstronie
     @Override

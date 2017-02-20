@@ -135,6 +135,15 @@ public class CrimsonController {
         return "tvShowList";
     }
 
+    @GetMapping("/country/{name}")
+    public String displayCountry(@PathVariable String name, Model model) {
+        name = Character.toUpperCase(name.charAt(0)) + name.substring(1);
+        model.addAttribute("country", name);
+        model.addAttribute("tvshows", tvShowService.getTvByCountry(name));
+        return "tvShowList";
+    }
+
+
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String searchResult(Model model, HttpServletRequest request) {
         List tvs = tvShowService.getAllTvShows();
