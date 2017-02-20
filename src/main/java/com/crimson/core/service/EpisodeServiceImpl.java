@@ -34,8 +34,8 @@ public class EpisodeServiceImpl implements EpisodeService {
     }
 
     @Override
-    public void deleteEpisode(Episode episode) {
-        episodeDAO.deleteEpisode(episode);
+    public void deleteEpisode(EpisodeDTO episode) {
+        episodeDAO.deleteEpisode(episodeDAO.getEpisodeById(episode.getId()));
     }
 
     @Override
@@ -112,5 +112,18 @@ public class EpisodeServiceImpl implements EpisodeService {
         ep.setNumber(episodeFormDTO.getNumber());
         ep.setEpisodeSummary(episodeFormDTO.getEpisodeSummary());
         episodeDAO.updateEpisode(ep);
+    }
+
+    @Override
+    public void addEpisodeFromForm(EpisodeFormDTO episodeFormDTO) {
+        Episode ep = Episode.builder()
+                .episodeSummary(episodeFormDTO.getEpisodeSummary())
+                .title(episodeFormDTO.getTitle())
+                .number(episodeFormDTO.getNumber())
+                .season(episodeFormDTO.getSeason())
+                .releaseDate(LocalDate.parse(episodeFormDTO.getReleaseDate()))
+                .idTvShow(episodeFormDTO.getIdTvShow())
+                .build();
+        episodeDAO.saveEpisode(ep);
     }
 }

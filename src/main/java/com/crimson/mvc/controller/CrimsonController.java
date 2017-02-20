@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @RequestMapping("/tv")
@@ -47,6 +48,7 @@ public class CrimsonController {
         TvShowDTO tv = tvShowService.getTvBySlug(name);
         boolean follow = false;
         int rating = 0;
+        List<EpisodeDTO> episodes = tv.getEpisodes();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             UserDTO user = userService.getUserByName(auth.getName());
@@ -58,11 +60,13 @@ public class CrimsonController {
             model.addAttribute("watchedEpisodesId", watchedEpisodesId);
         }
         int seasons = 0;
-        for (EpisodeDTO episode : tv.getEpisodes()) {
+        for (EpisodeDTO episode : episodes) {
             if (seasons < episode.getSeason()) seasons = episode.getSeason();
         }
+        episodes.sort(Comparator.comparing(EpisodeDTO::getSeason));
+        episodes.sort(Comparator.comparing(EpisodeDTO::getNumber));
         model.addAttribute("tv", tv);
-        model.addAttribute("episodes", tv.getEpisodes());
+        model.addAttribute("episodes", episodes);
         model.addAttribute("seasons", seasons);
         model.addAttribute("rating", rating);
         model.addAttribute("follow", follow);
@@ -98,6 +102,8 @@ public class CrimsonController {
                                     @PathVariable("name") String name, Model model) {
         TvShowDTO tv = tvShowService.getTvBySlug(name);
         List<EpisodeDTO> episodes = tv.getEpisodes();
+        episodes.sort(Comparator.comparing(EpisodeDTO::getSeason));
+        episodes.sort(Comparator.comparing(EpisodeDTO::getNumber));
         if (error != null) {
             model.addAttribute("error", "Error!");
         }
@@ -113,9 +119,8 @@ public class CrimsonController {
     @GetMapping("/{name}/edit/episodes/{id}")
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     public String displayEditTvShowEpisodes(@RequestParam(value = "error", required = false) String error,
-                                            @PathVariable("id") String sid, Model model) {
-        Long id = Long.parseLong(sid);
-        EpisodeDTO episodeDTO = episodeService.getEpisodeById(id);
+                                            @PathVariable("id") long id, Model model) {
+
         EpisodeFormDTO episodeFormDTO = episodeService.getEisodeForm(id);
         if (error != null) {
             model.addAttribute("error", "Error!");
@@ -123,6 +128,45 @@ public class CrimsonController {
         model.addAttribute("episode", episodeFormDTO);
         return "tvShowEditEpisode";
     }
+
+    @GetMapping("/{name}/edit/episodes/{id}/delete")
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
+    public String deleteEpisode(@PathVariable("id") long id, @PathVariable("name") String name) {
+        EpisodeDTO ep = episodeService.getEpisodeById(id);
+        episodeService.deleteEpisode(ep);
+        return String.format("redirect:/tv/%s/edit/episodes", name);
+    }
+
+    @GetMapping("/{name}/edit/episodes/add")
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
+    public String displayAddTvShowEpisodes(@RequestParam(value = "error", required = false) String error,
+                                           @PathVariable("name") String name, Model model) {
+
+        TvShowDTO tv = tvShowService.getTvBySlug(name);
+        long id = tv.getId();
+        String title = tv.getTitle();
+        String slug = tv.getSlug();
+        if (error != null) {
+            model.addAttribute("error", "Error!");
+        }
+        model.addAttribute("episode", new EpisodeFormDTO());
+        model.addAttribute("idTvShow", id);
+        model.addAttribute("title", title);
+        model.addAttribute("slug", slug);
+        return "addEpisode";
+    }
+
+    @RequestMapping(value = "/{name}/edit/episodes/add", method = RequestMethod.POST)
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
+    public String postAddTvShowEpisode(@ModelAttribute("episode") @Valid EpisodeFormDTO episodeFormDTO,
+                                       BindingResult bindingResult, @PathVariable("name") String name) {
+        if (bindingResult.hasErrors()) {
+            return "addEpisode";
+        }
+        episodeService.addEpisodeFromForm(episodeFormDTO);
+        return String.format("redirect:/tv/%s/edit/episodes", name);
+    }
+
 
     @RequestMapping(value = "/{name}/edit/episodes/{id}", method = RequestMethod.POST)
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})

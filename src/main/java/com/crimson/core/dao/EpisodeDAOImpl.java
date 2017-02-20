@@ -17,6 +17,9 @@ public class EpisodeDAOImpl implements EpisodeDAO {
     @Autowired
     private SessionFactory sf;
 
+    @Autowired
+    private UserDAO userDAO;
+
     @Override
     public void saveEpisode(Episode episode) {
         Session session = sf.getCurrentSession();
@@ -26,6 +29,10 @@ public class EpisodeDAOImpl implements EpisodeDAO {
     @Override
     public void deleteEpisode(Episode episode) {
         Session session = sf.getCurrentSession();
+        List<User> users = userDAO.getAllUsers();
+        for (User user: users) {
+            user.getUserEpisodeList().remove(episode);
+        }
         session.delete(episode);
     }
 

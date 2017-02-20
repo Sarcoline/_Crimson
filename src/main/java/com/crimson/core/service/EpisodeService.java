@@ -11,7 +11,7 @@ import java.util.List;
 public interface EpisodeService {
     void saveEpisode(Episode episode);
 
-    void deleteEpisode(Episode episode);
+    void deleteEpisode(EpisodeDTO episode);
 
     void updateEpisode(EpisodeDTO episode);
 
@@ -34,4 +34,6 @@ public interface EpisodeService {
     EpisodeFormDTO getEisodeForm(Long id);
 
     void updateEpisodeFromForm(EpisodeFormDTO episodeFormDTO);
+
+    void addEpisodeFromForm(EpisodeFormDTO episodeFormDTO);
 }
