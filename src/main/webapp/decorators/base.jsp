@@ -50,6 +50,17 @@
             <div class="genreList" id="found" style="z-index: 9999; position: absolute;">
             </div>
         </div>
+        <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_ADMIN')">
+            <li class="uk-parent" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false">
+                <a href="">Manage</a>
+                <div class="uk-dropdown uk-dropdown-navbar uk-dropdown-bottom">
+                    <ul class="uk-nav uk-nav-navbar">
+                        <li><a href="<c:url value="/tv/add"/> ">Add TvShow</a></li>
+                    </ul>
+                </div>
+            </li>
+        </sec:authorize>
+
     </ul>
     <div class="uk-navbar-flip">
         <ul class="uk-navbar-nav">

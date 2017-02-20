@@ -57,7 +57,7 @@ public class PopulateDatabase {
             tv.setReleaseYear(2010);
 
             LocalDate date = LocalDate.now().plusDays(5);
-           LocalDate date1 = LocalDate.now().plusDays(10);
+            LocalDate date1 = LocalDate.now().plusDays(10);
 
             List<Episode> GameOfThronesEpisodes = new ArrayList();
             GameOfThronesEpisodes.add(Episode.builder().title("Episode 1").number(1).releaseDate(LocalDate.now()).season(1).idTvShow(1L).episodeSummary("Summary 1").build());

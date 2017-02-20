@@ -18,9 +18,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,13 +82,49 @@ public class CrimsonController {
 
     @RequestMapping(value = "/{name}/edit", method = RequestMethod.POST)
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
-    public String postEditTvShow(@Valid TvShowDTO tvShowDTO, @PathVariable("name") String name, BindingResult bindingResult) {
-        Slugify slugify = new Slugify();
+    public String postEditTvShow(@Valid TvShowDTO tvShowDTO, BindingResult bindingResult, @PathVariable("name") String name) {
         if (bindingResult.hasErrors()) {
-            return String.format("redirect:/%s/edit?error", name);
+            return String.format("redirect:/tv/%s/edit?error", name);
         }
+        Slugify slugify = new Slugify();
         tvShowService.updateTvShow(tvShowDTO);
         return String.format("redirect:/tv/%s", slugify.slugify(tvShowDTO.getTitle()));
+    }
+
+    @GetMapping(value = "/add")
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
+    public String addTvShow(Model model, @RequestParam(value = "error", required = false) String error) {
+        if (error != null) {
+            model.addAttribute("error", "Error!");
+        }
+        model.addAttribute("tv", new TvShowDTO());
+        return "addTvShow";
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
+    public String addTvShow(@Valid TvShowDTO tvShowDTO, BindingResult bindingResult) throws IOException {
+        if (bindingResult.hasErrors()) {
+            return "redirect:/tv/add?error";
+        }
+        tvShowService.saveTvShowDTO(tvShowDTO);
+        return "redirect:/";
+    }
+
+    @GetMapping(value = "/{name}/delete")
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
+    public String deleteTvShow(@PathVariable("name") String name) {
+        tvShowService.deleteTvShow(tvShowService.getTvBySlug(name));
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/{name}/updatePicture", method = RequestMethod.POST)
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
+    public String postUpdatePicture(@PathVariable("name") String name,
+                                    @RequestParam("key") String key,
+                                    @RequestParam("pic1") MultipartFile pic1) throws IOException {
+        tvShowService.updateTvShowPicture(name, key, pic1);
+        return String.format("redirect:/tv/%s/edit", name);
     }
 
     @GetMapping("/genre/{name}")

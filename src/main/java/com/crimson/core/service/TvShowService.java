@@ -4,7 +4,9 @@ import com.crimson.core.dto.ImageDTO;
 import com.crimson.core.dto.TvShowDTO;
 import com.crimson.core.dto.TvShowSearchDTO;
 import com.crimson.core.model.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface TvShowService {
@@ -20,7 +22,7 @@ public interface TvShowService {
 
     List<TvShow> getTvByGenre(String genre);
 
-    void deleteTvShow(TvShow tvshow);
+    void deleteTvShow(TvShowDTO tvshow);
 
     void updateTvShow(TvShowDTO tvshow);
 
@@ -48,4 +50,8 @@ public interface TvShowService {
     List<TvShowSearchDTO> searchTvShow(String pattern);
 
     List<TvShowSearchDTO> filterTvShows(double min, double max);
+
+    void updateTvShowPicture(String name, String key, MultipartFile pic1) throws IOException;
+
+    void saveTvShowDTO(TvShowDTO tvShowDTO) throws IOException;
 }

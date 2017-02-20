@@ -48,8 +48,10 @@
     <div class="uk-width-large-4-6 uk-width-medium-1-1">
         <article class="uk-article">
             <h2 class="uk-article-title">Summary of <strong>${tv.title}</strong>
-                <sec:authorize access="hasRole('ROLE_ADMIN')">
-                    <small><a href="/tv/${tv.slug}/edit"><i class="fa fa-cog uk-text-muted" aria-hidden="true"
+                <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')">
+                    <small><a href="/tv/${tv.slug}/edit"><i class="fa fa-cog uk-text-primary" aria-hidden="true"
+                                                            style="cursor: pointer; font-size: 2rem"></i></a></small>
+                    <small><a href="/tv/${tv.slug}/delete"><i class="fa fa-times uk-text-danger" aria-hidden="true"
                                                             style="cursor: pointer; font-size: 2rem"></i></a></small>
                 </sec:authorize>
             </h2>

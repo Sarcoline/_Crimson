@@ -7,10 +7,16 @@ import com.crimson.core.dto.TvShowSearchDTO;
 import com.crimson.core.model.*;
 import com.github.slugify.Slugify;
 import ma.glasnost.orika.MapperFacade;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +29,9 @@ public class TvShowServiceImpl implements TvShowService {
     private TvShowDAO tvShowDAO;
     @Autowired
     private MapperFacade mapperFacade;
+
+    @Autowired
+    private ApplicationContext applicationContext;
 
     @Override
     public void saveTvShow(TvShow tvShow) {
@@ -60,8 +69,9 @@ public class TvShowServiceImpl implements TvShowService {
     }
 
     @Override
-    public void deleteTvShow(TvShow tvshow) {
-        tvShowDAO.deleteTvShow(tvshow);
+    public void deleteTvShow(TvShowDTO tvshow) {
+        TvShow tv = tvShowDAO.getTvById(tvshow.getId());
+        tvShowDAO.deleteTvShow(tv);
     }
 
     @Override
@@ -155,5 +165,25 @@ public class TvShowServiceImpl implements TvShowService {
                 tv -> tvs.add(mapperFacade.map(tv, TvShowSearchDTO.class))
         );
         return tvs;
+    }
+
+    @Override
+    public void updateTvShowPicture(String name, String key, MultipartFile pic1) throws IOException {
+        TvShow tv = tvShowDAO.getTvBySlug(name);
+        tv.getPictures().put(key, pic1.getBytes());
+        tvShowDAO.updateTvShow(tv);
+    }
+
+    @Override
+    public void saveTvShowDTO(TvShowDTO tvShowDTO) throws IOException {
+        Resource resource1 = applicationContext.getResource("classpath:/images/placeholder.png");
+        InputStream in1 = resource1.getInputStream();
+        byte[] pic = IOUtils.toByteArray(in1);
+        tvShowDTO.getPictures().put("1", pic);
+        tvShowDTO.getPictures().put("2", pic);
+        tvShowDTO.getPictures().put("3", pic);
+        tvShowDTO.getPictures().put("back", pic);
+        tvShowDTO.getPictures().put("poster", pic);
+        tvShowDAO.saveTvShow(mapperFacade.map(tvShowDTO, TvShow.class));
     }
 }
