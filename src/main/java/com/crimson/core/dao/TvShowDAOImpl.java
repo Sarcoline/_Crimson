@@ -69,6 +69,12 @@ public class TvShowDAOImpl implements TvShowDAO {
         return session.createQuery("Select a From TvShow a where a.country like :custCountry", TvShow.class).setParameter("custCountry", country).getResultList();
     }
 
+    @Override
+    public List<TvShow> getTvByYear(int releaseYear) {
+        Session session = sf.getCurrentSession();
+        return session.createQuery("Select a From TvShow a where a.releaseYear like :custReleaseYear", TvShow.class).setParameter("custReleaseYear", releaseYear).getResultList();
+    }
+
 
 
     @Override

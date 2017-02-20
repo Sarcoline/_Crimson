@@ -24,6 +24,8 @@ public interface TvShowService {
 
     List<TvShow> getTvByCountry(String country);
 
+    List<TvShow> getTvByYear(int releaseYear);
+
     void deleteTvShow(TvShowDTO tvshow);
 
     void updateTvShow(TvShowDTO tvshow);

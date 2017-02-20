@@ -232,6 +232,14 @@ public class CrimsonController {
         return "tvShowList";
     }
 
+    @GetMapping("/year/{releaseYear}")
+    public String displayYear(@PathVariable int releaseYear, Model model) {
+
+        model.addAttribute("year", releaseYear);
+        model.addAttribute("tvshows", tvShowService.getTvByYear(releaseYear));
+        return "tvShowList";
+    }
+
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String searchResult(Model model, HttpServletRequest request) {

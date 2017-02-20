@@ -68,6 +68,11 @@ public class TvShowServiceImpl implements TvShowService {
         return tvShowDAO.getTvByCountry(country);
     }
 
+    @Override
+    public List<TvShow> getTvByYear(int releaseYear) {
+        return tvShowDAO.getTvByYear(releaseYear);
+    }
+
 
     @Override
     public ImageDTO getTvPictures(String slug) {
