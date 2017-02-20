@@ -75,6 +75,12 @@ public class TvShowDAOImpl implements TvShowDAO {
         return session.createQuery("Select a From TvShow a where a.releaseYear like :custReleaseYear", TvShow.class).setParameter("custReleaseYear", releaseYear).getResultList();
     }
 
+    @Override
+    public List<TvShow> getTvByNetwork(String network) {
+        Session session = sf.getCurrentSession();
+        return session.createQuery("Select a From TvShow a where a.network like :custNetwork", TvShow.class).setParameter("custNetwork", network).getResultList();
+    }
+
 
 
     @Override

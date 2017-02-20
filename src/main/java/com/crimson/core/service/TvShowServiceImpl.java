@@ -73,6 +73,9 @@ public class TvShowServiceImpl implements TvShowService {
         return tvShowDAO.getTvByYear(releaseYear);
     }
 
+    @Override
+    public List<TvShow> getTvByNetwork(String network) { return tvShowDAO.getTvByNetwork(network);}
+
 
     @Override
     public ImageDTO getTvPictures(String slug) {

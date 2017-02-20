@@ -240,6 +240,15 @@ public class CrimsonController {
         return "tvShowList";
     }
 
+    @GetMapping("/network/{name}")
+    public String displayNetwork(@PathVariable String name, Model model) {
+        name = Character.toUpperCase(name.charAt(0)) + name.substring(1);
+        model.addAttribute("network", name);
+        model.addAttribute("tvshows", tvShowService.getTvByNetwork(name));
+        return "tvShowList";
+
+    }
+
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String searchResult(Model model, HttpServletRequest request) {

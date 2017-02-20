@@ -21,6 +21,8 @@ public interface TvShowDAO {
 
     List<TvShow> getTvByYear(int releaseYear);
 
+    List<TvShow> getTvByNetwork(String network);
+
     List<TvShow> getAllTvShowByMaxRating();
 
     void deleteTvShow(TvShow tvshow);
