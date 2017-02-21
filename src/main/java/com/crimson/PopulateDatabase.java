@@ -227,6 +227,30 @@ public class PopulateDatabase {
                     "The death of a young girl. To town comes a new teacher who begins his own investigation.  " +
                             "Until the end no one knows who really is a murderer. ");
 
+            TvShow tv6 = new TvShow();
+            tv6.setGenre("Drama");
+            tv6.setTitle("Sherlock");
+            tv6.setNetwork("BBC");
+            tv6.setOverallRating(5d);
+            tv6.setTrailerUrl("https://www.youtube.com/watch?v=38_c6dh6Y6M");
+            tv6.setCountry("USA");
+            tv6.setReleaseYear(2010);
+            InputStream in30 = applicationContext.getResource("classpath:/images/sherlock/poster.jpg").getInputStream();
+            tv6.getPictures().put("poster", IOUtils.toByteArray(in30));
+            InputStream in31 = applicationContext.getResource("classpath:/images/sherlock/back.jpg").getInputStream();
+            tv6.getPictures().put("back", IOUtils.toByteArray(in31));
+            InputStream in32 = applicationContext.getResource("classpath:/images/sherlock/1.jpg").getInputStream();
+            tv6.getPictures().put("1", IOUtils.toByteArray(in32));
+            InputStream in33 = applicationContext.getResource("classpath:/images/sherlock/2.jpg").getInputStream();
+            tv6.getPictures().put("2", IOUtils.toByteArray(in33));
+            InputStream in34 = applicationContext.getResource("classpath:/images/sherlock/3.jpg").getInputStream();
+            tv6.getPictures().put("3", IOUtils.toByteArray(in34));
+            tv6.setDescription(
+                    "A modern update finds the famous sleuth and his doctor partner solving crime in 21st century London.  " );
+
+
+
+
 
 
             Role role = new Role("USER");
@@ -239,8 +263,8 @@ public class PopulateDatabase {
             user.setPassword("123");
             user.getRoles().add(roleService.getAllRoles().get(1));
             user.setSetting(new Setting(true, 10, 7));
-            InputStream in30 = applicationContext.getResource("classpath:/images/user/meow.jpg").getInputStream();
-            user.setProfilePic(IOUtils.toByteArray(in30));
+            InputStream in35 = applicationContext.getResource("classpath:/images/user/meow.jpg").getInputStream();
+            user.setProfilePic(IOUtils.toByteArray(in35));
             userDAO.saveUser(user);
             tvShowDAO.saveTvShow(tv);
             tvShowDAO.saveTvShow(tv1);
@@ -248,6 +272,7 @@ public class PopulateDatabase {
             tvShowDAO.saveTvShow(tv3);
             tvShowDAO.saveTvShow(tv4);
             tvShowDAO.saveTvShow(tv5);
+            tvShowDAO.saveTvShow(tv6);
         }
     }
 }

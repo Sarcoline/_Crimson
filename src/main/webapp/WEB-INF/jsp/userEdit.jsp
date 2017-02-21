@@ -74,6 +74,7 @@
                     </form:form>
                     <a class="uk-width-1-1 uk-button uk-button-danger uk-button-large"
                        href="<c:url value="/user/delete/"/>">Delete</a>
+
                     <a class="uk-float-left uk-text-small uk-margin-top"
                        href="<c:url value="/user/updatePassword"/> ">Change
                         Password</a>
@@ -106,6 +107,8 @@
             <%--timeout : 5000,--%>
             <%--pos     : 'top-center'--%>
         <%--});--%>
+
+
 </script>
 </body>
 </html>
