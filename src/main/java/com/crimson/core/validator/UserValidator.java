@@ -18,20 +18,20 @@ public class UserValidator implements Validator {
     private UserService userService;
 
     @Override
-    public boolean supports(Class clazz){
+    public boolean supports(Class clazz) {
         return User.class.equals(clazz);
     }
 
     @Override
-    public void validate(Object target, Errors errors){
+    public void validate(Object target, Errors errors) {
         UserDTO userDTO = (UserDTO) target;
         List<User> userList = userService.getAllUsers();
-        for(User userTmp : userList){
-            if (userTmp.getName().contains(userDTO.getName())){
+        for (User userTmp : userList) {
+            if (userTmp.getName().contains(userDTO.getName())) {
                 errors.rejectValue("name", "", "User already exist");
             }
-            if (userTmp.getEmail().contains(userDTO.getEmail())){
-                errors.rejectValue("email", "","Email already exists!");
+            if (userTmp.getEmail().contains(userDTO.getEmail())) {
+                errors.rejectValue("email", "", "Email already exists!");
             }
         }
     }

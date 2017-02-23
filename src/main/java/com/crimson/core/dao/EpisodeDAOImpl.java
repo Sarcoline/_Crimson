@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -17,6 +16,9 @@ public class EpisodeDAOImpl implements EpisodeDAO {
 
     @Autowired
     private SessionFactory sf;
+
+    @Autowired
+    private UserDAO userDAO;
 
     @Override
     public void saveEpisode(Episode episode) {
@@ -27,6 +29,10 @@ public class EpisodeDAOImpl implements EpisodeDAO {
     @Override
     public void deleteEpisode(Episode episode) {
         Session session = sf.getCurrentSession();
+        List<User> users = userDAO.getAllUsers();
+        for (User user: users) {
+            user.getUserEpisodeList().remove(episode);
+        }
         session.delete(episode);
     }
 

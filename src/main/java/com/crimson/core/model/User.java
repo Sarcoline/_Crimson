@@ -3,7 +3,6 @@ package com.crimson.core.model;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Fetch;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
@@ -34,9 +33,6 @@ public @Data class User {
     @Column(name = "password")
     @Size(min = 3, max = 100, message = "{invalid.password}")
     private String password;
-
-    @Column(name = "role")
-    private String role = "ROLE_USER";
 
     @Lob
     private byte[] profilePic;
@@ -69,18 +65,17 @@ public @Data class User {
     //User2Role
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "User2Role",
-    joinColumns = @JoinColumn(name = "idUser"),
-    inverseJoinColumns = @JoinColumn(name = "idRole"))
-    private List<Role> userRoles = new ArrayList<>();
+            joinColumns = @JoinColumn(name = "idUser"),
+            inverseJoinColumns = @JoinColumn(name = "idRole"))
+    private List<Role> roles = new ArrayList<>();
 
 
 
     @Builder
-    public User(String name, String email, String password, String role, byte[] profilePic, int version){
+    public User(String name, String email, String password, byte[] profilePic, int version){
         this.name = name;
         this.email = email;
         this.password = password;
-        this.role = role;
         this.profilePic = profilePic;
         this.version = version;
     }

@@ -50,16 +50,16 @@ public class SettingsDAOImpl implements SettingsDAO {
 
     //User2Setting
     @Override
-    public void addUser2Setting(User user, Setting setting){
+    public void addUser2Setting(User user, Setting setting) {
         Session session = sessionFactory.getCurrentSession();
         setting.setUser2Setting(user);
         session.saveOrUpdate(setting);
     }
 
     @Override
-    public void deleteUserFromSetting(User user, Setting setting){
+    public void deleteUserFromSetting(User user, Setting setting) {
         Session session = sessionFactory.getCurrentSession();
-        if (setting.getUser2Setting() == user){
+        if (setting.getUser2Setting() == user) {
             setting.setUser2Setting(null);
         }
         session.saveOrUpdate(session);

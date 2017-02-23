@@ -6,7 +6,11 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 
 @Repository
@@ -88,10 +92,18 @@ public class UserDAOImpl implements UserDAO {
     public List<Episode> getAllUpcomingUserEpisodes(User user) {
 
         List<Episode> allFutureUserEpisodes = new ArrayList<>();
+        int days = user.getSetting().getDaysOfUpcomingEpisodes();
 
-        getAllUnwatchedUserEpisodes(user).forEach(episode -> {
-            if (episode.getReleaseDate().after(new Date())) allFutureUserEpisodes.add(episode);
-        });
+        LocalDate currentDate = LocalDate.now();
+        LocalDate lastDate = LocalDate.now().plusDays(days);
+
+        for (Episode episode: getAllUnwatchedUserEpisodes(user)) {
+            LocalDate episodeDate = episode.getReleaseDate();
+            if(episodeDate.isAfter(currentDate) && episodeDate.isBefore(lastDate)) allFutureUserEpisodes.add(episode);
+
+        }
+
+        allFutureUserEpisodes.sort(Comparator.comparing(Episode::getReleaseDate));
         return allFutureUserEpisodes;
     }
 
@@ -150,16 +162,16 @@ public class UserDAOImpl implements UserDAO {
     //User2Setting
 
     @Override
-    public void addSetting2User(User user, Setting setting){
+    public void addSetting2User(User user, Setting setting) {
         Session session = sf.getCurrentSession();
         user.setSetting(setting);
         session.saveOrUpdate(user);
     }
 
     @Override
-    public void deleteSettingFromUser(User user, Setting setting){
+    public void deleteSettingFromUser(User user, Setting setting) {
         Session session = sf.getCurrentSession();
-        if (user.getSetting() == setting){
+        if (user.getSetting() == setting) {
             user.setSetting(null);
         }
         session.saveOrUpdate(user);
@@ -168,19 +180,19 @@ public class UserDAOImpl implements UserDAO {
     //User2Role
 
     @Override
-    public void addRole2User(User user, Role role){
+    public void addRole2User(User user, Role role) {
         Session session = sf.getCurrentSession();
-        if (!user.getUserRoles().contains(role)){
-            user.getUserRoles().add(role);
+        if (!user.getRoles().contains(role)) {
+            user.getRoles().add(role);
         }
         session.saveOrUpdate(user);
     }
 
     @Override
-    public void deleteRoleFromUser(User user, Role role){
+    public void deleteRoleFromUser(User user, Role role) {
         Session session = sf.getCurrentSession();
-        if (user.getUserRoles().contains(role)){
-            user.getUserRoles().remove(role);
+        if (user.getRoles().contains(role)) {
+            user.getRoles().remove(role);
         }
         session.saveOrUpdate(user);
     }

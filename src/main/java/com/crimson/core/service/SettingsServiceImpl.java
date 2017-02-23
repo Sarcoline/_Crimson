@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class SettingsServiceImpl implements  SettingsService{
+public class SettingsServiceImpl implements SettingsService {
 
     @Autowired
     SettingsDAO settingsDAO;
@@ -46,9 +46,13 @@ public class SettingsServiceImpl implements  SettingsService{
     //User2Setting
 
     @Override
-    public void addUser2Setting(User user, Setting setting){settingsDAO.addUser2Setting(user, setting);}
+    public void addUser2Setting(User user, Setting setting) {
+        settingsDAO.addUser2Setting(user, setting);
+    }
 
     @Override
-    public void deleteUserFromSetting(User user, Setting setting){settingsDAO.deleteUserFromSetting(user, setting);}
+    public void deleteUserFromSetting(User user, Setting setting) {
+        settingsDAO.deleteUserFromSetting(user, setting);
+    }
 
 }

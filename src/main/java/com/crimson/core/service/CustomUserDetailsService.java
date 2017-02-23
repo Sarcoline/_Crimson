@@ -1,6 +1,7 @@
 package com.crimson.core.service;
 
 import com.crimson.core.dao.UserDAO;
+import com.crimson.core.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,9 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service("customUserDetailsService")
 public class CustomUserDetailsService implements UserDetailsService {
@@ -28,7 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             throws UsernameNotFoundException {
         com.crimson.core.model.User user = userDao.getUserByName(username);
         List<GrantedAuthority> authorities =
-                buildUserAuthority(user.getRole());
+                buildUserAuthority(user);
 
         return buildUserForAuthentication(user, authorities);
 
@@ -41,12 +40,14 @@ public class CustomUserDetailsService implements UserDetailsService {
                 true, true, true, true, authorities);
     }
 
-    //zwracanie listy ról, na razie sztywne ROLE_USER
-    private List<GrantedAuthority> buildUserAuthority(String role) {
-        Set<GrantedAuthority> setAuths = new HashSet<>();
-        setAuths.add(new SimpleGrantedAuthority(role));
+    private List<GrantedAuthority> buildUserAuthority(com.crimson.core.model.User user) {
+        List<GrantedAuthority> setAuths = new ArrayList<>();
 
-        return new ArrayList<>(setAuths);
+        for (Role role : user.getRoles()) {
+            setAuths.add(new SimpleGrantedAuthority(String.format("ROLE_%s", role.getRoleName())));
+        }
+
+        return setAuths;
     }
 
 }

@@ -17,11 +17,21 @@ public interface TvShowDAO {
 
     List<TvShow> getTvByGenre(String genre);
 
+    List<TvShow> getTvByCountry(String country);
+
+    List<TvShow> getTvByYear(int releaseYear);
+
+    List<TvShow> getTvByNetwork(String network);
+
     List<TvShow> getAllTvShowByMaxRating();
 
     void deleteTvShow(TvShow tvshow);
 
     void updateTvShow(TvShow tvshow);
+
+    List<TvShow> searchTvShow(String pattern);
+
+    List<TvShow> filterTvShows(double min, double max);
 
     List<TvShow> getTvShowsSortedByNumberOnList(int userChoosedNumberOnList, int pageNumber);
 

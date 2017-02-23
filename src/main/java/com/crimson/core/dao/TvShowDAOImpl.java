@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -59,7 +60,28 @@ public class TvShowDAOImpl implements TvShowDAO {
     public List<TvShow> getTvByGenre(String genre) {
         Session session = sf.getCurrentSession();
         return session.createQuery("Select a From TvShow a where a.genre like :custGenre", TvShow.class).setParameter("custGenre", genre).getResultList();
+
     }
+
+    @Override
+    public List<TvShow> getTvByCountry(String country) {
+        Session session = sf.getCurrentSession();
+        return session.createQuery("Select a From TvShow a where a.country like :custCountry", TvShow.class).setParameter("custCountry", country).getResultList();
+    }
+
+    @Override
+    public List<TvShow> getTvByYear(int releaseYear) {
+        Session session = sf.getCurrentSession();
+        return session.createQuery("Select a From TvShow a where a.releaseYear like :custReleaseYear", TvShow.class).setParameter("custReleaseYear", releaseYear).getResultList();
+    }
+
+    @Override
+    public List<TvShow> getTvByNetwork(String network) {
+        Session session = sf.getCurrentSession();
+        return session.createQuery("Select a From TvShow a where a.network like :custNetwork", TvShow.class).setParameter("custNetwork", network).getResultList();
+    }
+
+
 
     @Override
     public void deleteTvShow(TvShow tvshow) {
@@ -77,42 +99,63 @@ public class TvShowDAOImpl implements TvShowDAO {
     //Extra Methods
 
     @Override
-    public List<TvShow> getAllTvShowByMaxRating(){
+    public List<TvShow> getAllTvShowByMaxRating() {
         List<TvShow> unsortedList = getAllTvShows();
         unsortedList.sort(Comparator.comparing(TvShow::getOverallRating));
         Collections.reverse(unsortedList);
         return unsortedList;
     }
 
+    @Override
+    public List<TvShow> searchTvShow(String pattern) {
+        Session session = sf.getCurrentSession();
+        String hql = "FROM TvShow t WHERE title like :pattern";
+        Query query = session.createQuery(hql);
+        query.setParameter("pattern", String.format("%%%s%%", pattern));
+        query.setMaxResults(5);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<TvShow> filterTvShows(double min, double max) {
+        Session session = sf.getCurrentSession();
+        String hql = "from TvShow t WHERE overallRating between :start and :finish";
+        Query query = session.createQuery(hql);
+        query.setParameter("start", min);
+        query.setParameter("finish", max);
+        return query.getResultList();
+    }
+
+
+
     //Wyrzuca listę TvShow dzieląc cała listę na podany przedział przez użytkownika na stronie np. ma wyświetlić tylko 10 tvShows na jednej podstronie
     @Override
-    public List<TvShow> getTvShowsSortedByNumberOnList(int userChoosedNumberOnList, int pageNumber){
+    public List<TvShow> getTvShowsSortedByNumberOnList(int userChoosedNumberOnList, int pageNumber) {
         List<TvShow> allTvShows = getAllTvShows();
         List<TvShow> listToReturn = new ArrayList<>();
 
-        try{
+        try {
             int counter, sizeOfAllTvShows = getAllTvShows().size();
             //Od jakiego tvshow startuje
-            int startFrom = userChoosedNumberOnList*(pageNumber-1);
+            int startFrom = userChoosedNumberOnList * (pageNumber - 1);
             //Sprawdza czy na żądanej stronie baza nie posiada za mało Tvshows do wyświetlenia
-            if (sizeOfAllTvShows - (userChoosedNumberOnList*pageNumber) <= 0){
+            if (sizeOfAllTvShows - (userChoosedNumberOnList * pageNumber) <= 0) {
                 //jesli tak to oblicza ilosc tvshow ktorych brakuje
-                int tmp = sizeOfAllTvShows -(userChoosedNumberOnList*pageNumber);
+                int tmp = sizeOfAllTvShows - (userChoosedNumberOnList * pageNumber);
                 //ustawia licznik na ilosc TvShow do zwrócenia na danej
-                counter = userChoosedNumberOnList+tmp-1;
-            }
-            else {
-                counter = userChoosedNumberOnList-1;
+                counter = userChoosedNumberOnList + tmp - 1;
+            } else {
+                counter = userChoosedNumberOnList - 1;
             }
 
-            while (counter >= 0){
-                listToReturn.add(allTvShows.get(startFrom+counter));
+            while (counter >= 0) {
+                listToReturn.add(allTvShows.get(startFrom + counter));
                 counter--;
             }
 
             Collections.reverse(listToReturn);
             return listToReturn;
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }

@@ -39,7 +39,6 @@ public class TestUserDAO {
             .name("Aleks")
             .email("Email@wp.pl")
             .password("123")
-            .role("ROLE_USER")
             .version(1)
             .build();
 
@@ -102,7 +101,6 @@ public class TestUserDAO {
         user.setName("Alex");
         user.setEmail("Alex@wp.pl");
         user.setPassword("1234");
-        user.setRole("ROLE_ADMIN");
 
         userDAO.saveUser(user);
 

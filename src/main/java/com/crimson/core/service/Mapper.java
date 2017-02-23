@@ -1,8 +1,7 @@
 package com.crimson.core.service;
 
-import com.crimson.core.dto.ImageDTO;
-import com.crimson.core.dto.TvShowDTO;
-import com.crimson.core.dto.UserDTO;
+import com.crimson.core.dto.*;
+import com.crimson.core.model.Episode;
 import com.crimson.core.model.TvShow;
 import com.crimson.core.model.User;
 import ma.glasnost.orika.MapperFactory;
@@ -23,5 +22,15 @@ public class Mapper extends ConfigurableMapper {
         factory.classMap(TvShow.class, ImageDTO.class)
                 .byDefault()
                 .register();
+        factory.classMap(Episode.class, EpisodeDTO.class)
+                .byDefault()
+                .register();
+        factory.classMap(TvShow.class, TvShowSearchDTO.class)
+                .byDefault()
+                .register();
+        factory.classMap(Episode.class, EpisodeFormDTO.class)
+                .byDefault()
+                .register();
+        factory.getConverterFactory().registerConverter(new LocalDateConverter());
     }
 }
