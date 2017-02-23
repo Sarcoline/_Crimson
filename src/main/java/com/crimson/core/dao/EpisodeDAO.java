@@ -6,9 +6,7 @@ import com.crimson.core.model.User;
 
 import java.util.List;
 
-/**
- * Created by Meow on 30.01.2017.
- */
+
 public interface EpisodeDAO {
     void saveEpisode(Episode episode);
 

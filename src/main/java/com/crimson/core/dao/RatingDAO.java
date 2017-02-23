@@ -4,9 +4,7 @@ import com.crimson.core.model.Rating;
 
 import java.util.List;
 
-/**
- * Created by Meow on 30.01.2017.
- */
+
 public interface RatingDAO {
     void saveRating(Rating rating);
 

@@ -114,31 +114,39 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void addTvShow2User(User user, TvShow tvShow) {
+        Session session = sf.getCurrentSession();
         if (!user.getUserTvShowList().contains(tvShow)) {
             user.getUserTvShowList().add(tvShow);
         }
+        session.saveOrUpdate(user);
     }
 
     @Override
     public void deleteTvShowFromUser(User user, TvShow tvShow) {
+        Session session = sf.getCurrentSession();
         if (user.getUserTvShowList().contains(tvShow)) {
             user.getUserTvShowList().remove(tvShow);
         }
+        session.saveOrUpdate(user);
     }
 
     //User2Episode
     @Override
     public void addEpisode2User(User user, Episode episode) {
+        Session session = sf.getCurrentSession();
         if (!user.getUserEpisodeList().contains(episode)) {
             user.getUserEpisodeList().add(episode);
         }
+        session.saveOrUpdate(user);
     }
 
     @Override
     public void deleteEpisodeFromUser(User user, Episode episode) {
+        Session session = sf.getCurrentSession();
         if (user.getUserEpisodeList().contains(episode)) {
             user.getUserEpisodeList().remove(episode);
         }
+        session.saveOrUpdate(user);
     }
 
     //Rating
@@ -154,9 +162,11 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void deleteRatingFromUser(User user, Rating rating) {
+        Session session = sf.getCurrentSession();
         if (user.getUserRatings().contains(rating)) {
             user.getUserRatings().remove(rating);
         }
+        session.saveOrUpdate(user);
     }
 
     //User2Setting
@@ -196,6 +206,4 @@ public class UserDAOImpl implements UserDAO {
         }
         session.saveOrUpdate(user);
     }
-
-
 }

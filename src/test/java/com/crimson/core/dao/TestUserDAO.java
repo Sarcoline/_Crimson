@@ -1,10 +1,8 @@
 package com.crimson.core.dao;
 
 import com.crimson.context.TestSpringCore;
-import com.crimson.core.model.Episode;
-import com.crimson.core.model.Rating;
-import com.crimson.core.model.TvShow;
-import com.crimson.core.model.User;
+import com.crimson.core.factory.*;
+import com.crimson.core.model.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,53 +33,29 @@ public class TestUserDAO {
     @Autowired
     private RatingDAO ratingDAO;
 
-    private User user =  User.builder()
-            .name("Aleks")
-            .email("Email@wp.pl")
-            .password("123")
-            .version(1)
-            .build();
+    @Autowired
+    private RoleDAO roleDAO;
 
-    private TvShow tvShow = TvShow.builder()
-            .title("Dr.House")
-            .network("Netflix")
-            .country("US")
-            .genre("Drama")
-            .overallRating(6.7)
-            .build();
+    @Autowired
+    private SettingsDAO settingsDAO;
 
-    private TvShow tvShow2 = TvShow.builder()
-            .title("Dr.House")
-            .network("Netflix")
-            .country("US")
-            .genre("Drama")
-            .overallRating(8.7)
-            .build();
+    private UserFactory userFactory = new UserFactory();
+    private TvShowFactory tvShowFactory = new TvShowFactory();
+    private EpisodeFactory episodeFactory = new EpisodeFactory();
+    private SettingFactory settingFactory = new SettingFactory();
+    private RoleFactory roleFactory = new RoleFactory();
+    private RatingFactory ratingFactory = new RatingFactory();
 
-    private TvShow tvShow3 = TvShow.builder()
-            .title("Dr.House")
-            .network("Netflix")
-            .country("US")
-            .genre("Drama")
-            .overallRating(7.7)
-            .build();
-
-    private Episode episode = Episode.builder()
-            .title("Episode 1")
-            .build();
-
-    private Episode episode2 = Episode.builder()
-            .title("Episode 2")
-            .build();
-
-    private Episode episode3 = Episode.builder()
-            .title("Episode 3")
-            .build();
-
-    private Rating rating = Rating.builder()
-            .value(6)
-            .build();
-
+    private User user = userFactory.getUser("aleks");
+    private TvShow tvShow = tvShowFactory.getTvShow("test1");
+    private TvShow tvShow2 = tvShowFactory.getTvShow("test2");
+    private TvShow tvShow3 = tvShowFactory.getTvShow("test3");
+    private Episode episode = episodeFactory.getEpisode("episode_1");
+    private Episode episode2 = episodeFactory.getEpisode("episode_2");
+    private Episode episode3 = episodeFactory.getEpisode("episode_3");
+    private Rating rating = ratingFactory.getRating(5);
+    private Role role1 = roleFactory.getRole("role_1");
+    private Setting setting1 = settingFactory.getSetting("setting_1");
 
     @Before
     public void setDB() {
@@ -94,6 +68,8 @@ public class TestUserDAO {
         episodeDAO.saveEpisode(episode2);
         episodeDAO.saveEpisode(episode3);
         ratingDAO.saveRating(rating);
+        roleDAO.saveRole(role1);
+        settingsDAO.saveSetting(setting1);
     }
 
     @Test
@@ -197,6 +173,8 @@ public class TestUserDAO {
 
         userDAO.addTvShow2User(user, tvShow);
         Assert.assertEquals(size + 1, user.getUserTvShowList().size());
+        Assert.assertEquals(size + 1, userDAO.getUserById(user.getId()).getUserTvShowList().size());
+        Assert.assertEquals(userDAO.getUserById(user.getId()).getUserTvShowList().contains(tvShow), true);
     }
 
     @Test
@@ -208,6 +186,8 @@ public class TestUserDAO {
         userDAO.deleteTvShowFromUser(user, tvShow);
 
         Assert.assertEquals(size - 1, user.getUserTvShowList().size());
+        Assert.assertEquals(size - 1, userDAO.getUserById(user.getId()).getUserTvShowList().size());
+        Assert.assertEquals(userDAO.getUserById(user.getId()).getUserTvShowList().contains(tvShow), false);
     }
 
     //User2Episode
@@ -219,6 +199,8 @@ public class TestUserDAO {
         userDAO.addEpisode2User(user, episode);
 
         Assert.assertEquals(size + 1, user.getUserEpisodeList().size());
+        Assert.assertEquals(size + 1, userDAO.getUserById(user.getId()).getUserEpisodeList().size());
+        Assert.assertEquals(userDAO.getUserById(user.getId()).getUserEpisodeList().contains(episode), true);
     }
 
     @Test
@@ -230,6 +212,8 @@ public class TestUserDAO {
         userDAO.deleteEpisodeFromUser(user, episode);
 
         Assert.assertEquals(size - 1, user.getUserEpisodeList().size());
+        Assert.assertEquals(size - 1, userDAO.getUserById(user.getId()).getUserEpisodeList().size());
+        Assert.assertEquals(userDAO.getUserById(user.getId()).getUserEpisodeList().contains(episode), false);
     }
 
     //Rating
@@ -240,6 +224,8 @@ public class TestUserDAO {
         userDAO.addRating2User(user, rating);
 
         Assert.assertEquals(size + 1, user.getUserRatings().size());
+        Assert.assertEquals(size + 1, userDAO.getUserById(user.getId()).getUserRatings().size());
+        Assert.assertEquals(userDAO.getUserById(user.getId()).getUserRatings().contains(rating), true);
     }
 
     @Test
@@ -251,6 +237,54 @@ public class TestUserDAO {
         userDAO.deleteRatingFromUser(user, rating);
 
         Assert.assertEquals(size - 1, user.getUserRatings().size());
+        Assert.assertEquals(size - 1, userDAO.getUserById(user.getId()).getUserRatings().size());
+        Assert.assertEquals(userDAO.getUserById(user.getId()).getUserRatings().contains(rating), false);
+    }
+
+    //Setting
+    @Test
+    public void addSetting2UserTest(){
+        Setting setting = user.getSetting();
+
+        userDAO.addSetting2User(user,setting1);
+
+        Assert.assertEquals(user.getSetting().equals(setting1), true);
+        Assert.assertEquals(setting, null);
+        Assert.assertEquals(userDAO.getUserById(user.getId()).getSetting().equals(setting1), true);
+    }
+
+    @Test
+    public void deleteSettingFromUserTest(){
+        addSetting2UserTest();
+
+        userDAO.deleteSettingFromUser(user, setting1);
+
+        Assert.assertEquals(user.getSetting(), null);
+        Assert.assertEquals(userDAO.getUserById(user.getId()).getSetting(), null);
+    }
+
+    //User2Roles
+    @Test
+    public void addRole2UserTest(){
+        int listSize = user.getRoles().size();
+
+        userDAO.addRole2User(user, role1);
+
+        Assert.assertEquals(user.getRoles().size(), listSize+1);
+        Assert.assertEquals(user.getRoles().contains(role1), true);
+        Assert.assertEquals(userDAO.getUserById(user.getId()).getRoles().contains(role1), true);
+        Assert.assertEquals(userDAO.getUserById(user.getId()).getRoles().size(), listSize+1);
+    }
+
+    @Test
+    public void deleteRoleFromUserTest(){
+        addRole2UserTest();
+        int listSize = user.getRoles().size();
+
+        userDAO.deleteRoleFromUser(user, role1);
+
+        Assert.assertEquals(listSize-1, userDAO.getUserById(user.getId()).getRoles().size());
+        Assert.assertEquals(userDAO.getUserById(user.getId()).getRoles().contains(role1), false);
     }
 
 

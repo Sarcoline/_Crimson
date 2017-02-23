@@ -67,33 +67,41 @@ public class EpisodeDAOImpl implements EpisodeDAO {
 
     @Override
     public void addUser2Episode(User user, Episode episode) {
+        Session session = sf.getCurrentSession();
         if (!episode.getEpisodeUserList().contains(user)) {
             List<User> episodes = new ArrayList<>();
             episodes.addAll(episode.getEpisodeUserList());
             episodes.add(user);
             episode.setEpisodeUserList(episodes);
         }
+        session.saveOrUpdate(episode);
     }
 
     @Override
     public void deleteUserFromEpisode(User user, Episode episode) {
+        Session session = sf.getCurrentSession();
         if (episode.getEpisodeUserList().contains(user)) {
             episode.getEpisodeUserList().remove(user);
         }
+        session.saveOrUpdate(episode);
     }
 
     //TvShow2Episode
 
     @Override
     public void addTvShow2Episode(TvShow tvShow, Episode episode) {
+        Session session = sf.getCurrentSession();
         episode.setEpisodeFromTvShow(tvShow);
+        session.saveOrUpdate(episode);
     }
 
     @Override
     public void deleteTvShowFromEpisode(TvShow tvShow, Episode episode) {
+        Session session = sf.getCurrentSession();
         if (episode.getEpisodeFromTvShow() == tvShow) {
             episode.setEpisodeFromTvShow(null);
         }
+        session.saveOrUpdate(episode);
     }
 
 }

@@ -26,16 +26,12 @@ public class TestGenreDAO {
     @Autowired
     private GenreDAO genreDAO;
 
-    private Genre genre = Genre.builder()
-            .name("Drama")
-            .build();
+    private GenreFactory genreFactory = new GenreFactory();
+    private TvShowFactory tvShowFactory = new TvShowFactory();
 
-    private TvShow tvShow = TvShow.builder()
-            .title("Dr.House")
-            .network("Netflix")
-            .country("US")
-            .genre("Drama")
-            .build();
+    private Genre genre = genreFactory.getGenre("drama");
+    private TvShow tvShow = tvShowFactory.getTvShow("friends");
+
 
     @Before
     public void setDB() {
@@ -99,6 +95,8 @@ public class TestGenreDAO {
         genreDAO.addTvShow2Genre(genre, tvShow);
 
         Assert.assertEquals(size + 1, genre.getGenreTvShowList().size());
+        Assert.assertEquals(size +1, genreDAO.getGenreById(genre.getId()).getGenreTvShowList().size());
+        Assert.assertEquals(genreDAO.getGenreById(genre.getId()).getGenreTvShowList().contains(tvShow), true);
     }
 
     @Test
@@ -110,6 +108,8 @@ public class TestGenreDAO {
         genreDAO.deleteTvShowFromGenre(genre, tvShow);
 
         Assert.assertEquals(size - 1, genre.getGenreTvShowList().size());
+        Assert.assertEquals(size - 1, genreDAO.getGenreById(genre.getId()).getGenreTvShowList().size());
+        Assert.assertEquals(genreDAO.getGenreById(genre.getId()).getGenreTvShowList().contains(tvShow), false);
     }
 
 }

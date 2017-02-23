@@ -62,6 +62,6 @@ public class SettingsDAOImpl implements SettingsDAO {
         if (setting.getUser2Setting() == user) {
             setting.setUser2Setting(null);
         }
-        session.saveOrUpdate(session);
+        session.saveOrUpdate(setting);
     }
 }

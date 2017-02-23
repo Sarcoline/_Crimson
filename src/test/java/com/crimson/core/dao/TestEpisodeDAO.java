@@ -1,6 +1,9 @@
 package com.crimson.core.dao;
 
 import com.crimson.context.TestSpringCore;
+import com.crimson.core.factory.EpisodeFactory;
+import com.crimson.core.factory.TvShowFactory;
+import com.crimson.core.factory.UserFactory;
 import com.crimson.core.model.Episode;
 import com.crimson.core.model.TvShow;
 import com.crimson.core.model.User;
@@ -30,22 +33,14 @@ public class TestEpisodeDAO {
     @Autowired
     private TvShowDAO tvShowDAO;
 
-    private Episode episode = Episode.builder()
-            .title("Episode 1")
-            .build();
+    private UserFactory userFactory = new UserFactory();
+    private EpisodeFactory episodeFactory = new EpisodeFactory();
+    private TvShowFactory tvShowFactory = new TvShowFactory();
 
-    private User user =  User.builder()
-            .name("Aleks")
-            .email("Email@wp.pl")
-            .password("123")
-            .build();
+    private Episode episode = episodeFactory.getEpisode("episode_1");
+    private User user = userFactory.getUser("aleks");
+    private TvShow tvShow = tvShowFactory.getTvShow("friends");
 
-    private TvShow tvShow = TvShow.builder()
-            .title("Dr.House")
-            .network("Netflix")
-            .country("US")
-            .genre("Drama")
-            .build();
 
     @Before
     public void setDB() {
@@ -119,6 +114,8 @@ public class TestEpisodeDAO {
         episodeDAO.addUser2Episode(user, episode);
 
         Assert.assertEquals(size + 1, episode.getEpisodeUserList().size());
+        Assert.assertEquals(size+1, episodeDAO.getEpisodeById(episode.getId()).getEpisodeUserList().size());
+        Assert.assertEquals(episodeDAO.getEpisodeById(episode.getId()).getEpisodeUserList().contains(user), true);
     }
 
     @Test
@@ -130,22 +127,23 @@ public class TestEpisodeDAO {
         episodeDAO.deleteUserFromEpisode(user, episode);
 
         Assert.assertEquals(size - 1, episode.getEpisodeUserList().size());
+        Assert.assertEquals(size - 1, episodeDAO.getEpisodeById(episode.getId()).getEpisodeUserList().size());
+        Assert.assertEquals(episodeDAO.getEpisodeById(episode.getId()).getEpisodeUserList().contains(user), false);
     }
 
     //TvShow2Episode
 
     @Test
     public void addTvShow2EpisodeTest() {
-
         episodeDAO.addTvShow2Episode(tvShow, episode);
 
-        assert (tvShow == episode.getEpisodeFromTvShow());
+        Assert.assertEquals(episodeDAO.getEpisodeById(episode.getId()).getEpisodeFromTvShow().equals(tvShow), true);
     }
 
     @Test
     public void deleteTvShowFromEpisodeTest() {
         episodeDAO.deleteTvShowFromEpisode(tvShow, episode);
 
-        assert (episode.getEpisodeFromTvShow() == null);
+        Assert.assertEquals(episodeDAO.getEpisodeById(episode.getId()).getEpisodeFromTvShow(), null);
     }
 }

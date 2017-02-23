@@ -200,4 +200,14 @@ public class TvShowServiceImpl implements TvShowService {
         tvShowDTO.getPictures().put("poster", pic);
         tvShowDAO.saveTvShow(mapperFacade.map(tvShowDTO, TvShow.class));
     }
+
+    @Override
+    public int tvShowsLastPageNumber(){
+        return tvShowDAO.tvShowsLastPageNumber();
+    }
+
+    @Override
+    public  List<TvShow> tvShowsPaginationList(int pageNumber){
+        return tvShowDAO.tvShowsPaginationList(pageNumber);
+    }
 }

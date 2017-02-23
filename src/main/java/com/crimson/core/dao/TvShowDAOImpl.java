@@ -127,38 +127,31 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
 
-
-    //Wyrzuca listę TvShow dzieląc cała listę na podany przedział przez użytkownika na stronie np. ma wyświetlić tylko 10 tvShows na jednej podstronie
+    //Wyrzuca ostatnia stronę przy pagination dla TvShow
     @Override
-    public List<TvShow> getTvShowsSortedByNumberOnList(int userChoosedNumberOnList, int pageNumber) {
-        List<TvShow> allTvShows = getAllTvShows();
-        List<TvShow> listToReturn = new ArrayList<>();
-
-        try {
-            int counter, sizeOfAllTvShows = getAllTvShows().size();
-            //Od jakiego tvshow startuje
-            int startFrom = userChoosedNumberOnList * (pageNumber - 1);
-            //Sprawdza czy na żądanej stronie baza nie posiada za mało Tvshows do wyświetlenia
-            if (sizeOfAllTvShows - (userChoosedNumberOnList * pageNumber) <= 0) {
-                //jesli tak to oblicza ilosc tvshow ktorych brakuje
-                int tmp = sizeOfAllTvShows - (userChoosedNumberOnList * pageNumber);
-                //ustawia licznik na ilosc TvShow do zwrócenia na danej
-                counter = userChoosedNumberOnList + tmp - 1;
-            } else {
-                counter = userChoosedNumberOnList - 1;
-            }
-
-            while (counter >= 0) {
-                listToReturn.add(allTvShows.get(startFrom + counter));
-                counter--;
-            }
-
-            Collections.reverse(listToReturn);
-            return listToReturn;
-        } catch (Exception e) {
-            return null;
-        }
+    public int tvShowsLastPageNumber(){
+        Session session = sf.getCurrentSession();
+        int listSizeOnPage = 25;
+        Long countResults = (Long) session.createQuery("SELECT count (id) FROM TvShow  f").uniqueResult();
+        return (int) (countResults/listSizeOnPage)+1;
     }
+
+    //Wyrzuca listę tvShow dla danej strony
+    @Override
+    public List<TvShow> tvShowsPaginationList(int pageNumber){
+        Session session = sf.getCurrentSession();
+        int lastPage = tvShowsLastPageNumber();
+        List<TvShow> selectedList = new ArrayList<>();
+        org.hibernate.query.Query selectQuery = session.createQuery("from TvShow ");
+
+        if (pageNumber <= lastPage){
+            selectQuery.setFirstResult((pageNumber-1)*25);
+            selectQuery.setMaxResults(25);
+            selectedList = selectQuery.list();
+        }
+        return selectedList;
+    }
+
 
 
 
@@ -168,64 +161,80 @@ public class TvShowDAOImpl implements TvShowDAO {
 
     @Override
     public void addUser2TvShow(User user, TvShow tvShow) {
+        Session session = sf.getCurrentSession();
         if (!tvShow.getTvShowUserList().contains(user)) {
             tvShow.getTvShowUserList().add(user);
         }
+        session.saveOrUpdate(tvShow);
     }
 
     @Override
     public void deleteUserFromTvShow(User user, TvShow tvShow) {
+        Session session = sf.getCurrentSession();
         if (tvShow.getTvShowUserList().contains(user)) {
             tvShow.getTvShowUserList().remove(user);
         }
+        session.saveOrUpdate(tvShow);
     }
 
     //TvShow2Genre
 
     @Override
     public void addGenre2TvShow(TvShow tvShow, Genre genre) {
+        Session session = sf.getCurrentSession();
         if (!tvShow.getTvShowGenreList().contains(genre)) {
             tvShow.getTvShowGenreList().add(genre);
         }
+        session.saveOrUpdate(tvShow);
     }
 
     @Override
     public void deleteGenreFromTvShow(TvShow tvShow, Genre genre) {
+        Session session = sf.getCurrentSession();
         if (tvShow.getTvShowGenreList().contains(genre)) {
             tvShow.getTvShowGenreList().remove(genre);
         }
+        session.saveOrUpdate(tvShow);
     }
 
     //TvShow2Episode
 
     @Override
     public void addEpisode2TvShow(TvShow tvShow, Episode episode) {
+        Session session = sf.getCurrentSession();
         if (!tvShow.getEpisodes().contains(episode)) {
             tvShow.getEpisodes().add(episode);
         }
+        session.saveOrUpdate(tvShow);
     }
 
     @Override
     public void deleteEpisodeFromTvShow(TvShow tvShow, Episode episode) {
+        Session session = sf.getCurrentSession();
         if (tvShow.getEpisodes().contains(episode)) {
             tvShow.getEpisodes().remove(episode);
         }
+        session.saveOrUpdate(tvShow);
     }
 
     //TvShowRating
 
     @Override
     public void addRating2TvShow(TvShow tvShow, Rating rating) {
+        Session session = sf.getCurrentSession();
         if (!tvShow.getTvShowRating().contains(rating)) {
             tvShow.getTvShowRating().add(rating);
         }
+        session.saveOrUpdate(tvShow);
     }
 
     @Override
     public void deleteRatingFromTvShow(TvShow tvShow, Rating rating) {
+        Session session = sf.getCurrentSession();
         if (tvShow.getTvShowRating().contains(rating)) {
             tvShow.getTvShowRating().remove(rating);
         }
+        session.saveOrUpdate(tvShow);
     }
 
 

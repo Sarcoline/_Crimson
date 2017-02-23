@@ -8,9 +8,7 @@ import org.hibernate.validator.constraints.Range;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/**
- * Created by Meow on 20.02.2017.
- */
+
 public @Data class EpisodeFormDTO {
 
     private Long id;

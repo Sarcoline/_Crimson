@@ -5,9 +5,7 @@ import com.crimson.core.model.TvShow;
 
 import java.util.List;
 
-/**
- * Created by Meow on 30.01.2017.
- */
+
 public interface GenreDAO {
     void addGenre(Genre genre);
 

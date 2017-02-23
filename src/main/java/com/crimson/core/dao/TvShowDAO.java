@@ -33,7 +33,9 @@ public interface TvShowDAO {
 
     List<TvShow> filterTvShows(double min, double max);
 
-    List<TvShow> getTvShowsSortedByNumberOnList(int userChoosedNumberOnList, int pageNumber);
+    int tvShowsLastPageNumber();
+
+    List<TvShow> tvShowsPaginationList(int pageNumber);
 
     void addUser2TvShow(User user, TvShow tvShow);
 
