@@ -118,9 +118,6 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
 
-//    public List<TvShow> getTvShowsSortedByUserNumberToShow(List<TvShow> allTvShows, int userChoosedNumberOnList, int pageNumber){
-//
-//    }
 
     //RELATIONSHIPS
 

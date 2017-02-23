@@ -3,6 +3,7 @@ package com.crimson.core.model;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
@@ -66,8 +67,11 @@ public @Data class User {
     private Setting setting;
 
     //User2Role
-    @OneToMany(mappedBy = "roleFromUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Role> roles = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "User2Role",
+    joinColumns = @JoinColumn(name = "idUser"),
+    inverseJoinColumns = @JoinColumn(name = "idRole"))
+    private List<Role> userRoles = new ArrayList<>();
 
 
 

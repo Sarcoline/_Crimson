@@ -170,8 +170,8 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void addRole2User(User user, Role role){
         Session session = sf.getCurrentSession();
-        if (!user.getRoles().contains(role)){
-            user.getRoles().add(role);
+        if (!user.getUserRoles().contains(role)){
+            user.getUserRoles().add(role);
         }
         session.saveOrUpdate(user);
     }
@@ -179,8 +179,8 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void deleteRoleFromUser(User user, Role role){
         Session session = sf.getCurrentSession();
-        if (user.getRoles().contains(role)){
-            user.getRoles().remove(role);
+        if (user.getUserRoles().contains(role)){
+            user.getUserRoles().remove(role);
         }
         session.saveOrUpdate(user);
     }
