@@ -63,5 +63,7 @@ public interface TvShowService {
 
     int tvShowsLastPageNumber();
 
-    List<TvShow> tvShowsPaginationList(int pageNumber);
+    List<TvShowSearchDTO> tvShowsPaginationList(int pageNumber);
+
+    long tvShowsSize();
 }

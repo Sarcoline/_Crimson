@@ -21,7 +21,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -216,50 +215,10 @@ public class CrimsonController {
         return String.format("redirect:/tv/%s/edit", name);
     }
 
-    @GetMapping("/genre/{name}")
-    public String displayGenre(@PathVariable String name, Model model) {
-        name = Character.toUpperCase(name.charAt(0)) + name.substring(1);
-        model.addAttribute("genre", name);
-        model.addAttribute("tvshows", tvShowService.getTvByGenre(name));
-        return "tvShowList";
-    }
-
-    @GetMapping("/country/{name}")
-    public String displayCountry(@PathVariable String name, Model model) {
-        name = Character.toUpperCase(name.charAt(0)) + name.substring(1);
-        model.addAttribute("country", name);
-        model.addAttribute("tvshows", tvShowService.getTvByCountry(name));
-        return "tvShowList";
-    }
-
-    @GetMapping("/year/{releaseYear}")
-    public String displayYear(@PathVariable int releaseYear, Model model) {
-
-        model.addAttribute("year", releaseYear);
-        model.addAttribute("tvshows", tvShowService.getTvByYear(releaseYear));
-        return "tvShowList";
-    }
-
-    @GetMapping("/network/{name}")
-    public String displayNetwork(@PathVariable String name, Model model) {
-        name = Character.toUpperCase(name.charAt(0)) + name.substring(1);
-        model.addAttribute("network", name);
-        model.addAttribute("tvshows", tvShowService.getTvByNetwork(name));
-        return "tvShowList";
-
-    }
-
-
-    @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public String searchResult(Model model, HttpServletRequest request) {
-        List tvs = tvShowService.getAllTvShows();
-        model.addAttribute("tvshows", tvs);
-        return "searchResult";
-    }
 
     @GetMapping("/list")
     public String tvShowList(Model model) {
-        model.addAttribute("tvshows", tvShowService.getAllTvShows());
+        model.addAttribute("tvSize", tvShowService.tvShowsSize());
         return "tvShowList";
     }
 

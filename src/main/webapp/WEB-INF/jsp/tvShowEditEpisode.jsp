@@ -10,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Edit ${episode.title}</title>
 </head>
 <body>
 <div class="uk-container uk-container-center uk-margin-large-top">

@@ -26,4 +26,10 @@ public class RestCrimsonController {
     public List<TvShowSearchDTO> searchRating(@PathVariable("min") double min, @PathVariable("max") double max, HttpServletRequest request) {
         return tvShowService.filterTvShows(min,max);
     }
+
+    @GetMapping(value = "/tvshows/{page}", produces = "application/json")
+    @ResponseBody
+    public List<TvShowSearchDTO> getTvShowsOnPage(@PathVariable("page") int page) {
+        return tvShowService.tvShowsPaginationList(page);
+    }
 }

@@ -1,15 +1,6 @@
-<%--suppress JSUnresolvedFunction --%>
-<%--suppress JSUnresolvedFunction --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <sec:authentication var="name" property="name"/>
-<%--
-  Created by IntelliJ IDEA.
-  User: Meow
-  Date: 30.12.2016
-  Time: 16:18
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -65,12 +56,10 @@
                     <c:forEach begin="1" end="${seasons}" varStatus="count">
                         <li aria-expanded="false" class="menu <c:if test="${count.last}">uk-active</c:if>"><a href="#">Season ${count.count}</a>
                         </li>
-                        <%--<li aria-expanded="false" class="menu uk-active"><a href="#">Season 5</a></li>--%>
                     </c:forEach>
                 </ul>
             </div>
             <div class="uk-width-large-3-6 uk-width-small-4-6">
-                <%--Na razie wszystkie episody obserwowanych--%>
                 <ul id="tab-content" class="uk-switcher ">
                     <c:forEach begin="1" end="${seasons}" varStatus="count">
                         <li aria-hidden="false" class="">
@@ -224,32 +213,29 @@
 </div>
 <script>
     $(function () {
-        var rating = ${rating};
-        if (rating != 0) $('.rateValue').html(" " + rating);
 
-        var watched = ${watchedEpisodesId}
-            $('.rateThis').each(function () {
-                if ($.inArray($(this).data('id'), watched) != -1) $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
-            });
+        <sec:authorize access="isAuthenticated()">
+        var rating = parseFloat(${rating});
+        var rateValue = $('.rateValue');
+        var rateThis = $('.rateThis');
+
+        if (rating != 0) rateValue.html(" " + rating);
 
         <c:if test="${follow == true}">
         $('i.fa-heart-o').addClass('fa-heart').removeClass('fa-heart-o');
         </c:if>
 
-        <sec:authorize access="isAuthenticated()">
-        $('a.rateThis').click(function () {
-            $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
-        });
-        </sec:authorize>
+        //mark watched episodes
+        var watched = ${watchedEpisodesId}
+            rateThis.each(function () {
+                if ($.inArray($(this).data('id'), watched) != -1) $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
+            });
 
-        $('small.follow').click(function () {
-            $(this).find('i').toggleClass('fa-heart-o fa-heart');
-        });
-
-        var modal = UIkit.modal(".uk-modal");
+        //ajax request to rate tvShow
         $('label').on('click', function () {
+            var modal = UIkit.modal(".uk-modal");
             var i = $('input#' + $(this).attr('for')).val();
-            $('.rateValue').html(" " + i);
+            rateValue.html(" " + i);
             modal.hide();
             $.ajax({
                 type: "get",
@@ -258,21 +244,26 @@
             });
         });
 
+        //ajax request to follow tvShow
         $('#follow').on('click', function () {
+            $(this).find('i').toggleClass('fa-heart-o fa-heart');
             $.ajax({
                 type: "get",
                 url: "follow",
                 data: {id: ${tv.id}}
             })
-        })
-    });
-
-    $('.rateThis').on('click', function () {
-        $.ajax({
-            type: "get",
-            url: "watched",
-            data: {id: $(this).data('id')}
         });
+
+        //ajax request to rate tvShow
+        rateThis.on('click', function () {
+            $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
+            $.ajax({
+                type: "get",
+                url: "watched",
+                data: {id: $(this).data('id')}
+            });
+        });
+        </sec:authorize>
     });
 </script>
 </body>

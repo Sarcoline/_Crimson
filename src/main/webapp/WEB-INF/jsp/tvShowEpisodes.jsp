@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>${episodes.get(0).tvShow.title} episodes</title>
 </head>
 <body>
 <div class="uk-container uk-container-center uk-margin-large-top">

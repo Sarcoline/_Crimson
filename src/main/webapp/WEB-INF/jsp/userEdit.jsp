@@ -1,16 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Meow
-  Date: 06.01.2017
-  Time: 19:05
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Edit ${userDTO.name}</title>
 </head>
 <body>
 <div class="uk-container uk-container-center uk-margin-large-top">
@@ -19,7 +12,8 @@
             <div class="uk-width-1-2">
                 <h2 class="">Change profile picture</h2>
                 <img src="<c:url value="/images/user/${userDTO.name}"/> " alt="" width="300" height="300">
-                <form class="uk-form uk-margin-top" method="post" action="<c:url value="/updatePicture" />" enctype="multipart/form-data">
+                <form class="uk-form uk-margin-top" method="post" action="<c:url value="/updatePicture" />"
+                      enctype="multipart/form-data">
                     <input type="file" name="fileUpload" size="50" onchange="previewFile()"/>
                     <input type="hidden" name="${_csrf.parameterName}"
                            value="${_csrf.token}"/>
@@ -27,7 +21,8 @@
                 </form>
                 <h2 class="uk-margin-large-top">Edit settings </h2>
                 <form class="uk-form " method="post" action="<c:url value="/updateSettings" />">
-                    <input type="number" name="days" placeholder="Days of upcoming episodes" value="${settings.daysOfUpcomingEpisodes}"/>
+                    <input type="number" name="days" placeholder="Days of upcoming episodes"
+                           value="${settings.daysOfUpcomingEpisodes}"/>
                     <input type="hidden" name="${_csrf.parameterName}"
                            value="${_csrf.token}"/>
                     <input class="uk-button uk-button-primary" type="submit" value="Save"/>
@@ -84,31 +79,20 @@
     </div>
 </div>
 <script>
-    function previewFile(){
+    var previewFile = function () {
         var preview = document.querySelector('img');
-        var file    = document.querySelector('input[type=file]').files[0];
-        var reader  = new FileReader();
+        var file = document.querySelector('input[type=file]').files[0];
+        var reader = new FileReader();
 
         reader.onloadend = function () {
             preview.src = reader.result;
         };
-
         if (file) {
             reader.readAsDataURL(file);
         } else {
             preview.src = "<c:url value="/images/user/${userDTO.name}"/> ";
         }
     }
-
-    <%--success: function () {--%>
-        <%--UIkit.notify({--%>
-            <%--message : 'Your are following ${tv.title}',--%>
-            <%--status  : 'info',--%>
-            <%--timeout : 5000,--%>
-            <%--pos     : 'top-center'--%>
-        <%--});--%>
-
-
 </script>
 </body>
 </html>

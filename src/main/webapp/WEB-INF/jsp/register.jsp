@@ -1,12 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Meow
-  Date: 06.01.2017
-  Time: 19:05
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -39,7 +32,6 @@
                     <form:errors path="email" cssClass="uk-alert uk-alert-danger" element="div"/>
                     <form:input path="email" value="" class="uk-width-1-1 uk-form-large" type="text" name='email'
                                 placeholder="Email"/>
-                        <%--TODO zmienic wyświetlanie błędów--%>
                 </div>
                 <div class="uk-form-row uk-form-file" >
                     <form:errors path="uploadedPic" cssClass="uk-alert uk-alert-danger" element="div"/>

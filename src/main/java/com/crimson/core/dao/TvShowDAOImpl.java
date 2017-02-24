@@ -127,11 +127,18 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
 
+    @Override
+    public long tvShowsSize() {
+        Session session = sf.getCurrentSession();
+        Query q = session.createQuery ("SELECT count(x) FROM TvShow x");
+        return (long) q.getSingleResult();
+    }
+
     //Wyrzuca ostatnia stronę przy pagination dla TvShow
     @Override
     public int tvShowsLastPageNumber(){
         Session session = sf.getCurrentSession();
-        int listSizeOnPage = 25;
+        int listSizeOnPage = 5;
         Long countResults = (Long) session.createQuery("SELECT count (id) FROM TvShow  f").uniqueResult();
         return (int) (countResults/listSizeOnPage)+1;
     }
@@ -145,8 +152,8 @@ public class TvShowDAOImpl implements TvShowDAO {
         org.hibernate.query.Query selectQuery = session.createQuery("from TvShow ");
 
         if (pageNumber <= lastPage){
-            selectQuery.setFirstResult((pageNumber-1)*25);
-            selectQuery.setMaxResults(25);
+            selectQuery.setFirstResult((pageNumber-1)*5);
+            selectQuery.setMaxResults(5);
             selectedList = selectQuery.list();
         }
         return selectedList;

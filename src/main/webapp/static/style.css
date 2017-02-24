@@ -427,7 +427,7 @@ input[type="submit"] {
 }
 
 div.login {
-
+    padding: 20px;
     color: #F9FBFC;
     background: #444;
     box-shadow: 1px 10px 50px -20px;

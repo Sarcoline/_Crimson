@@ -5,7 +5,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Dashboard - ${user.name} </title>
 </head>
 <body>
 <div class="uk-grid">
@@ -16,12 +16,13 @@
                     <div class="uk-width-1-3">
                         <c:if test="${user.name == name}">
                             <a href="<c:url value="/user/edit" /> "><i class="fa fa-cog fa-2x"
-                                                                          style="color: #999;"
-                                                                          aria-hidden="true"></i></a>
+                                                                       style="color: #999;"
+                                                                       aria-hidden="true"></i></a>
                         </c:if>
                         <div>
                             <img src="<c:url value="/images/user/${user.name}"/>" class="center"
-                                 style="border-radius: 50%; <c:if test="${user.name != name}"> margin-top: 0px; </c:if> ">
+                                 style="border-radius: 50%;
+                                 <c:if test="${user.name != name}"> margin-top: 0; </c:if> ">
                         </div>
                     </div>
                     <div class="uk-width-1-3 centerText">
@@ -57,7 +58,9 @@
             </div>
             <c:if test="${user.name == name}">
                 <div class="uk-width-4-5 uk-margin-large-top">
-                    <h2>Upcoming episodes <small class="uk-text-muted">${user.setting.daysOfUpcomingEpisodes} days</small></h2>
+                    <h2>Upcoming episodes
+                        <small class="uk-text-muted">${user.setting.daysOfUpcomingEpisodes} days</small>
+                    </h2>
                     <c:if test="${upcomimgEpisodes.size() <= 0}">
                         <h3 class="uk-text-muted">There's no upcoming episodes</h3>
                     </c:if>
@@ -85,33 +88,33 @@
             <div class="uk-grid">
                 <div class="uk-width-1-1 uk-margin-large-top ">
                     <c:if test="${favorites.size() > 0}">
-                    <h2 style="text-align: center">Favorites</h2>
-                    <c:forEach items="${favorites}" var="tv" begin="0" end="4">
-                        <a href="<c:url value="/tv/${tv.slug}"/>"> <span class="item2"
-                                                                         style="background-image: url('<c:url
-                                                                                 value="/images/tv/${tv.slug}/back"/>'); ">
+                        <h2 style="text-align: center">Favorites</h2>
+                        <c:forEach items="${favorites}" var="tv" begin="0" end="4">
+                            <a href="<c:url value="/tv/${tv.slug}"/>"> <span class="item2"
+                                                                             style="background-image: url('<c:url
+                                                                                     value="/images/tv/${tv.slug}/back"/>'); ">
                     <span class="overlay">
                         <span class="item-header">${tv.title}</span> </span>
             </span>
-                        </a>
-                    </c:forEach>
+                            </a>
+                        </c:forEach>
                     </c:if>
                 </div>
                 <c:if test="${user.name == name}">
                 <div class="uk-width-1-1 uk-margin-large-top">
                     <c:if test="${watchedEpisodesId.size() > 0}">
-                    <h2 class="uk-margin-large-bottom uk-text-center">Recently watched</h2>
-                    <ul class="uk-list uk-margin-large-left">
-                        <c:forEach items="${watchedEpisodes}" var="episode" begin="0" end="9">
+                        <h2 class="uk-margin-large-bottom uk-text-center">Recently watched</h2>
+                        <ul class="uk-list uk-margin-large-left">
+                            <c:forEach items="${watchedEpisodes}" var="episode" begin="0" end="9">
 
-                            <li>
-                                <p><strong><a href="<c:url value="/tv/${episode.tvShow.slug}" /> ">
-                                        ${episode.tvShow.title}</a> </strong> -
-                                    S${episode.season}E${episode.number} - ${episode.title}
-                                </p>
-                            </li>
-                        </c:forEach>
-                    </ul>
+                                <li>
+                                    <p><strong><a href="<c:url value="/tv/${episode.tvShow.slug}" /> ">
+                                            ${episode.tvShow.title}</a> </strong> -
+                                        S${episode.season}E${episode.number} - ${episode.title}
+                                    </p>
+                                </li>
+                            </c:forEach>
+                        </ul>
                     </c:if>
                 </div>
             </div>
@@ -122,24 +125,22 @@
 </div>
 <script>
     $(function () {
-        var watched = ${watchedEpisodesId}
-            $('.rateThis').each(function () {
-                console.log($(this).data('id'));
-                if ($.inArray($(this).data('id'), watched) != -1) $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
-            });
         <sec:authorize access="isAuthenticated()">
-        $('a.rateThis').click(function () {
-            $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
+        var watched = ${watchedEpisodesId};
+        var rateThis = $('.rateThis');
+        rateThis.each(function () {
+            if ($.inArray($(this).data('id'), watched) != -1) $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
         });
-        </sec:authorize>
-        $('.rateThis').on('click', function () {
-            console.log($(this).data('id'));
+
+        rateThis.on('click', function () {
+            $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
             $.ajax({
                 type: "get",
                 url: "/tv/watched",
                 data: {id: $(this).data('id')}
             });
         });
+        </sec:authorize>
     });
 </script>
 </body>

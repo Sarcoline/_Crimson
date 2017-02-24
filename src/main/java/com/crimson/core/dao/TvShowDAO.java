@@ -33,6 +33,8 @@ public interface TvShowDAO {
 
     List<TvShow> filterTvShows(double min, double max);
 
+    long tvShowsSize();
+
     int tvShowsLastPageNumber();
 
     List<TvShow> tvShowsPaginationList(int pageNumber);

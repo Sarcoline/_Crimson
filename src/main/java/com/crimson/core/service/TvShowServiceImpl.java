@@ -102,6 +102,11 @@ public class TvShowServiceImpl implements TvShowService {
         tvShowDAO.update(tv);
     }
 
+    @Override
+    public long tvShowsSize() {
+        return tvShowDAO.tvShowsSize();
+    }
+
 
     //RELATIONSHIPS
 
@@ -207,10 +212,10 @@ public class TvShowServiceImpl implements TvShowService {
     }
 
     @Override
-    public  List<TvShow> tvShowsPaginationList(int pageNumber){
+    public  List<TvShowSearchDTO> tvShowsPaginationList(int pageNumber){
         List tvShows = new ArrayList();
         tvShowDAO.tvShowsPaginationList(pageNumber).forEach(
-                tvShow -> tvShows.add(mapperFacade.map(tvShow, TvShowDTO.class))
+                tvShow -> tvShows.add(mapperFacade.map(tvShow, TvShowSearchDTO.class))
         );
         return tvShows;
     }

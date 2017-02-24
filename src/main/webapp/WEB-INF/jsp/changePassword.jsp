@@ -6,7 +6,6 @@
 <%@ page session="false" %>
 <html>
 <body>
-<div id="errormsg" style="display:none"></div>
 <div class="uk-container uk-container-center uk-margin-large-top">
     <div class=" uk-text-center">
         <div class="uk-panel uk-panel-box uk-vertical-align-middle uk-margin-top login" style="width: 300px;">
