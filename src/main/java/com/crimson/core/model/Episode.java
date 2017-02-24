@@ -61,7 +61,7 @@ public @Data class Episode {
     }
 
     //EpisodeWatched(User2Episode) Relation
-    @ManyToMany(targetEntity = User.class, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "episodes", fetch = FetchType.LAZY)
     private List<User> users = new ArrayList<>();
 
     //TvShow2Episode Relation

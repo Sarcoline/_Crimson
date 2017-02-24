@@ -76,16 +76,16 @@ public @Data class TvShow {
 
     //RELATIONSHIPS
     //User2TvShow Relation
-    @ManyToMany(targetEntity = User.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "tvShows", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<User> users = new ArrayList<>();
     //TvShow2Genre
-    @ManyToMany(targetEntity = Genre.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "tvShows", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Genre> genres = new ArrayList<>();
     //TvShowEpisode Relation
-    @OneToMany(targetEntity = Episode.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Episode> episodes = new ArrayList<>();
     //Rating
-    @OneToMany(targetEntity = Rating.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Rating> ratings = new ArrayList<>();
 
     @Builder
