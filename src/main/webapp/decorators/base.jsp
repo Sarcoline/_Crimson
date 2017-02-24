@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/slider.min.css' />">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/notify.min.css' />">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/datepicker.min.css' />">
+    <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/form-file.min.css' />">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/style.css' />">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"
             type="application/javascript"></script>
@@ -23,6 +24,7 @@
     <script src="<c:url value='/static/uikit/js/components/slider.min.js' />" type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/components/datepicker.min.js' />" type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/components/notify.min.js' />" type="application/javascript"></script>
+    <script src="<c:url value='/static/uikit/js/components/pagination.min.js' />" type="application/javascript"></script>
 
     <title><decorator:title/></title>
 </head>

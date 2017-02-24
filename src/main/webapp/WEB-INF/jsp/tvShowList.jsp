@@ -16,16 +16,66 @@
     <c:if test="${genre != null}">
         <h1>${genre}:</h1>
     </c:if>
-    <div class="genreList uk-margin-large-top">
-        <c:forEach items="${tvshows}" var="tv">
-            <a href="<c:url value="/tv/${tv.slug}"/>"> <span class="item" style="background-image: url('<c:url
-                    value="/images/tv/${tv.slug}/poster"/>')">
-                    <span class="overlay">
-                        <span class="item-header">${tv.title}</span> </span>
-            </span>
-            </a>
-        </c:forEach>
+    <div class="genreList uk-margin-large-top" id="filter">
+        <%--<c:forEach items="${tvshows}" var="tv">--%>
+        <%--<a href="<c:url value="/tv/${tv.slug}"/>"> <span class="item" style="background-image: url('<c:url--%>
+        <%--value="/images/tv/${tv.slug}/poster"/>')">--%>
+        <%--<span class="overlay">--%>
+        <%--<span class="item-header">${tv.title}</span> </span>--%>
+        <%--</span>--%>
+        <%--</a>--%>
+        <%--</c:forEach>--%>
     </div>
+    <ul class="uk-pagination" data-uk-pagination="{items:100, itemsOnPage:25}">
+    </ul>
 </div>
+<script>
+    $(function () {
+        var createFound = function (slug, title) {
+            var a = document.createElement('a');
+            a.href = '/tv/' + slug;
+            var span = document.createElement('span');
+            var link = '/images/tv/' + slug + '/poster';
+            span.style.backgroundImage = "url(" + link + ")";
+            span.className = 'item';
+            var spanOverlay = document.createElement('span');
+            spanOverlay.className = 'overlay';
+            var spanItem = document.createElement('span');
+            spanItem.className = 'item-header';
+            spanItem.innerText = title;
+            spanOverlay.appendChild(spanItem);
+            span.appendChild(spanOverlay);
+            a.appendChild(span);
+            return a;
+        };
+
+
+        $('[data-uk-pagination]').on('select.uk.pagination', function (e, pageIndex) {
+            if (pageIndex + 1 == 1) {
+                var result = [];
+                $.getJSON('/api/search/game', function (data) {
+                    $.each(data, function (key, val) {
+                        var found = createFound(val.slug, val.title);
+                        console.log(found);
+                        result.push(found);
+                    })
+                    $('#filter').html(result);
+                })
+            }
+            if (pageIndex + 1 == 2) {
+                $.getJSON('/api/search/shame', function (data) {
+                    var result = [];
+                    $.each(data, function (key, val) {
+                        var found = createFound(val.slug, val.title);
+                        console.log(found);
+                        result.push(found);
+                    })
+                    $('#filter').html(result);
+                })
+            }
+        });
+
+    })
+</script>
 </body>
 </html>

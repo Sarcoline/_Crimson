@@ -41,8 +41,9 @@
                                 placeholder="Email"/>
                         <%--TODO zmienic wyświetlanie błędów--%>
                 </div>
-                <div class="uk-form-row">
+                <div class="uk-form-row uk-form-file" >
                     <form:errors path="uploadedPic" cssClass="uk-alert uk-alert-danger" element="div"/>
+                    <button class="uk-button">Select profile picture</button>
                     <form:input path="uploadedPic" value="" class="uk-width-1-1 uk-form-large" type="file" name="profilePic"/>
                 </div>
                 <div class="uk-form-row">

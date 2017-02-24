@@ -16,11 +16,12 @@
                     <div class="uk-width-1-3">
                         <c:if test="${user.name == name}">
                             <a href="<c:url value="/user/edit" /> "><i class="fa fa-cog fa-2x"
-                                                                          style="color: #999; margin-bottom: -40px;"
+                                                                          style="color: #999;"
                                                                           aria-hidden="true"></i></a>
                         </c:if>
                         <div>
-                            <img src="<c:url value="/images/user/${user.name}"/>" class="center" style="border-radius: 50%;">
+                            <img src="<c:url value="/images/user/${user.name}"/>" class="center"
+                                 style="border-radius: 50%; <c:if test="${user.name != name}"> margin-top: 0px; </c:if> ">
                         </div>
                     </div>
                     <div class="uk-width-1-3 centerText">

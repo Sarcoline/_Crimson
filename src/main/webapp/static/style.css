@@ -1,10 +1,11 @@
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
 html, body {
-    min-height: 120%;
+    min-height: 140vh;
     overflow-x: hidden;
     font-family: 'Raleway', sans-serif;
-    background: #F9FBFC;
+    background: #f7f7f7;
+
 }
 
 h1,
@@ -13,6 +14,7 @@ h3,
 h4,
 h5 {
     font-family: 'Roboto', sans-serif;
+
 }
 
 a {
@@ -24,10 +26,12 @@ a:hover {
     text-decoration: none;
 }
 
-.index {
-    /*<div class="index" style="margin-top:-50px; background: linear-gradient(to bottom, rgba(255,255,255,0.5) 0%,rgba(255,255,255,1) 80%), url('http://wallpapercave.com/wp/wp1812410.jpg') repeat 0 0;">*/
+.uk-comment-avatar {
+    margin-top: 8px;
 }
-
+.uk-comment-meta li {
+    margin-left: -10px;
+}
 /*Navbar*/
 
 .uk-navbar {
@@ -71,7 +75,7 @@ a:hover {
 }
 
 /*tvShow header */
-header {
+header.head {
     position: relative;
     background-size: cover;
     transform: translateX(-15vw);
@@ -82,7 +86,7 @@ header {
     margin-bottom: 100px;
 }
 
-header figure {
+header.head figure {
     bottom: -100px;
     left: calc(50% - 50px);
     width: 250px;
@@ -130,7 +134,7 @@ header figure {
     font-size: 1.6rem;
 }
 
-.uk-article {
+.uk-article.summary {
     margin-top: 20px;
     font-size: 1.2rem;
 }
@@ -423,6 +427,12 @@ input[type="submit"] {
 }
 
 div.login {
-    background: #fff;
+
+    color: #F9FBFC;
+    background: #444;
     box-shadow: 1px 10px 50px -20px;
+}
+
+.login h1 {
+    color: #F9FBFC;
 }

@@ -16,7 +16,7 @@
     <title>${tv.title}</title>
 </head>
 <body>
-<header style="background: url(<c:url value="/images/tv/${tv.slug}/back"/>) center center;">
+<header class="head" style="background: url(<c:url value="/images/tv/${tv.slug}/back"/>) center center;">
     <figure style="background: url(<c:url value="/images/tv/${tv.slug}/poster"/>) center center"></figure>
 </header>
 
@@ -46,13 +46,13 @@
         </div>
     </div>
     <div class="uk-width-large-4-6 uk-width-medium-1-1">
-        <article class="uk-article">
+        <article class="uk-article summary">
             <h2 class="uk-article-title">Summary of <strong>${tv.title}</strong>
                 <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')">
                     <small><a href="/tv/${tv.slug}/edit"><i class="fa fa-cog uk-text-primary" aria-hidden="true"
                                                             style="cursor: pointer; font-size: 2rem"></i></a></small>
                     <small><a href="/tv/${tv.slug}/delete"><i class="fa fa-times uk-text-danger" aria-hidden="true"
-                                                            style="cursor: pointer; font-size: 2rem"></i></a></small>
+                                                              style="cursor: pointer; font-size: 2rem"></i></a></small>
                 </sec:authorize>
             </h2>
             <p>${tv.description}</p>
@@ -98,13 +98,62 @@
                 </ul>
             </div>
         </div>
+        <h2 class="uk-margin-large-top">Comments: </h2>
+        <button class="uk-button uk-button-success">Add</button>
+        <div class=" uk-margin-large-bottom comments">
+
+            <ul class="uk-comment-list uk-list-lined">
+                <li>
+                    <article class="uk-comment uk-margin-top uk-comment-primary">
+                        <header class="uk-comment-header">
+                            <img class="uk-comment-avatar" src="<c:url value="/images/user/testuser"/> " width="50"
+                                 height="50" alt="">
+                            <h4 class="uk-comment-title">Author</h4>
+                            <div class="uk-comment-meta">12 days ago | <a
+                                    href="<c:url value="/user/testuser"/>">Profile</a></div>
+                        </header>
+                        <div class="uk-comment-body">
+                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+                        </div>
+                    </article>
+                    <article class="uk-comment uk-margin-top uk-comment-primary">
+                        <header class="uk-comment-header">
+                            <img class="uk-comment-avatar" src="<c:url value="/images/user/testuser"/> " width="50"
+                                 height="50" alt="">
+                            <h4 class="uk-comment-title">Author</h4>
+                            <div class="uk-comment-meta">12 days ago | <a
+                                    href="<c:url value="/user/testuser"/>">Profile</a></div>
+                        </header>
+                        <div class="uk-comment-body">
+                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+                        </div>
+                    </article>
+                    <article class="uk-comment uk-margin-top uk-comment-primary">
+                        <header class="uk-comment-header">
+                            <img class="uk-comment-avatar" src="<c:url value="/images/user/testuser"/> " width="50"
+                                 height="50" alt="">
+                            <h4 class="uk-comment-title">Author</h4>
+                            <div class="uk-comment-meta">12 days ago | <a
+                                    href="<c:url value="/user/testuser"/>">Profile</a></div>
+                        </header>
+                        <div class="uk-comment-body">
+                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+                        </div>
+                    </article>
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="uk-width-large-1-6 uk-width-medium-1-1">
         <div class="uk-grid details" data-uk-grid-margin=" ">
             <div class="uk-width-large-1-1 uk-width-small-1-2">
                 <div class="ratebox">
                     <p class="overallrating">
-                    ${tv.overallRating}<small class="uk-text-muted" style="font-size: 2rem;">/10</small>
+                        ${tv.overallRating}
+                        <small class="uk-text-muted" style="font-size: 2rem;">/10</small>
                     </p>
                     <p class="uk-text-muted">${tv.tvShowRating.size()} ratings</p>
                     <p class="uk-text-muted">${tv.tvShowUserList.size()} follows</p>
@@ -196,9 +245,7 @@
         $('small.follow').click(function () {
             $(this).find('i').toggleClass('fa-heart-o fa-heart');
         });
-//        $('i.rate').on('click', function () {
-//            $('fieldset.rating').toggleClass('uk-hidden')
-//        });
+
         var modal = UIkit.modal(".uk-modal");
         $('label').on('click', function () {
             var i = $('input#' + $(this).attr('for')).val();
