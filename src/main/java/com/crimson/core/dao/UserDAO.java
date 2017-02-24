@@ -2,28 +2,10 @@ package com.crimson.core.dao;
 
 import com.crimson.core.model.*;
 
-import java.util.List;
 
-
-public interface UserDAO {
-    void save(User user);
-
-    List<User> getAllUsers();
-
-    User getUserById(Long id);
-
-    void delete(User user);
-
-    void update(User user);
+public interface UserDAO extends BaseDAO<User, Long> {
 
     User getUserByName(String name);
-
-    //Extra methods
-    List<TvShow> getUserTvShowsSortedByMaxRating(User user);
-
-    List<Episode> getAllUnwatchedUserEpisodes(User user);
-
-    List<Episode> getAllUpcomingUserEpisodes(User user);
 
     void addTvShow2User(User user, TvShow tvShow);
 

@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -40,12 +41,12 @@ public class TvShowServiceImpl implements TvShowService {
 
     @Override
     public List<TvShow> getAllTvShows() {
-        return tvShowDAO.getAllTvShows();
+        return tvShowDAO.getAll();
     }
 
     @Override
     public TvShowDTO getTvById(Long id) {
-        return mapperFacade.map(tvShowDAO.getTvById(id), TvShowDTO.class);
+        return mapperFacade.map(tvShowDAO.getById(id), TvShowDTO.class);
     }
 
     @Override
@@ -74,7 +75,9 @@ public class TvShowServiceImpl implements TvShowService {
     }
 
     @Override
-    public List<TvShow> getTvByNetwork(String network) { return tvShowDAO.getTvByNetwork(network);}
+    public List<TvShow> getTvByNetwork(String network) {
+        return tvShowDAO.getTvByNetwork(network);
+    }
 
 
     @Override
@@ -84,14 +87,14 @@ public class TvShowServiceImpl implements TvShowService {
 
     @Override
     public void deleteTvShow(TvShowDTO tvshow) {
-        TvShow tv = tvShowDAO.getTvById(tvshow.getId());
+        TvShow tv = tvShowDAO.getById(tvshow.getId());
         tvShowDAO.delete(tv);
     }
 
     @Override
     public void updateTvShow(TvShowDTO tvshow) {
         Slugify slugify = new Slugify();
-        TvShow tv = tvShowDAO.getTvById(tvshow.getId());
+        TvShow tv = tvShowDAO.getById(tvshow.getId());
         tv.setCountry(tvshow.getCountry());
         tv.setNetwork(tvshow.getNetwork());
         tv.setDescription(tvshow.getDescription());
@@ -162,15 +165,17 @@ public class TvShowServiceImpl implements TvShowService {
 
     @Override
     public List<TvShowDTO> getAllTvShowByMaxRating() {
-        List tvs = new ArrayList();
-        tvShowDAO.getAllTvShowByMaxRating().forEach(
+        List<TvShowDTO> tvs = new ArrayList<>();
+        List<TvShow> unsortedList = tvShowDAO.getAll();
+        unsortedList.sort(Comparator.comparing(TvShow::getOverallRating).reversed());
+        unsortedList.forEach(
                 tv -> tvs.add(mapperFacade.map(tv, TvShowDTO.class)));
         return tvs;
     }
 
     @Override
     public List<TvShowSearchDTO> searchTvShow(String pattern) {
-        List tvs = new ArrayList();
+        List<TvShowSearchDTO> tvs = new ArrayList<>();
         tvShowDAO.searchTvShow(pattern).forEach(
                 tv -> tvs.add(mapperFacade.map(tv, TvShowSearchDTO.class))
         );
@@ -179,8 +184,8 @@ public class TvShowServiceImpl implements TvShowService {
 
     @Override
     public List<TvShowSearchDTO> filterTvShows(double min, double max) {
-        List tvs = new ArrayList();
-        tvShowDAO.filterTvShows(min,max).forEach(
+        List<TvShowSearchDTO> tvs = new ArrayList<>();
+        tvShowDAO.filterTvShows(min, max).forEach(
                 tv -> tvs.add(mapperFacade.map(tv, TvShowSearchDTO.class))
         );
         return tvs;
@@ -207,13 +212,13 @@ public class TvShowServiceImpl implements TvShowService {
     }
 
     @Override
-    public int tvShowsLastPageNumber(){
+    public int tvShowsLastPageNumber() {
         return tvShowDAO.tvShowsLastPageNumber();
     }
 
     @Override
-    public  List<TvShowSearchDTO> tvShowsPaginationList(int pageNumber){
-        List tvShows = new ArrayList();
+    public List<TvShowSearchDTO> tvShowsPaginationList(int pageNumber) {
+        List<TvShowSearchDTO> tvShows = new ArrayList<>();
         tvShowDAO.tvShowsPaginationList(pageNumber).forEach(
                 tvShow -> tvShows.add(mapperFacade.map(tvShow, TvShowSearchDTO.class))
         );

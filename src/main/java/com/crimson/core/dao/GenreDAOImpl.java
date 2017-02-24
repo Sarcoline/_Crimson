@@ -13,42 +13,43 @@ import java.util.List;
 public class GenreDAOImpl implements GenreDAO {
 
     @Autowired
-    private SessionFactory sf;
+    private SessionFactory sessionFactory;
 
     @Override
     public void save(Genre genre) {
-        Session session = sf.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         session.persist(genre);
     }
 
     @Override
     public void delete(Genre genre) {
-        Session session = sf.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         session.delete(genre);
     }
 
     @Override
     public void update(Genre genre) {
-        Session session = sf.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         session.update(genre);
     }
 
     @Override
-    public Genre getGenreById(Long idGenre) {
-        Session session = sf.getCurrentSession();
+    public Genre getById(Long idGenre) {
+        Session session = sessionFactory.getCurrentSession();
         return session.find(Genre.class, idGenre);
     }
 
     @Override
-    public List<Genre> getAllGenre() {
-        Session session = sf.getCurrentSession();
+    public List<Genre> getAll() {
+        Session session = sessionFactory.getCurrentSession();
         return session.createQuery("SELECT a FROM Genre a", Genre.class).getResultList();
     }
 
     @Override
     public Genre getGenreByName(String name) {
-        Session session = sf.getCurrentSession();
-        return session.createQuery("Select a From Genre a where a.name like :custName", Genre.class).setParameter("custName", name).getSingleResult();
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("Select a From Genre a where a.name like :custName", Genre.class)
+                .setParameter("custName", name).getSingleResult();
     }
 
     //RELATIONSHIPS
@@ -57,7 +58,7 @@ public class GenreDAOImpl implements GenreDAO {
 
     @Override
     public void addTvShow2Genre(Genre genre, TvShow tvShow) {
-        Session session = sf.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         if (!genre.getTvShows().contains(tvShow)) {
             genre.getTvShows().add(tvShow);
         }
@@ -66,7 +67,7 @@ public class GenreDAOImpl implements GenreDAO {
 
     @Override
     public void deleteTvShowFromGenre(Genre genre, TvShow tvShow) {
-        Session session = sf.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         genre.getTvShows().remove(tvShow);
         session.saveOrUpdate(genre);
     }

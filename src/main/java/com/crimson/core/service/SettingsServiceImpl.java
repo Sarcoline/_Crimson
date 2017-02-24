@@ -23,12 +23,12 @@ public class SettingsServiceImpl implements SettingsService {
 
     @Override
     public List<Setting> getAllSettings() {
-        return settingsDAO.getAllSettings();
+        return settingsDAO.getAll();
     }
 
     @Override
     public Setting getSettingById(Long id) {
-        return settingsDAO.getSettingById(id);
+        return settingsDAO.getById(id);
     }
 
     @Override

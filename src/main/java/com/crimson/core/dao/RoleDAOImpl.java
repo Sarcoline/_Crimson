@@ -22,13 +22,13 @@ public class RoleDAOImpl implements RoleDAO {
     }
 
     @Override
-    public List<Role> getAllRoles() {
+    public List<Role> getAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From Role a", Role.class).getResultList();
     }
 
     @Override
-    public Role getRoleById(Long id) {
+    public Role getById(Long id) {
         Session session = sessionFactory.getCurrentSession();
         return session.find(Role.class, id);
     }

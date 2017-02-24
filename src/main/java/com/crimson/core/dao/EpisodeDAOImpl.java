@@ -15,22 +15,22 @@ import java.util.List;
 public class EpisodeDAOImpl implements EpisodeDAO {
 
     @Autowired
-    private SessionFactory sf;
+    private SessionFactory sessionFactory;
 
     @Autowired
     private UserDAO userDAO;
 
     @Override
     public void save(Episode episode) {
-        Session session = sf.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         session.persist(episode);
     }
 
     @Override
     public void delete(Episode episode) {
-        Session session = sf.getCurrentSession();
-        List<User> users = userDAO.getAllUsers();
-        for (User user: users) {
+        Session session = sessionFactory.getCurrentSession();
+        List<User> users = userDAO.getAll();
+        for (User user : users) {
             user.getEpisodes().remove(episode);
         }
         session.delete(episode);
@@ -38,26 +38,27 @@ public class EpisodeDAOImpl implements EpisodeDAO {
 
     @Override
     public void update(Episode episode) {
-        Session session = sf.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         session.update(episode);
     }
 
     @Override
-    public Episode getEpisodeById(Long idEpisode) {
-        Session session = sf.getCurrentSession();
+    public Episode getById(Long idEpisode) {
+        Session session = sessionFactory.getCurrentSession();
         return session.find(Episode.class, idEpisode);
     }
 
     @Override
-    public List<Episode> getAllEpisodes() {
-        Session session = sf.getCurrentSession();
+    public List<Episode> getAll() {
+        Session session = sessionFactory.getCurrentSession();
         return session.createQuery("SELECT a FROM Episode a", Episode.class).getResultList();
     }
 
     @Override
     public Episode getEpisodeByTitle(String title) {
-        Session session = sf.getCurrentSession();
-        return session.createQuery("Select a From Episode a where a.title like :custTitle", Episode.class).setParameter("custTitle", title).getSingleResult();
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("Select a From Episode a where a.title like :custTitle", Episode.class)
+                .setParameter("custTitle", title).getSingleResult();
     }
 
 
@@ -67,7 +68,7 @@ public class EpisodeDAOImpl implements EpisodeDAO {
 
     @Override
     public void addUser2Episode(User user, Episode episode) {
-        Session session = sf.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         if (!episode.getUsers().contains(user)) {
             List<User> episodes = new ArrayList<>();
             episodes.addAll(episode.getUsers());
@@ -79,7 +80,7 @@ public class EpisodeDAOImpl implements EpisodeDAO {
 
     @Override
     public void deleteUserFromEpisode(User user, Episode episode) {
-        Session session = sf.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         episode.getUsers().remove(user);
         session.saveOrUpdate(episode);
     }
@@ -88,14 +89,14 @@ public class EpisodeDAOImpl implements EpisodeDAO {
 
     @Override
     public void addTvShow2Episode(TvShow tvShow, Episode episode) {
-        Session session = sf.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         episode.setTvShow(tvShow);
         session.saveOrUpdate(episode);
     }
 
     @Override
     public void deleteTvShowFromEpisode(TvShow tvShow, Episode episode) {
-        Session session = sf.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         if (episode.getTvShow() == tvShow) {
             episode.setTvShow(null);
         }

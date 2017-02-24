@@ -35,7 +35,7 @@ public class EpisodeServiceImpl implements EpisodeService {
 
     @Override
     public void deleteEpisode(EpisodeDTO episode) {
-        episodeDAO.delete(episodeDAO.getEpisodeById(episode.getId()));
+        episodeDAO.delete(episodeDAO.getById(episode.getId()));
     }
 
     @Override
@@ -45,12 +45,12 @@ public class EpisodeServiceImpl implements EpisodeService {
 
     @Override
     public EpisodeDTO getEpisodeById(Long idEpisode) {
-        return mapperFacade.map(episodeDAO.getEpisodeById(idEpisode), EpisodeDTO.class);
+        return mapperFacade.map(episodeDAO.getById(idEpisode), EpisodeDTO.class);
     }
 
     @Override
     public List<Episode> getAllEpisodes() {
-        return episodeDAO.getAllEpisodes();
+        return episodeDAO.getAll();
     }
 
     @Override
@@ -65,24 +65,23 @@ public class EpisodeServiceImpl implements EpisodeService {
 
     @Override
     public void addUser2Episode(UserDTO userDTO, EpisodeDTO episodeDTO) {
-        User user = userDAO.getUserById(userDTO.getId());
-        Episode episode = episodeDAO.getEpisodeById(episodeDTO.getId());
+        User user = userDAO.getById(userDTO.getId());
+        Episode episode = episodeDAO.getById(episodeDTO.getId());
         userDAO.addEpisode2User(user, episode);
 
     }
 
-    //TODO naprawic usuwanie episode z usera?
     @Override
     public void deleteUserFromEpisode(UserDTO userDTO, EpisodeDTO episodeDTO) {
-        Episode episode = episodeDAO.getEpisodeById(episodeDTO.getId());
-        User user = userDAO.getUserById(userDTO.getId());
+        Episode episode = episodeDAO.getById(episodeDTO.getId());
+        User user = userDAO.getById(userDTO.getId());
         userDAO.deleteEpisodeFromUser(user, episode);
     }
 
     @Override
     public boolean checkWatched(UserDTO userDTO, EpisodeDTO episodeDTO) {
-        Episode episode = episodeDAO.getEpisodeById(episodeDTO.getId());
-        return userDAO.getUserByName(userDTO.getName()).getEpisodes().contains(episodeDAO.getEpisodeById(episode.getId()));
+        Episode episode = episodeDAO.getById(episodeDTO.getId());
+        return userDAO.getUserByName(userDTO.getName()).getEpisodes().contains(episodeDAO.getById(episode.getId()));
     }
 
     //TvShow2Episode
@@ -100,12 +99,12 @@ public class EpisodeServiceImpl implements EpisodeService {
 
     @Override
     public EpisodeFormDTO getEisodeForm(Long id) {
-        return mapperFacade.map(episodeDAO.getEpisodeById(id), EpisodeFormDTO.class);
+        return mapperFacade.map(episodeDAO.getById(id), EpisodeFormDTO.class);
     }
 
     @Override
     public void updateEpisodeFromForm(EpisodeFormDTO episodeFormDTO) {
-       Episode ep  = episodeDAO.getEpisodeById(episodeFormDTO.getId());
+        Episode ep = episodeDAO.getById(episodeFormDTO.getId());
         ep.setReleaseDate(LocalDate.parse(episodeFormDTO.getReleaseDate()));
         ep.setTitle(episodeFormDTO.getTitle());
         ep.setSeason(episodeFormDTO.getSeason());

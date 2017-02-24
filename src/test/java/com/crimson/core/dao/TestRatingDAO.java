@@ -47,7 +47,7 @@ public class TestRatingDAO {
 
     @Test
     public void addRatingTest() {
-        Assert.assertEquals(1, ratingDAO.getAllRatings().size());
+        Assert.assertEquals(1, ratingDAO.getAll().size());
         Rating rating1 = Rating.builder()
                 .value(3)
                 .build();
@@ -65,26 +65,26 @@ public class TestRatingDAO {
 
         ratingDAO.update(rating);
 
-        Assert.assertEquals(rating.getValue(), ratingDAO.getRatingByID(rating.getId()).getValue());
+        Assert.assertEquals(rating.getValue(), ratingDAO.getById(rating.getId()).getValue());
     }
 
     @Test
     public void deleteRatingTest() {
         ratingDAO.delete(rating);
 
-        Assert.assertEquals(null, ratingDAO.getRatingByID(rating.getId()));
+        Assert.assertEquals(null, ratingDAO.getById(rating.getId()));
     }
 
     @Test
     public void getAllRatingsTest() {
-        int sizeListRatings = ratingDAO.getAllRatings().size();
+        int sizeListRatings = ratingDAO.getAll().size();
 
         Assert.assertEquals(1, sizeListRatings);
     }
 
     @Test
     public void getRatingByIdTest() {
-        Rating ratingtest = ratingDAO.getRatingByID(rating.getId());
+        Rating ratingtest = ratingDAO.getById(rating.getId());
 
         Assert.assertEquals(ratingtest.getValue(), rating.getValue());
     }

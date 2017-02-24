@@ -4,19 +4,8 @@ import com.crimson.core.model.Episode;
 import com.crimson.core.model.TvShow;
 import com.crimson.core.model.User;
 
-import java.util.List;
 
-
-public interface EpisodeDAO {
-    void save(Episode episode);
-
-    void delete(Episode episode);
-
-    void update(Episode episode);
-
-    Episode getEpisodeById(Long idEpisode);
-
-    List<Episode> getAllEpisodes();
+public interface EpisodeDAO extends BaseDAO<Episode, Long> {
 
     Episode getEpisodeByTitle(String title);
 

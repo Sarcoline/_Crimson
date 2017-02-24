@@ -109,8 +109,6 @@ public class PopulateDatabase {
             tv1.setReleaseYear(2008);
 
 
-
-
             List<Episode> ShamelessEpisodes = new ArrayList();
             ShamelessEpisodes.add(Episode.builder().title("Episode 1").number(1).releaseDate(LocalDate.now()).season(1).idTvShow(2L).episodeSummary("Summary 1").build());
             ShamelessEpisodes.add(Episode.builder().title("Episode 2").number(2).releaseDate(LocalDate.now()).season(1).idTvShow(2L).episodeSummary("Summary 2").build());
@@ -246,11 +244,7 @@ public class PopulateDatabase {
             InputStream in34 = applicationContext.getResource("classpath:/images/sherlock/3.jpg").getInputStream();
             tv6.getPictures().put("3", IOUtils.toByteArray(in34));
             tv6.setDescription(
-                    "A modern update finds the famous sleuth and his doctor partner solving crime in 21st century London.  " );
-
-
-
-
+                    "A modern update finds the famous sleuth and his doctor partner solving crime in 21st century London.  ");
 
 
             Role role = new Role("USER");

@@ -18,7 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -46,11 +48,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(UserDTO userDTO) throws IOException {
-        Role role = roleDAO.getAllRoles().get(0);
+        Role role = roleDAO.getAll().get(0);
         User user = mapperFacade.map(userDTO, User.class);
         user.setPassword(encoder.encode(user.getPassword()));
         user.getRoles().add(role);
-        user.setSetting(new Setting(false,10,7));
+        user.setSetting(new Setting(false, 10, 7));
         if (userDTO.getUploadedPic() != null) {
             user.setProfilePic(userDTO.getUploadedPic().getBytes());
         } else {
@@ -65,30 +67,30 @@ public class UserServiceImpl implements UserService {
     @Override
     @SuppressWarnings("unchecked")
     public List<User> getAllUsers() {
-        return userDAO.getAllUsers();
+        return userDAO.getAll();
     }
 
     @Override
     public User getUserById(Long id) {
-        return userDAO.getUserById(id);
+        return userDAO.getById(id);
     }
 
     @Override
     public void deleteUser(UserDTO userDTO) {
-        User user = userDAO.getUserById(userDTO.getId());
+        User user = userDAO.getById(userDTO.getId());
         userDAO.delete(user);
     }
 
     @Override
     public void updateUser(UserDTO userDTO) throws IOException {
-        User user2 = userDAO.getUserById(userDTO.getId());
+        User user2 = userDAO.getById(userDTO.getId());
         user2.setEmail(userDTO.getEmail());
         userDAO.update(user2);
     }
 
     @Override
     public void changeProfilePic(UserDTO userDTO, MultipartFile file) throws IOException {
-        User user2 = userDAO.getUserById(userDTO.getId());
+        User user2 = userDAO.getById(userDTO.getId());
         user2.setProfilePic(file.getBytes());
         userDAO.update(user2);
     }
@@ -101,7 +103,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkFollow(UserDTO userDTO, TvShowDTO tvShow) {
-        return userDAO.getUserByName(userDTO.getName()).getTvShows().contains(tvShowDAO.getTvById(tvShow.getId()));
+        return userDAO.getUserByName(userDTO.getName()).getTvShows().contains(tvShowDAO.getById(tvShow.getId()));
     }
 
     @Override
@@ -112,7 +114,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteTvShowFromUser(UserDTO userDTO, TvShowDTO tvShow) {
         User user = userDAO.getUserByName(userDTO.getName());
-        TvShow tv = tvShowDAO.getTvById(tvShow.getId());
+        TvShow tv = tvShowDAO.getById(tvShow.getId());
         user.getTvShows().remove(tv);
 
     }
@@ -177,36 +179,61 @@ public class UserServiceImpl implements UserService {
     //Extra Methods
     @Override
     public List<TvShowDTO> getUserTvShowsSortedByMaxRating(UserDTO userDTO) {
-        User user = userDAO.getUserById(userDTO.getId());
-        List<TvShowDTO> tvs = new ArrayList<>();
 
-        userDAO.getUserTvShowsSortedByMaxRating(user).forEach(
-                tv -> tvs.add(mapperFacade.map(tv, TvShowDTO.class))
-        );
-        return tvs;
+        User user = userDAO.getById(userDTO.getId());
+        List<TvShowDTO> sortedList = new ArrayList<>();
+        List<Rating> unsortedList = user.getRatings();
+        unsortedList.sort(Comparator.comparingInt(Rating::getValue).reversed());
+        unsortedList.forEach(rating -> sortedList.add(mapperFacade.map(rating.getTvShow(), TvShowDTO.class)));
+
+        return sortedList;
     }
 
     @Override
     public List<EpisodeDTO> getAllUnwatchedUserEpisodes(UserDTO userDTO) {
-        User user = userDAO.getUserById(userDTO.getId());
-        List<EpisodeDTO> eps = new ArrayList<>();
-        userDAO.getAllUnwatchedUserEpisodes(user).forEach(episode ->
-                eps.add(mapperFacade.map(episode, EpisodeDTO.class)));
-        return eps;
+
+        User user = userDAO.getById(userDTO.getId());
+        List<TvShow> allFollowedUserTvShows = user.getTvShows();
+
+        List<EpisodeDTO> allUnwatchedUserEpisodes = new ArrayList<>();
+
+        List<Episode> allWatchedUserEpisodes = user.getEpisodes();
+
+        allFollowedUserTvShows.forEach(tvShow -> {
+            List<Episode> tvShowEpisodes = tvShow.getEpisodes();
+            tvShowEpisodes.forEach(episode -> {
+                if (!allWatchedUserEpisodes.contains(episode))
+                    allUnwatchedUserEpisodes.add(mapperFacade.map(episode, EpisodeDTO.class));
+            });
+        });
+
+
+        return allUnwatchedUserEpisodes;
     }
 
+    //TODO slow af
     @Override
     public List<EpisodeDTO> getAllUpcomingUserEpisodes(UserDTO userDTO) {
-        User user = userDAO.getUserById(userDTO.getId());
-        List<EpisodeDTO> eps = new ArrayList<>();
-        userDAO.getAllUpcomingUserEpisodes(user).forEach(episode ->
-                eps.add(mapperFacade.map(episode, EpisodeDTO.class)));
-        return eps;
+
+        List<EpisodeDTO> allFutureUserEpisodes = new ArrayList<>();
+        int days = userDTO.getSetting().getDaysOfUpcomingEpisodes();
+
+        LocalDate currentDate = LocalDate.now();
+        LocalDate lastDate = LocalDate.now().plusDays(days);
+
+        for (EpisodeDTO episode : getAllUnwatchedUserEpisodes(userDTO)) {
+            LocalDate episodeDate = episode.getReleaseDate();
+            if (episodeDate.isAfter(currentDate) && episodeDate.isBefore(lastDate))
+                allFutureUserEpisodes.add(episode);
+        }
+
+        allFutureUserEpisodes.sort(Comparator.comparing(EpisodeDTO::getReleaseDate));
+        return allFutureUserEpisodes;
     }
 
     @Override
     public void updatePassword(UserDTO userDTO, String password) {
-        User user = userDAO.getUserById(userDTO.getId());
+        User user = userDAO.getById(userDTO.getId());
         user.setPassword(encoder.encode(password));
         userDAO.update(user);
     }
@@ -218,7 +245,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateSettings(UserDTO userDTO, int days) {
-        User user = userDAO.getUserById(userDTO.getId());
+        User user = userDAO.getById(userDTO.getId());
         user.getSetting().setDaysOfUpcomingEpisodes(days);
         userDAO.update(user);
     }

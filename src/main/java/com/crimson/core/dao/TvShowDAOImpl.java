@@ -10,8 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 @Repository
@@ -29,13 +27,13 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
-    public List<TvShow> getAllTvShows() {
+    public List<TvShow> getAll() {
         Session session = sf.getCurrentSession();
         return session.createQuery("Select a From TvShow a", TvShow.class).getResultList();
     }
 
     @Override
-    public TvShow getTvById(Long id) {
+    public TvShow getById(Long id) {
         Session session = sf.getCurrentSession();
         return session.find(TvShow.class, id);
     }
@@ -53,34 +51,38 @@ public class TvShowDAOImpl implements TvShowDAO {
     @Override
     public TvShow getTvBySlug(String slug) {
         Session session = sf.getCurrentSession();
-        return session.createQuery("Select a From TvShow a where a.slug like :custSlug", TvShow.class).setParameter("custSlug", slug).getSingleResult();
+        return session.createQuery("Select a From TvShow a where a.slug like :custSlug", TvShow.class)
+                .setParameter("custSlug", slug).getSingleResult();
     }
 
     @Override
     public List<TvShow> getTvByGenre(String genre) {
         Session session = sf.getCurrentSession();
-        return session.createQuery("Select a From TvShow a where a.genre like :custGenre", TvShow.class).setParameter("custGenre", genre).getResultList();
+        return session.createQuery("Select a From TvShow a where a.genre like :custGenre", TvShow.class)
+                .setParameter("custGenre", genre).getResultList();
 
     }
 
     @Override
     public List<TvShow> getTvByCountry(String country) {
         Session session = sf.getCurrentSession();
-        return session.createQuery("Select a From TvShow a where a.country like :custCountry", TvShow.class).setParameter("custCountry", country).getResultList();
+        return session.createQuery("Select a From TvShow a where a.country like :custCountry", TvShow.class)
+                .setParameter("custCountry", country).getResultList();
     }
 
     @Override
     public List<TvShow> getTvByYear(int releaseYear) {
         Session session = sf.getCurrentSession();
-        return session.createQuery("Select a From TvShow a where a.releaseYear like :custReleaseYear", TvShow.class).setParameter("custReleaseYear", releaseYear).getResultList();
+        return session.createQuery("Select a From TvShow a where a.releaseYear = :custReleaseYear", TvShow.class)
+                .setParameter("custReleaseYear", releaseYear).getResultList();
     }
 
     @Override
     public List<TvShow> getTvByNetwork(String network) {
         Session session = sf.getCurrentSession();
-        return session.createQuery("Select a From TvShow a where a.network like :custNetwork", TvShow.class).setParameter("custNetwork", network).getResultList();
+        return session.createQuery("Select a From TvShow a where a.network like :custNetwork", TvShow.class)
+                .setParameter("custNetwork", network).getResultList();
     }
-
 
 
     @Override
@@ -95,18 +97,8 @@ public class TvShowDAOImpl implements TvShowDAO {
         session.update(tvshow);
     }
 
-
-    //Extra Methods
-
     @Override
-    public List<TvShow> getAllTvShowByMaxRating() {
-        List<TvShow> unsortedList = getAllTvShows();
-        unsortedList.sort(Comparator.comparing(TvShow::getOverallRating));
-        Collections.reverse(unsortedList);
-        return unsortedList;
-    }
-
-    @Override
+    @SuppressWarnings("unchecked")
     public List<TvShow> searchTvShow(String pattern) {
         Session session = sf.getCurrentSession();
         String hql = "FROM TvShow t WHERE title like :pattern";
@@ -117,6 +109,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<TvShow> filterTvShows(double min, double max) {
         Session session = sf.getCurrentSession();
         String hql = "from TvShow t WHERE overallRating between :start and :finish";
@@ -130,38 +123,35 @@ public class TvShowDAOImpl implements TvShowDAO {
     @Override
     public long tvShowsSize() {
         Session session = sf.getCurrentSession();
-        Query q = session.createQuery ("SELECT count(x) FROM TvShow x");
+        Query q = session.createQuery("SELECT count(x) FROM TvShow x");
         return (long) q.getSingleResult();
     }
 
     //Wyrzuca ostatnia stronę przy pagination dla TvShow
     @Override
-    public int tvShowsLastPageNumber(){
+    public int tvShowsLastPageNumber() {
         Session session = sf.getCurrentSession();
         int listSizeOnPage = 5;
         Long countResults = (Long) session.createQuery("SELECT count (id) FROM TvShow  f").uniqueResult();
-        return (int) (countResults/listSizeOnPage)+1;
+        return (int) (countResults / listSizeOnPage) + 1;
     }
 
     //Wyrzuca listę tvShow dla danej strony
     @Override
-    public List<TvShow> tvShowsPaginationList(int pageNumber){
+    @SuppressWarnings("unchecked")
+    public List<TvShow> tvShowsPaginationList(int pageNumber) {
         Session session = sf.getCurrentSession();
         int lastPage = tvShowsLastPageNumber();
         List<TvShow> selectedList = new ArrayList<>();
         org.hibernate.query.Query selectQuery = session.createQuery("from TvShow ");
 
-        if (pageNumber <= lastPage){
-            selectQuery.setFirstResult((pageNumber-1)*5);
+        if (pageNumber <= lastPage) {
+            selectQuery.setFirstResult((pageNumber - 1) * 5);
             selectQuery.setMaxResults(5);
             selectedList = selectQuery.list();
         }
         return selectedList;
     }
-
-
-
-
     //RELATIONSHIPS
 
     //User2TvShow

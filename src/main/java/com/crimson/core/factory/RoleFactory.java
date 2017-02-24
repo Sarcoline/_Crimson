@@ -5,11 +5,11 @@ import com.crimson.core.model.Role;
 
 public class RoleFactory {
 
-    public Role getRole(String name){
+    public Role getRole(String name) {
 
         Role role = null;
 
-        switch (name.toLowerCase()){
+        switch (name.toLowerCase()) {
             case "role_1": {
                 role = Role.builder()
                         .roleName("ROLE_USER")

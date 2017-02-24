@@ -24,7 +24,7 @@ public class RestCrimsonController {
     @RequestMapping(value = "/rating/{min}/{max}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public List<TvShowSearchDTO> searchRating(@PathVariable("min") double min, @PathVariable("max") double max, HttpServletRequest request) {
-        return tvShowService.filterTvShows(min,max);
+        return tvShowService.filterTvShows(min, max);
     }
 
     @GetMapping(value = "/tvshows/{page}", produces = "application/json")

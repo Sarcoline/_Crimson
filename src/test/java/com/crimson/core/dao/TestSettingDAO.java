@@ -39,7 +39,7 @@ public class TestSettingDAO {
 
 
     @Before
-    public void setDB(){
+    public void setDB() {
         settingsDAO.save(setting1);
         settingsDAO.save(setting2);
         settingsDAO.save(setting3);
@@ -49,7 +49,7 @@ public class TestSettingDAO {
     }
 
     @Test
-    public void saveTest(){
+    public void saveTest() {
         Setting setting = Setting.builder()
                 .daysOfUpcomingEpisodes(10)
                 .episodesFromBegining(true)
@@ -58,52 +58,52 @@ public class TestSettingDAO {
 
         settingsDAO.save(setting);
 
-        Assert.assertEquals(settingsDAO.getAllSettings().contains(setting), true);
+        Assert.assertEquals(settingsDAO.getAll().contains(setting), true);
     }
 
     @Test
-    public void updateTest(){
+    public void updateTest() {
         setting1.setDaysOfUpcomingEpisodes(20);
 
         settingsDAO.update(setting1);
 
-        Assert.assertEquals(settingsDAO.getSettingById(setting1.getId()).getDaysOfUpcomingEpisodes(), 20);
+        Assert.assertEquals(settingsDAO.getById(setting1.getId()).getDaysOfUpcomingEpisodes(), 20);
     }
 
     @Test
-    public void deleteTest(){
-        int listSize = settingsDAO.getAllSettings().size();
+    public void deleteTest() {
+        int listSize = settingsDAO.getAll().size();
         settingsDAO.delete(setting1);
 
-        Assert.assertEquals(listSize-1, settingsDAO.getAllSettings().size());
-        Assert.assertEquals(settingsDAO.getAllSettings().contains(setting1), false);
+        Assert.assertEquals(listSize - 1, settingsDAO.getAll().size());
+        Assert.assertEquals(settingsDAO.getAll().contains(setting1), false);
     }
 
     @Test
-    public void getAllSettingsTest(){
-        Assert.assertEquals(settingsDAO.getAllSettings().size(), 3);
+    public void getAllSettingsTest() {
+        Assert.assertEquals(settingsDAO.getAll().size(), 3);
     }
 
     @Test
-    public void getSettingById(){
-        Assert.assertEquals(settingsDAO.getSettingById(setting1.getId()).equals(setting1), true);
+    public void getSettingById() {
+        Assert.assertEquals(settingsDAO.getById(setting1.getId()).equals(setting1), true);
     }
 
     @Test
-    public void addUser2SettingTest(){
+    public void addUser2SettingTest() {
         settingsDAO.addUser2Setting(user1, setting1);
 
-        Assert.assertEquals(settingsDAO.getSettingById(setting1.getId()).getUser(), user1);
+        Assert.assertEquals(settingsDAO.getById(setting1.getId()).getUser(), user1);
     }
 
     @Test
-    public void deleteUserFromSettingTest(){
+    public void deleteUserFromSettingTest() {
         addUser2SettingTest();
 
-        Assert.assertEquals(settingsDAO.getSettingById(setting1.getId()).getUser(), user1);
+        Assert.assertEquals(settingsDAO.getById(setting1.getId()).getUser(), user1);
 
         settingsDAO.deleteUserFromSetting(user1, setting1);
 
-        Assert.assertEquals(settingsDAO.getSettingById(setting1.getId()).getUser(), null);
+        Assert.assertEquals(settingsDAO.getById(setting1.getId()).getUser(), null);
     }
 }

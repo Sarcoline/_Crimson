@@ -79,9 +79,9 @@ public class TestTvShowDAO {
 
         tvShowDAO.save(tvShow);
 
-        Assert.assertEquals(tvShow.getTitle(), tvShowDAO.getTvById(tvShow.getId()).getTitle());
-        Assert.assertEquals(tvShow.getTitle(), tvShowDAO.getTvById(tvShow.getId()).getCountry());
-        Assert.assertEquals(tvShow.getTitle(), tvShowDAO.getTvById(tvShow.getId()).getGenre());
+        Assert.assertEquals(tvShow.getTitle(), tvShowDAO.getById(tvShow.getId()).getTitle());
+        Assert.assertEquals(tvShow.getTitle(), tvShowDAO.getById(tvShow.getId()).getCountry());
+        Assert.assertEquals(tvShow.getTitle(), tvShowDAO.getById(tvShow.getId()).getGenre());
     }
 
     @Test
@@ -91,52 +91,52 @@ public class TestTvShowDAO {
 
         tvShowDAO.update(tvShow);
 
-        Assert.assertEquals(tvShow.getTitle(), tvShowDAO.getTvById(tvShow.getId()).getTitle());
-        Assert.assertEquals(tvShow.getCountry(), tvShowDAO.getTvById(tvShow.getId()).getCountry());
+        Assert.assertEquals(tvShow.getTitle(), tvShowDAO.getById(tvShow.getId()).getTitle());
+        Assert.assertEquals(tvShow.getCountry(), tvShowDAO.getById(tvShow.getId()).getCountry());
     }
 
     @Test
     public void deleteTvShowTest() {
         tvShowDAO.delete(tvShow);
 
-        Assert.assertEquals(null, tvShowDAO.getTvById(tvShow.getId()));
+        Assert.assertEquals(null, tvShowDAO.getById(tvShow.getId()));
     }
 
     @Test
     public void getAllTvShowsTest() {
-        int sizeListTvShows = tvShowDAO.getAllTvShows().size();
+        int sizeListTvShows = tvShowDAO.getAll().size();
 
         Assert.assertEquals(10, sizeListTvShows);
     }
 
     @Test
     public void getTvShowByIdTest() {
-        TvShow getTvShowByIdTest = tvShowDAO.getTvById(tvShow.getId());
+        TvShow getTvShowByIdTest = tvShowDAO.getById(tvShow.getId());
 
         Assert.assertEquals(getTvShowByIdTest.getTitle(), tvShow.getTitle());
     }
 
     //Extra Methods
 
+//    @Test
+//    public void getAllTvShowByMaxRating(){
+//        List<TvShow> sortedList = tvShowDAO.getAllTvShowByMaxRating();
+//
+//        Assert.assertEquals(sortedList.get(0).getOverallRating(), tvShow2.getOverallRating());
+//        Assert.assertEquals(sortedList.get(1).getOverallRating(), tvShow3.getOverallRating());
+//        Assert.assertEquals(sortedList.get(2).getOverallRating(), tvShow.getOverallRating());
+//    }
+
+
     @Test
-    public void getAllTvShowByMaxRating(){
-        List<TvShow> sortedList = tvShowDAO.getAllTvShowByMaxRating();
-
-        Assert.assertEquals(sortedList.get(0).getOverallRating(), tvShow2.getOverallRating());
-        Assert.assertEquals(sortedList.get(1).getOverallRating(), tvShow3.getOverallRating());
-        Assert.assertEquals(sortedList.get(2).getOverallRating(), tvShow.getOverallRating());
-    }
-
-
-    @Test
-    public void tvShowsLastPageNumber(){
+    public void tvShowsLastPageNumber() {
         int lastPage = tvShowDAO.tvShowsLastPageNumber();
 
         Assert.assertEquals(lastPage, 1);
     }
 
     @Test
-    public void tvShowsPaginationList(){
+    public void tvShowsPaginationList() {
         List<TvShow> tvShows = tvShowDAO.tvShowsPaginationList(1);
 
         Assert.assertEquals(tvShows.get(0), tvShow);
@@ -163,8 +163,8 @@ public class TestTvShowDAO {
         tvShowDAO.addUser2TvShow(user, tvShow);
 
         Assert.assertEquals(size + 1, tvShow.getUsers().size());
-        Assert.assertEquals(size +1, tvShowDAO.getTvById(tvShow.getId()).getUsers().size());
-        Assert.assertEquals(tvShowDAO.getTvById(tvShow.getId()).getUsers().contains(user), true);
+        Assert.assertEquals(size + 1, tvShowDAO.getById(tvShow.getId()).getUsers().size());
+        Assert.assertEquals(tvShowDAO.getById(tvShow.getId()).getUsers().contains(user), true);
     }
 
     @Test
@@ -176,8 +176,8 @@ public class TestTvShowDAO {
         tvShowDAO.deleteUserFromTvShow(user, tvShow);
 
         Assert.assertEquals(size - 1, tvShow.getUsers().size());
-        Assert.assertEquals(size - 1, tvShowDAO.getTvById(tvShow.getId()).getUsers().size());
-        Assert.assertEquals(tvShowDAO.getTvById(tvShow.getId()).getUsers().contains(user), false);
+        Assert.assertEquals(size - 1, tvShowDAO.getById(tvShow.getId()).getUsers().size());
+        Assert.assertEquals(tvShowDAO.getById(tvShow.getId()).getUsers().contains(user), false);
     }
 
     //Genre2TvShow
@@ -189,8 +189,8 @@ public class TestTvShowDAO {
         tvShowDAO.addGenre2TvShow(tvShow, genre);
 
         Assert.assertEquals(size + 1, tvShow.getGenres().size());
-        Assert.assertEquals(size + 1, tvShowDAO.getTvById(tvShow.getId()).getGenres().size());
-        Assert.assertEquals(tvShowDAO.getTvById(tvShow.getId()).getGenres().contains(genre), true);
+        Assert.assertEquals(size + 1, tvShowDAO.getById(tvShow.getId()).getGenres().size());
+        Assert.assertEquals(tvShowDAO.getById(tvShow.getId()).getGenres().contains(genre), true);
     }
 
     @Test
@@ -202,8 +202,8 @@ public class TestTvShowDAO {
         tvShowDAO.deleteGenreFromTvShow(tvShow, genre);
 
         Assert.assertEquals(size - 1, tvShow.getGenres().size());
-        Assert.assertEquals(size - 1, tvShowDAO.getTvById(tvShow.getId()).getGenres().size());
-        Assert.assertEquals(tvShowDAO.getTvById(tvShow.getId()).getGenres().contains(genre), false);
+        Assert.assertEquals(size - 1, tvShowDAO.getById(tvShow.getId()).getGenres().size());
+        Assert.assertEquals(tvShowDAO.getById(tvShow.getId()).getGenres().contains(genre), false);
     }
 
     //TvShow2Episode
@@ -215,8 +215,8 @@ public class TestTvShowDAO {
         tvShowDAO.addEpisode2TvShow(tvShow, episode);
 
         Assert.assertEquals(size + 1, tvShow.getEpisodes().size());
-        Assert.assertEquals(size +1, tvShowDAO.getTvById(tvShow.getId()).getEpisodes().size());
-        Assert.assertEquals(tvShowDAO.getTvById(tvShow.getId()).getEpisodes().contains(episode), true);
+        Assert.assertEquals(size + 1, tvShowDAO.getById(tvShow.getId()).getEpisodes().size());
+        Assert.assertEquals(tvShowDAO.getById(tvShow.getId()).getEpisodes().contains(episode), true);
     }
 
     @Test
@@ -228,8 +228,8 @@ public class TestTvShowDAO {
         tvShowDAO.deleteEpisodeFromTvShow(tvShow, episode);
 
         Assert.assertEquals(size - 1, tvShow.getEpisodes().size());
-        Assert.assertEquals(size - 1, tvShowDAO.getTvById(tvShow.getId()).getEpisodes().size());
-        Assert.assertEquals(tvShowDAO.getTvById(tvShow.getId()).getEpisodes().contains(episode), false);
+        Assert.assertEquals(size - 1, tvShowDAO.getById(tvShow.getId()).getEpisodes().size());
+        Assert.assertEquals(tvShowDAO.getById(tvShow.getId()).getEpisodes().contains(episode), false);
     }
 
     @Test
@@ -239,8 +239,8 @@ public class TestTvShowDAO {
         tvShowDAO.addRating2TvShow(tvShow, rating);
 
         Assert.assertEquals(size + 1, tvShow.getRatings().size());
-        Assert.assertEquals(size + 1, tvShowDAO.getTvById(tvShow.getId()).getRatings().size());
-        Assert.assertEquals(tvShowDAO.getTvById(tvShow.getId()).getRatings().contains(rating), true);
+        Assert.assertEquals(size + 1, tvShowDAO.getById(tvShow.getId()).getRatings().size());
+        Assert.assertEquals(tvShowDAO.getById(tvShow.getId()).getRatings().contains(rating), true);
     }
 
     @Test
@@ -252,7 +252,7 @@ public class TestTvShowDAO {
         tvShowDAO.deleteRatingFromTvShow(tvShow, rating);
 
         Assert.assertEquals(size - 1, tvShow.getRatings().size());
-        Assert.assertEquals(size - 1, tvShowDAO.getTvById(tvShow.getId()).getRatings().size());
-        Assert.assertEquals(tvShowDAO.getTvById(tvShow.getId()).getRatings().contains(rating), false);
+        Assert.assertEquals(size - 1, tvShowDAO.getById(tvShow.getId()).getRatings().size());
+        Assert.assertEquals(tvShowDAO.getById(tvShow.getId()).getRatings().contains(rating), false);
     }
 }

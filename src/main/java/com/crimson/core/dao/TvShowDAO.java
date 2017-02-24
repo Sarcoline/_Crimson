@@ -4,12 +4,7 @@ import com.crimson.core.model.*;
 
 import java.util.List;
 
-public interface TvShowDAO {
-    void save(TvShow tv);
-
-    List<TvShow> getAllTvShows();
-
-    TvShow getTvById(Long id);
+public interface TvShowDAO extends BaseDAO<TvShow, Long> {
 
     TvShow getTvByIdWithEpisodes(Long id);
 
@@ -22,12 +17,6 @@ public interface TvShowDAO {
     List<TvShow> getTvByYear(int releaseYear);
 
     List<TvShow> getTvByNetwork(String network);
-
-    List<TvShow> getAllTvShowByMaxRating();
-
-    void delete(TvShow tvshow);
-
-    void update(TvShow tvshow);
 
     List<TvShow> searchTvShow(String pattern);
 

@@ -48,7 +48,7 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public Rating getRatingByID(Long id) {
-        return ratingDAO.getRatingByID(id);
+        return ratingDAO.getById(id);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public List<Rating> getAllRatings() {
-        return ratingDAO.getAllRatings();
+        return ratingDAO.getAll();
     }
 
     @Override
@@ -79,7 +79,7 @@ public class RatingServiceImpl implements RatingService {
     }
 
     public void calculateRating(long id) {
-        TvShow tvShow = tvShowDAO.getTvById(id);
+        TvShow tvShow = tvShowDAO.getById(id);
         List<Rating> ratings = tvShow.getRatings();
         double overall = ratings.stream().mapToDouble(Rating::getValue).average().getAsDouble();
         tvShow.setOverallRating(overall);

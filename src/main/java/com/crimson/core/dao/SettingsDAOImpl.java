@@ -22,13 +22,13 @@ public class SettingsDAOImpl implements SettingsDAO {
     }
 
     @Override
-    public List<Setting> getAllSettings() {
+    public List<Setting> getAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From Setting a", Setting.class).getResultList();
     }
 
     @Override
-    public Setting getSettingById(Long id) {
+    public Setting getById(Long id) {
         Session session = sessionFactory.getCurrentSession();
         return session.find(Setting.class, id);
     }

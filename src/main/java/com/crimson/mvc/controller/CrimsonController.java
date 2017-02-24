@@ -98,7 +98,7 @@ public class CrimsonController {
     @GetMapping("/{name}/edit/episodes")
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     public String displayTvShowEpisodes(@RequestParam(value = "error", required = false) String error,
-                                    @PathVariable("name") String name, Model model) {
+                                        @PathVariable("name") String name, Model model) {
         TvShowDTO tv = tvShowService.getTvBySlug(name);
         List<EpisodeDTO> episodes = tv.getEpisodes();
         episodes.sort(Comparator.comparing(EpisodeDTO::getSeason));

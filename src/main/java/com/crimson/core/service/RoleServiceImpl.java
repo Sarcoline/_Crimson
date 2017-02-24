@@ -23,12 +23,12 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<Role> getAllRoles() {
-        return roleDAO.getAllRoles();
+        return roleDAO.getAll();
     }
 
     @Override
     public Role getRoleById(Long id) {
-        return roleDAO.getRoleById(id);
+        return roleDAO.getById(id);
     }
 
     @Override

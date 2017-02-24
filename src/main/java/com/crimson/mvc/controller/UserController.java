@@ -58,6 +58,7 @@ public class UserController {
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             return "redirect:/";
         }
+
         if (error != null) {
             model.addAttribute("error", "Invalid username and password!");
         }
@@ -96,7 +97,7 @@ public class UserController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
-        userService.changeProfilePic(user,dto);
+        userService.changeProfilePic(user, dto);
         return "redirect:/user/edit";
     }
 

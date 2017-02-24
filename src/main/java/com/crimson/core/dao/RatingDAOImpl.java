@@ -12,64 +12,64 @@ import java.util.List;
 public class RatingDAOImpl implements RatingDAO {
 
     @Autowired
-    private SessionFactory sf;
+    private SessionFactory sessionFactory;
 
     @Override
     public void save(Rating rating) {
-        Session session = sf.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(rating);
     }
 
     @Override
     public void delete(Rating rating) {
-        Session session = sf.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         session.delete(rating);
     }
 
     @Override
     public void update(Rating rating) {
-        Session session = sf.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         session.update(rating);
     }
 
     @Override
     public Rating getRatingByIdUser(Long idUser) {
-        Session session = sf.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         return session.find(Rating.class, idUser);
     }
 
     @Override
-    public Rating getRatingByID(Long id) {
-        Session session = sf.getCurrentSession();
+    public Rating getById(Long id) {
+        Session session = sessionFactory.getCurrentSession();
         return session.find(Rating.class, id);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<Rating> getRatingByIdTvShow(Long idTvShow) {
-        Session session = sf.getCurrentSession();
-        String hql = "from Rating s where s.tvShowRating.id = ?";
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "from Rating s where s.tvShow.id = ?";
         return session.createQuery(hql)
                 .setParameter(0, idTvShow)
                 .getResultList();
     }
 
     @Override
-    public List<Rating> getAllRatings() {
-        Session session = sf.getCurrentSession();
+    public List<Rating> getAll() {
+        Session session = sessionFactory.getCurrentSession();
         return session.createQuery("SELECT a FROM  Rating a", Rating.class).getResultList();
     }
 
+    //podobno proper way?
     @Override
     public Rating getRating(long idtv, long iduser) {
-        Session session = sf.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         String hql = "from Rating s where s.tvShow.id = ? and s.user.id = ?";
         List rating = session.createQuery(hql)
                 .setParameter(0, idtv)
                 .setParameter(1, iduser)
                 .getResultList();
-        if (rating.size() != 0) return (Rating) rating.get(0);
-        return new Rating();
+        return rating.isEmpty() ? new Rating() : (Rating) rating.get(0);
     }
 
 }

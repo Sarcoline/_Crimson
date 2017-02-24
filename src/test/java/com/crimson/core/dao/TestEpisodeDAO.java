@@ -55,9 +55,9 @@ public class TestEpisodeDAO {
 
         episodeDAO.save(episode);
 
-        Assert.assertEquals(episode.getTitle(), episodeDAO.getEpisodeById(episode.getId()).getTitle());
-        Assert.assertEquals(episode.getNumber(), episodeDAO.getEpisodeById(episode.getId()).getNumber());
-        Assert.assertEquals(episode.getSeason(), episodeDAO.getEpisodeById(episode.getId()).getSeason());
+        Assert.assertEquals(episode.getTitle(), episodeDAO.getById(episode.getId()).getTitle());
+        Assert.assertEquals(episode.getNumber(), episodeDAO.getById(episode.getId()).getNumber());
+        Assert.assertEquals(episode.getSeason(), episodeDAO.getById(episode.getId()).getSeason());
     }
 
     @Test
@@ -67,27 +67,27 @@ public class TestEpisodeDAO {
 
         episodeDAO.update(episode);
 
-        Assert.assertEquals(episode.getTitle(), episodeDAO.getEpisodeById(episode.getId()).getTitle());
-        Assert.assertEquals(episode.getSeason(), episodeDAO.getEpisodeById(episode.getId()).getSeason());
+        Assert.assertEquals(episode.getTitle(), episodeDAO.getById(episode.getId()).getTitle());
+        Assert.assertEquals(episode.getSeason(), episodeDAO.getById(episode.getId()).getSeason());
     }
 
     @Test
     public void deleteEpisodeTest() {
         episodeDAO.delete(episode);
 
-        Assert.assertEquals(null, episodeDAO.getEpisodeById(episode.getId()));
+        Assert.assertEquals(null, episodeDAO.getById(episode.getId()));
     }
 
     @Test
     public void getAllEpisodesTest() {
-        int sizeList = episodeDAO.getAllEpisodes().size();
+        int sizeList = episodeDAO.getAll().size();
 
         Assert.assertEquals(1, sizeList);
     }
 
     @Test
     public void getEpisodeByIdTest() {
-        Episode test = episodeDAO.getEpisodeById(episode.getId());
+        Episode test = episodeDAO.getById(episode.getId());
 
         Assert.assertEquals(test.getTitle(), episode.getTitle());
         Assert.assertEquals(test.getSeason(), episode.getSeason());
@@ -114,8 +114,8 @@ public class TestEpisodeDAO {
         episodeDAO.addUser2Episode(user, episode);
 
         Assert.assertEquals(size + 1, episode.getUsers().size());
-        Assert.assertEquals(size+1, episodeDAO.getEpisodeById(episode.getId()).getUsers().size());
-        Assert.assertEquals(episodeDAO.getEpisodeById(episode.getId()).getUsers().contains(user), true);
+        Assert.assertEquals(size + 1, episodeDAO.getById(episode.getId()).getUsers().size());
+        Assert.assertEquals(episodeDAO.getById(episode.getId()).getUsers().contains(user), true);
     }
 
     @Test
@@ -127,8 +127,8 @@ public class TestEpisodeDAO {
         episodeDAO.deleteUserFromEpisode(user, episode);
 
         Assert.assertEquals(size - 1, episode.getUsers().size());
-        Assert.assertEquals(size - 1, episodeDAO.getEpisodeById(episode.getId()).getUsers().size());
-        Assert.assertEquals(episodeDAO.getEpisodeById(episode.getId()).getUsers().contains(user), false);
+        Assert.assertEquals(size - 1, episodeDAO.getById(episode.getId()).getUsers().size());
+        Assert.assertEquals(episodeDAO.getById(episode.getId()).getUsers().contains(user), false);
     }
 
     //TvShow2Episode
@@ -137,13 +137,13 @@ public class TestEpisodeDAO {
     public void addTvShow2EpisodeTest() {
         episodeDAO.addTvShow2Episode(tvShow, episode);
 
-        Assert.assertEquals(episodeDAO.getEpisodeById(episode.getId()).getTvShow().equals(tvShow), true);
+        Assert.assertEquals(episodeDAO.getById(episode.getId()).getTvShow().equals(tvShow), true);
     }
 
     @Test
     public void deleteTvShowFromEpisodeTest() {
         episodeDAO.deleteTvShowFromEpisode(tvShow, episode);
 
-        Assert.assertEquals(episodeDAO.getEpisodeById(episode.getId()).getTvShow(), null);
+        Assert.assertEquals(episodeDAO.getById(episode.getId()).getTvShow(), null);
     }
 }

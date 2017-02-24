@@ -44,7 +44,7 @@ public class TestGenreDAO {
         genre.setName("Comedy");
         genreDAO.save(genre);
 
-        Assert.assertEquals(genre.getName(), genreDAO.getGenreById(genre.getId()).getName());
+        Assert.assertEquals(genre.getName(), genreDAO.getById(genre.getId()).getName());
     }
 
     @Test
@@ -52,26 +52,26 @@ public class TestGenreDAO {
         genre.setName("NEW_Drama");
 
         genreDAO.update(genre);
-        Assert.assertEquals(genre.getName(), genreDAO.getGenreById(genre.getId()).getName());
+        Assert.assertEquals(genre.getName(), genreDAO.getById(genre.getId()).getName());
     }
 
     @Test
     public void deleteGenreTest() {
         genreDAO.delete(genre);
 
-        Assert.assertEquals(null, genreDAO.getGenreById(genre.getId()));
+        Assert.assertEquals(null, genreDAO.getById(genre.getId()));
     }
 
     @Test
     public void getAllGenreTest() {
-        int sizeList = genreDAO.getAllGenre().size();
+        int sizeList = genreDAO.getAll().size();
 
         Assert.assertEquals(1, sizeList);
     }
 
     @Test
     public void getGenreByIdTest() {
-        Genre testgenre = genreDAO.getGenreById(genre.getId());
+        Genre testgenre = genreDAO.getById(genre.getId());
 
         Assert.assertEquals(testgenre.getName(), genre.getName());
     }
@@ -95,8 +95,8 @@ public class TestGenreDAO {
         genreDAO.addTvShow2Genre(genre, tvShow);
 
         Assert.assertEquals(size + 1, genre.getTvShows().size());
-        Assert.assertEquals(size +1, genreDAO.getGenreById(genre.getId()).getTvShows().size());
-        Assert.assertEquals(genreDAO.getGenreById(genre.getId()).getTvShows().contains(tvShow), true);
+        Assert.assertEquals(size + 1, genreDAO.getById(genre.getId()).getTvShows().size());
+        Assert.assertEquals(genreDAO.getById(genre.getId()).getTvShows().contains(tvShow), true);
     }
 
     @Test
@@ -108,8 +108,8 @@ public class TestGenreDAO {
         genreDAO.deleteTvShowFromGenre(genre, tvShow);
 
         Assert.assertEquals(size - 1, genre.getTvShows().size());
-        Assert.assertEquals(size - 1, genreDAO.getGenreById(genre.getId()).getTvShows().size());
-        Assert.assertEquals(genreDAO.getGenreById(genre.getId()).getTvShows().contains(tvShow), false);
+        Assert.assertEquals(size - 1, genreDAO.getById(genre.getId()).getTvShows().size());
+        Assert.assertEquals(genreDAO.getById(genre.getId()).getTvShows().contains(tvShow), false);
     }
 
 }
