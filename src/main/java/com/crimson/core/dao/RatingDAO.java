@@ -6,11 +6,11 @@ import java.util.List;
 
 
 public interface RatingDAO {
-    void saveRating(Rating rating);
+    void save(Rating rating);
 
-    void deleteRating(Rating rating);
+    void delete(Rating rating);
 
-    void updateRating(Rating rating);
+    void update(Rating rating);
 
     Rating getRatingByIdUser(Long idUser);
 

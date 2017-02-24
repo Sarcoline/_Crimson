@@ -7,15 +7,15 @@ import java.util.List;
 
 public interface SettingsDAO {
 
-    void saveSetting(Setting setting);
+    void save(Setting setting);
 
     List<Setting> getAllSettings();
 
     Setting getSettingById(Long id);
 
-    void deleteSetting(Setting setting);
+    void delete(Setting setting);
 
-    void updateSetting(Setting setting);
+    void update(Setting setting);
 
     void addUser2Setting(User user, Setting setting);
 

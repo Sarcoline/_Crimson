@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
         }
 
 
-        userDAO.saveUser(user);
+        userDAO.save(user);
     }
 
     @Override
@@ -76,21 +76,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(UserDTO userDTO) {
         User user = userDAO.getUserById(userDTO.getId());
-        userDAO.deleteUser(user);
+        userDAO.delete(user);
     }
 
     @Override
     public void updateUser(UserDTO userDTO) throws IOException {
         User user2 = userDAO.getUserById(userDTO.getId());
         user2.setEmail(userDTO.getEmail());
-        userDAO.updateUser(user2);
+        userDAO.update(user2);
     }
 
     @Override
     public void changeProfilePic(UserDTO userDTO, MultipartFile file) throws IOException {
         User user2 = userDAO.getUserById(userDTO.getId());
         user2.setProfilePic(file.getBytes());
-        userDAO.updateUser(user2);
+        userDAO.update(user2);
     }
 
     @Override
@@ -101,19 +101,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkFollow(UserDTO userDTO, TvShowDTO tvShow) {
-        return userDAO.getUserByName(userDTO.getName()).getUserTvShowList().contains(tvShowDAO.getTvById(tvShow.getId()));
+        return userDAO.getUserByName(userDTO.getName()).getTvShows().contains(tvShowDAO.getTvById(tvShow.getId()));
     }
 
     @Override
     public void addTvShow2User(UserDTO userDTO, TvShowDTO tvShow) {
-        userDAO.getUserByName(userDTO.getName()).getUserTvShowList().add(mapperFacade.map(tvShow, TvShow.class));
+        userDAO.getUserByName(userDTO.getName()).getTvShows().add(mapperFacade.map(tvShow, TvShow.class));
     }
 
     @Override
     public void deleteTvShowFromUser(UserDTO userDTO, TvShowDTO tvShow) {
         User user = userDAO.getUserByName(userDTO.getName());
         TvShow tv = tvShowDAO.getTvById(tvShow.getId());
-        user.getUserTvShowList().remove(tv);
+        user.getTvShows().remove(tv);
 
     }
 
@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
     @SuppressWarnings("unchecked")
     public List<TvShowDTO> getUserTvShows(UserDTO userDTO) {
         List tvs = new ArrayList();
-        userDAO.getUserByName(userDTO.getName()).getUserTvShowList().forEach(
+        userDAO.getUserByName(userDTO.getName()).getTvShows().forEach(
                 tv -> tvs.add(mapperFacade.map(tv, TvShowDTO.class)));
         return tvs;
     }
@@ -208,7 +208,7 @@ public class UserServiceImpl implements UserService {
     public void updatePassword(UserDTO userDTO, String password) {
         User user = userDAO.getUserById(userDTO.getId());
         user.setPassword(encoder.encode(password));
-        userDAO.updateUser(user);
+        userDAO.update(user);
     }
 
     @Override
@@ -220,6 +220,6 @@ public class UserServiceImpl implements UserService {
     public void updateSettings(UserDTO userDTO, int days) {
         User user = userDAO.getUserById(userDTO.getId());
         user.getSetting().setDaysOfUpcomingEpisodes(days);
-        userDAO.updateUser(user);
+        userDAO.update(user);
     }
 }

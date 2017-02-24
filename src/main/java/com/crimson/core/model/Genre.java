@@ -40,7 +40,7 @@ public @Data class Genre {
     @JoinTable(name = "Genre2TvShow",
             joinColumns = @JoinColumn(name = "idGenre"),
             inverseJoinColumns = @JoinColumn(name = "idTvShow"))
-    private List<TvShow> genreTvShowList = new ArrayList<>();
+    private List<TvShow> tvShows = new ArrayList<>();
 
 
 }

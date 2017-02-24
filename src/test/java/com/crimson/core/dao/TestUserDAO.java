@@ -60,16 +60,16 @@ public class TestUserDAO {
     @Before
     public void setDB() {
 
-        userDAO.saveUser(user);
-        tvShowDAO.saveTvShow(tvShow);
-        tvShowDAO.saveTvShow(tvShow2);
-        tvShowDAO.saveTvShow(tvShow3);
-        episodeDAO.saveEpisode(episode);
-        episodeDAO.saveEpisode(episode2);
-        episodeDAO.saveEpisode(episode3);
-        ratingDAO.saveRating(rating);
-        roleDAO.saveRole(role1);
-        settingsDAO.saveSetting(setting1);
+        userDAO.save(user);
+        tvShowDAO.save(tvShow);
+        tvShowDAO.save(tvShow2);
+        tvShowDAO.save(tvShow3);
+        episodeDAO.save(episode);
+        episodeDAO.save(episode2);
+        episodeDAO.save(episode3);
+        ratingDAO.save(rating);
+        roleDAO.save(role1);
+        settingsDAO.save(setting1);
     }
 
     @Test
@@ -78,7 +78,7 @@ public class TestUserDAO {
         user.setEmail("Alex@wp.pl");
         user.setPassword("1234");
 
-        userDAO.saveUser(user);
+        userDAO.save(user);
 
         Assert.assertEquals(user.getName(), userDAO.getUserById(user.getId()).getName());
         Assert.assertEquals(user.getEmail(), userDAO.getUserById(user.getId()).getEmail());
@@ -91,7 +91,7 @@ public class TestUserDAO {
         user.setEmail("changeEmail");
         user.setPassword("changePassword");
 
-        userDAO.updateUser(user);
+        userDAO.update(user);
 
         Assert.assertEquals(user.getEmail(), "changeEmail");
         Assert.assertEquals(user.getPassword(), "changePassword");
@@ -99,7 +99,7 @@ public class TestUserDAO {
 
     @Test
     public void deleteUserTest() {
-        userDAO.deleteUser(user);
+        userDAO.delete(user);
 
         Assert.assertEquals(null, userDAO.getUserById(user.getId()));
     }
@@ -134,19 +134,19 @@ public class TestUserDAO {
         userDAO.addTvShow2User(user, tvShow3);
         Rating rating = new Rating();
         rating.setValue(5);
-        rating.setTvShowRating(tvShow);
-        rating.setUserRating(user);
+        rating.setTvShow(tvShow);
+        rating.setUser(user);
         Rating rating2 = new Rating();
         rating2.setValue(8);
-        rating2.setTvShowRating(tvShow2);
-        rating2.setUserRating(user);
-        user.getUserRatings().add(rating);
-        user.getUserRatings().add(rating2);
+        rating2.setTvShow(tvShow2);
+        rating2.setUser(user);
+        user.getRatings().add(rating);
+        user.getRatings().add(rating2);
         List<TvShow> userTvShowList = userDAO.getUserTvShowsSortedByMaxRating(user);
 
         Assert.assertEquals(userTvShowList.size(), 2);
-        Assert.assertEquals(user.getUserRatings().get(0).getValue(), rating.getValue());
-        Assert.assertEquals(user.getUserRatings().get(1).getValue(), rating2.getValue());
+        Assert.assertEquals(user.getRatings().get(0).getValue(), rating.getValue());
+        Assert.assertEquals(user.getRatings().get(1).getValue(), rating2.getValue());
     }
 
     @Test
@@ -169,76 +169,76 @@ public class TestUserDAO {
     //User2TvShow
     @Test
     public void addTvShow2User() {
-        int size = user.getUserTvShowList().size();
+        int size = user.getTvShows().size();
 
         userDAO.addTvShow2User(user, tvShow);
-        Assert.assertEquals(size + 1, user.getUserTvShowList().size());
-        Assert.assertEquals(size + 1, userDAO.getUserById(user.getId()).getUserTvShowList().size());
-        Assert.assertEquals(userDAO.getUserById(user.getId()).getUserTvShowList().contains(tvShow), true);
+        Assert.assertEquals(size + 1, user.getTvShows().size());
+        Assert.assertEquals(size + 1, userDAO.getUserById(user.getId()).getTvShows().size());
+        Assert.assertEquals(userDAO.getUserById(user.getId()).getTvShows().contains(tvShow), true);
     }
 
     @Test
     public void deleteTvShowFromUser() {
         addTvShow2User();
 
-        int size = user.getUserTvShowList().size();
+        int size = user.getTvShows().size();
 
         userDAO.deleteTvShowFromUser(user, tvShow);
 
-        Assert.assertEquals(size - 1, user.getUserTvShowList().size());
-        Assert.assertEquals(size - 1, userDAO.getUserById(user.getId()).getUserTvShowList().size());
-        Assert.assertEquals(userDAO.getUserById(user.getId()).getUserTvShowList().contains(tvShow), false);
+        Assert.assertEquals(size - 1, user.getTvShows().size());
+        Assert.assertEquals(size - 1, userDAO.getUserById(user.getId()).getTvShows().size());
+        Assert.assertEquals(userDAO.getUserById(user.getId()).getTvShows().contains(tvShow), false);
     }
 
     //User2Episode
 
     @Test
     public void addEpisode2User() {
-        int size = user.getUserEpisodeList().size();
+        int size = user.getEpisodes().size();
 
         userDAO.addEpisode2User(user, episode);
 
-        Assert.assertEquals(size + 1, user.getUserEpisodeList().size());
-        Assert.assertEquals(size + 1, userDAO.getUserById(user.getId()).getUserEpisodeList().size());
-        Assert.assertEquals(userDAO.getUserById(user.getId()).getUserEpisodeList().contains(episode), true);
+        Assert.assertEquals(size + 1, user.getEpisodes().size());
+        Assert.assertEquals(size + 1, userDAO.getUserById(user.getId()).getEpisodes().size());
+        Assert.assertEquals(userDAO.getUserById(user.getId()).getEpisodes().contains(episode), true);
     }
 
     @Test
     public void deleteEpisodeFromUser() {
         addEpisode2User();
 
-        int size = user.getUserEpisodeList().size();
+        int size = user.getEpisodes().size();
 
         userDAO.deleteEpisodeFromUser(user, episode);
 
-        Assert.assertEquals(size - 1, user.getUserEpisodeList().size());
-        Assert.assertEquals(size - 1, userDAO.getUserById(user.getId()).getUserEpisodeList().size());
-        Assert.assertEquals(userDAO.getUserById(user.getId()).getUserEpisodeList().contains(episode), false);
+        Assert.assertEquals(size - 1, user.getEpisodes().size());
+        Assert.assertEquals(size - 1, userDAO.getUserById(user.getId()).getEpisodes().size());
+        Assert.assertEquals(userDAO.getUserById(user.getId()).getEpisodes().contains(episode), false);
     }
 
     //Rating
     @Test
     public void addRating2User() {
-        int size = user.getUserRatings().size();
+        int size = user.getRatings().size();
 
         userDAO.addRating2User(user, rating);
 
-        Assert.assertEquals(size + 1, user.getUserRatings().size());
-        Assert.assertEquals(size + 1, userDAO.getUserById(user.getId()).getUserRatings().size());
-        Assert.assertEquals(userDAO.getUserById(user.getId()).getUserRatings().contains(rating), true);
+        Assert.assertEquals(size + 1, user.getRatings().size());
+        Assert.assertEquals(size + 1, userDAO.getUserById(user.getId()).getRatings().size());
+        Assert.assertEquals(userDAO.getUserById(user.getId()).getRatings().contains(rating), true);
     }
 
     @Test
     public void deleteRatingFromUser() {
         addRating2User();
 
-        int size = user.getUserRatings().size();
+        int size = user.getRatings().size();
 
         userDAO.deleteRatingFromUser(user, rating);
 
-        Assert.assertEquals(size - 1, user.getUserRatings().size());
-        Assert.assertEquals(size - 1, userDAO.getUserById(user.getId()).getUserRatings().size());
-        Assert.assertEquals(userDAO.getUserById(user.getId()).getUserRatings().contains(rating), false);
+        Assert.assertEquals(size - 1, user.getRatings().size());
+        Assert.assertEquals(size - 1, userDAO.getUserById(user.getId()).getRatings().size());
+        Assert.assertEquals(userDAO.getUserById(user.getId()).getRatings().contains(rating), false);
     }
 
     //Setting

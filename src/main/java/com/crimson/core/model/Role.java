@@ -26,7 +26,7 @@ public @Data class Role {
         this.roleName = roleName;
     }
 
-    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<User> roleUsers = new ArrayList<>();
+    @ManyToMany(targetEntity = User.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<User> users = new ArrayList<>();
 
 }

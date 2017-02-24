@@ -21,23 +21,23 @@ public class EpisodeDAOImpl implements EpisodeDAO {
     private UserDAO userDAO;
 
     @Override
-    public void saveEpisode(Episode episode) {
+    public void save(Episode episode) {
         Session session = sf.getCurrentSession();
         session.persist(episode);
     }
 
     @Override
-    public void deleteEpisode(Episode episode) {
+    public void delete(Episode episode) {
         Session session = sf.getCurrentSession();
         List<User> users = userDAO.getAllUsers();
         for (User user: users) {
-            user.getUserEpisodeList().remove(episode);
+            user.getEpisodes().remove(episode);
         }
         session.delete(episode);
     }
 
     @Override
-    public void updateEpisode(Episode episode) {
+    public void update(Episode episode) {
         Session session = sf.getCurrentSession();
         session.update(episode);
     }
@@ -68,11 +68,11 @@ public class EpisodeDAOImpl implements EpisodeDAO {
     @Override
     public void addUser2Episode(User user, Episode episode) {
         Session session = sf.getCurrentSession();
-        if (!episode.getEpisodeUserList().contains(user)) {
+        if (!episode.getUsers().contains(user)) {
             List<User> episodes = new ArrayList<>();
-            episodes.addAll(episode.getEpisodeUserList());
+            episodes.addAll(episode.getUsers());
             episodes.add(user);
-            episode.setEpisodeUserList(episodes);
+            episode.setUsers(episodes);
         }
         session.saveOrUpdate(episode);
     }
@@ -80,9 +80,7 @@ public class EpisodeDAOImpl implements EpisodeDAO {
     @Override
     public void deleteUserFromEpisode(User user, Episode episode) {
         Session session = sf.getCurrentSession();
-        if (episode.getEpisodeUserList().contains(user)) {
-            episode.getEpisodeUserList().remove(user);
-        }
+        episode.getUsers().remove(user);
         session.saveOrUpdate(episode);
     }
 
@@ -91,15 +89,15 @@ public class EpisodeDAOImpl implements EpisodeDAO {
     @Override
     public void addTvShow2Episode(TvShow tvShow, Episode episode) {
         Session session = sf.getCurrentSession();
-        episode.setEpisodeFromTvShow(tvShow);
+        episode.setTvShow(tvShow);
         session.saveOrUpdate(episode);
     }
 
     @Override
     public void deleteTvShowFromEpisode(TvShow tvShow, Episode episode) {
         Session session = sf.getCurrentSession();
-        if (episode.getEpisodeFromTvShow() == tvShow) {
-            episode.setEpisodeFromTvShow(null);
+        if (episode.getTvShow() == tvShow) {
+            episode.setTvShow(null);
         }
         session.saveOrUpdate(episode);
     }

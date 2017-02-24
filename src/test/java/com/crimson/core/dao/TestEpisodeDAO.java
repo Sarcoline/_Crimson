@@ -44,16 +44,16 @@ public class TestEpisodeDAO {
 
     @Before
     public void setDB() {
-        episodeDAO.saveEpisode(episode);
-        tvShowDAO.saveTvShow(tvShow);
-        userDAO.saveUser(user);
+        episodeDAO.save(episode);
+        tvShowDAO.save(tvShow);
+        userDAO.save(user);
     }
 
     @Test
     public void addEpisodeTest() {
         episode.setTitle("Nowy");
 
-        episodeDAO.saveEpisode(episode);
+        episodeDAO.save(episode);
 
         Assert.assertEquals(episode.getTitle(), episodeDAO.getEpisodeById(episode.getId()).getTitle());
         Assert.assertEquals(episode.getNumber(), episodeDAO.getEpisodeById(episode.getId()).getNumber());
@@ -65,7 +65,7 @@ public class TestEpisodeDAO {
         episode.setTitle("UpdatedTitle");
         episode.setSeason(2);
 
-        episodeDAO.updateEpisode(episode);
+        episodeDAO.update(episode);
 
         Assert.assertEquals(episode.getTitle(), episodeDAO.getEpisodeById(episode.getId()).getTitle());
         Assert.assertEquals(episode.getSeason(), episodeDAO.getEpisodeById(episode.getId()).getSeason());
@@ -73,7 +73,7 @@ public class TestEpisodeDAO {
 
     @Test
     public void deleteEpisodeTest() {
-        episodeDAO.deleteEpisode(episode);
+        episodeDAO.delete(episode);
 
         Assert.assertEquals(null, episodeDAO.getEpisodeById(episode.getId()));
     }
@@ -109,26 +109,26 @@ public class TestEpisodeDAO {
 
     @Test
     public void addUser2EpisodeTest() {
-        int size = episode.getEpisodeUserList().size();
+        int size = episode.getUsers().size();
 
         episodeDAO.addUser2Episode(user, episode);
 
-        Assert.assertEquals(size + 1, episode.getEpisodeUserList().size());
-        Assert.assertEquals(size+1, episodeDAO.getEpisodeById(episode.getId()).getEpisodeUserList().size());
-        Assert.assertEquals(episodeDAO.getEpisodeById(episode.getId()).getEpisodeUserList().contains(user), true);
+        Assert.assertEquals(size + 1, episode.getUsers().size());
+        Assert.assertEquals(size+1, episodeDAO.getEpisodeById(episode.getId()).getUsers().size());
+        Assert.assertEquals(episodeDAO.getEpisodeById(episode.getId()).getUsers().contains(user), true);
     }
 
     @Test
     public void deleteUserFromEpisode() {
         addUser2EpisodeTest();
 
-        int size = episode.getEpisodeUserList().size();
+        int size = episode.getUsers().size();
 
         episodeDAO.deleteUserFromEpisode(user, episode);
 
-        Assert.assertEquals(size - 1, episode.getEpisodeUserList().size());
-        Assert.assertEquals(size - 1, episodeDAO.getEpisodeById(episode.getId()).getEpisodeUserList().size());
-        Assert.assertEquals(episodeDAO.getEpisodeById(episode.getId()).getEpisodeUserList().contains(user), false);
+        Assert.assertEquals(size - 1, episode.getUsers().size());
+        Assert.assertEquals(size - 1, episodeDAO.getEpisodeById(episode.getId()).getUsers().size());
+        Assert.assertEquals(episodeDAO.getEpisodeById(episode.getId()).getUsers().contains(user), false);
     }
 
     //TvShow2Episode
@@ -137,13 +137,13 @@ public class TestEpisodeDAO {
     public void addTvShow2EpisodeTest() {
         episodeDAO.addTvShow2Episode(tvShow, episode);
 
-        Assert.assertEquals(episodeDAO.getEpisodeById(episode.getId()).getEpisodeFromTvShow().equals(tvShow), true);
+        Assert.assertEquals(episodeDAO.getEpisodeById(episode.getId()).getTvShow().equals(tvShow), true);
     }
 
     @Test
     public void deleteTvShowFromEpisodeTest() {
         episodeDAO.deleteTvShowFromEpisode(tvShow, episode);
 
-        Assert.assertEquals(episodeDAO.getEpisodeById(episode.getId()).getEpisodeFromTvShow(), null);
+        Assert.assertEquals(episodeDAO.getEpisodeById(episode.getId()).getTvShow(), null);
     }
 }

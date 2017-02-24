@@ -8,15 +8,15 @@ import java.util.List;
 
 public interface RoleDAO {
 
-    void saveRole(Role role);
+    void save(Role role);
 
     List<Role> getAllRoles();
 
     Role getRoleById(Long id);
 
-    void deleteRole(Role role);
+    void delete(Role role);
 
-    void updateRole(Role role);
+    void update(Role role);
 
     //User2Role
     void addUser2Role(User user, Role role);

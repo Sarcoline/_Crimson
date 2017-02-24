@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="uk-container uk-container-center uk-margin-large-top">
-    <h1>Edit ${episode.title} of ${episode.episodeFromTvShow.title}</h1>
+    <h1>Edit ${episode.title} of ${episode.tvShow.title}</h1>
     <div class="uk-grid uk-margin-large-top">
         <div class="uk-width-1-1">
             <c:if test="${not empty error}">
@@ -69,7 +69,7 @@
                 </div>
                 <form:input path="id" value="${episode.id}" type="hidden"/>
                 <form:input path="idTvShow" value="${episode.idTvShow}" type="hidden"/>
-                <a href="<c:url value="/tv/${episode.episodeFromTvShow.slug}/edit/episodes"/>"
+                <a href="<c:url value="/tv/${episode.tvShow.slug}/edit/episodes"/>"
                    class="uk-button uk-margin-top">Back</a>
                 <input class=" uk-button uk-button-success uk-margin-top" name="submit"
                        type="submit"

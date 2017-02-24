@@ -21,7 +21,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     private SessionFactory sf;
 
     @Override
-    public void saveTvShow(TvShow tv) {
+    public void save(TvShow tv) {
         Session session = sf.getCurrentSession();
         Slugify slg = new Slugify();
         tv.setSlug(slg.slugify(tv.getTitle()));
@@ -84,13 +84,13 @@ public class TvShowDAOImpl implements TvShowDAO {
 
 
     @Override
-    public void deleteTvShow(TvShow tvshow) {
+    public void delete(TvShow tvshow) {
         Session session = sf.getCurrentSession();
         session.delete(tvshow);
     }
 
     @Override
-    public void updateTvShow(TvShow tvshow) {
+    public void update(TvShow tvshow) {
         Session session = sf.getCurrentSession();
         session.update(tvshow);
     }
@@ -162,8 +162,8 @@ public class TvShowDAOImpl implements TvShowDAO {
     @Override
     public void addUser2TvShow(User user, TvShow tvShow) {
         Session session = sf.getCurrentSession();
-        if (!tvShow.getTvShowUserList().contains(user)) {
-            tvShow.getTvShowUserList().add(user);
+        if (!tvShow.getUsers().contains(user)) {
+            tvShow.getUsers().add(user);
         }
         session.saveOrUpdate(tvShow);
     }
@@ -171,9 +171,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     @Override
     public void deleteUserFromTvShow(User user, TvShow tvShow) {
         Session session = sf.getCurrentSession();
-        if (tvShow.getTvShowUserList().contains(user)) {
-            tvShow.getTvShowUserList().remove(user);
-        }
+        tvShow.getUsers().remove(user);
         session.saveOrUpdate(tvShow);
     }
 
@@ -182,8 +180,8 @@ public class TvShowDAOImpl implements TvShowDAO {
     @Override
     public void addGenre2TvShow(TvShow tvShow, Genre genre) {
         Session session = sf.getCurrentSession();
-        if (!tvShow.getTvShowGenreList().contains(genre)) {
-            tvShow.getTvShowGenreList().add(genre);
+        if (!tvShow.getGenres().contains(genre)) {
+            tvShow.getGenres().add(genre);
         }
         session.saveOrUpdate(tvShow);
     }
@@ -191,9 +189,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     @Override
     public void deleteGenreFromTvShow(TvShow tvShow, Genre genre) {
         Session session = sf.getCurrentSession();
-        if (tvShow.getTvShowGenreList().contains(genre)) {
-            tvShow.getTvShowGenreList().remove(genre);
-        }
+        tvShow.getGenres().remove(genre);
         session.saveOrUpdate(tvShow);
     }
 
@@ -211,9 +207,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     @Override
     public void deleteEpisodeFromTvShow(TvShow tvShow, Episode episode) {
         Session session = sf.getCurrentSession();
-        if (tvShow.getEpisodes().contains(episode)) {
-            tvShow.getEpisodes().remove(episode);
-        }
+        tvShow.getEpisodes().remove(episode);
         session.saveOrUpdate(tvShow);
     }
 
@@ -222,8 +216,8 @@ public class TvShowDAOImpl implements TvShowDAO {
     @Override
     public void addRating2TvShow(TvShow tvShow, Rating rating) {
         Session session = sf.getCurrentSession();
-        if (!tvShow.getTvShowRating().contains(rating)) {
-            tvShow.getTvShowRating().add(rating);
+        if (!tvShow.getRatings().contains(rating)) {
+            tvShow.getRatings().add(rating);
         }
         session.saveOrUpdate(tvShow);
     }
@@ -231,9 +225,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     @Override
     public void deleteRatingFromTvShow(TvShow tvShow, Rating rating) {
         Session session = sf.getCurrentSession();
-        if (tvShow.getTvShowRating().contains(rating)) {
-            tvShow.getTvShowRating().remove(rating);
-        }
+        tvShow.getRatings().remove(rating);
         session.saveOrUpdate(tvShow);
     }
 

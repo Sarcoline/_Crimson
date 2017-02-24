@@ -5,7 +5,7 @@ import com.crimson.core.model.*;
 import java.util.List;
 
 public interface TvShowDAO {
-    void saveTvShow(TvShow tv);
+    void save(TvShow tv);
 
     List<TvShow> getAllTvShows();
 
@@ -25,9 +25,9 @@ public interface TvShowDAO {
 
     List<TvShow> getAllTvShowByMaxRating();
 
-    void deleteTvShow(TvShow tvshow);
+    void delete(TvShow tvshow);
 
-    void updateTvShow(TvShow tvshow);
+    void update(TvShow tvshow);
 
     List<TvShow> searchTvShow(String pattern);
 

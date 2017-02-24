@@ -18,7 +18,7 @@ public class SettingsServiceImpl implements SettingsService {
 
     @Override
     public void saveSetting(Setting setting) {
-        settingsDAO.saveSetting(setting);
+        settingsDAO.save(setting);
     }
 
     @Override
@@ -33,12 +33,12 @@ public class SettingsServiceImpl implements SettingsService {
 
     @Override
     public void deleteSetting(Setting setting) {
-        settingsDAO.deleteSetting(setting);
+        settingsDAO.delete(setting);
     }
 
     @Override
     public void updateSetting(Setting setting) {
-        settingsDAO.updateSetting(setting);
+        settingsDAO.update(setting);
     }
 
     //RELATIONSHIPS

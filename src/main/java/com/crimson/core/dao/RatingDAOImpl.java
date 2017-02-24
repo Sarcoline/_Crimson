@@ -15,19 +15,19 @@ public class RatingDAOImpl implements RatingDAO {
     private SessionFactory sf;
 
     @Override
-    public void saveRating(Rating rating) {
+    public void save(Rating rating) {
         Session session = sf.getCurrentSession();
         session.saveOrUpdate(rating);
     }
 
     @Override
-    public void deleteRating(Rating rating) {
+    public void delete(Rating rating) {
         Session session = sf.getCurrentSession();
         session.delete(rating);
     }
 
     @Override
-    public void updateRating(Rating rating) {
+    public void update(Rating rating) {
         Session session = sf.getCurrentSession();
         session.update(rating);
     }
@@ -63,7 +63,7 @@ public class RatingDAOImpl implements RatingDAO {
     @Override
     public Rating getRating(long idtv, long iduser) {
         Session session = sf.getCurrentSession();
-        String hql = "from Rating s where s.tvShowRating.id = ? and s.userRating.id = ?";
+        String hql = "from Rating s where s.tvShow.id = ? and s.user.id = ?";
         List rating = session.createQuery(hql)
                 .setParameter(0, idtv)
                 .setParameter(1, iduser)

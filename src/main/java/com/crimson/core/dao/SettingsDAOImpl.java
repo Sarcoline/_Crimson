@@ -16,7 +16,7 @@ public class SettingsDAOImpl implements SettingsDAO {
     private SessionFactory sessionFactory;
 
     @Override
-    public void saveSetting(Setting setting) {
+    public void save(Setting setting) {
         Session session = sessionFactory.getCurrentSession();
         session.persist(setting);
     }
@@ -34,13 +34,13 @@ public class SettingsDAOImpl implements SettingsDAO {
     }
 
     @Override
-    public void deleteSetting(Setting setting) {
+    public void delete(Setting setting) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(setting);
     }
 
     @Override
-    public void updateSetting(Setting setting) {
+    public void update(Setting setting) {
         Session session = sessionFactory.getCurrentSession();
         session.update(setting);
     }
@@ -52,15 +52,15 @@ public class SettingsDAOImpl implements SettingsDAO {
     @Override
     public void addUser2Setting(User user, Setting setting) {
         Session session = sessionFactory.getCurrentSession();
-        setting.setUser2Setting(user);
+        setting.setUser(user);
         session.saveOrUpdate(setting);
     }
 
     @Override
     public void deleteUserFromSetting(User user, Setting setting) {
         Session session = sessionFactory.getCurrentSession();
-        if (setting.getUser2Setting() == user) {
-            setting.setUser2Setting(null);
+        if (setting.getUser() == user) {
+            setting.setUser(null);
         }
         session.saveOrUpdate(setting);
     }

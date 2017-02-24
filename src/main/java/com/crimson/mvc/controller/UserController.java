@@ -115,7 +115,7 @@ public class UserController {
         UserDTO user = userService.getUserByName(name);
         List<TvShowDTO> tvs = userService.getUserTvShows(user);
         List<TvShowDTO> favorites = userService.getUserTvShowsSortedByMaxRating(user);
-        List<EpisodeDTO> watchedEpisodes = user.getUserEpisodeList();
+        List<EpisodeDTO> watchedEpisodes = user.getEpisodes();
         List watchedEpisodesId = new ArrayList();
         watchedEpisodes.forEach(episode -> watchedEpisodesId.add(episode.getId()));
         model.addAttribute("tvshows", tvs);

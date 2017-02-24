@@ -7,11 +7,11 @@ import java.util.List;
 
 
 public interface GenreDAO {
-    void addGenre(Genre genre);
+    void save(Genre genre);
 
-    void deleteGenre(Genre genre);
+    void delete(Genre genre);
 
-    void updateGenre(Genre genre);
+    void update(Genre genre);
 
     Genre getGenreById(Long idGenre);
 

@@ -34,7 +34,7 @@ public @Data class EpisodeDTO {
 
     private Integer version;
 
-    private List<User> episodeUserList = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
-    private TvShow episodeFromTvShow;
+    private TvShow tvShow;
 }

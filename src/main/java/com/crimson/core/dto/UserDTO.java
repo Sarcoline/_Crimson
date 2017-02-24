@@ -41,10 +41,10 @@ public @Data class UserDTO {
 
     private List<Role> roles = new ArrayList<>();
 
-    private List<Rating> userRatings;
+    private List<Rating> ratings;
 
-    private List<TvShowDTO> userTvShowList;
+    private List<TvShowDTO> tvShows;
 
-    private List<EpisodeDTO> userEpisodeList;
+    private List<EpisodeDTO> episodes;
 
 }

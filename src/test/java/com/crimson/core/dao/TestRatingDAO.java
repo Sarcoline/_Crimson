@@ -40,9 +40,9 @@ public class TestRatingDAO {
 
     @Before
     public void setDB() {
-        tvShowDAO.saveTvShow(tvShow);
-        userDAO.saveUser(user);
-        ratingDAO.saveRating(rating);
+        tvShowDAO.save(tvShow);
+        userDAO.save(user);
+        ratingDAO.save(rating);
     }
 
     @Test
@@ -52,9 +52,9 @@ public class TestRatingDAO {
                 .value(3)
                 .build();
         rating1.setValue(5);
-        rating1.setTvShowRating(tvShow);
-        rating1.setUserRating(user);
-        ratingDAO.saveRating(rating1);
+        rating1.setTvShow(tvShow);
+        rating1.setUser(user);
+        ratingDAO.save(rating1);
 
         //Assert.assertEquals(rating1.getValue(),ratingDAO.getRatingByID(rating1.getId()).getValue());
     }
@@ -63,14 +63,14 @@ public class TestRatingDAO {
     public void updateRatingTest() {
         rating.setValue(7);
 
-        ratingDAO.updateRating(rating);
+        ratingDAO.update(rating);
 
         Assert.assertEquals(rating.getValue(), ratingDAO.getRatingByID(rating.getId()).getValue());
     }
 
     @Test
     public void deleteRatingTest() {
-        ratingDAO.deleteRating(rating);
+        ratingDAO.delete(rating);
 
         Assert.assertEquals(null, ratingDAO.getRatingByID(rating.getId()));
     }
@@ -99,12 +99,12 @@ public class TestRatingDAO {
                 .build();
 
         tvShow.setTitle("test");
-        tvShowDAO.saveTvShow(tvShow);
+        tvShowDAO.save(tvShow);
         Rating rating = Rating.builder()
                 .value(3)
                 .build();
-        rating.setTvShowRating(tvShow);
-        rating.setUserRating(user);
+        rating.setTvShow(tvShow);
+        rating.setUser(user);
         rating.setValue(6);
     }
 }

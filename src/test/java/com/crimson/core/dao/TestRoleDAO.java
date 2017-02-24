@@ -42,12 +42,12 @@ public class TestRoleDAO {
 
     @Before
     public void setDB(){
-        roleDAO.saveRole(role1);
-        roleDAO.saveRole(role2);
-        roleDAO.saveRole(role3);
+        roleDAO.save(role1);
+        roleDAO.save(role2);
+        roleDAO.save(role3);
 
-        userDAO.saveUser(user1);
-        userDAO.saveUser(user2);
+        userDAO.save(user1);
+        userDAO.save(user2);
     }
 
 
@@ -57,7 +57,7 @@ public class TestRoleDAO {
                 .roleName("ROLE_USER")
                 .build();
 
-        roleDAO.saveRole(role);
+        roleDAO.save(role);
 
         Assert.assertEquals(role.getRoleName(), roleDAO.getRoleById(role.getIdRole()).getRoleName());
         Assert.assertEquals(roleDAO.getAllRoles().contains(role), true);
@@ -66,7 +66,7 @@ public class TestRoleDAO {
     @Test
     public void updateTest(){
         role1.setRoleName("NEW ROLE");
-        roleDAO.updateRole(role1);
+        roleDAO.update(role1);
 
         Assert.assertEquals(role1.getRoleName(), roleDAO.getRoleById(role1.getIdRole()).getRoleName());
     }
@@ -75,7 +75,7 @@ public class TestRoleDAO {
     public void deleteTest(){
         int listSize = roleDAO.getAllRoles().size();
 
-        roleDAO.deleteRole(role1);
+        roleDAO.delete(role1);
 
         Assert.assertEquals(roleDAO.getAllRoles().contains(role1), false);
         Assert.assertEquals(listSize-1, roleDAO.getAllRoles().size());
@@ -97,26 +97,26 @@ public class TestRoleDAO {
 
     @Test
     public void addUser2RoleTest(){
-        int listSize = role1.getRoleUsers().size();
+        int listSize = role1.getUsers().size();
 
         roleDAO.addUser2Role(user1, role1);
 
-        Assert.assertEquals(listSize+1, role1.getRoleUsers().size());
-        Assert.assertEquals(role1.getRoleUsers().contains(user1), true);
-        Assert.assertEquals(listSize+1, roleDAO.getRoleById(role1.getIdRole()).getRoleUsers().size());
-        Assert.assertEquals(roleDAO.getRoleById(role1.getIdRole()).getRoleUsers().contains(user1), true);
+        Assert.assertEquals(listSize+1, role1.getUsers().size());
+        Assert.assertEquals(role1.getUsers().contains(user1), true);
+        Assert.assertEquals(listSize+1, roleDAO.getRoleById(role1.getIdRole()).getUsers().size());
+        Assert.assertEquals(roleDAO.getRoleById(role1.getIdRole()).getUsers().contains(user1), true);
     }
 
     @Test
     public void deleteUserFromRoleTest(){
         addUser2RoleTest();
-        int listSize = role1.getRoleUsers().size();
+        int listSize = role1.getUsers().size();
 
         roleDAO.deleteUserFromRole(user1, role1);
 
-        Assert.assertEquals(listSize-1, role1.getRoleUsers().size());
-        Assert.assertEquals(role1.getRoleUsers().contains(user1), false);
-        Assert.assertEquals(listSize-1, roleDAO.getRoleById(role1.getIdRole()).getRoleUsers().size());
-        Assert.assertEquals(roleDAO.getRoleById(role1.getIdRole()).getRoleUsers().contains(user1), false);
+        Assert.assertEquals(listSize-1, role1.getUsers().size());
+        Assert.assertEquals(role1.getUsers().contains(user1), false);
+        Assert.assertEquals(listSize-1, roleDAO.getRoleById(role1.getIdRole()).getUsers().size());
+        Assert.assertEquals(roleDAO.getRoleById(role1.getIdRole()).getUsers().contains(user1), false);
     }
 }

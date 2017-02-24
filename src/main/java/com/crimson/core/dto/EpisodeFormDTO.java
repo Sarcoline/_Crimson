@@ -32,5 +32,5 @@ public @Data class EpisodeFormDTO {
 
     private Integer version;
 
-    private TvShow episodeFromTvShow;
+    private TvShow tvShow;
 }

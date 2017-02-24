@@ -56,7 +56,7 @@ public class CrimsonController {
             rating = ratingService.getRating(tv.getId(), user.getId()).getValue();
             model.addAttribute("user", user);
             List watchedEpisodesId = new ArrayList();
-            user.getUserEpisodeList().forEach(episode -> watchedEpisodesId.add(episode.getId()));
+            user.getEpisodes().forEach(episode -> watchedEpisodesId.add(episode.getId()));
             model.addAttribute("watchedEpisodesId", watchedEpisodesId);
         }
         int seasons = 0;
