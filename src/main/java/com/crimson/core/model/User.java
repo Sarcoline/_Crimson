@@ -46,20 +46,20 @@ public @Data class User {
     @JoinTable(name = "User2TvShow",
             joinColumns = @JoinColumn(name = "idUser"),
             inverseJoinColumns = @JoinColumn(name = "idTvShow"))
-    private List<TvShow> userTvShowList = new ArrayList<>();
+    private List<TvShow> tvShows = new ArrayList<>();
     //User2Episode
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "EpisodeWatched",
             joinColumns = @JoinColumn(name = "idUser"),
             inverseJoinColumns = @JoinColumn(name = "idEpisode"))
-    private List<Episode> userEpisodeList = new ArrayList<>();
+    private List<Episode> episodes = new ArrayList<>();
 
     //Rating
-    @OneToMany(mappedBy = "userRating", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Rating> userRatings = new ArrayList<>();
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Rating> ratings = new ArrayList<>();
 
     //User2Setting
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user2Setting", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = Setting.class, cascade = CascadeType.ALL)
     private Setting setting;
 
     //User2Role

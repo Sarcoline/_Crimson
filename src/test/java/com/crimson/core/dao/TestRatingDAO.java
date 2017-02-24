@@ -1,10 +1,12 @@
 package com.crimson.core.dao;
 
 import com.crimson.context.TestSpringCore;
+import com.crimson.core.factory.RatingFactory;
+import com.crimson.core.factory.TvShowFactory;
+import com.crimson.core.factory.UserFactory;
 import com.crimson.core.model.Rating;
 import com.crimson.core.model.TvShow;
 import com.crimson.core.model.User;
-import com.crimson.core.service.RatingService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestSpringCore.class)
 @Transactional
-@Rollback(value = true)
+@Rollback()
 public class TestRatingDAO {
 
     @Autowired
@@ -27,31 +29,20 @@ public class TestRatingDAO {
     private UserDAO userDAO;
     @Autowired
     private TvShowDAO tvShowDAO;
-    @Autowired
-    private RatingService ratingService;
 
-    private Rating rating = Rating.builder()
-            .value(5)
-            .build();
+    private RatingFactory ratingFactory = new RatingFactory();
+    private UserFactory userFactory = new UserFactory();
+    private TvShowFactory tvShowFactory = new TvShowFactory();
 
-    private TvShow tvShow = TvShow.builder()
-            .title("Dr.House")
-            .network("Netflix")
-            .country("US")
-            .genre("Drama")
-            .build();
-
-    private User user =  User.builder()
-            .name("Aleks")
-            .email("Email@wp.pl")
-            .password("123")
-            .build();
+    private Rating rating = ratingFactory.getRating(5);
+    private TvShow tvShow = tvShowFactory.getTvShow("friends");
+    private User user = userFactory.getUser("aleks");
 
     @Before
     public void setDB() {
-        tvShowDAO.saveTvShow(tvShow);
-        userDAO.saveUser(user);
-        ratingDAO.saveRating(rating);
+        tvShowDAO.save(tvShow);
+        userDAO.save(user);
+        ratingDAO.save(rating);
     }
 
     @Test
@@ -61,9 +52,9 @@ public class TestRatingDAO {
                 .value(3)
                 .build();
         rating1.setValue(5);
-        rating1.setTvShowRating(tvShow);
-        rating1.setUserRating(user);
-        ratingDAO.saveRating(rating1);
+        rating1.setTvShow(tvShow);
+        rating1.setUser(user);
+        ratingDAO.save(rating1);
 
         //Assert.assertEquals(rating1.getValue(),ratingDAO.getRatingByID(rating1.getId()).getValue());
     }
@@ -72,14 +63,14 @@ public class TestRatingDAO {
     public void updateRatingTest() {
         rating.setValue(7);
 
-        ratingDAO.updateRating(rating);
+        ratingDAO.update(rating);
 
         Assert.assertEquals(rating.getValue(), ratingDAO.getRatingByID(rating.getId()).getValue());
     }
 
     @Test
     public void deleteRatingTest() {
-        ratingDAO.deleteRating(rating);
+        ratingDAO.delete(rating);
 
         Assert.assertEquals(null, ratingDAO.getRatingByID(rating.getId()));
     }
@@ -108,12 +99,12 @@ public class TestRatingDAO {
                 .build();
 
         tvShow.setTitle("test");
-        tvShowDAO.saveTvShow(tvShow);
+        tvShowDAO.save(tvShow);
         Rating rating = Rating.builder()
                 .value(3)
                 .build();
-        rating.setTvShowRating(tvShow);
-        rating.setUserRating(user);
+        rating.setTvShow(tvShow);
+        rating.setUser(user);
         rating.setValue(6);
     }
 }

@@ -50,7 +50,7 @@ public class TvShowDTO {
 
     private List<EpisodeDTO> episodes = new ArrayList<>();
 
-    private List<UserDTO> tvShowUserList = new ArrayList<>();
+    private List<UserDTO> users = new ArrayList<>();
 
-    private List<Rating> tvShowRating = new ArrayList<>();
+    private List<Rating> ratings = new ArrayList<>();
 }

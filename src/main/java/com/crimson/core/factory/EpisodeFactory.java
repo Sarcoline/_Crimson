@@ -11,9 +11,21 @@ public class EpisodeFactory {
         Episode episode = null;
 
         switch (title.toLowerCase()) {
-            case "episode 1": {
+            case "episode_1": {
                 episode = Episode.builder()
                         .title("Episode 1")
+                        .build();
+                break;
+            }
+            case "episode_2": {
+                episode = Episode.builder()
+                        .title("Episode 2")
+                        .build();
+                break;
+            }
+            case "episode_3": {
+                episode = Episode.builder()
+                        .title("Episode 3")
                         .build();
                 break;
             }

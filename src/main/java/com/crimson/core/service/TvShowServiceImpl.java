@@ -35,7 +35,7 @@ public class TvShowServiceImpl implements TvShowService {
 
     @Override
     public void saveTvShow(TvShow tvShow) {
-        tvShowDAO.saveTvShow(tvShow);
+        tvShowDAO.save(tvShow);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class TvShowServiceImpl implements TvShowService {
     @Override
     public void deleteTvShow(TvShowDTO tvshow) {
         TvShow tv = tvShowDAO.getTvById(tvshow.getId());
-        tvShowDAO.deleteTvShow(tv);
+        tvShowDAO.delete(tv);
     }
 
     @Override
@@ -99,7 +99,7 @@ public class TvShowServiceImpl implements TvShowService {
         tv.setGenre(tvshow.getGenre());
         tv.setTitle(tvshow.getTitle());
         tv.setSlug(slugify.slugify(tvshow.getTitle()));
-        tvShowDAO.updateTvShow(tv);
+        tvShowDAO.update(tv);
     }
 
 
@@ -185,7 +185,7 @@ public class TvShowServiceImpl implements TvShowService {
     public void updateTvShowPicture(String name, String key, MultipartFile pic1) throws IOException {
         TvShow tv = tvShowDAO.getTvBySlug(name);
         tv.getPictures().put(key, pic1.getBytes());
-        tvShowDAO.updateTvShow(tv);
+        tvShowDAO.update(tv);
     }
 
     @Override
@@ -198,6 +198,20 @@ public class TvShowServiceImpl implements TvShowService {
         tvShowDTO.getPictures().put("3", pic);
         tvShowDTO.getPictures().put("back", pic);
         tvShowDTO.getPictures().put("poster", pic);
-        tvShowDAO.saveTvShow(mapperFacade.map(tvShowDTO, TvShow.class));
+        tvShowDAO.save(mapperFacade.map(tvShowDTO, TvShow.class));
+    }
+
+    @Override
+    public int tvShowsLastPageNumber(){
+        return tvShowDAO.tvShowsLastPageNumber();
+    }
+
+    @Override
+    public  List<TvShow> tvShowsPaginationList(int pageNumber){
+        List tvShows = new ArrayList();
+        tvShowDAO.tvShowsPaginationList(pageNumber).forEach(
+                tvShow -> tvShows.add(mapperFacade.map(tvShow, TvShowDTO.class))
+        );
+        return tvShows;
     }
 }

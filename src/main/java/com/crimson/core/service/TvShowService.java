@@ -60,4 +60,8 @@ public interface TvShowService {
     void updateTvShowPicture(String name, String key, MultipartFile pic1) throws IOException;
 
     void saveTvShowDTO(TvShowDTO tvShowDTO) throws IOException;
+
+    int tvShowsLastPageNumber();
+
+    List<TvShow> tvShowsPaginationList(int pageNumber);
 }

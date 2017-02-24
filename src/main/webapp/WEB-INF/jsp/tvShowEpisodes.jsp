@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="uk-container uk-container-center uk-margin-large-top">
-    <h1>Edit ${episodes.get(0).episodeFromTvShow.title} episodes</h1>
+    <h1>Edit ${episodes.get(0).tvShow.title} episodes</h1>
     <div class="uk-grid uk-grid-large uk-margin-large-top">
         <%--action="<c:url value="/tv/${episode.episodeFromTvShow.slug}/edit/episodes"/>"--%>
         <c:forEach begin="1" end="${seasons}" varStatus="count">
@@ -21,9 +21,9 @@
                             <span>${episode.episodeSummary}</span>
                             <span class="uk-text-muted uk-margin-left">${episode.releaseDate}</span>
                             <span style="float: right;">
-                            <a href="/tv/${episode.episodeFromTvShow.slug}/edit/episodes/${episode.id}"
+                            <a href="/tv/${episode.tvShow.slug}/edit/episodes/${episode.id}"
                                class="uk-button uk-button-primary uk-button-small">Edit</a>
-                            <a href="/tv/${episode.episodeFromTvShow.slug}/edit/episodes/${episode.id}/delete"
+                            <a href="/tv/${episode.tvShow.slug}/edit/episodes/${episode.id}/delete"
                                class="uk-button uk-button-danger uk-button-small">Delete</a>
                                 </span>
                         </li>
@@ -31,9 +31,9 @@
                 </c:forEach>
             </ul>
         </c:forEach>
-        <a href="<c:url value="/tv/${episodes.get(0).episodeFromTvShow.slug}/edit/"/>"
+        <a href="<c:url value="/tv/${episodes.get(0).tvShow.slug}/edit/"/>"
            class="uk-button uk-margin-top">Back</a>
-        <a href="<c:url value="/tv/${episodes.get(0).episodeFromTvShow.slug}/edit/episodes/add/"/>"
+        <a href="<c:url value="/tv/${episodes.get(0).tvShow.slug}/edit/episodes/add/"/>"
            class="uk-button uk-button-success uk-margin-top" style="float: right">Add</a>
     </div>
 </div>

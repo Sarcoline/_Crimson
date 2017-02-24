@@ -61,12 +61,12 @@ public @Data class Episode {
     }
 
     //EpisodeWatched(User2Episode) Relation
-    @ManyToMany(mappedBy = "userEpisodeList", fetch = FetchType.LAZY)
-    private List<User> episodeUserList = new ArrayList<>();
+    @ManyToMany(mappedBy = "episodes", fetch = FetchType.LAZY)
+    private List<User> users = new ArrayList<>();
 
     //TvShow2Episode Relation
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idTvShow", insertable = false, updatable = false)
-    private TvShow episodeFromTvShow;
+    private TvShow tvShow;
 
 }

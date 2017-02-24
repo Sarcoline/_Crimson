@@ -18,17 +18,17 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public void addGenre(Genre genre) {
-        genreDAO.addGenre(genre);
+        genreDAO.save(genre);
     }
 
     @Override
     public void deleteGenre(Genre genre) {
-        genreDAO.deleteGenre(genre);
+        genreDAO.delete(genre);
     }
 
     @Override
     public void updateGenre(Genre genre) {
-        genreDAO.updateGenre(genre);
+        genreDAO.update(genre);
     }
 
     @Override

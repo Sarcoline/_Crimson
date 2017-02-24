@@ -33,7 +33,7 @@
                     <div class="uk-width-1-3 centerText1">
                         <ul class="uk-list">
                             <li class="uk-text-muted"><strong
-                                    style="font-size: 5rem;">${user.userTvShowList.size()}</strong></li>
+                                    style="font-size: 5rem;">${user.tvShows.size()}</strong></li>
 
                         </ul>
                     </div>
@@ -64,8 +64,8 @@
                     <ul class="uk-list uk-list-line" style="font-size: 1.1rem">
                         <c:forEach items="${upcomimgEpisodes}" var="episode">
                             <li>
-                                <p><strong><a href="<c:url value="/tv/${episode.episodeFromTvShow.slug}" /> ">
-                                        ${episode.episodeFromTvShow.title} </a> - S${episode.season}E${episode.number} -
+                                <p><strong><a href="<c:url value="/tv/${episode.tvShow.slug}" /> ">
+                                        ${episode.tvShow.title} </a> - S${episode.season}E${episode.number} -
                                 </strong>
                                     <a class="rateThis" data-id="${episode.id}"><i class="fa fa-square-o"
                                                                                    aria-hidden="true"></i></a>
@@ -105,8 +105,8 @@
                         <c:forEach items="${watchedEpisodes}" var="episode" begin="0" end="9">
 
                             <li>
-                                <p><strong><a href="<c:url value="/tv/${episode.episodeFromTvShow.slug}" /> ">
-                                        ${episode.episodeFromTvShow.title}</a> </strong> -
+                                <p><strong><a href="<c:url value="/tv/${episode.tvShow.slug}" /> ">
+                                        ${episode.tvShow.title}</a> </strong> -
                                     S${episode.season}E${episode.number} - ${episode.title}
                                 </p>
                             </li>

@@ -28,17 +28,17 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public void saveRating(Rating rating) {
-        ratingDAO.saveRating(rating);
+        ratingDAO.save(rating);
     }
 
     @Override
     public void deleteRating(Rating rating) {
-        ratingDAO.deleteRating(rating);
+        ratingDAO.delete(rating);
     }
 
     @Override
     public void updateRating(Rating rating) {
-        ratingDAO.updateRating(rating);
+        ratingDAO.update(rating);
     }
 
     @Override
@@ -72,17 +72,17 @@ public class RatingServiceImpl implements RatingService {
         TvShow tvShow = mapperFacade.map(tvShowDTO, TvShow.class);
         Rating rating = ratingDAO.getRating(tvShow.getId(), user.getId());
         rating.setValue(value);
-        rating.setUserRating(user);
-        rating.setTvShowRating(tvShow);
-        ratingDAO.saveRating(rating);
+        rating.setUser(user);
+        rating.setTvShow(tvShow);
+        ratingDAO.save(rating);
         calculateRating(tvShow.getId());
     }
 
     public void calculateRating(long id) {
         TvShow tvShow = tvShowDAO.getTvById(id);
-        List<Rating> ratings = tvShow.getTvShowRating();
+        List<Rating> ratings = tvShow.getRatings();
         double overall = ratings.stream().mapToDouble(Rating::getValue).average().getAsDouble();
         tvShow.setOverallRating(overall);
-        tvShowDAO.updateTvShow(tvShow);
+        tvShowDAO.update(tvShow);
     }
 }

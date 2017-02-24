@@ -23,12 +23,12 @@ public @Data class Rating {
     //user
     @ManyToOne(cascade = CascadeType.MERGE)
     @PrimaryKeyJoinColumn(name = "idUser")
-    private User userRating;
+    private User user;
 
     //tvshow
     @ManyToOne(fetch = FetchType.EAGER)
     @PrimaryKeyJoinColumn(name = "idTvShow")
-    private TvShow tvShowRating;
+    private TvShow tvShow;
 
     //Optimistic Locking
     @Version

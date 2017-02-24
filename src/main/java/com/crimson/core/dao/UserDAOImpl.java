@@ -21,7 +21,7 @@ public class UserDAOImpl implements UserDAO {
 
 
     @Override
-    public void saveUser(User user) {
+    public void save(User user) {
         Session session = sf.getCurrentSession();
         session.persist(user);
     }
@@ -39,13 +39,13 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void deleteUser(User user) {
+    public void delete(User user) {
         Session session = sf.getCurrentSession();
         session.delete(user);
     }
 
     @Override
-    public void updateUser(User user) {
+    public void update(User user) {
         Session session = sf.getCurrentSession();
         session.saveOrUpdate(user);
     }
@@ -61,10 +61,10 @@ public class UserDAOImpl implements UserDAO {
     public List<TvShow> getUserTvShowsSortedByMaxRating(User user) {
 
         List<TvShow> sortedList = new ArrayList<>();
-        List<Rating> unsortedList = user.getUserRatings();
+        List<Rating> unsortedList = user.getRatings();
 
-        (user.getUserRatings()).sort(Comparator.comparingInt(Rating::getValue));
-        unsortedList.forEach(rating -> sortedList.add(rating.getTvShowRating()));
+        (user.getRatings()).sort(Comparator.comparingInt(Rating::getValue));
+        unsortedList.forEach(rating -> sortedList.add(rating.getTvShow()));
 
         Collections.reverse(sortedList);
         return sortedList;
@@ -73,11 +73,11 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public List<Episode> getAllUnwatchedUserEpisodes(User user) {
 
-        List<TvShow> allFollowedUserTvShows = user.getUserTvShowList();
+        List<TvShow> allFollowedUserTvShows = user.getTvShows();
 
         List<Episode> allUnwatchedUserEpisodes = new ArrayList<>();
 
-        List<Episode> allWatchedUserEpisodes = user.getUserEpisodeList();
+        List<Episode> allWatchedUserEpisodes = user.getEpisodes();
 
         allFollowedUserTvShows.forEach(tvShow -> {
             List<Episode> tvShowEpisodes = tvShow.getEpisodes();
@@ -114,31 +114,35 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void addTvShow2User(User user, TvShow tvShow) {
-        if (!user.getUserTvShowList().contains(tvShow)) {
-            user.getUserTvShowList().add(tvShow);
+        Session session = sf.getCurrentSession();
+        if (!user.getTvShows().contains(tvShow)) {
+            user.getTvShows().add(tvShow);
         }
+        session.saveOrUpdate(user);
     }
 
     @Override
     public void deleteTvShowFromUser(User user, TvShow tvShow) {
-        if (user.getUserTvShowList().contains(tvShow)) {
-            user.getUserTvShowList().remove(tvShow);
-        }
+        Session session = sf.getCurrentSession();
+        user.getTvShows().remove(tvShow);
+        session.saveOrUpdate(user);
     }
 
     //User2Episode
     @Override
     public void addEpisode2User(User user, Episode episode) {
-        if (!user.getUserEpisodeList().contains(episode)) {
-            user.getUserEpisodeList().add(episode);
+        Session session = sf.getCurrentSession();
+        if (!user.getEpisodes().contains(episode)) {
+            user.getEpisodes().add(episode);
         }
+        session.saveOrUpdate(user);
     }
 
     @Override
     public void deleteEpisodeFromUser(User user, Episode episode) {
-        if (user.getUserEpisodeList().contains(episode)) {
-            user.getUserEpisodeList().remove(episode);
-        }
+        Session session = sf.getCurrentSession();
+        user.getEpisodes().remove(episode);
+        session.saveOrUpdate(user);
     }
 
     //Rating
@@ -146,17 +150,17 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void addRating2User(User user, Rating rating) {
         Session session = sf.getCurrentSession();
-        if (!user.getUserRatings().contains(rating)) {
-            user.getUserRatings().add(rating);
+        if (!user.getRatings().contains(rating)) {
+            user.getRatings().add(rating);
         }
         session.saveOrUpdate(user);
     }
 
     @Override
     public void deleteRatingFromUser(User user, Rating rating) {
-        if (user.getUserRatings().contains(rating)) {
-            user.getUserRatings().remove(rating);
-        }
+        Session session = sf.getCurrentSession();
+        user.getRatings().remove(rating);
+        session.saveOrUpdate(user);
     }
 
     //User2Setting
@@ -191,9 +195,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void deleteRoleFromUser(User user, Role role) {
         Session session = sf.getCurrentSession();
-        if (user.getRoles().contains(role)) {
-            user.getRoles().remove(role);
-        }
+        user.getRoles().remove(role);
         session.saveOrUpdate(user);
     }
 

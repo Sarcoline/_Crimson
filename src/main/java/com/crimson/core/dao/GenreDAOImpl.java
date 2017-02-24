@@ -16,19 +16,19 @@ public class GenreDAOImpl implements GenreDAO {
     private SessionFactory sf;
 
     @Override
-    public void addGenre(Genre genre) {
+    public void save(Genre genre) {
         Session session = sf.getCurrentSession();
         session.persist(genre);
     }
 
     @Override
-    public void deleteGenre(Genre genre) {
+    public void delete(Genre genre) {
         Session session = sf.getCurrentSession();
         session.delete(genre);
     }
 
     @Override
-    public void updateGenre(Genre genre) {
+    public void update(Genre genre) {
         Session session = sf.getCurrentSession();
         session.update(genre);
     }
@@ -57,15 +57,17 @@ public class GenreDAOImpl implements GenreDAO {
 
     @Override
     public void addTvShow2Genre(Genre genre, TvShow tvShow) {
-        if (!genre.getGenreTvShowList().contains(tvShow)) {
-            genre.getGenreTvShowList().add(tvShow);
+        Session session = sf.getCurrentSession();
+        if (!genre.getTvShows().contains(tvShow)) {
+            genre.getTvShows().add(tvShow);
         }
+        session.saveOrUpdate(genre);
     }
 
     @Override
     public void deleteTvShowFromGenre(Genre genre, TvShow tvShow) {
-        if (genre.getGenreTvShowList().contains(tvShow)) {
-            genre.getGenreTvShowList().remove(tvShow);
-        }
+        Session session = sf.getCurrentSession();
+        genre.getTvShows().remove(tvShow);
+        session.saveOrUpdate(genre);
     }
 }

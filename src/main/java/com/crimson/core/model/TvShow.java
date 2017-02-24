@@ -76,17 +76,17 @@ public @Data class TvShow {
 
     //RELATIONSHIPS
     //User2TvShow Relation
-    @ManyToMany(mappedBy = "userTvShowList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<User> tvShowUserList = new ArrayList<>();
+    @ManyToMany(mappedBy = "tvShows", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<User> users = new ArrayList<>();
     //TvShow2Genre
-    @ManyToMany(mappedBy = "genreTvShowList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Genre> tvShowGenreList = new ArrayList<>();
+    @ManyToMany(mappedBy = "tvShows", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Genre> genres = new ArrayList<>();
     //TvShowEpisode Relation
-    @OneToMany(mappedBy = "episodeFromTvShow", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Episode> episodes = new ArrayList<>();
     //Rating
-    @OneToMany(mappedBy = "tvShowRating", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Rating> tvShowRating = new ArrayList<>();
+    @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Rating> ratings = new ArrayList<>();
 
     @Builder
     public TvShow(String title, String network, String country, String genre, String description, String trailerUrl, double overallRating, int releaseYear, String slug){

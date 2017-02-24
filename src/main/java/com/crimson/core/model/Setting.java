@@ -36,6 +36,6 @@ public @Data class Setting {
 
     @OneToOne
     @PrimaryKeyJoinColumn
-    private User user2Setting;
+    private User user;
 
 }

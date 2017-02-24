@@ -16,7 +16,7 @@ public class RoleDAOImpl implements RoleDAO {
     private SessionFactory sessionFactory;
 
     @Override
-    public void saveRole(Role role) {
+    public void save(Role role) {
         Session session = sessionFactory.getCurrentSession();
         session.persist(role);
     }
@@ -34,13 +34,13 @@ public class RoleDAOImpl implements RoleDAO {
     }
 
     @Override
-    public void deleteRole(Role role) {
+    public void delete(Role role) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(role);
     }
 
     @Override
-    public void updateRole(Role role) {
+    public void update(Role role) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(role);
     }
@@ -51,16 +51,14 @@ public class RoleDAOImpl implements RoleDAO {
     @Override
     public void addUser2Role(User user, Role role) {
         Session session = sessionFactory.getCurrentSession();
-        role.getRoleUsers().add(user);
+        role.getUsers().add(user);
         session.saveOrUpdate(role);
     }
 
     @Override
     public void deleteUserFromRole(User user, Role role) {
         Session session = sessionFactory.getCurrentSession();
-        if (role.getRoleUsers().contains(user)) {
-            role.getRoleUsers().remove(user);
-        }
+        role.getUsers().remove(user);
         session.saveOrUpdate(role);
     }
 

@@ -30,17 +30,17 @@ public class EpisodeServiceImpl implements EpisodeService {
 
     @Override
     public void saveEpisode(Episode episode) {
-        episodeDAO.saveEpisode(episode);
+        episodeDAO.save(episode);
     }
 
     @Override
     public void deleteEpisode(EpisodeDTO episode) {
-        episodeDAO.deleteEpisode(episodeDAO.getEpisodeById(episode.getId()));
+        episodeDAO.delete(episodeDAO.getEpisodeById(episode.getId()));
     }
 
     @Override
     public void updateEpisode(EpisodeDTO episode) {
-        episodeDAO.updateEpisode(mapperFacade.map(episode, Episode.class));
+        episodeDAO.update(mapperFacade.map(episode, Episode.class));
     }
 
     @Override
@@ -82,7 +82,7 @@ public class EpisodeServiceImpl implements EpisodeService {
     @Override
     public boolean checkWatched(UserDTO userDTO, EpisodeDTO episodeDTO) {
         Episode episode = episodeDAO.getEpisodeById(episodeDTO.getId());
-        return userDAO.getUserByName(userDTO.getName()).getUserEpisodeList().contains(episodeDAO.getEpisodeById(episode.getId()));
+        return userDAO.getUserByName(userDTO.getName()).getEpisodes().contains(episodeDAO.getEpisodeById(episode.getId()));
     }
 
     //TvShow2Episode
@@ -111,7 +111,7 @@ public class EpisodeServiceImpl implements EpisodeService {
         ep.setSeason(episodeFormDTO.getSeason());
         ep.setNumber(episodeFormDTO.getNumber());
         ep.setEpisodeSummary(episodeFormDTO.getEpisodeSummary());
-        episodeDAO.updateEpisode(ep);
+        episodeDAO.update(ep);
     }
 
     @Override
@@ -124,6 +124,6 @@ public class EpisodeServiceImpl implements EpisodeService {
                 .releaseDate(LocalDate.parse(episodeFormDTO.getReleaseDate()))
                 .idTvShow(episodeFormDTO.getIdTvShow())
                 .build();
-        episodeDAO.saveEpisode(ep);
+        episodeDAO.save(ep);
     }
 }

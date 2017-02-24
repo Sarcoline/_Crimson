@@ -5,7 +5,7 @@ import com.crimson.core.model.*;
 import java.util.List;
 
 public interface TvShowDAO {
-    void saveTvShow(TvShow tv);
+    void save(TvShow tv);
 
     List<TvShow> getAllTvShows();
 
@@ -25,15 +25,17 @@ public interface TvShowDAO {
 
     List<TvShow> getAllTvShowByMaxRating();
 
-    void deleteTvShow(TvShow tvshow);
+    void delete(TvShow tvshow);
 
-    void updateTvShow(TvShow tvshow);
+    void update(TvShow tvshow);
 
     List<TvShow> searchTvShow(String pattern);
 
     List<TvShow> filterTvShows(double min, double max);
 
-    List<TvShow> getTvShowsSortedByNumberOnList(int userChoosedNumberOnList, int pageNumber);
+    int tvShowsLastPageNumber();
+
+    List<TvShow> tvShowsPaginationList(int pageNumber);
 
     void addUser2TvShow(User user, TvShow tvShow);
 
