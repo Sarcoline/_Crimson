@@ -18,7 +18,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -259,21 +258,24 @@ public class CrimsonController {
     }
 
     @GetMapping(value = "/{name}/edit/episodes/addSearch")
-    public String searchAddEpisode(@PathVariable("name") String name, Model model ) {
+    public String searchAddEpisode(@PathVariable("name") String name, Model model) {
         model.addAttribute("name", name);
         return "addEpisodesFromJson";
     }
 
-    @RequestMapping(value = "/{name}/edit/episodes/addSearch", method = RequestMethod.POST)
-    public String postSearchAddEpisode(HttpServletRequest request, @PathVariable("name") String name, Model model ) {
+    @RequestMapping(value = "/{name}/edit/episodes/addSearch/add", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
+    public void postSearchAddEpisode(@RequestParam("title") String title, @RequestParam("episode") int number,
+                                     @RequestParam("season") int season,
+                                       @RequestParam("releaseDate") String releaseDate,
+                                       @PathVariable("name") String name) {
         EpisodeFromJson episode = new EpisodeFromJson();
-        episode.setTitle(request.getParameter("Title"));
-        episode.setReleaseDate(request.getParameter("releaseDate"));
-        episode.setEpisode(Integer.parseInt(request.getParameter("Number")));
-        episode.setSeason(Integer.parseInt(request.getParameter("Season")));
+        episode.setTitle(title);
+        episode.setReleaseDate(releaseDate);
+        episode.setEpisode(number);
+        episode.setSeason(season);
         episode.setIdTvShow(tvShowService.getTvBySlug(name).getId());
         episodeService.saveEpisodeJSON(episode);
-        System.out.print(episode);
-        return String.format("redirect: /tv/%s/edit/episodes/addSearch", name);
     }
 }

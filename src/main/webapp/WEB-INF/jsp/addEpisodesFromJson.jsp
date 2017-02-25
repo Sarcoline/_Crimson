@@ -4,73 +4,44 @@
 <html>
 <head>
     <title>Title</title>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 </head>
 <body>
 <div class="uk-container uk-container-center uk-margin-large-top">
     <h1>Add episodes</h1>
+    <a class="uk-button uk-button-primary" id="saveAll">Add all (risky) </a>
     <div class="uk-grid uk-grid-large uk-margin-large-top">
-        <div id="test">
+        <div>
+            <ul id="test" class="uk-list uk-list-line">
 
+            </ul>
         </div>
     </div>
 </div>
 <script>
     $(function () {
-        'use strict';
         var tvshow = '${name}';
-        var episodes = [];
-        var createForm = function (number,season,date,title) {
-            var f = document.createElement("form");
-            f.setAttribute('method',"post");
-            f.setAttribute('action'," ");
-            f.setAttribute('class', "uk-form uk-margin-top");
 
-            var titleInput = document.createElement("input"); //input element, text
-            titleInput.setAttribute('type',"text");
-            titleInput.setAttribute('name',"Title");
-            titleInput.setAttribute('value', title);
-
-            var i = document.createElement("input"); //input element, text
-            i.setAttribute('type',"text");
-            i.setAttribute('name',"releaseDate");
-            i.setAttribute('value', date);
-            i.setAttribute('data-uk-datepicker', "{format:'YYYY-MM-DD'}");
-
-            var seasonInput = document.createElement("input"); //input element, text
-            seasonInput.setAttribute('type',"number");
-            seasonInput.setAttribute('name',"Season");
-            seasonInput.setAttribute('value', season);
-
-            var numberInput = document.createElement("input"); //input element, text
-            numberInput.setAttribute('type',"number");
-            numberInput.setAttribute('name',"Number");
-            numberInput.setAttribute('value', number);
-
-            var csrf = document.createElement("input");
-            csrf.setAttribute("type", "hidden");
-            csrf.setAttribute("name", "${_csrf.parameterName}");
-            csrf.setAttribute("value", "${_csrf.token}");
-            var submit = document.createElement("input");
-            submit.setAttribute('type', "submit");
-            submit.setAttribute('class', "uk-button uk-button-success");
-            submit.setAttribute('value', "Save!");
-            f.appendChild(seasonInput);
-            f.appendChild(numberInput);
-            f.appendChild(titleInput);
-            f.appendChild(i);
-            f.appendChild(csrf);
-            f.appendChild(submit);
-            return f;
-        };
-        console.log(createForm(1,1, "test","test"));
         var getJson = function () {
             $.getJSON('http://www.omdbapi.com/?t=' + tvshow, function (data) {
-                console.log(data.Genre, data.Title);
                 for (var i = 1; i <= data.totalSeasons; i += 1) {
                     (function (i) {
                         $.getJSON('http://www.omdbapi.com/?t=' + tvshow + '&season=' + i, function (data) {
                             $.each(data.Episodes, function (val, key) {
-                                $('#test').append(createForm(key.Episode, i, key.Released, key.Title));
+                                var li = document.createElement('li');
+                                var a = document.createElement('a');
+                                a.setAttribute("data-season", i);
+                                a.setAttribute("data-episode", key.Episode);
+                                a.setAttribute("data-title", key.Title);
+                                a.setAttribute("data-date", key.Released);
+                                a.setAttribute("class", "uk-button uk-button-success");
+                                a.setAttribute("style", "float:right;");
+                                a.innerHTML = 'Save!';
+                                li.innerHTML = 'S' + i + 'E' + key.Episode + ' ' + key.Title + ' ' + key.Released;
+                                li.appendChild(a);
+                                $('#test').append(li);
                             });
                         });
                     })(i);
@@ -78,6 +49,54 @@
             });
         };
         getJson();
+
+        var postJson = function(episode) {
+            $.ajax({
+                url: 'add',
+                type: 'get',
+                data: episode,
+                success: function () {
+                    UIkit.notify({
+                        message: 'Successfully added: ' + episode.title + '!',
+                        status: 'success',
+                        timeout: 5000,
+                        pos: 'top-center'
+                    });
+                },
+                error: function () {
+                    UIkit.notify({
+                        message: 'Error with adding: ' + episode.title + '!',
+                        status: 'danger',
+                        timeout: 5000,
+                        pos: 'top-center'
+                    });
+                }
+            });
+        };
+
+        $('#saveAll').on('click', function () {
+            $( "#test").find("li").each(function( index, li ) {
+                var a = li.firstElementChild;
+                var episode = {
+                    title: a.dataset.title,
+                    releaseDate: a.dataset.date,
+                    season: a.dataset.season,
+                    episode: a.dataset.episode
+                };
+                postJson(episode);
+            });
+        });
+
+        $('#test').on("click", "a", function (e) {
+            e.preventDefault();
+            var episode = {
+                title: $(this).data('title'),
+                releaseDate: $(this).data('date'),
+                season: $(this).data('season'),
+                episode: $(this).data('episode')
+            };
+            postJson(episode);
+        });
     });
 </script>
 </body>

@@ -7,7 +7,6 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +21,10 @@ public @Data class Episode {
     private Long id;
 
     @Column(name = "title")
-    @Size(min = 3, max = 30, message = "{invalid.size.title}")
-    //@Pattern(regexp = "[A-Z][a-z]*(([ ]?[A-Za-z]+)?)*", message = "{invalid.pattern.title}")
     private String title;
 
     @Column(name = "season")
     @Range(max = 99, message = "{invalid.number}")
-    //@Pattern(regexp = "[A-Za-z0-9]*", message = "{invalid.pattern.season}")
     private int season;
 
     @Column(name = "number")
