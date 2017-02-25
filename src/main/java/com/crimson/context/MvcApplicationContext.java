@@ -1,5 +1,6 @@
 package com.crimson.context;
 
+import com.crimson.mvc.MvcPackageMarker;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +16,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @EnableWebMvc
 @EnableGlobalMethodSecurity(securedEnabled = true)
-@ComponentScan(basePackages = "com.crimson.mvc")
+@ComponentScan(basePackageClasses = MvcPackageMarker.class)
 @Import({SecurityApplicationContext.class, CoreApplicationContext.class})
 public class MvcApplicationContext extends WebMvcConfigurerAdapter {
 

@@ -1,6 +1,7 @@
 package com.crimson.context;
 
 
+import com.crimson.core.CorePackageMarker;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +19,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan(basePackages = "com.crimson.core")
+@ComponentScan(basePackageClasses = CorePackageMarker.class)
 @PropertySource("classpath:/hibernate.properties")
 public class CoreApplicationContext {
 
