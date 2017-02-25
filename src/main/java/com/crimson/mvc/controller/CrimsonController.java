@@ -1,9 +1,6 @@
 package com.crimson.mvc.controller;
 
-import com.crimson.core.dto.EpisodeDTO;
-import com.crimson.core.dto.EpisodeFormDTO;
-import com.crimson.core.dto.TvShowDTO;
-import com.crimson.core.dto.UserDTO;
+import com.crimson.core.dto.*;
 import com.crimson.core.service.EpisodeService;
 import com.crimson.core.service.RatingService;
 import com.crimson.core.service.TvShowService;
@@ -21,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -110,6 +108,7 @@ public class CrimsonController {
         for (EpisodeDTO episode : episodes) {
             if (seasons < episode.getSeason()) seasons = episode.getSeason();
         }
+        model.addAttribute("name", name);
         model.addAttribute("seasons", seasons);
         model.addAttribute("episodes", episodes);
         return "tvShowEpisodes";
@@ -257,5 +256,24 @@ public class CrimsonController {
         EpisodeDTO episode = episodeService.getEpisodeById(id);
         if (episodeService.checkWatched(user, episode)) episodeService.deleteUserFromEpisode(user, episode);
         else episodeService.addUser2Episode(user, episode);
+    }
+
+    @GetMapping(value = "/{name}/edit/episodes/addSearch")
+    public String searchAddEpisode(@PathVariable("name") String name, Model model ) {
+        model.addAttribute("name", name);
+        return "addEpisodesFromJson";
+    }
+
+    @RequestMapping(value = "/{name}/edit/episodes/addSearch", method = RequestMethod.POST)
+    public String postSearchAddEpisode(HttpServletRequest request, @PathVariable("name") String name, Model model ) {
+        EpisodeFromJson episode = new EpisodeFromJson();
+        episode.setTitle(request.getParameter("Title"));
+        episode.setReleaseDate(request.getParameter("releaseDate"));
+        episode.setEpisode(Integer.parseInt(request.getParameter("Number")));
+        episode.setSeason(Integer.parseInt(request.getParameter("Season")));
+        episode.setIdTvShow(tvShowService.getTvBySlug(name).getId());
+        episodeService.saveEpisodeJSON(episode);
+        System.out.print(episode);
+        return String.format("redirect: /tv/%s/edit/episodes/addSearch", name);
     }
 }

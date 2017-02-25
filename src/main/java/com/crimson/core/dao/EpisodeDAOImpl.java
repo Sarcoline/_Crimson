@@ -23,7 +23,7 @@ public class EpisodeDAOImpl implements EpisodeDAO {
     @Override
     public void save(Episode episode) {
         Session session = sessionFactory.getCurrentSession();
-        session.persist(episode);
+        session.saveOrUpdate(episode);
     }
 
     @Override
@@ -59,6 +59,16 @@ public class EpisodeDAOImpl implements EpisodeDAO {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From Episode a where a.title like :custTitle", Episode.class)
                 .setParameter("custTitle", title).getSingleResult();
+    }
+
+    @Override
+    public Episode getBySeasonAndEpisodeNumber(int season, int number, long idTv) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("Select e FROM Episode e where " +
+                "e.tvShow.id = :idTv and e.number = :number and e.season = :season", Episode.class)
+                .setParameter("idTv", idTv).setParameter("number", number).setParameter("season", season)
+                .getSingleResult();
+
     }
 
 

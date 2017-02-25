@@ -3,11 +3,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>${episodes.get(0).tvShow.title} episodes</title>
+    <title>${name} episodes</title>
 </head>
 <body>
 <div class="uk-container uk-container-center uk-margin-large-top">
-    <h1>Edit ${episodes.get(0).tvShow.title} episodes</h1>
+    <h1>Edit ${name} episodes</h1>
     <div class="uk-grid uk-grid-large uk-margin-large-top">
         <%--action="<c:url value="/tv/${episode.episodeFromTvShow.slug}/edit/episodes"/>"--%>
         <c:forEach begin="1" end="${seasons}" varStatus="count">
@@ -31,10 +31,12 @@
                 </c:forEach>
             </ul>
         </c:forEach>
-        <a href="<c:url value="/tv/${episodes.get(0).tvShow.slug}/edit/"/>"
+        <a href="<c:url value="/tv/${name}/edit/"/>"
            class="uk-button uk-margin-top">Back</a>
-        <a href="<c:url value="/tv/${episodes.get(0).tvShow.slug}/edit/episodes/add/"/>"
+        <a href="<c:url value="/tv/${name}/edit/episodes/add/"/>"
            class="uk-button uk-button-success uk-margin-top" style="float: right">Add</a>
+        <a href="<c:url value="/tv/${name}/edit/episodes/addSearch/"/>"
+           class="uk-button uk-button-primary uk-margin-top">Try to add from external api</a>
     </div>
 </div>
 </body>
