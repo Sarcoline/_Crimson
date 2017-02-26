@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -25,23 +26,27 @@ public @Data class TvShow {
     private Long id;
 
     @Column(name = "title")
+    @NotNull
     @Size(min = 3, max = 30, message = "{invalid.size.title}")
-    @Pattern(regexp = "[A-Z][a-z]*(([ ]?[A-Za-z]+)?)*", message = "{invalid.pattern.title}")
+    @Pattern(regexp = "\\w+(([ ]?\\w+)?)*", message = "{invalid.pattern.title}")
     private String title;
 
     @Column(name = "network")
+    @NotNull
     @Size(min = 3, max = 30, message = "{invalid.size.network}")
-    @Pattern(regexp = "[A-Za-z0-9]*(([ ]?[A-Za-z0-9]+)?)*", message = "{invalid.pattern.network}")
+    @Pattern(regexp = "\\w+([+]?([ ]?\\w]+)?)*", message = "{invalid.pattern.network}")
     private String network;
 
     @Column(name = "country")
-    @Size(min = 3, max = 30, message = "{invalid.size.country}")
-    @Pattern(regexp = "[A-z][a-z]*(([ ]?[A-Z][a-z]*)?)*", message = "{invalid.pattern.country}")
+    @NotNull
+    @Size(min = 2, max = 30, message = "{invalid.size.country}")
+    @Pattern(regexp = "[A-Za-z]+(([ ]?[A-Za-z]+)?)*", message = "{invalid.pattern.country}")
     private String country;
 
     @Column(name = "genre")
+    @NotNull
     @Size(min = 3, max = 20, message = "{invalid.size.genre}")
-    @Pattern(regexp = "[A-z][a-z]+", message = "{invalid.pattern.genre}")
+    @Pattern(regexp = "[A-Za-z]+", message = "{invalid.pattern.genre}")
     private String genre;
 
     @Column(name = "description")
@@ -63,7 +68,7 @@ public @Data class TvShow {
 
     @Column(name = "slug")
     @Size(max = 20, message = "{invalid.size.slug}")
-    //@Pattern(regexp = "[a-z]*", message = "{invalid.pattern.slug}")
+    @Pattern(regexp = "[\\w-]*", message = "{invalid.pattern.slug}")
     private String slug;
 
     @Lob

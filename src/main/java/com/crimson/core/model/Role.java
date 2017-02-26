@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +22,9 @@ public @Data class Role {
     private Long idRole;
 
     @Column(name = "roleName")
+    @NotNull
+    @Pattern(regexp = "[\\w-]+", message = "{invalid.pattern.role}")
+    @Size(min = 3, max = 20, message = "{invalid.size.role}")
     private String roleName;
 
     @Builder

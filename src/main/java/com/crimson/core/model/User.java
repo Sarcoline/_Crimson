@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -22,15 +23,19 @@ public @Data class User {
     private Long id;
 
     @Column(name = "name", unique = true)
+    @NotNull
     @Size(min = 3, max = 30, message = "{invalid.size.name}")
-    @Pattern(regexp = "[A-Za-z0-9]*", message = "{invalid.pattern.name}")
+    //no whitespace in name
+    @Pattern(regexp = "[\\S]+", message = "{invalid.pattern.name}")
     private String name;
 
     @Column(name = "email")
+    @NotNull
     @Email(message = "{invalid.email}")
     private String email;
 
     @Column(name = "password")
+    @NotNull
     @Size(min = 3, max = 100, message = "{invalid.password}")
     private String password;
 

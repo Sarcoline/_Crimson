@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @NoArgsConstructor
@@ -13,6 +14,7 @@ import javax.persistence.*;
 public @Data class Rating {
 
     @Column(name = "value")
+    @NotNull
     @Range(min = 0, max = 10, message = "{invalid.value}")
     private int value;
 
