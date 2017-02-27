@@ -29,7 +29,7 @@
                 </form>
             </div>
             <div class="uk-width-1-2">
-                <div class="uk-panel uk-panel-box uk-vertical-align-middle uk-margin-top login" style="width: 300px;">
+                < class="uk-panel uk-panel-box uk-vertical-align-middle uk-margin-top login" style="width: 300px;">
                     <h1>Edit your account!</h1>
                     <c:if test="${not empty error}">
                         <div class="uk-alert uk-alert-danger" data-uk-alert="">
@@ -67,8 +67,8 @@
                                    value="Save"/>
                         </div>
                     </form:form>
-                    <a class="uk-width-1-1 uk-button uk-button-danger uk-button-large"
-                       href="<c:url value="/user/delete/"/>">Delete</a>
+                <a class="uk-width-1-1 uk-button uk-button-danger uk-button-large"
+                   href="<c:url value="/user/delete/"/>">Delete</a>
 
                     <a class="uk-float-left uk-text-small uk-margin-top"
                        href="<c:url value="/user/updatePassword"/> ">Change
@@ -93,6 +93,11 @@
             preview.src = "<c:url value="/images/user/${userDTO.name}"/> ";
         }
     }
+
+    //        Delete confirmation
+    $("#confirm-delete").on('show.bs.modal', function (e) {
+        $(this).find('.uk-button-success').attr('href', $(e.relatedTarget).data('href'));
+    });
 </script>
 </body>
 </html>

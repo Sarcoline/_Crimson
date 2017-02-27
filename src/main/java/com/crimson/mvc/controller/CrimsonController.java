@@ -1,9 +1,6 @@
 package com.crimson.mvc.controller;
 
-import com.crimson.core.dto.EpisodeDTO;
-import com.crimson.core.dto.EpisodeFormDTO;
-import com.crimson.core.dto.TvShowDTO;
-import com.crimson.core.dto.UserDTO;
+import com.crimson.core.dto.*;
 import com.crimson.core.service.EpisodeService;
 import com.crimson.core.service.RatingService;
 import com.crimson.core.service.TvShowService;
@@ -257,5 +254,15 @@ public class CrimsonController {
         EpisodeDTO episode = episodeService.getEpisodeById(id);
         if (episodeService.checkWatched(user, episode)) episodeService.deleteUserFromEpisode(user, episode);
         else episodeService.addUser2Episode(user, episode);
+    }
+
+    @RequestMapping(value = "/addComment", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
+    @Secured("ROLE_USER")
+    public void addComment(@RequestParam("idTvShow") long idTvShow, @RequestParam("value") String value) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDTO user = userService.getUserByName(auth.getName());
+        TvShowDTO tvShowDTO = tvShowService.getTvById(idTvShow);
+        CommentDTO commentDTO = new CommentDTO(value, user,tvShowDTO);
     }
 }

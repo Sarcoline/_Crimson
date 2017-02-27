@@ -88,9 +88,18 @@
             </div>
         </div>
         <h2 class="uk-margin-large-top">Comments: </h2>
-        <button class="uk-button uk-button-success">Add</button>
-        <div class=" uk-margin-large-bottom comments">
-
+        <button class="uk-button uk-button-success"
+                data-uk-toggle="{target:'#add-comment'}">Add
+        </button>
+        <form class="uk-form uk-margin-top uk-margin-large-bottom uk-hidden" id="add-comment">
+            <div class="uk-form-row">
+                <textarea id="commenttext" class="uk-width-1-2 uk-form-large" rows="5"
+                          placeholder="Add new comment" name="commenttext"></textarea>
+            </div>
+            <button class="uk-width-1-2 uk-button uk-button-primary uk-button-large" id="send-comment" disabled>Send
+            </button>
+        </form>
+        <div class="uk-margin-large-bottom comments">
             <ul class="uk-comment-list uk-list-lined">
                 <li>
                     <article class="uk-comment uk-margin-top uk-comment-primary">
@@ -213,24 +222,21 @@
 </div>
 <script>
     $(function () {
-
         <sec:authorize access="isAuthenticated()">
         var rating = parseFloat(${rating});
         var rateValue = $('.rateValue');
         var rateThis = $('.rateThis');
-
+        var sendButton = $('#send-comment');
+        var commentInput = $('#commenttext');
         if (rating != 0) rateValue.html(" " + rating);
-
         <c:if test="${follow == true}">
         $('i.fa-heart-o').addClass('fa-heart').removeClass('fa-heart-o');
         </c:if>
-
         //mark watched episodes
         var watched = ${watchedEpisodesId}
             rateThis.each(function () {
                 if ($.inArray($(this).data('id'), watched) != -1) $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
             });
-
         //ajax request to rate tvShow
         $('label').on('click', function () {
             var modal = UIkit.modal(".uk-modal");
@@ -243,7 +249,6 @@
                 data: {id: ${tv.id}, value: i}
             });
         });
-
         //ajax request to follow tvShow
         $('#follow').on('click', function () {
             $(this).find('i').toggleClass('fa-heart-o fa-heart');
@@ -253,7 +258,6 @@
                 data: {id: ${tv.id}}
             })
         });
-
         //ajax request to rate tvShow
         rateThis.on('click', function () {
             $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
@@ -262,6 +266,31 @@
                 url: "watched",
                 data: {id: $(this).data('id')}
             });
+        });
+        commentInput.on('input', function () {
+            var len = $(this).val().length;
+            if (len >= 5 && len <= 200) sendButton.prop('disabled', false);
+            else sendButton.prop('disabled', true);
+        });
+        sendButton.on('click', function (event) {
+            event.preventDefault();
+            var comment = {
+                value: commentInput.val(),
+                idTvShow: ${tv.id}
+            };
+            if (comment.value.length >= 5) {
+                $.ajax({
+                    type: "get",
+                    url: "addComment",
+                    data: comment,
+                    success: function () {
+                        console.log('ok')
+                    },
+                    error: function () {
+                        console.log('not ok')
+                    }
+                });
+            }
         });
         </sec:authorize>
     });
