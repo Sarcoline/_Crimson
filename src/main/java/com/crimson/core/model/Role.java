@@ -21,9 +21,13 @@ public @Data class Role {
     @Column(name = "roleName")
     private String roleName;
 
+    @Version
+    int version;
+
     @Builder
-    public Role(String roleName){
+    public Role(String roleName, int version){
         this.roleName = roleName;
+        this.version = version;
     }
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER, cascade = CascadeType.ALL)

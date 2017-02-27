@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Repository
@@ -133,7 +135,8 @@ public class TvShowDAOImpl implements TvShowDAO {
         Session session = sf.getCurrentSession();
         int listSizeOnPage = 5;
         Long countResults = (Long) session.createQuery("SELECT count (id) FROM TvShow  f").uniqueResult();
-        return (int) (countResults / listSizeOnPage) + 1;
+        if((countResults % listSizeOnPage) == 0) return (int) (countResults / listSizeOnPage);
+        else return (int) (countResults / listSizeOnPage) + 1;
     }
 
     //Wyrzuca listę tvShow dla danej strony
@@ -223,6 +226,24 @@ public class TvShowDAOImpl implements TvShowDAO {
     public void deleteRatingFromTvShow(TvShow tvShow, Rating rating) {
         Session session = sf.getCurrentSession();
         tvShow.getRatings().remove(rating);
+        session.saveOrUpdate(tvShow);
+    }
+
+    //TvShow2Comment
+
+    @Override
+    public void addComment(TvShow tvShow, Comment comment){
+        Session session = sf.getCurrentSession();
+        if (!tvShow.getComments().contains(comment)){
+            tvShow.getComments().add(comment);
+        }
+        session.saveOrUpdate(tvShow);
+    }
+
+    @Override
+    public void deleteComment(TvShow tvShow, Comment comment){
+        Session session = sf.getCurrentSession();
+        tvShow.getComments().remove(comment);
         session.saveOrUpdate(tvShow);
     }
 
