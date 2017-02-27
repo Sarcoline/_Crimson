@@ -105,45 +105,20 @@
         <div class="uk-margin-large-bottom comments">
             <ul class="uk-comment-list uk-list-lined">
                 <li id="comments">
-                    <article class="uk-comment uk-margin-top">
-                        <header class="uk-comment-header">
-                            <img class="uk-comment-avatar" src="<c:url value="/images/user/testuser"/> " width="50"
-                                 height="50" alt="">
-                            <h4 class="uk-comment-title">Author</h4>
-                            <div class="uk-comment-meta">12 days ago | <a
-                                    href="<c:url value="/user/testuser"/>">Profile</a></div>
-                        </header>
-                        <div class="uk-comment-body">
-                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-                        </div>
-                    </article>
-                    <article class="uk-comment uk-margin-top">
-                        <header class="uk-comment-header">
-                            <img class="uk-comment-avatar" src="<c:url value="/images/user/testuser"/> " width="50"
-                                 height="50" alt="">
-                            <h4 class="uk-comment-title">Author</h4>
-                            <div class="uk-comment-meta">12 days ago | <a
-                                    href="<c:url value="/user/testuser"/>">Profile</a></div>
-                        </header>
-                        <div class="uk-comment-body">
-                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-                        </div>
-                    </article>
-                    <article class="uk-comment uk-margin-top">
-                        <header class="uk-comment-header">
-                            <img class="uk-comment-avatar" src="<c:url value="/images/user/testuser"/> " width="50"
-                                 height="50" alt="">
-                            <h4 class="uk-comment-title">Author</h4>
-                            <div class="uk-comment-meta">12 days ago | <a
-                                    href="<c:url value="/user/testuser"/>">Profile</a></div>
-                        </header>
-                        <div class="uk-comment-body">
-                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-                        </div>
-                    </article>
+                    <c:forEach items="${comments}" var="comment">
+                        <article class="uk-comment uk-margin-top">
+                            <header class="uk-comment-header">
+                                <img class="uk-comment-avatar" src="<c:url value="/images/user/${comment.user.name}"/> " width="50"
+                                     height="50" alt="">
+                                <h4 class="uk-comment-title">${comment.user.name}</h4>
+                                <div class="uk-comment-meta">${comment.date} | <a
+                                        href="<c:url value="/user/${comment.user.name}"/>">Profile</a></div>
+                            </header>
+                            <div class="uk-comment-body">
+                                <p>${comment.text}</p>
+                            </div>
+                        </article>
+                    </c:forEach>
                 </li>
             </ul>
         </div>
@@ -270,10 +245,10 @@
         sendButton.on('click', function (event) {
             event.preventDefault();
             var comment = {
-                value: commentInput.val(),
+                text: commentInput.val(),
                 idTvShow: ${tv.id}
             };
-            if (comment.value.length >= 5) {
+            if (comment.text.length >= 5) {
                 $.ajax({
                     headers: {
                         'Accept': 'application/json',
@@ -284,7 +259,9 @@
                     data: JSON.stringify(comment),
                     success: function () {
                         console.log('ok');
-                        $('#comments').prepend(createComment(comment.value, '${name}'));
+                        $('#comments').prepend(createComment(comment.text, '${name}'));
+                        $('#add-comment').addClass('uk-hidden');
+                        commentInput.val(' ');
                     },
                     error: function () {
                         console.log('not ok')

@@ -35,13 +35,13 @@ public class CommentDAOImpl implements CommentDAO {
     }
 
     @Override
-    public Comment getCommentById(Long idComment) {
+    public Comment getById(Long idComment) {
         Session session = sessionFactory.getCurrentSession();
         return session.find(Comment.class, idComment);
     }
 
     @Override
-    public List<Comment> getAllComments() {
+    public List<Comment> getAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("SELECT a FROM Comment a", Comment.class).getResultList();
     }

@@ -58,44 +58,44 @@ public class TestCommentDAO {
                 .text("TEST")
                 .date(LocalDate.parse("2017-02-27"))
                 .build();
-        int listSize = commentDAO.getAllComments().size();
+        int listSize = commentDAO.getAll().size();
 
         commentDAO.save(comment);
 
-        Assert.assertEquals(listSize+1, commentDAO.getAllComments().size());
-        Assert.assertEquals(commentDAO.getAllComments().contains(comment), true);
+        Assert.assertEquals(listSize+1, commentDAO.getAll().size());
+        Assert.assertEquals(commentDAO.getAll().contains(comment), true);
     }
 
     @Test
     public void updateTest(){
-        Comment comment = commentDAO.getCommentById(commentDAO.getAllComments().get(0).getId());
+        Comment comment = commentDAO.getById(commentDAO.getAll().get(0).getId());
         comment.setText("CHANGED");
 
         commentDAO.update(comment);
 
-        Assert.assertEquals(commentDAO.getAllComments().get(0).getText(), comment.getText());
+        Assert.assertEquals(commentDAO.getAll().get(0).getText(), comment.getText());
     }
 
     @Test
     public void deleteTest(){
-        int listSize = commentDAO.getAllComments().size();
+        int listSize = commentDAO.getAll().size();
 
         commentDAO.delete(comment1);
 
-        Assert.assertEquals(listSize-1, commentDAO.getAllComments().size());
-        Assert.assertEquals(commentDAO.getAllComments().contains(comment1), false);
+        Assert.assertEquals(listSize-1, commentDAO.getAll().size());
+        Assert.assertEquals(commentDAO.getAll().contains(comment1), false);
     }
 
     @Test
     public void getCommentByIdTest(){
-        Comment comment = commentDAO.getCommentById(comment1.getId());
+        Comment comment = commentDAO.getById(comment1.getId());
 
         Assert.assertEquals(comment.equals(comment1), true);
     }
 
     @Test
     public void getAllCommentsTest(){
-        Assert.assertEquals(commentDAO.getAllComments().size(), 2);
+        Assert.assertEquals(commentDAO.getAll().size(), 2);
     }
 
     @Test

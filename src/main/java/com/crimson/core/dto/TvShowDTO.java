@@ -55,4 +55,7 @@ public class TvShowDTO {
     private List<UserDTO> users = new ArrayList<>();
 
     private List<Rating> ratings = new ArrayList<>();
+
+    private List<CommentDTO> comments = new ArrayList<>();
+
 }

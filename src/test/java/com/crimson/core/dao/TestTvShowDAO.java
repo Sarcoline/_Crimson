@@ -267,8 +267,8 @@ public class TestTvShowDAO {
 
         tvShowDAO.addComment(tvShow, comment);
 
-        Assert.assertEquals(tvShowDAO.getTvById(tvShow.getId()).getComments().contains(comment), true);
-        Assert.assertEquals(tvShowDAO.getTvById(tvShow.getId()).getComments().size(), listSize+1);
+        Assert.assertEquals(tvShowDAO.getById(tvShow.getId()).getComments().contains(comment), true);
+        Assert.assertEquals(tvShowDAO.getById(tvShow.getId()).getComments().size(), listSize+1);
     }
 
     @Test
@@ -278,7 +278,7 @@ public class TestTvShowDAO {
         int listSize = tvShow.getComments().size();
         tvShowDAO.deleteComment(tvShow, comment);
 
-        Assert.assertEquals(tvShowDAO.getTvById(tvShow.getId()).getComments().contains(comment), false);
-        Assert.assertEquals(tvShowDAO.getTvById(tvShow.getId()).getComments().size(), listSize-1);
+        Assert.assertEquals(tvShowDAO.getById(tvShow.getId()).getComments().contains(comment), false);
+        Assert.assertEquals(tvShowDAO.getById(tvShow.getId()).getComments().size(), listSize-1);
     }
 }

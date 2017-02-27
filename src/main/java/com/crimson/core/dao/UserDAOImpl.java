@@ -148,7 +148,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void addComment(User user, Comment comment){
-        Session session = sf.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         if (!user.getComments().contains(comment)){
             user.getComments().add(comment);
         }
@@ -157,7 +157,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void deleteComment(User user, Comment comment){
-        Session session = sf.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         user.getComments().remove(comment);
         session.saveOrUpdate(user);
     }

@@ -1,10 +1,7 @@
 package com.crimson.mvc.controller;
 
 import com.crimson.core.dto.*;
-import com.crimson.core.service.EpisodeService;
-import com.crimson.core.service.RatingService;
-import com.crimson.core.service.TvShowService;
-import com.crimson.core.service.UserService;
+import com.crimson.core.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
@@ -13,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
 import java.util.List;
 
 @RequestMapping("/api")
@@ -27,6 +25,8 @@ public class RestCrimsonController {
     private EpisodeService episodeService;
     @Autowired
     private RatingService ratingService;
+    @Autowired
+    private CommentService commentService;
 
     @RequestMapping(value = "/search/{pattern}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
@@ -49,6 +49,8 @@ public class RestCrimsonController {
         TvShowDTO tvShowDTO = tvShowService.getTvById(commentDTO.getIdTvShow());
         commentDTO.setTvShow(tvShowDTO);
         commentDTO.setUser(user);
+        commentDTO.setDate(LocalDate.now());
+        commentService.save(commentDTO);
     }
 
     @RequestMapping(value = "/watched", method = RequestMethod.POST)

@@ -297,8 +297,8 @@ public class TestUserDAO {
     public void addCommentTest(){
         int listSize = user.getComments().size();
         userDAO.addComment(user, comment);
-        Assert.assertEquals(userDAO.getUserById(user.getId()).getComments().contains(comment), true);
-        Assert.assertEquals(userDAO.getUserById(user.getId()).getComments().size(), listSize+1);
+        Assert.assertEquals(userDAO.getById(user.getId()).getComments().contains(comment), true);
+        Assert.assertEquals(userDAO.getById(user.getId()).getComments().size(), listSize+1);
     }
 
     @Test
@@ -308,8 +308,8 @@ public class TestUserDAO {
 
         userDAO.deleteComment(user, comment);
 
-        Assert.assertEquals(userDAO.getUserById(user.getId()).getComments().contains(comment), false);
-        Assert.assertEquals(userDAO.getUserById(user.getId()).getComments().size(), listSize-1);
+        Assert.assertEquals(userDAO.getById(user.getId()).getComments().contains(comment), false);
+        Assert.assertEquals(userDAO.getById(user.getId()).getComments().size(), listSize-1);
     }
 
 

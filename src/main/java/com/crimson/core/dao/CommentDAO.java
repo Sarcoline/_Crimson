@@ -6,17 +6,7 @@ import com.crimson.core.model.Comment;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface CommentDAO {
-
-    void save(Comment comment);
-
-    void delete(Comment comment);
-
-    void update(Comment comment);
-
-    Comment getCommentById(Long idComment);
-
-    List<Comment> getAllComments();
+public interface CommentDAO extends BaseDAO<Comment, Long> {
 
     List<Comment> getCommentsByDate(LocalDate date);
 

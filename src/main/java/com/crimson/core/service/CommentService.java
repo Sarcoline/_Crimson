@@ -1,6 +1,7 @@
 package com.crimson.core.service;
 
 
+import com.crimson.core.dto.CommentDTO;
 import com.crimson.core.model.Comment;
 
 import java.time.LocalDate;
@@ -8,7 +9,7 @@ import java.util.List;
 
 public interface CommentService {
 
-    void save(Comment comment);
+    void save(CommentDTO commentDTO);
 
     void delete(Comment comment);
 

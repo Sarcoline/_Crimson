@@ -2,20 +2,37 @@ package com.crimson.core.service;
 
 
 import com.crimson.core.dao.CommentDAO;
+import com.crimson.core.dao.TvShowDAO;
+import com.crimson.core.dao.UserDAO;
+import com.crimson.core.dto.CommentDTO;
 import com.crimson.core.model.Comment;
+import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-
+@Service
+@Transactional
 public class CommentServiceImpl implements CommentService {
 
     @Autowired
     private CommentDAO commentDAO;
+    @Autowired
+    private TvShowDAO tvShowDAO;
+    @Autowired
+    private UserDAO userDAO;
+
+    @Autowired
+    private MapperFacade mapperFacade;
 
     @Override
-    public void save(Comment comment) {
-        commentDAO.save(comment);
+    public void save(CommentDTO commentDTO) {
+        Comment comment1 = new Comment(commentDTO.getText(),commentDTO.getDate());
+        comment1.setTvShow(tvShowDAO.getById(commentDTO.getIdTvShow()));
+        comment1.setUser(userDAO.getById(commentDTO.getUser().getId()));
+        commentDAO.save(comment1);
     }
 
     @Override
@@ -30,12 +47,12 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment getCommentById(Long idComment) {
-        return commentDAO.getCommentById(idComment);
+        return commentDAO.getById(idComment);
     }
 
     @Override
     public List<Comment> getAllComments() {
-        return commentDAO.getAllComments();
+        return commentDAO.getAll();
     }
 
     @Override

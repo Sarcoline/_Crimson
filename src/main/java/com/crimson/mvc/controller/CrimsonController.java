@@ -60,6 +60,9 @@ public class CrimsonController {
         episodes.sort(Comparator.comparing(EpisodeDTO::getSeason));
         episodes.sort(Comparator.comparing(EpisodeDTO::getNumber));
         int seasons = episodes.isEmpty() ? 0 :  episodes.get(episodes.size()-1).getSeason();
+        List<CommentDTO> comments = tv.getComments();
+        comments.sort(Comparator.comparing(CommentDTO::getDate).reversed());
+        model.addAttribute("comments", comments);
         model.addAttribute("tv", tv);
         model.addAttribute("episodes", episodes);
         model.addAttribute("seasons", seasons);

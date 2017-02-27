@@ -2,6 +2,7 @@ package com.crimson.core.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Range;
 
 import java.time.LocalDate;
 
@@ -11,21 +12,22 @@ public @Data class CommentDTO {
     private long id;
 
     public CommentDTO(String value, UserDTO user, TvShowDTO tvShow ) {
-        this.value = value;
+        this.text = value;
         this.tvShow = tvShow;
         this.user = user;
-        this.creationDate = LocalDate.now();
     }
 
     public CommentDTO(String value, long idTvShow) {
-        this.value = value;
+        this.text = value;
         this.idTvShow = idTvShow;
     }
 
     private long idTvShow;
-    private String value;
+
+    @Range(min = 10, max = 200)
+    private String text;
     private TvShowDTO tvShow;
     private UserDTO user;
-    private LocalDate creationDate;
+    private LocalDate date;
 
 }

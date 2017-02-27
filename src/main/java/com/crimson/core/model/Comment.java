@@ -27,10 +27,9 @@ public @Data class Comment {
     private int version;
 
     @Builder
-    public Comment(String text, LocalDate date, int version){
+    public Comment(String text, LocalDate date){
         this.text = text;
-        this.date = date;
-        this.version = version;
+        this.date = LocalDate.now();
     }
 
     //RELATIONSHIPS
