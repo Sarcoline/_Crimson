@@ -41,6 +41,16 @@ public @Data class User {
     @Version
     private int version;
 
+    @Builder
+    public User(String name, String email, String password, byte[] profilePic, int version){
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.profilePic = profilePic;
+        this.version = version;
+    }
+
+
     //User2TvShow
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "User2TvShow",
@@ -59,7 +69,7 @@ public @Data class User {
     private List<Rating> ratings = new ArrayList<>();
 
     //User2Setting
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = Setting.class, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
     private Setting setting;
 
     //User2Role
@@ -69,15 +79,9 @@ public @Data class User {
             inverseJoinColumns = @JoinColumn(name = "idRole"))
     private List<Role> roles = new ArrayList<>();
 
+    //Comments
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
 
-
-    @Builder
-    public User(String name, String email, String password, byte[] profilePic, int version){
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.profilePic = profilePic;
-        this.version = version;
-    }
 
 }

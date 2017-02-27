@@ -5,7 +5,6 @@ import com.crimson.core.model.Episode;
 import com.crimson.core.model.Role;
 import com.crimson.core.model.Setting;
 import com.crimson.core.model.TvShow;
-import com.crimson.core.service.EpisodeService;
 import com.crimson.core.service.RoleService;
 import com.crimson.core.service.TvShowService;
 import com.crimson.core.service.UserService;
@@ -32,9 +31,6 @@ public class PopulateDatabase {
 
     @Autowired
     private TvShowService tvShowDAO;
-
-    @Autowired
-    private EpisodeService episodeService;
 
     @Autowired
     private UserService userDAO;
@@ -249,12 +245,10 @@ public class PopulateDatabase {
                     "A modern update finds the famous sleuth and his doctor partner solving crime in 21st century London.  " );
 
 
-
-
-
-
-            Role role = new Role("USER");
-            Role role1 = new Role("ADMIN");
+            Role role = new Role();
+            Role role1 = new Role();
+            role.setRoleName("USER");
+            role.setRoleName("ADMIN");
             roleService.saveRole(role);
             roleService.saveRole(role1);
             UserDTO user = new UserDTO();

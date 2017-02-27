@@ -52,4 +52,8 @@ public interface TvShowDAO {
     void addRating2TvShow(TvShow tvShow, Rating rating);
 
     void deleteRatingFromTvShow(TvShow tvShow, Rating rating);
+
+    void addComment(TvShow tvShow, Comment comment);
+
+    void deleteComment(TvShow tvShow, Comment comment);
 }

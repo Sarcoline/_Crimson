@@ -45,4 +45,8 @@ public interface UserDAO {
     void addRole2User(User user, Role role);
 
     void deleteRoleFromUser(User user, Role role);
+
+    void addComment(User user, Comment comment);
+
+    void deleteComment(User user, Comment comment);
 }
