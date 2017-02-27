@@ -133,7 +133,8 @@ public class TvShowDAOImpl implements TvShowDAO {
         Session session = sf.getCurrentSession();
         int listSizeOnPage = 5;
         Long countResults = (Long) session.createQuery("SELECT count (id) FROM TvShow  f").uniqueResult();
-        return (int) (countResults / listSizeOnPage) + 1;
+        if((countResults % listSizeOnPage) == 0) return (int) (countResults / listSizeOnPage);
+        else return (int) (countResults / listSizeOnPage) + 1;
     }
 
     //Wyrzuca listę tvShow dla danej strony

@@ -132,7 +132,7 @@ public class TestTvShowDAO {
     public void tvShowsLastPageNumber() {
         int lastPage = tvShowDAO.tvShowsLastPageNumber();
 
-        Assert.assertEquals(lastPage, 2 + 1);
+        Assert.assertEquals(lastPage, 2);
     }
 
     @Test
