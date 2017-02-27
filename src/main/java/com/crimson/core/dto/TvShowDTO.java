@@ -40,6 +40,8 @@ public class TvShowDTO {
     @Range(min = 1920, max = 2017)
     private int releaseYear;
 
+    private int finishYear;
+
     @Size(min = 3, max = 20)
     @Pattern(regexp = "[A-z][a-z]+")
     private String genre;

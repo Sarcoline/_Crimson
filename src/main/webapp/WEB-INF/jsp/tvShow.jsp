@@ -18,7 +18,7 @@
     </sec:authorize>
 
 </h1>
-<h3 class="subtitle uk-text-muted">${tv.genre} ${tv.releaseYear}</h3>
+<h3 class="subtitle uk-text-muted">${tv.genre} ${tv.releaseYear} - <c:if test="${tv.finishYear != 0}">${tv.finishYear}</c:if></h3>
 <div class="uk-grid">
     <div class="uk-width-large-1-6  uk-width-medium-1-1" data-uk-grid-margin=" ">
         <div class="gallery">

@@ -61,6 +61,8 @@ public @Data class TvShow {
     @Range(min = 1920, max = 2017, message = "{invalid.releaseYear}")
     private int releaseYear;
 
+    private int finishYear;
+
     @Column(name = "slug")
     @Size(max = 20, message = "{invalid.size.slug}")
     //@Pattern(regexp = "[a-z]*", message = "{invalid.pattern.slug}")

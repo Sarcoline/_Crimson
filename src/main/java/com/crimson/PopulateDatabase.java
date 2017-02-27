@@ -166,6 +166,7 @@ public class PopulateDatabase {
             tv3.setTrailerUrl("https://www.youtube.com/watch?v=5DIADh4lMq8");
             tv3.setCountry("USA");
             tv3.setReleaseYear(2004);
+            tv3.setFinishYear(2012);
             InputStream in15 = applicationContext.getResource("classpath:/images/house/poster.jpg").getInputStream();
             tv3.getPictures().put("poster", IOUtils.toByteArray(in15));
             InputStream in16 = applicationContext.getResource("classpath:/images/house/back.jpg").getInputStream();
@@ -182,12 +183,13 @@ public class PopulateDatabase {
 
             TvShow tv4 = new TvShow();
             tv4.setGenre("Comedy");
-            tv4.setTitle("Game of Friends");
+            tv4.setTitle("Friends");
             tv4.setNetwork("NBC");
             tv4.setOverallRating(3d);
             tv4.setTrailerUrl("https://www.youtube.com/watch?v=hDNNmeeJs1Q");
             tv4.setCountry("USA");
             tv4.setReleaseYear(1994);
+            tv4.setFinishYear(2004);
             InputStream in20 = applicationContext.getResource("classpath:/images/friends/poster.jpg").getInputStream();
             tv4.getPictures().put("poster", IOUtils.toByteArray(in20));
             InputStream in21 = applicationContext.getResource("classpath:/images/friends/back.jpg").getInputStream();
