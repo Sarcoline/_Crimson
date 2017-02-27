@@ -132,12 +132,13 @@ public class TestTvShowDAO {
     public void tvShowsLastPageNumber() {
         int lastPage = tvShowDAO.tvShowsLastPageNumber();
 
-        Assert.assertEquals(lastPage, 1);
+        Assert.assertEquals(lastPage, 2);
     }
 
     @Test
     public void tvShowsPaginationList() {
         List<TvShow> tvShows = tvShowDAO.tvShowsPaginationList(1);
+        tvShows.addAll(tvShowDAO.tvShowsPaginationList(2));
 
         Assert.assertEquals(tvShows.get(0), tvShow);
         Assert.assertEquals(tvShows.get(1), tvShow2);
