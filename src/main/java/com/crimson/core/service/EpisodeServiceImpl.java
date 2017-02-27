@@ -1,9 +1,11 @@
 package com.crimson.core.service;
 
 import com.crimson.core.dao.EpisodeDAO;
+import com.crimson.core.dao.TvShowDAO;
 import com.crimson.core.dao.UserDAO;
 import com.crimson.core.dto.EpisodeDTO;
 import com.crimson.core.dto.EpisodeFormDTO;
+import com.crimson.core.dto.EpisodeFromJson;
 import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.Episode;
 import com.crimson.core.model.TvShow;
@@ -25,6 +27,9 @@ public class EpisodeServiceImpl implements EpisodeService {
     private EpisodeDAO episodeDAO;
     @Autowired
     private UserDAO userDAO;
+
+    @Autowired
+    private TvShowDAO tvShowDAO;
     @Autowired
     private MapperFacade mapperFacade;
 
@@ -124,5 +129,40 @@ public class EpisodeServiceImpl implements EpisodeService {
                 .idTvShow(episodeFormDTO.getIdTvShow())
                 .build();
         episodeDAO.save(ep);
+    }
+
+    @Override
+    public void saveEpisodeJSON(EpisodeFromJson episodeFromJson) {
+
+        Episode epRet;
+        boolean exsist = false;
+        for (Episode episode : tvShowDAO.getById(episodeFromJson.getIdTvShow()).getEpisodes()) {
+            if (episode.getNumber() == episodeFromJson.getEpisode()
+                    && episode.getSeason() == episodeFromJson.getSeason()) exsist = true;
+        }
+        if (exsist) {
+            epRet = episodeDAO.getBySeasonAndEpisodeNumber(
+                    episodeFromJson.getSeason(), episodeFromJson.getEpisode(), episodeFromJson.getIdTvShow());
+
+            epRet.setReleaseDate(LocalDate.parse(episodeFromJson.getReleaseDate()));
+            epRet.setTitle(episodeFromJson.getTitle());
+            epRet.setSeason(episodeFromJson.getSeason());
+            epRet.setNumber(episodeFromJson.getEpisode());
+            epRet.setEpisodeSummary("no summary");
+            episodeDAO.update(epRet);
+        } else {
+
+            Episode ep = Episode.builder()
+                    .episodeSummary("No summary")
+                    .title(episodeFromJson.getTitle())
+                    .number(episodeFromJson.getEpisode())
+                    .season(episodeFromJson.getSeason())
+                    .releaseDate(LocalDate.parse(episodeFromJson.getReleaseDate()))
+                    .idTvShow(episodeFromJson.getIdTvShow())
+                    .build();
+            episodeDAO.save(ep);
+        }
+
+
     }
 }

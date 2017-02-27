@@ -1,9 +1,6 @@
 package com.crimson.mvc.controller;
 
-import com.crimson.core.dto.EpisodeDTO;
-import com.crimson.core.dto.EpisodeFormDTO;
-import com.crimson.core.dto.TvShowDTO;
-import com.crimson.core.dto.UserDTO;
+import com.crimson.core.dto.*;
 import com.crimson.core.service.EpisodeService;
 import com.crimson.core.service.RatingService;
 import com.crimson.core.service.TvShowService;
@@ -109,6 +106,7 @@ public class CrimsonController {
         for (EpisodeDTO episode : episodes) {
             if (seasons < episode.getSeason()) seasons = episode.getSeason();
         }
+        model.addAttribute("name", name);
         model.addAttribute("seasons", seasons);
         model.addAttribute("episodes", episodes);
         return "tvShowEpisodes";
