@@ -25,7 +25,8 @@ public class LogHandler{
             returning= "result")
     public void logAfterReturning(JoinPoint joinPoint, Object result) {
         if (result == null) result = true;
-        logger.info(joinPoint.getSignature() + " - " + joinPoint.getSignature().getName() + ": returned value: " + result);
+        else result = result.getClass();
+        logger.info(joinPoint.getSignature() + " - " + joinPoint.getSignature().getName() + ": returned value of " + result);
     }
 
     @AfterThrowing(
