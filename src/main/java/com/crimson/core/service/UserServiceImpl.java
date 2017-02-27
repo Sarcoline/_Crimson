@@ -215,20 +215,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<EpisodeDTO> getAllUpcomingUserEpisodes(UserDTO userDTO) {
 
-        List<EpisodeDTO> allFutureUserEpisodes = new ArrayList<>();
         int days = userDTO.getSetting().getDaysOfUpcomingEpisodes();
-
+        List<Episode> allFutureUserEpisodes = new ArrayList<>();
+        List<EpisodeDTO> allFutureUserEpisodesDTO = new ArrayList<>();
+        User user = userDAO.getById(userDTO.getId());
+        List<TvShow> tvs = user.getTvShows();
         LocalDate currentDate = LocalDate.now();
         LocalDate lastDate = LocalDate.now().plusDays(days);
 
-        for (EpisodeDTO episode : getAllUnwatchedUserEpisodes(userDTO)) {
+        tvs.forEach(tv -> allFutureUserEpisodes.addAll(tv.getEpisodes()));
+        allFutureUserEpisodes.removeAll(user.getEpisodes());
+
+        for (Episode episode : allFutureUserEpisodes) {
             LocalDate episodeDate = episode.getReleaseDate();
             if (episodeDate.isAfter(currentDate) && episodeDate.isBefore(lastDate))
-                allFutureUserEpisodes.add(episode);
+                allFutureUserEpisodesDTO.add(mapperFacade.map(episode, EpisodeDTO.class));
         }
 
-        allFutureUserEpisodes.sort(Comparator.comparing(EpisodeDTO::getReleaseDate));
-        return allFutureUserEpisodes;
+        allFutureUserEpisodesDTO.sort(Comparator.comparing(EpisodeDTO::getReleaseDate));
+        return allFutureUserEpisodesDTO;
     }
 
     @Override

@@ -70,13 +70,13 @@
                                         <li>
                                             <p><strong> ${episode.number}. </strong>
                                                 <sec:authorize access="isAuthenticated()">
-                                                    <a class="rateThis" data-id="${episode.id}"><i
+                                                    <a class="watched-this" data-id="${episode.id}"><i
                                                             class="fa fa-square-o"
                                                             aria-hidden="true"></i></a>
 
                                                 </sec:authorize>
                                                     ${episode.title}
-                                                <small class="episodeDate uk-text-muted">${episode.releaseDate}</small>
+                                                <small class="episode-date uk-text-muted">${episode.releaseDate}</small>
                                             </p>
                                         </li>
                                     </c:if>
@@ -149,7 +149,7 @@
         <div class="uk-grid details" data-uk-grid-margin=" ">
             <div class="uk-width-large-1-1 uk-width-small-1-2">
                 <div class="ratebox">
-                    <p class="overallrating">
+                    <p class="overall-rating">
                         ${tv.overallRating}
                         <small class="uk-text-muted" style="font-size: 2rem;">/10</small>
                     </p>
@@ -193,7 +193,7 @@
                     <img src="<c:url value="/images/user/${name}"/>" class="userPictureRate">
                 </sec:authorize>
             </div>
-            <div class="uk-width-1-2 centerH">
+            <div class="uk-width-1-2 center-rating">
                 <fieldset class="rating">
                     <input type="radio" id="star5" name="rating" value="10"/>
                     <label class="full" for="star5" title="10"></label>
@@ -220,53 +220,44 @@
         </div>
     </div>
 </div>
+<script src="<c:url value="/static/js/userActions.js"/>"></script>
 <script>
     $(function () {
+
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        $(document).ajaxSend(function(e, xhr, options) {
+            xhr.setRequestHeader(header, token);
+        });
+
         <sec:authorize access="isAuthenticated()">
+
         var rating = parseFloat(${rating});
         var rateValue = $('.rateValue');
-        var rateThis = $('.rateThis');
+        var watchedThis = $('.watched-this');
         var sendButton = $('#send-comment');
         var commentInput = $('#commenttext');
+        var watched = ${watchedEpisodesId};
+        var label = $('label');
+        var follow = $('#follow');
+        var id = ${tv.id};
         if (rating != 0) rateValue.html(" " + rating);
         <c:if test="${follow == true}">
         $('i.fa-heart-o').addClass('fa-heart').removeClass('fa-heart-o');
         </c:if>
+
         //mark watched episodes
-        var watched = ${watchedEpisodesId}
-            rateThis.each(function () {
-                if ($.inArray($(this).data('id'), watched) != -1) $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
-            });
+        markWatchedEpisodes(watchedThis, watched);
+
         //ajax request to rate tvShow
-        $('label').on('click', function () {
-            var modal = UIkit.modal(".uk-modal");
-            var i = $('input#' + $(this).attr('for')).val();
-            rateValue.html(" " + i);
-            modal.hide();
-            $.ajax({
-                type: "get",
-                url: "rate",
-                data: {id: ${tv.id}, value: i}
-            });
-        });
+        rateTvShow(label, rateValue, id);
+
         //ajax request to follow tvShow
-        $('#follow').on('click', function () {
-            $(this).find('i').toggleClass('fa-heart-o fa-heart');
-            $.ajax({
-                type: "get",
-                url: "follow",
-                data: {id: ${tv.id}}
-            })
-        });
+        followTvShow(follow, id);
         //ajax request to rate tvShow
-        rateThis.on('click', function () {
-            $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
-            $.ajax({
-                type: "get",
-                url: "watched",
-                data: {id: $(this).data('id')}
-            });
-        });
+        markAsWatched(watchedThis);
+
+        //add comment
         commentInput.on('input', function () {
             var len = $(this).val().length;
             if (len >= 5 && len <= 200) sendButton.prop('disabled', false);
@@ -280,9 +271,13 @@
             };
             if (comment.value.length >= 5) {
                 $.ajax({
-                    type: "get",
-                    url: "addComment",
-                    data: comment,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    type: "post",
+                    url: "/api/addComment",
+                    data: JSON.stringify(comment),
                     success: function () {
                         console.log('ok')
                     },

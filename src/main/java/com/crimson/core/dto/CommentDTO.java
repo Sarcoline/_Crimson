@@ -5,9 +5,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-/**
- * Created by adm on 2017-02-27.
- */
 @NoArgsConstructor
 public @Data class CommentDTO {
 
@@ -20,6 +17,12 @@ public @Data class CommentDTO {
         this.creationDate = LocalDate.now();
     }
 
+    public CommentDTO(String value, long idTvShow) {
+        this.value = value;
+        this.idTvShow = idTvShow;
+    }
+
+    private long idTvShow;
     private String value;
     private TvShowDTO tvShow;
     private UserDTO user;

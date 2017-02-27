@@ -63,6 +63,7 @@ public class UserDAOImpl implements UserDAO {
             user.getTvShows().add(tvShow);
         }
         session.saveOrUpdate(user);
+
     }
 
     @Override
