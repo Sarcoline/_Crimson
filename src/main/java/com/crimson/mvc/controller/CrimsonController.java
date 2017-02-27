@@ -7,6 +7,7 @@ import com.crimson.core.service.TvShowService;
 import com.crimson.core.service.UserService;
 import com.github.slugify.Slugify;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -40,6 +41,7 @@ public class CrimsonController {
     @GetMapping("/{name}")
     @SuppressWarnings("unchecked")
     public String displayTvShow(Model model, @PathVariable("name") String name) {
+
         TvShowDTO tv = tvShowService.getTvBySlug(name);
         boolean follow = false;
         int rating = 0;
@@ -47,19 +49,17 @@ public class CrimsonController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             UserDTO user = userService.getUserByName(auth.getName());
-            follow = userService.checkFollow(user, tv);
+            follow = user.getTvShows().contains(tv);
             rating = ratingService.getRating(tv.getId(), user.getId()).getValue();
             model.addAttribute("user", user);
             List watchedEpisodesId = new ArrayList();
             user.getEpisodes().forEach(episode -> watchedEpisodesId.add(episode.getId()));
             model.addAttribute("watchedEpisodesId", watchedEpisodesId);
         }
-        int seasons = 0;
-        for (EpisodeDTO episode : episodes) {
-            if (seasons < episode.getSeason()) seasons = episode.getSeason();
-        }
+
         episodes.sort(Comparator.comparing(EpisodeDTO::getSeason));
         episodes.sort(Comparator.comparing(EpisodeDTO::getNumber));
+        int seasons = episodes.isEmpty() ? 0 :  episodes.get(episodes.size()-1).getSeason();
         model.addAttribute("tv", tv);
         model.addAttribute("episodes", episodes);
         model.addAttribute("seasons", seasons);
@@ -217,5 +217,27 @@ public class CrimsonController {
     public String tvShowList(Model model) {
         model.addAttribute("tvSize", tvShowService.tvShowsSize());
         return "tvShowList";
+    }
+
+    @GetMapping(value = "/{name}/edit/episodes/addSearch")
+    public String searchAddEpisode(@PathVariable("name") String name, Model model) {
+        model.addAttribute("name", name);
+        return "addEpisodesFromJson";
+    }
+
+    @RequestMapping(value = "/{name}/edit/episodes/addSearch/add", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
+    public void postSearchAddEpisode(@RequestParam("title") String title, @RequestParam("episode") int number,
+                                     @RequestParam("season") int season,
+                                     @RequestParam("releaseDate") String releaseDate,
+                                     @PathVariable("name") String name) {
+        EpisodeFromJson episode = new EpisodeFromJson();
+        episode.setTitle(title);
+        episode.setReleaseDate(releaseDate);
+        episode.setEpisode(number);
+        episode.setSeason(season);
+        episode.setIdTvShow(tvShowService.getTvBySlug(name).getId());
+        episodeService.saveEpisodeJSON(episode);
     }
 }

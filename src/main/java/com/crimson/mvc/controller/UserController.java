@@ -113,16 +113,19 @@ public class UserController {
     @GetMapping("/user/{name}")
     @SuppressWarnings("unchecked")
     public String displayUser(Model model, @PathVariable("name") String name) {
+
         UserDTO user = userService.getUserByName(name);
-        List<TvShowDTO> tvs = userService.getUserTvShows(user);
+        List<TvShowDTO> tvs = user.getTvShows();
         List<TvShowDTO> favorites = userService.getUserTvShowsSortedByMaxRating(user);
         List<EpisodeDTO> watchedEpisodes = user.getEpisodes();
-        List watchedEpisodesId = new ArrayList();
+        List watchedEpisodesId = new ArrayList<>();
         watchedEpisodes.forEach(episode -> watchedEpisodesId.add(episode.getId()));
+        List<EpisodeDTO> upcoming =  userService.getAllUpcomingUserEpisodes(user, tvs, watchedEpisodes);
+
         model.addAttribute("tvshows", tvs);
         model.addAttribute("watchedEpisodes", Lists.reverse(watchedEpisodes));
         model.addAttribute("watchedEpisodesId", watchedEpisodesId);
-        model.addAttribute("upcomimgEpisodes", userService.getAllUpcomingUserEpisodes(user));
+        model.addAttribute("upcomimgEpisodes", upcoming);
         model.addAttribute("favorites", favorites);
         model.addAttribute("user", user);
         return "user";

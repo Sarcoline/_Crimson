@@ -180,9 +180,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<TvShowDTO> getUserTvShowsSortedByMaxRating(UserDTO userDTO) {
 
-        User user = userDAO.getById(userDTO.getId());
         List<TvShowDTO> sortedList = new ArrayList<>();
-        List<Rating> unsortedList = user.getRatings();
+        List<Rating> unsortedList = userDTO.getRatings();
         unsortedList.sort(Comparator.comparingInt(Rating::getValue).reversed());
         unsortedList.forEach(rating -> sortedList.add(mapperFacade.map(rating.getTvShow(), TvShowDTO.class)));
 
@@ -213,23 +212,24 @@ public class UserServiceImpl implements UserService {
 
     //TODO slow af
     @Override
-    public List<EpisodeDTO> getAllUpcomingUserEpisodes(UserDTO userDTO) {
+    public List<EpisodeDTO> getAllUpcomingUserEpisodes(UserDTO userDTO, List<TvShowDTO> tvs, List<EpisodeDTO> watchedEpisodes) {
 
         int days = userDTO.getSetting().getDaysOfUpcomingEpisodes();
-        List<Episode> allFutureUserEpisodes = new ArrayList<>();
+        List<EpisodeDTO> allFutureUserEpisodes = new ArrayList<>();
         List<EpisodeDTO> allFutureUserEpisodesDTO = new ArrayList<>();
-        User user = userDAO.getById(userDTO.getId());
-        List<TvShow> tvs = user.getTvShows();
         LocalDate currentDate = LocalDate.now();
         LocalDate lastDate = LocalDate.now().plusDays(days);
 
-        tvs.forEach(tv -> allFutureUserEpisodes.addAll(tv.getEpisodes()));
-        allFutureUserEpisodes.removeAll(user.getEpisodes());
+        tvs.forEach(tv -> {
+               if(tv.getFinishYear() != 0) allFutureUserEpisodes.addAll(tv.getEpisodes());
+                });
 
-        for (Episode episode : allFutureUserEpisodes) {
+        allFutureUserEpisodes.removeAll(watchedEpisodes);
+
+        for (EpisodeDTO episode : allFutureUserEpisodes) {
             LocalDate episodeDate = episode.getReleaseDate();
             if (episodeDate.isAfter(currentDate) && episodeDate.isBefore(lastDate))
-                allFutureUserEpisodesDTO.add(mapperFacade.map(episode, EpisodeDTO.class));
+                allFutureUserEpisodesDTO.add(episode);
         }
 
         allFutureUserEpisodesDTO.sort(Comparator.comparing(EpisodeDTO::getReleaseDate));

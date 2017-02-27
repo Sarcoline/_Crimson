@@ -18,7 +18,10 @@
     </sec:authorize>
 
 </h1>
-<h3 class="subtitle uk-text-muted">${tv.genre} ${tv.releaseYear} - <c:if test="${tv.finishYear != 0}">${tv.finishYear}</c:if></h3>
+<h3 class="subtitle uk-text-muted">
+    ${tv.genre}, ${tv.releaseYear} - <c:if test="${tv.finishYear != 0}">${tv.finishYear}</c:if>
+
+</h3>
 <div class="uk-grid">
     <div class="uk-width-large-1-6  uk-width-medium-1-1" data-uk-grid-margin=" ">
         <div class="gallery">
@@ -101,8 +104,8 @@
         </form>
         <div class="uk-margin-large-bottom comments">
             <ul class="uk-comment-list uk-list-lined">
-                <li>
-                    <article class="uk-comment uk-margin-top uk-comment-primary">
+                <li id="comments">
+                    <article class="uk-comment uk-margin-top">
                         <header class="uk-comment-header">
                             <img class="uk-comment-avatar" src="<c:url value="/images/user/testuser"/> " width="50"
                                  height="50" alt="">
@@ -115,7 +118,7 @@
                                 invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
                         </div>
                     </article>
-                    <article class="uk-comment uk-margin-top uk-comment-primary">
+                    <article class="uk-comment uk-margin-top">
                         <header class="uk-comment-header">
                             <img class="uk-comment-avatar" src="<c:url value="/images/user/testuser"/> " width="50"
                                  height="50" alt="">
@@ -128,7 +131,7 @@
                                 invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
                         </div>
                     </article>
-                    <article class="uk-comment uk-margin-top uk-comment-primary">
+                    <article class="uk-comment uk-margin-top">
                         <header class="uk-comment-header">
                             <img class="uk-comment-avatar" src="<c:url value="/images/user/testuser"/> " width="50"
                                  height="50" alt="">
@@ -221,12 +224,13 @@
     </div>
 </div>
 <script src="<c:url value="/static/js/userActions.js"/>"></script>
+<script src="<c:url value="/static/js/comment.js" />"></script>
 <script>
     $(function () {
 
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
-        $(document).ajaxSend(function(e, xhr, options) {
+        $(document).ajaxSend(function (e, xhr, options) {
             xhr.setRequestHeader(header, token);
         });
 
@@ -279,7 +283,8 @@
                     url: "/api/addComment",
                     data: JSON.stringify(comment),
                     success: function () {
-                        console.log('ok')
+                        console.log('ok');
+                        $('#comments').prepend(createComment(comment.value, '${name}'));
                     },
                     error: function () {
                         console.log('not ok')
