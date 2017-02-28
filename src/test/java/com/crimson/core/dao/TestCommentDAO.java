@@ -100,7 +100,7 @@ public class TestCommentDAO {
 
     @Test
     public void getCommentsByDateTest(){
-        List<Comment> comments = commentDAO.getCommentsByDate(LocalDate.parse("2017-02-27"));
+        List<Comment> comments = commentDAO.getCommentsByDate(LocalDate.now());
 
         Assert.assertEquals(comments.size(), 2);
         Assert.assertEquals(comments.contains(comment1), true);
