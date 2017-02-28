@@ -28,7 +28,6 @@ public @Data class TvShow {
     @Column(name = "title")
     @NotNull
     @Size(min = 3, max = 30, message = "{invalid.size.title}")
-    @Pattern(regexp = "\\w+(([ ]?\\w+)?)*", message = "{invalid.pattern.title}")
     private String title;
 
     @Column(name = "network")
