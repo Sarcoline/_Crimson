@@ -3,6 +3,7 @@ package com.crimson.core.model;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 
@@ -20,8 +21,11 @@ public @Data class Setting {
     private Boolean episodesFromBegining;
 
     @Column(name = "numberOfEpisodesOnUserPage")
+    @Range(max = 99, message = "{invalid.numberOfEpisodesOnUserPage}")
     private int numberOfEpisodesOnUserPage;
 
+    @Column(name = "daysOfUpcomingEpisodes")
+    @Range(max = 30, message = "{invalid.daysOfUpcomingEpisodes}")
     private int daysOfUpcomingEpisodes;
 
     @Version

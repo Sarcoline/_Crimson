@@ -112,7 +112,7 @@
 
         search.on('input', function () {
             var input = $(this).val();
-            if (input.length > 2) {
+            if (input.length > 1) {
                 var result = [];
                 $.getJSON('/api/search/' + input, function (data) {
                     $.each(data, function (key, val) {

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -21,8 +22,9 @@ public @Data class Genre {
     private Long id;
 
     @Column(name = "name")
+    @NotNull
     @Size(min = 3, max = 20, message = "{invalid.size.genre}")
-    @Pattern(regexp = "[A-z][a-z]+", message = "{invalid.pattern.genre}")
+    @Pattern(regexp = "[A-Za-z]+", message = "{invalid.pattern.genre}")
     private String name;
 
     //Optimistic Locking

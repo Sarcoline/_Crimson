@@ -210,7 +210,7 @@ public class PopulateDatabase {
             TvShow tv5 = new TvShow();
             tv5.setGenre("Drama");
             tv5.setTitle("Belfer");
-            tv5.setNetwork("Canal Plus");
+            tv5.setNetwork("Canal+");
             tv5.setOverallRating(5d);
             tv5.setTrailerUrl("https://www.youtube.com/watch?v=QJBo2ZAtWBA");
             tv5.setCountry("Poland");
@@ -235,7 +235,7 @@ public class PopulateDatabase {
             tv6.setNetwork("BBC");
             tv6.setOverallRating(5d);
             tv6.setTrailerUrl("https://www.youtube.com/watch?v=38_c6dh6Y6M");
-            tv6.setCountry("USA");
+            tv6.setCountry("UK");
             tv6.setReleaseYear(2010);
             InputStream in30 = applicationContext.getResource("classpath:/images/sherlock/poster.jpg").getInputStream();
             tv6.getPictures().put("poster", IOUtils.toByteArray(in30));
