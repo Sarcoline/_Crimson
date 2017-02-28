@@ -74,6 +74,7 @@ public class TestTvShowDAO {
         genreDAO.save(genre);
         episodeDAO.save(episode);
         rating.setTvShow(tvShow);
+        commentDAO.save(comment);
     }
 
     @Test

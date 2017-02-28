@@ -27,7 +27,7 @@ public @Data class TvShow {
 
     @Column(name = "title")
     @NotNull
-    @Size(min = 3, max = 30, message = "{invalid.size.title}")
+    @Size(min = 3, max = 50, message = "{invalid.size.title}")
     private String title;
 
     @Column(name = "network")
