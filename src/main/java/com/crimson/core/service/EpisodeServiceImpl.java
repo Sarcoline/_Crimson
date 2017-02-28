@@ -148,12 +148,12 @@ public class EpisodeServiceImpl implements EpisodeService {
             epRet.setTitle(episodeFromJson.getTitle());
             epRet.setSeason(episodeFromJson.getSeason());
             epRet.setNumber(episodeFromJson.getEpisode());
-            epRet.setEpisodeSummary("no summary");
+            epRet.setEpisodeSummary(episodeFromJson.getSummary());
             episodeDAO.update(epRet);
         } else {
 
             Episode ep = Episode.builder()
-                    .episodeSummary("No summary")
+                    .episodeSummary(episodeFromJson.getSummary())
                     .title(episodeFromJson.getTitle())
                     .number(episodeFromJson.getEpisode())
                     .season(episodeFromJson.getSeason())

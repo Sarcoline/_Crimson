@@ -162,7 +162,7 @@ public class PopulateDatabase {
                             "from the inside.");
             TvShow tv3 = new TvShow();
             tv3.setGenre("Comedy");
-            tv3.setTitle("Dr House");
+            tv3.setTitle("House M.D.");
             tv3.setNetwork("Fox");
             tv3.setOverallRating(1d);
             tv3.setTrailerUrl("https://www.youtube.com/watch?v=5DIADh4lMq8");

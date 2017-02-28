@@ -26,7 +26,6 @@ public @Data class TvShow {
 
     @Column(name = "title")
     @Size(min = 3, max = 30, message = "{invalid.size.title}")
-    @Pattern(regexp = "[A-Z][a-z]*(([ ]?[A-Za-z]+)?)*", message = "{invalid.pattern.title}")
     private String title;
 
     @Column(name = "network")

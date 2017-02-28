@@ -49,7 +49,7 @@ public class CrimsonController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             UserDTO user = userService.getUserByName(auth.getName());
-            follow = user.getTvShows().contains(tv);
+            follow = userService.checkFollow(user, tv);
             rating = ratingService.getRating(tv.getId(), user.getId()).getValue();
             model.addAttribute("user", user);
             List watchedEpisodesId = new ArrayList();
@@ -57,8 +57,8 @@ public class CrimsonController {
             model.addAttribute("watchedEpisodesId", watchedEpisodesId);
         }
 
-        episodes.sort(Comparator.comparing(EpisodeDTO::getSeason));
         episodes.sort(Comparator.comparing(EpisodeDTO::getNumber));
+        episodes.sort(Comparator.comparing(EpisodeDTO::getSeason));
         int seasons = episodes.isEmpty() ? 0 :  episodes.get(episodes.size()-1).getSeason();
         List<CommentDTO> comments = tv.getComments();
         comments.sort(Comparator.comparing(CommentDTO::getDate).reversed());
@@ -232,7 +232,7 @@ public class CrimsonController {
     @ResponseStatus(value = HttpStatus.OK)
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     public void postSearchAddEpisode(@RequestParam("title") String title, @RequestParam("episode") int number,
-                                     @RequestParam("season") int season,
+                                     @RequestParam("season") int season,  @RequestParam("summary") String summary,
                                      @RequestParam("releaseDate") String releaseDate,
                                      @PathVariable("name") String name) {
         EpisodeFromJson episode = new EpisodeFromJson();
@@ -240,6 +240,7 @@ public class CrimsonController {
         episode.setReleaseDate(releaseDate);
         episode.setEpisode(number);
         episode.setSeason(season);
+        episode.setSummary(summary);
         episode.setIdTvShow(tvShowService.getTvBySlug(name).getId());
         episodeService.saveEpisodeJSON(episode);
     }

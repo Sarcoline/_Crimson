@@ -25,32 +25,32 @@
         var tvshow = '${name}';
 
         var getJson = function () {
-            $.getJSON('http://www.omdbapi.com/?t=' + tvshow, function (data) {
-                for (var i = 1; i <= data.totalSeasons; i += 1) {
-                    (function (i) {
-                        $.getJSON('http://www.omdbapi.com/?t=' + tvshow + '&season=' + i, function (data) {
-                            $.each(data.Episodes, function (val, key) {
-                                var li = document.createElement('li');
-                                var a = document.createElement('a');
-                                a.setAttribute("data-season", i);
-                                a.setAttribute("data-episode", key.Episode);
-                                a.setAttribute("data-title", key.Title);
-                                a.setAttribute("data-date", key.Released);
-                                a.setAttribute("class", "uk-button uk-button-success");
-                                a.setAttribute("style", "float:right;");
-                                a.innerHTML = 'Save!';
-                                li.innerHTML = 'S' + i + 'E' + key.Episode + ' ' + key.Title + ' ' + key.Released;
-                                li.appendChild(a);
-                                $('#test').append(li);
-                            });
-                        });
-                    })(i);
-                }
+            var im;
+            $.getJSON('http://api.tvmaze.com/singlesearch/shows?q=' + tvshow, function (data) {
+                im = data.id;
+                $.getJSON('http://api.tvmaze.com/shows/' + im + '/episodes', function (data) {
+                    $.each(data, function (i) {
+                        console.log(data[i].season, data[i].number, data[i].name);
+                        var li = document.createElement('li');
+                        var a = document.createElement('a');
+                        a.setAttribute("data-season", data[i].season);
+                        a.setAttribute("data-episode", data[i].number);
+                        a.setAttribute("data-title", data[i].name);
+                        a.setAttribute("data-date", data[i].airdate);
+                        a.setAttribute("data-summary", data[i].summary);
+                        a.setAttribute("class", "uk-button uk-button-success");
+                        a.setAttribute("style", "float:right;");
+                        a.innerHTML = 'Save!';
+                        li.innerHTML = 'S' + data[i].season + 'E' + data[i].number + ' ' + data[i].name + ' ' + data[i].airdate;
+                        li.appendChild(a);
+                        $('#test').append(li);
+                    })
+                });
             });
         };
         getJson();
 
-        var postJson = function(episode) {
+        var postJson = function (episode) {
             $.ajax({
                 url: 'add',
                 type: 'get',
@@ -75,13 +75,14 @@
         };
 
         $('#saveAll').on('click', function () {
-            $( "#test").find("li").each(function( index, li ) {
+            $("#test").find("li").each(function (index, li) {
                 var a = li.firstElementChild;
                 var episode = {
                     title: a.dataset.title,
                     releaseDate: a.dataset.date,
                     season: a.dataset.season,
-                    episode: a.dataset.episode
+                    episode: a.dataset.episode,
+                    summary: a.dataset.summary
                 };
                 postJson(episode);
             });
@@ -93,7 +94,8 @@
                 title: $(this).data('title'),
                 releaseDate: $(this).data('date'),
                 season: $(this).data('season'),
-                episode: $(this).data('episode')
+                episode: $(this).data('episode'),
+                summary: $(this).data('summary')
             };
             postJson(episode);
         });

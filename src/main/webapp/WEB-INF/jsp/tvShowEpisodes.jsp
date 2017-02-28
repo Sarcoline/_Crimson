@@ -18,14 +18,15 @@
                         <li>
                             <strong>S${episode.season}E${episode.number} -</strong>
                             <span>${episode.title} -</span>
-                            <span>${episode.episodeSummary}</span>
-                            <span class="uk-text-muted uk-margin-left">${episode.releaseDate}</span>
+                            <span class="uk-text-muted ">${episode.releaseDate}</span>
                             <span style="float: right;">
                             <a href="/tv/${episode.tvShow.slug}/edit/episodes/${episode.id}"
                                class="uk-button uk-button-primary uk-button-small">Edit</a>
                             <a href="/tv/${episode.tvShow.slug}/edit/episodes/${episode.id}/delete"
                                class="uk-button uk-button-danger uk-button-small">Delete</a>
                                 </span>
+                            <span>${episode.episodeSummary}</span>
+
                         </li>
                     </c:if>
                 </c:forEach>

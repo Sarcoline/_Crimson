@@ -20,7 +20,7 @@ public @Data class Comment {
     private Long id;
 
     @Column(name = "commentText")
-    @Length(min = 10,max = 500)
+    @Length(min = 5,max = 500)
     @NotNull
     private String text;
 

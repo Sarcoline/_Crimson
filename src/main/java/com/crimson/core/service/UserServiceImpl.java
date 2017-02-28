@@ -221,7 +221,7 @@ public class UserServiceImpl implements UserService {
         LocalDate lastDate = LocalDate.now().plusDays(days);
 
         tvs.forEach(tv -> {
-               if(tv.getFinishYear() != 0) allFutureUserEpisodes.addAll(tv.getEpisodes());
+               if(tv.getFinishYear() == 0) allFutureUserEpisodes.addAll(tv.getEpisodes());
                 });
 
         allFutureUserEpisodes.removeAll(watchedEpisodes);
