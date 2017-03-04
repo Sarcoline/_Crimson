@@ -29,7 +29,7 @@
                 </form>
             </div>
             <div class="uk-width-1-2">
-                < class="uk-panel uk-panel-box uk-vertical-align-middle uk-margin-top login" style="width: 300px;">
+                <div class="uk-panel uk-panel-box uk-vertical-align-middle uk-margin-top login" style="width: 300px;">
                     <h1>Edit your account!</h1>
                     <c:if test="${not empty error}">
                         <div class="uk-alert uk-alert-danger" data-uk-alert="">
@@ -67,8 +67,11 @@
                                    value="Save"/>
                         </div>
                     </form:form>
-                <a class="uk-width-1-1 uk-button uk-button-danger uk-button-large"
-                   href="<c:url value="/user/delete/"/>">Delete</a>
+                    <button class="uk-width-1-1 uk-button uk-button-danger uk-button-large" type="button"  data-uk-modal="{target:'#myy-id'}">
+                        Delete
+
+
+                    </button>
 
                     <a class="uk-float-left uk-text-small uk-margin-top"
                        href="<c:url value="/user/updatePassword"/> ">Change
@@ -76,6 +79,24 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div id="myy-id" class="uk-modal">
+    <div class="uk-modal-dialog">
+        <a class="uk-modal-close uk-close"></a>
+        <div class="uk-modal-header">
+            <h2 class="uk-text-center">This action will delete your account.</br>Are you sure?</h2>
+            <div class="uk-grid">
+                <div class="uk-container-center">
+
+                    <a class="uk-button uk-button-default " href="<c:url value="/user/delete/"/>">OK</a>
+                    <a class="uk-button uk-button-default " href="<c:url value="/user/edit/"/>">CANCEL</a>
+                </div>
+            </div>
+
+
+        </div>
+
     </div>
 </div>
 <script>
@@ -94,10 +115,34 @@
         }
     }
 
-    //        Delete confirmation
-    $("#confirm-delete").on('show.bs.modal', function (e) {
-        $(this).find('.uk-button-success').attr('href', $(e.relatedTarget).data('href'));
+    function doConfirm(msg, yesFn, noFn) {
+        var confirmBox = $("#confirmBox");
+        confirmBox.find(".message").text(msg);
+        confirmBox.find(".yes,.no").unbind().click(function () {
+            confirmBox.hide();
+        });
+        confirmBox.find(".yes").click(yesFn);
+        confirmBox.find(".no").click(noFn);
+        confirmBox.show();
+    }
+
+
+
+    $(function () {
+        $("form").submit(function (e) {
+            e.preventDefault();
+            var form = this;
+            doConfirm("Are you sure?", function yes() {
+                form.submit();
+            }, function no() {
+                // do nothing
+            });
+        });
     });
+    function myFunction(elmnt,clr) {
+        elmnt.style.color = clr;
+    }
+
 </script>
 </body>
 </html>
