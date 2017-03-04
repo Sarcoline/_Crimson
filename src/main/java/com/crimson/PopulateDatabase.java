@@ -250,6 +250,27 @@ public class PopulateDatabase {
             tv6.setDescription(
                     "A modern update finds the famous sleuth and his doctor partner solving crime in 21st century London.  ");
 
+            TvShow tv7 = new TvShow();
+             tv7.setGenre("Drama");
+             tv7.setTitle("Call the midwife");
+             tv7.setNetwork("BBC");
+             tv7.setOverallRating(5d);
+             tv7.setTrailerUrl("https://www.youtube.com/watch?v=aVfdZevxf_o");
+             tv7.setCountry("USA");
+             tv7.setReleaseYear(2012);
+             InputStream in35 = applicationContext.getResource("classpath:/images/midwife/poster.jpg").getInputStream();
+             tv7.getPictures().put("poster", IOUtils.toByteArray(in35));
+             InputStream in36 = applicationContext.getResource("classpath:/images/midwife/back1.jpg").getInputStream();
+             tv7.getPictures().put("back", IOUtils.toByteArray(in36));
+             InputStream in37 = applicationContext.getResource("classpath:/images/midwife/1.jpg").getInputStream();
+             tv7.getPictures().put("1", IOUtils.toByteArray(in37));
+             InputStream in38 = applicationContext.getResource("classpath:/images/midwife/2.jpg").getInputStream();
+             tv7.getPictures().put("2", IOUtils.toByteArray(in38));
+             InputStream in39 = applicationContext.getResource("classpath:/images/midwife/3.jpg").getInputStream();
+             tv7.getPictures().put("3", IOUtils.toByteArray(in39));
+             tv7.setDescription(
+                   "Chronicles the lives of a group of midwives living in East London in the late 1950s to early 1960s.  ");
+
 
 
 
@@ -265,8 +286,8 @@ public class PopulateDatabase {
             user.setPassword("123");
             user.getRoles().add(roleService.getAllRoles().get(1));
             user.setSetting(new Setting(true, 10, 7));
-            InputStream in35 = applicationContext.getResource("classpath:/images/user/meow.jpg").getInputStream();
-            user.setProfilePic(IOUtils.toByteArray(in35));
+            InputStream in40 = applicationContext.getResource("classpath:/images/user/meow.jpg").getInputStream();
+            user.setProfilePic(IOUtils.toByteArray(in40));
             userDAO.saveUser(user);
             tvShowDAO.saveTvShow(tv);
             tvShowDAO.saveTvShow(tv1);
@@ -275,6 +296,7 @@ public class PopulateDatabase {
             tvShowDAO.saveTvShow(tv4);
             tvShowDAO.saveTvShow(tv5);
             tvShowDAO.saveTvShow(tv6);
+            tvShowDAO.saveTvShow(tv7);
         }
     }
 }
