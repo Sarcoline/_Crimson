@@ -10,7 +10,8 @@
 </head>
 <body>
 <div class="uk-container uk-container-center uk-margin-large-top">
-    <h1>Add episodes</h1>
+    <h1>Add episodes </h1>
+    <p id="loading"></p>
     <a class="uk-button uk-button-primary" id="saveAll">Add all (risky) </a>
     <div class="uk-grid uk-grid-large uk-margin-large-top">
         <div>
@@ -30,7 +31,6 @@
                 im = data.id;
                 $.getJSON('http://api.tvmaze.com/shows/' + im + '/episodes', function (data) {
                     $.each(data, function (i) {
-                        console.log(data[i].season, data[i].number, data[i].name);
                         var li = document.createElement('li');
                         var a = document.createElement('a');
                         a.setAttribute("data-season", data[i].season);
@@ -59,7 +59,7 @@
                     UIkit.notify({
                         message: 'Successfully added: ' + episode.title + '!',
                         status: 'success',
-                        timeout: 5000,
+                        timeout: 200,
                         pos: 'top-center'
                     });
                 },

@@ -12,7 +12,7 @@
         <form:errors cssClass="uk-alert uk-alert-danger" element="div"/>
         <div class="uk-form-row">
             <form:errors path="title" cssClass="uk-alert uk-alert-danger" element="div"/>
-
+            <form:label path="title" for="title" class="uk-form-label">Title</form:label>
             <form:input path="title"
                            class="uk-width-1-2 uk-form-large"
                            name='title'
@@ -32,7 +32,7 @@
             <form:textarea path="content"
                            class="uk-width-1-2 uk-form-large"
                            name='content'
-                           placeholder="content" data-uk-htmleditor="{markdown:true}"/>
+                           placeholder="content" data-uk-htmleditor="{markdown:false}"/>
         </div>
         <a href="<c:url value="/tv/${tv.slug}/"/>"
            class="uk-button uk-margin-top">Back</a>
