@@ -41,7 +41,23 @@ public class CrimsonController {
     @GetMapping("/{name}")
     @SuppressWarnings("unchecked")
     public String displayTvShow(Model model, @PathVariable("name") String name) {
-
+        String review = "<h1>Heading</h1>\n" +
+                "\n" +
+                "<p>Lorem ipsum dolor sit <strong>amet</strong>, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <a href=\"#\">This is a link</a></p>\n" +
+                "\n" +
+                "<ul>\n" +
+                "    <li>Item</li>\n" +
+                "    <li>Item</li>\n" +
+                "    <li>Item</li>\n" +
+                "</ul>\n" +
+                "\n" +
+                "<h2>Heading</h2>\n" +
+                "\n" +
+                "<p>Ut enim ad <em>minim</em> veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>\n" +
+                "\n" +
+                "<p>\n" +
+                "    Test paragraph\n" +
+                "</p>";
         TvShowDTO tv = tvShowService.getTvBySlug(name);
         boolean follow = false;
         int rating = 0;
@@ -68,6 +84,7 @@ public class CrimsonController {
         model.addAttribute("seasons", seasons);
         model.addAttribute("rating", rating);
         model.addAttribute("follow", follow);
+        model.addAttribute("review", review);
         return "tvShow";
     }
 
@@ -243,5 +260,28 @@ public class CrimsonController {
         episode.setSummary(summary);
         episode.setIdTvShow(tvShowService.getTvBySlug(name).getId());
         episodeService.saveEpisodeJSON(episode);
+    }
+
+    @GetMapping(value = "/{name}/reviews/write")
+    @Secured({"ROLE_AUTHOR","ROLE_ADMIN"})
+    public String writeReview(@PathVariable("name") String title, Model model) {
+        TvShowDTO tv = tvShowService.getTvBySlug(title);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDTO user = userService.getUserByName(auth.getName());
+        model.addAttribute("tv", tv);
+        model.addAttribute("user", user);
+        model.addAttribute("review", new ReviewDTO());
+        return "writeReview";
+    }
+
+    @RequestMapping(value = "/{name}/reviews/write", method = RequestMethod.POST)
+    @Secured({"ROLE_AUTHOR", "ROLE_ADMIN"})
+    public String postReview(@ModelAttribute("review") ReviewDTO reviewDTO, @PathVariable("name") String title) {
+        TvShowDTO tv = tvShowService.getTvBySlug(title);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDTO user = userService.getUserByName(auth.getName());
+        reviewDTO.setAuthor(user);
+        reviewDTO.setTvShow(tv);
+        return String.format("redirect:/tv/%s", title);
     }
 }

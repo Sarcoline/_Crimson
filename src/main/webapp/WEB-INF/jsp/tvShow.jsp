@@ -90,7 +90,37 @@
                 </ul>
             </div>
         </div>
-        <h2 class="uk-margin-large-top">Comments: </h2>
+        <h2 class="uk-margin-large-top">Reviews (5): </h2>
+        <a class="uk-button uk-button-success"
+                href="/tv/${tv.slug}/write">Write
+        </a>
+        <div class="reviews">
+            <ul class="uk-list uk-list-line">
+                <li>
+            <article class="uk-article uk-margin-top">
+
+                <p class="uk-article-lead">Test review</p>
+                <p class="uk-article-meta">By user on date</p>
+                Film "Królowa" z Helen Mirren w roli tytułowej był zapowiadany jako obraz, który przypomni światu o
+                tragedii, jaką dla Brytyjczyków (i nie tylko) była śmierć księżnej Diany. Stephen Frears zobrazował
+                rozpacz tłumów, premiera, który próbował owej stracie zyskać, oraz Elżbietę II, dla której najważniejsze
+                jest przestrzeganie zasad. <a href="#" style="color: #00a8e6;">Read more</a>
+            </article>
+                </li>
+                <li>
+            <article class="uk-article uk-margin-top">
+
+                <p class="uk-article-lead">Test review</p>
+                <p class="uk-article-meta">By user on date</p>
+                Film "Królowa" z Helen Mirren w roli tytułowej był zapowiadany jako obraz, który przypomni światu o
+                tragedii, jaką dla Brytyjczyków (i nie tylko) była śmierć księżnej Diany. Stephen Frears zobrazował
+                rozpacz tłumów, premiera, który próbował owej stracie zyskać, oraz Elżbietę II, dla której najważniejsze
+                jest przestrzeganie zasad. <a href="#" style="color: #00a8e6;">Read more</a>
+            </article>
+                </li>
+            </ul>
+        </div>
+        <h2 class="uk-margin-large-top">Comments (${comments.size()}): </h2>
         <button class="uk-button uk-button-success"
                 data-uk-toggle="{target:'#add-comment'}">Add
         </button>
@@ -108,7 +138,8 @@
                     <c:forEach items="${comments}" var="comment">
                         <article class="uk-comment uk-margin-top">
                             <header class="uk-comment-header">
-                                <img class="uk-comment-avatar" src="<c:url value="/images/user/${comment.user.name}"/> " width="50"
+                                <img class="uk-comment-avatar" src="<c:url value="/images/user/${comment.user.name}"/> "
+                                     width="50"
                                      height="50" alt="">
                                 <h4 class="uk-comment-title">${comment.user.name}</h4>
                                 <div class="uk-comment-meta">${comment.date} | <a
@@ -154,7 +185,8 @@
                         <br><strong>60 minutes</strong></p> <a class="uk-button uk-button-primary"
                                                                href=${tv.trailerUrl}
                                                                        data-uk-lightbox="{group:'group2'}">Watch
-                    trailer</a></div>
+                    trailer</a>
+                </div>
             </div>
         </div>
     </div>
