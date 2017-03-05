@@ -30,6 +30,8 @@
         <slf4j.version>1.7.22</slf4j.version>
         <cglib.version>3.2.4</cglib.version>
         <aspectj.version>1.8.9</aspectj.version>
+        <jackson.version>2.8.6</jackson.version>
+        <javax-validation.version>1.1.0.Final</javax-validation.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -116,7 +118,7 @@
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
-            <version>1.1.0.Final</version>
+            <version>${javax-validation.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -174,21 +176,21 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.8.6</version>
+            <version>${jackson.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.8.6</version>
+            <version>${jackson.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>2.8.6</version>
+            <version>${jackson.version}</version>
         </dependency>
 
         <dependency>

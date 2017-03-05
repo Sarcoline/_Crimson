@@ -1,9 +1,6 @@
 package com.crimson.mvc.controller;
 
-import com.crimson.core.dto.EpisodeDTO;
-import com.crimson.core.dto.EpisodeFormDTO;
-import com.crimson.core.dto.TvShowDTO;
-import com.crimson.core.dto.UserDTO;
+import com.crimson.core.dto.*;
 import com.crimson.core.service.EpisodeService;
 import com.crimson.core.service.RatingService;
 import com.crimson.core.service.TvShowService;
@@ -44,6 +41,7 @@ public class CrimsonController {
     @GetMapping("/{name}")
     @SuppressWarnings("unchecked")
     public String displayTvShow(Model model, @PathVariable("name") String name) {
+
         TvShowDTO tv = tvShowService.getTvBySlug(name);
         boolean follow = false;
         int rating = 0;
@@ -58,12 +56,13 @@ public class CrimsonController {
             user.getEpisodes().forEach(episode -> watchedEpisodesId.add(episode.getId()));
             model.addAttribute("watchedEpisodesId", watchedEpisodesId);
         }
-        int seasons = 0;
-        for (EpisodeDTO episode : episodes) {
-            if (seasons < episode.getSeason()) seasons = episode.getSeason();
-        }
-        episodes.sort(Comparator.comparing(EpisodeDTO::getSeason));
+
         episodes.sort(Comparator.comparing(EpisodeDTO::getNumber));
+        episodes.sort(Comparator.comparing(EpisodeDTO::getSeason));
+        int seasons = episodes.isEmpty() ? 0 :  episodes.get(episodes.size()-1).getSeason();
+        List<CommentDTO> comments = tv.getComments();
+        comments.sort(Comparator.comparing(CommentDTO::getDate).reversed());
+        model.addAttribute("comments", comments);
         model.addAttribute("tv", tv);
         model.addAttribute("episodes", episodes);
         model.addAttribute("seasons", seasons);
@@ -110,6 +109,7 @@ public class CrimsonController {
         for (EpisodeDTO episode : episodes) {
             if (seasons < episode.getSeason()) seasons = episode.getSeason();
         }
+        model.addAttribute("name", name);
         model.addAttribute("seasons", seasons);
         model.addAttribute("episodes", episodes);
         return "tvShowEpisodes";
@@ -222,40 +222,26 @@ public class CrimsonController {
         return "tvShowList";
     }
 
-
-    @RequestMapping(value = "/follow")
-    @Secured("ROLE_USER")
-    public String follow(@RequestParam("id") Long id) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDTO user = userService.getUserByName(auth.getName());
-        TvShowDTO tv = tvShowService.getTvById(id);
-
-        if (userService.checkFollow(user, tv)) userService.deleteTvShowFromUser(user, tv);
-        else userService.addTvShow2User(user, tv);
-
-        return String.format("redirect:/tv/%s", tv.getSlug());
+    @GetMapping(value = "/{name}/edit/episodes/addSearch")
+    public String searchAddEpisode(@PathVariable("name") String name, Model model) {
+        model.addAttribute("name", name);
+        return "addEpisodesFromJson";
     }
 
-
-    @RequestMapping(value = "/rate", method = RequestMethod.GET)
+    @RequestMapping(value = "/{name}/edit/episodes/addSearch/add", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
-    @Secured("ROLE_USER")
-    public void rate(@RequestParam("id") long id, @RequestParam("value") int value) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDTO user = userService.getUserByName(auth.getName());
-        TvShowDTO tv = tvShowService.getTvById(id);
-        ratingService.saveUserRating(user, tv, value);
-
-    }
-
-    @RequestMapping(value = "/watched", method = RequestMethod.GET)
-    @ResponseStatus(value = HttpStatus.OK)
-    @Secured("ROLE_USER")
-    public void watched(@RequestParam("id") long id) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDTO user = userService.getUserByName(auth.getName());
-        EpisodeDTO episode = episodeService.getEpisodeById(id);
-        if (episodeService.checkWatched(user, episode)) episodeService.deleteUserFromEpisode(user, episode);
-        else episodeService.addUser2Episode(user, episode);
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
+    public void postSearchAddEpisode(@RequestParam("title") String title, @RequestParam("episode") int number,
+                                     @RequestParam("season") int season,  @RequestParam("summary") String summary,
+                                     @RequestParam("releaseDate") String releaseDate,
+                                     @PathVariable("name") String name) {
+        EpisodeFromJson episode = new EpisodeFromJson();
+        episode.setTitle(title);
+        episode.setReleaseDate(releaseDate);
+        episode.setEpisode(number);
+        episode.setSeason(season);
+        episode.setSummary(summary);
+        episode.setIdTvShow(tvShowService.getTvBySlug(name).getId());
+        episodeService.saveEpisodeJSON(episode);
     }
 }

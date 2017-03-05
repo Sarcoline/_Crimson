@@ -40,6 +40,8 @@ public class TvShowDTO {
     @Range(min = 1920, max = 2017)
     private int releaseYear;
 
+    private int finishYear;
+
     @Size(min = 3, max = 20)
     @Pattern(regexp = "[A-z][a-z]+")
     private String genre;
@@ -53,4 +55,7 @@ public class TvShowDTO {
     private List<UserDTO> users = new ArrayList<>();
 
     private List<Rating> ratings = new ArrayList<>();
+
+    private List<CommentDTO> comments = new ArrayList<>();
+
 }

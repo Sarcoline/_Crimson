@@ -37,12 +37,16 @@ public class TestUserDAO {
     @Autowired
     private SettingsDAO settingsDAO;
 
+    @Autowired
+    private CommentDAO commentDAO;
+
     private UserFactory userFactory = new UserFactory();
     private TvShowFactory tvShowFactory = new TvShowFactory();
     private EpisodeFactory episodeFactory = new EpisodeFactory();
     private SettingFactory settingFactory = new SettingFactory();
     private RoleFactory roleFactory = new RoleFactory();
     private RatingFactory ratingFactory = new RatingFactory();
+    private CommentFactory commentFactory = new CommentFactory();
 
     private User user = userFactory.getUser("aleks");
     private TvShow tvShow = tvShowFactory.getTvShow("test1");
@@ -54,6 +58,7 @@ public class TestUserDAO {
     private Rating rating = ratingFactory.getRating(5);
     private Role role1 = roleFactory.getRole("role_1");
     private Setting setting1 = settingFactory.getSetting("setting_1");
+    private Comment comment = commentFactory.getComment("comment1");
 
     @Before
     public void setDB() {
@@ -68,6 +73,7 @@ public class TestUserDAO {
         ratingDAO.save(rating);
         roleDAO.save(role1);
         settingsDAO.save(setting1);
+        commentDAO.save(comment);
     }
 
     @Test
@@ -283,6 +289,27 @@ public class TestUserDAO {
 
         Assert.assertEquals(listSize - 1, userDAO.getById(user.getId()).getRoles().size());
         Assert.assertEquals(userDAO.getById(user.getId()).getRoles().contains(role1), false);
+    }
+
+    //User2Comments
+
+    @Test
+    public void addCommentTest(){
+        int listSize = user.getComments().size();
+        userDAO.addComment(user, comment);
+        Assert.assertEquals(userDAO.getById(user.getId()).getComments().contains(comment), true);
+        Assert.assertEquals(userDAO.getById(user.getId()).getComments().size(), listSize+1);
+    }
+
+    @Test
+    public void deleteCommentTest(){
+        addCommentTest();
+        int listSize = user.getComments().size();
+
+        userDAO.deleteComment(user, comment);
+
+        Assert.assertEquals(userDAO.getById(user.getId()).getComments().contains(comment), false);
+        Assert.assertEquals(userDAO.getById(user.getId()).getComments().size(), listSize-1);
     }
 
 

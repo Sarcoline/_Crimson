@@ -109,6 +109,8 @@ public class PopulateDatabase {
             tv1.setReleaseYear(2008);
 
 
+
+
             List<Episode> ShamelessEpisodes = new ArrayList();
             ShamelessEpisodes.add(Episode.builder().title("Episode 1").number(1).releaseDate(LocalDate.now()).season(1).idTvShow(2L).episodeSummary("Summary 1").build());
             ShamelessEpisodes.add(Episode.builder().title("Episode 2").number(2).releaseDate(LocalDate.now()).season(1).idTvShow(2L).episodeSummary("Summary 2").build());
@@ -160,12 +162,13 @@ public class PopulateDatabase {
                             "from the inside.");
             TvShow tv3 = new TvShow();
             tv3.setGenre("Comedy");
-            tv3.setTitle("Dr House");
+            tv3.setTitle("House M.D.");
             tv3.setNetwork("Fox");
             tv3.setOverallRating(1d);
             tv3.setTrailerUrl("https://www.youtube.com/watch?v=5DIADh4lMq8");
             tv3.setCountry("USA");
             tv3.setReleaseYear(2004);
+            tv3.setFinishYear(2012);
             InputStream in15 = applicationContext.getResource("classpath:/images/house/poster.jpg").getInputStream();
             tv3.getPictures().put("poster", IOUtils.toByteArray(in15));
             InputStream in16 = applicationContext.getResource("classpath:/images/house/back.jpg").getInputStream();
@@ -182,12 +185,13 @@ public class PopulateDatabase {
 
             TvShow tv4 = new TvShow();
             tv4.setGenre("Comedy");
-            tv4.setTitle("Game of Friends");
+            tv4.setTitle("Friends");
             tv4.setNetwork("NBC");
             tv4.setOverallRating(3d);
             tv4.setTrailerUrl("https://www.youtube.com/watch?v=hDNNmeeJs1Q");
             tv4.setCountry("USA");
             tv4.setReleaseYear(1994);
+            tv4.setFinishYear(2004);
             InputStream in20 = applicationContext.getResource("classpath:/images/friends/poster.jpg").getInputStream();
             tv4.getPictures().put("poster", IOUtils.toByteArray(in20));
             InputStream in21 = applicationContext.getResource("classpath:/images/friends/back.jpg").getInputStream();
@@ -246,6 +250,31 @@ public class PopulateDatabase {
             tv6.setDescription(
                     "A modern update finds the famous sleuth and his doctor partner solving crime in 21st century London.  ");
 
+            TvShow tv7 = new TvShow();
+             tv7.setGenre("Drama");
+             tv7.setTitle("Call the midwife");
+             tv7.setNetwork("BBC");
+             tv7.setOverallRating(5d);
+             tv7.setTrailerUrl("https://www.youtube.com/watch?v=aVfdZevxf_o");
+             tv7.setCountry("USA");
+             tv7.setReleaseYear(2012);
+             InputStream in35 = applicationContext.getResource("classpath:/images/midwife/poster.jpg").getInputStream();
+             tv7.getPictures().put("poster", IOUtils.toByteArray(in35));
+             InputStream in36 = applicationContext.getResource("classpath:/images/midwife/back1.jpg").getInputStream();
+             tv7.getPictures().put("back", IOUtils.toByteArray(in36));
+             InputStream in37 = applicationContext.getResource("classpath:/images/midwife/1.jpg").getInputStream();
+             tv7.getPictures().put("1", IOUtils.toByteArray(in37));
+             InputStream in38 = applicationContext.getResource("classpath:/images/midwife/2.jpg").getInputStream();
+             tv7.getPictures().put("2", IOUtils.toByteArray(in38));
+             InputStream in39 = applicationContext.getResource("classpath:/images/midwife/3.jpg").getInputStream();
+             tv7.getPictures().put("3", IOUtils.toByteArray(in39));
+             tv7.setDescription(
+                   "Chronicles the lives of a group of midwives living in East London in the late 1950s to early 1960s.  ");
+
+
+
+
+
 
             Role role = new Role("USER");
             Role role1 = new Role("ADMIN");
@@ -257,8 +286,8 @@ public class PopulateDatabase {
             user.setPassword("123");
             user.getRoles().add(roleService.getAllRoles().get(1));
             user.setSetting(new Setting(true, 10, 7));
-            InputStream in35 = applicationContext.getResource("classpath:/images/user/meow.jpg").getInputStream();
-            user.setProfilePic(IOUtils.toByteArray(in35));
+            InputStream in40 = applicationContext.getResource("classpath:/images/user/meow.jpg").getInputStream();
+            user.setProfilePic(IOUtils.toByteArray(in40));
             userDAO.saveUser(user);
             tvShowDAO.saveTvShow(tv);
             tvShowDAO.saveTvShow(tv1);
@@ -267,6 +296,7 @@ public class PopulateDatabase {
             tvShowDAO.saveTvShow(tv4);
             tvShowDAO.saveTvShow(tv5);
             tvShowDAO.saveTvShow(tv6);
+            tvShowDAO.saveTvShow(tv7);
         }
     }
 }

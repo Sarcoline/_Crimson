@@ -156,7 +156,7 @@ header.head figure {
 /*margin-bottom: 20px;*/
 /*}*/
 
-.overallrating {
+.overall-rating {
     font-size: 3.5rem;
     text-align: center;
 }
@@ -169,7 +169,7 @@ header.head figure {
     cursor: pointer;
 }
 
-.centerH {
+.center-rating {
     height: 10em;
     position: relative
 }
@@ -258,7 +258,7 @@ li.menu.uk-active a {
     border-bottom: 2px solid #00a8e6;
 }
 
-.episodeDate {
+.episode-date {
     margin-right: 0.2rem;
     font-size: 1rem;
     float: right;
@@ -290,14 +290,14 @@ img.center {
     width: 200px;
 }
 
-.centerText {
+.center-user-shows {
     height: 140px;
     line-height: 140px;
     text-align: center;
 
 }
 
-.centerText1 {
+.center-user-info {
     height: 160px;
     line-height: 160px;
     text-align: center;
@@ -355,7 +355,7 @@ img.center {
 
 }
 
-.item1 {
+.item-smaller {
     display: inline-block;
     background-color: black;
     width: 100px;
@@ -366,7 +366,7 @@ img.center {
 
 }
 
-.item2 {
+.item-wide {
     display: inline-block;
     background-color: black;
     width: 500px;
@@ -377,7 +377,7 @@ img.center {
 
 }
 
-.itemSearch {
+.item-search {
     display: inline-block;
     background-color: black;
     width: 100px;
@@ -385,16 +385,6 @@ img.center {
     background-size: cover;
     margin-top: 5px;
 
-
-}
-.top {
-    display: inline-block;
-    background-color: black;
-    width: 130px;
-    height: 140px;
-    background-size: cover;
-    margin: 5px;
-    box-shadow: 3px 3px 6px #999;
 
 }
 

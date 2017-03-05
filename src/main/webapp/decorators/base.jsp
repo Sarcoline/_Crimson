@@ -29,6 +29,7 @@
             type="application/javascript"></script>
 
     <title><decorator:title/></title>
+    <sec:csrfMetaTags/>
 </head>
 <body>
 <nav class="uk-navbar">
@@ -97,7 +98,7 @@
             var span = document.createElement('span');
             var link = '/images/tv/' + slug + '/poster';
             span.style.backgroundImage = "url(" + link + ")";
-            span.className = 'itemSearch';
+            span.className = 'item-search';
             var spanOverlay = document.createElement('span');
             spanOverlay.className = 'overlay';
             var spanItem = document.createElement('span');

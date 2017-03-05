@@ -24,7 +24,7 @@ public @Data class Episode {
 
     @Column(name = "title")
     @NotNull
-    @Size(min = 1, max = 30, message = "{invalid.size.title}")
+    @Size(min = 1, max = 100, message = "{invalid.size.title}")
     private String title;
 
     @Column(name = "season")

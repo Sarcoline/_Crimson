@@ -27,8 +27,7 @@ public @Data class TvShow {
 
     @Column(name = "title")
     @NotNull
-    @Size(min = 3, max = 30, message = "{invalid.size.title}")
-    @Pattern(regexp = "\\w+(([ ]?\\w+)?)*", message = "{invalid.pattern.title}")
+    @Size(min = 3, max = 50, message = "{invalid.size.title}")
     private String title;
 
     @Column(name = "network")
@@ -66,6 +65,8 @@ public @Data class TvShow {
     @Range(min = 1920, max = 2017, message = "{invalid.releaseYear}")
     private int releaseYear;
 
+    private int finishYear;
+
     @Column(name = "slug")
     @Size(max = 20, message = "{invalid.size.slug}")
     @Pattern(regexp = "[\\w-]*", message = "{invalid.pattern.slug}")
@@ -78,6 +79,20 @@ public @Data class TvShow {
     //Optimistic Locking
     @Version
     private int version;
+
+
+    @Builder
+    public TvShow(String title, String network, String country, String genre, String description, String trailerUrl, double overallRating, int releaseYear, String slug){
+        this.title = title;
+        this.network = network;
+        this.country = country;
+        this.genre = genre;
+        this.description = description;
+        this.trailerUrl = trailerUrl;
+        this.overallRating = overallRating;
+        this.releaseYear = releaseYear;
+        this.slug = slug;
+    }
 
     //RELATIONSHIPS
     //User2TvShow Relation
@@ -92,18 +107,10 @@ public @Data class TvShow {
     //Rating
     @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Rating> ratings = new ArrayList<>();
+    //Comments
+    @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Comment> comments = new ArrayList<>();
 
-    @Builder
-    public TvShow(String title, String network, String country, String genre, String description, String trailerUrl, double overallRating, int releaseYear, String slug){
-        this.title = title;
-        this.network = network;
-        this.country = country;
-        this.genre = genre;
-        this.description = description;
-        this.trailerUrl = trailerUrl;
-        this.overallRating = overallRating;
-        this.releaseYear = releaseYear;
-        this.slug = slug;
-    }
+
 
 }

@@ -30,16 +30,21 @@ public class TestTvShowDAO {
     @Autowired
     private EpisodeDAO episodeDAO;
 
+    @Autowired
+    private CommentDAO commentDAO;
+
     private TvShowFactory tvShowFactory = new TvShowFactory();
     private GenreFactory genreFactory = new GenreFactory();
     private EpisodeFactory episodeFactory = new EpisodeFactory();
     private UserFactory userFactory = new UserFactory();
     private RatingFactory ratingFactory = new RatingFactory();
+    private CommentFactory commentFactory = new CommentFactory();
 
     private User user = userFactory.getUser("aleks");
     private Genre genre = genreFactory.getGenre("drama");
     private Episode episode = episodeFactory.getEpisode("episode_1");
     private Rating rating = ratingFactory.getRating(5);
+    private Comment comment = commentFactory.getComment("comment1");
 
     private TvShow tvShow = tvShowFactory.getTvShow("test1");
     private TvShow tvShow2 = tvShowFactory.getTvShow("test2");
@@ -69,6 +74,7 @@ public class TestTvShowDAO {
         genreDAO.save(genre);
         episodeDAO.save(episode);
         rating.setTvShow(tvShow);
+        commentDAO.save(comment);
     }
 
     @Test
@@ -255,5 +261,26 @@ public class TestTvShowDAO {
         Assert.assertEquals(size - 1, tvShow.getRatings().size());
         Assert.assertEquals(size - 1, tvShowDAO.getById(tvShow.getId()).getRatings().size());
         Assert.assertEquals(tvShowDAO.getById(tvShow.getId()).getRatings().contains(rating), false);
+    }
+
+    @Test
+    public void addCommentTest(){
+        int listSize = tvShow.getComments().size();
+
+        tvShowDAO.addComment(tvShow, comment);
+
+        Assert.assertEquals(tvShowDAO.getById(tvShow.getId()).getComments().contains(comment), true);
+        Assert.assertEquals(tvShowDAO.getById(tvShow.getId()).getComments().size(), listSize+1);
+    }
+
+    @Test
+    public void deleteCommentTest(){
+        addCommentTest();
+
+        int listSize = tvShow.getComments().size();
+        tvShowDAO.deleteComment(tvShow, comment);
+
+        Assert.assertEquals(tvShowDAO.getById(tvShow.getId()).getComments().contains(comment), false);
+        Assert.assertEquals(tvShowDAO.getById(tvShow.getId()).getComments().size(), listSize-1);
     }
 }

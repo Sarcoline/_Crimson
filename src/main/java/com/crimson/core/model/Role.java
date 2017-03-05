@@ -27,6 +27,9 @@ public @Data class Role {
     @Size(min = 3, max = 20, message = "{invalid.size.role}")
     private String roleName;
 
+    @Version
+    int version;
+
     @Builder
     public Role(String roleName){
         this.roleName = roleName;

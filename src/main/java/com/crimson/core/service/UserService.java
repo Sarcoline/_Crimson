@@ -56,7 +56,7 @@ public interface UserService {
 
     List<EpisodeDTO> getAllUnwatchedUserEpisodes(UserDTO user);
 
-    List<EpisodeDTO> getAllUpcomingUserEpisodes(UserDTO userDTO);
+    List<EpisodeDTO> getAllUpcomingUserEpisodes(UserDTO userDTO, List<TvShowDTO> tvs, List<EpisodeDTO> watchedEpisodes);
 
     void updatePassword(UserDTO user, String password);
 

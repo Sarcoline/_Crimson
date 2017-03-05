@@ -17,7 +17,6 @@
                 password-parameter="password"/>
         <logout logout-success-url="/login?logout"/>
         <remember-me user-service-ref="customUserDetailsService" key="secret"/>
-        <csrf/>
 
     </http>
     <authentication-manager alias="authenticationManager">

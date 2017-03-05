@@ -25,13 +25,13 @@
                                  <c:if test="${user.name != name}"> margin-top: 0; </c:if> ">
                         </div>
                     </div>
-                    <div class="uk-width-1-3 centerText">
+                    <div class="uk-width-1-3 center-user-shows">
                         <ul class="uk-list " style="font-size: 1.8rem">
                             <li style="font-size: 3rem;"><strong>${user.name}</strong></li>
                             <li class="uk-text-muted " style="margin-top: -100px;"><strong>${user.email}</strong></li>
                         </ul>
                     </div>
-                    <div class="uk-width-1-3 centerText1">
+                    <div class="uk-width-1-3 center-user-info">
                         <ul class="uk-list">
                             <li class="uk-text-muted"><strong
                                     style="font-size: 5rem;">${user.tvShows.size()}</strong></li>
@@ -46,7 +46,7 @@
                 </c:if>
                 <div class="genreList uk-margin-large-top">
                     <c:forEach items="${tvshows}" var="tv">
-                        <a href="<c:url value="/tv/${tv.slug}"/>"> <span class="item1"
+                        <a href="<c:url value="/tv/${tv.slug}"/>"> <span class="item-smaller"
                                                                          style="background-image: url('<c:url
                                                                                  value="/images/tv/${tv.slug}/poster"/>')">
                     <span class="overlay">
@@ -70,10 +70,10 @@
                                 <p><strong><a href="<c:url value="/tv/${episode.tvShow.slug}" /> ">
                                         ${episode.tvShow.title} </a> - S${episode.season}E${episode.number} -
                                 </strong>
-                                    <a class="rateThis" data-id="${episode.id}"><i class="fa fa-square-o"
+                                    <a class="watched-this" data-id="${episode.id}"><i class="fa fa-square-o"
                                                                                    aria-hidden="true"></i></a>
                                         ${episode.title}
-                                    <small class="episodeDate uk-text-muted">${episode.releaseDate}</small>
+                                    <small class="episode-date uk-text-muted">${episode.releaseDate}</small>
                                 </p>
                             </li>
                         </c:forEach>
@@ -90,7 +90,7 @@
                     <c:if test="${favorites.size() > 0}">
                         <h2 style="text-align: center">Favorites</h2>
                         <c:forEach items="${favorites}" var="tv" begin="0" end="4">
-                            <a href="<c:url value="/tv/${tv.slug}"/>"> <span class="item2"
+                            <a href="<c:url value="/tv/${tv.slug}"/>"> <span class="item-wide"
                                                                              style="background-image: url('<c:url
                                                                                      value="/images/tv/${tv.slug}/back"/>'); ">
                     <span class="overlay">
@@ -123,23 +123,19 @@
 
     </div>
 </div>
+<script src="<c:url value="/static/js/userActions.js"/> "></script>
 <script>
     $(function () {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        $(document).ajaxSend(function(e, xhr, options) {
+            xhr.setRequestHeader(header, token);
+        });
         <sec:authorize access="isAuthenticated()">
         var watched = ${watchedEpisodesId};
-        var rateThis = $('.rateThis');
-        rateThis.each(function () {
-            if ($.inArray($(this).data('id'), watched) != -1) $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
-        });
-
-        rateThis.on('click', function () {
-            $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
-            $.ajax({
-                type: "get",
-                url: "/tv/watched",
-                data: {id: $(this).data('id')}
-            });
-        });
+        var rateThis = $('.watched-this');
+        markWatchedEpisodes(rateThis,watched);
+        markAsWatched(rateThis);
         </sec:authorize>
     });
 </script>

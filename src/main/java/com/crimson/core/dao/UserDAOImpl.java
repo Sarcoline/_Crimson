@@ -63,6 +63,7 @@ public class UserDAOImpl implements UserDAO {
             user.getTvShows().add(tvShow);
         }
         session.saveOrUpdate(user);
+
     }
 
     @Override
@@ -140,6 +141,24 @@ public class UserDAOImpl implements UserDAO {
     public void deleteRoleFromUser(User user, Role role) {
         Session session = sessionFactory.getCurrentSession();
         user.getRoles().remove(role);
+        session.saveOrUpdate(user);
+    }
+
+    //User2Comment
+
+    @Override
+    public void addComment(User user, Comment comment){
+        Session session = sessionFactory.getCurrentSession();
+        if (!user.getComments().contains(comment)){
+            user.getComments().add(comment);
+        }
+        session.saveOrUpdate(user);
+    }
+
+    @Override
+    public void deleteComment(User user, Comment comment){
+        Session session = sessionFactory.getCurrentSession();
+        user.getComments().remove(comment);
         session.saveOrUpdate(user);
     }
 
