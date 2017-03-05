@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <link href="https://fonts.googleapis.com/css?family=Raleway|Roboto:900|Montserrat:700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway|Roboto:900|Montserrat:400" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/uikit.min.css' />">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/font-awesome-4.7.0/css/font-awesome.min.css'/>">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/slidenav.css' />">

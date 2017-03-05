@@ -9,16 +9,7 @@
 <div class="uk-container uk-container-center uk-margin-large-top">
     <div class=" uk-text-center">
         <div class="uk-grid">
-            <div class="uk-width-1-2">
-                <h2 class="">Change profile picture</h2>
-                <img src="<c:url value="/images/user/${userDTO.name}"/> " alt="" width="300" height="300">
-                <form class="uk-form uk-margin-top" method="post" action="<c:url value="/updatePicture" />"
-                      enctype="multipart/form-data">
-                    <input type="file" name="fileUpload" size="50" onchange="previewFile()"/>
-                    <input type="hidden" name="${_csrf.parameterName}"
-                           value="${_csrf.token}"/>
-                    <input class="uk-button uk-button-primary" type="submit" value="Save"/>
-                </form>
+            <div class="uk-width-1-3">
                 <h2 class="uk-margin-large-top">Edit settings </h2>
                 <form class="uk-form " method="post" action="<c:url value="/updateSettings" />">
                     <input type="number" name="days" placeholder="Days of upcoming episodes"
@@ -28,7 +19,19 @@
                     <input class="uk-button uk-button-primary" type="submit" value="Save"/>
                 </form>
             </div>
-            <div class="uk-width-1-2">
+            <div class="uk-width-1-3">
+                <h2 class="">Change profile picture</h2>
+                <img src="<c:url value="/images/user/${userDTO.name}"/> " alt="" width="300" height="300">
+                <form class="uk-form uk-margin-top" method="post" action="<c:url value="/updatePicture" />"
+                      enctype="multipart/form-data">
+                    <input type="file" name="fileUpload" size="50" onchange="previewFile()"/>
+                    <input type="hidden" name="${_csrf.parameterName}"
+                           value="${_csrf.token}"/>
+                    <input class="uk-button uk-button-primary" type="submit" value="Save"/>
+                </form>
+            </div>
+            </div>
+            <div class="uk-width-1-3">
                 <div class="uk-panel uk-panel-box uk-vertical-align-middle uk-margin-top login" style="width: 300px;">
                     <h1>Edit your account!</h1>
                     <c:if test="${not empty error}">
@@ -89,8 +92,8 @@
             <div class="uk-grid">
                 <div class="uk-container-center">
 
-                    <a class="uk-button uk-button-default " href="<c:url value="/user/delete/"/>">OK</a>
-                    <a class="uk-button uk-button-default " href="<c:url value="/user/edit/"/>">CANCEL</a>
+                    <a class="uk-button uk-button-danger" href="<c:url value="/user/delete/"/>">Delete</a>
+                    <a class="uk-button uk-button-default uk-modal-close">Cancel</a>
                 </div>
             </div>
 
@@ -113,36 +116,7 @@
         } else {
             preview.src = "<c:url value="/images/user/${userDTO.name}"/> ";
         }
-    }
-
-    function doConfirm(msg, yesFn, noFn) {
-        var confirmBox = $("#confirmBox");
-        confirmBox.find(".message").text(msg);
-        confirmBox.find(".yes,.no").unbind().click(function () {
-            confirmBox.hide();
-        });
-        confirmBox.find(".yes").click(yesFn);
-        confirmBox.find(".no").click(noFn);
-        confirmBox.show();
-    }
-
-
-
-    $(function () {
-        $("form").submit(function (e) {
-            e.preventDefault();
-            var form = this;
-            doConfirm("Are you sure?", function yes() {
-                form.submit();
-            }, function no() {
-                // do nothing
-            });
-        });
-    });
-    function myFunction(elmnt,clr) {
-        elmnt.style.color = clr;
-    }
-
+    };
 </script>
 </body>
 </html>

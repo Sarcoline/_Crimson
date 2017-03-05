@@ -284,4 +284,9 @@ public class CrimsonController {
         reviewDTO.setTvShow(tv);
         return String.format("redirect:/tv/%s", title);
     }
+
+    @GetMapping(value = "/{name}/reviews/{id}")
+    public String displayReview(Model model) {
+        return "review";
+    }
 }

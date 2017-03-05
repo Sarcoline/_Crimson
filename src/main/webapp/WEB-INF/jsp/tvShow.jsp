@@ -92,7 +92,7 @@
         </div>
         <h2 class="uk-margin-large-top">Reviews (5): </h2>
         <a class="uk-button uk-button-success"
-                href="/tv/${tv.slug}/write">Write
+                href="/tv/${tv.slug}/reviews/write">Write
         </a>
         <div class="reviews">
             <ul class="uk-list uk-list-line">
@@ -115,7 +115,7 @@
                 Film "Królowa" z Helen Mirren w roli tytułowej był zapowiadany jako obraz, który przypomni światu o
                 tragedii, jaką dla Brytyjczyków (i nie tylko) była śmierć księżnej Diany. Stephen Frears zobrazował
                 rozpacz tłumów, premiera, który próbował owej stracie zyskać, oraz Elżbietę II, dla której najważniejsze
-                jest przestrzeganie zasad. <a href="#" style="color: #00a8e6;">Read more</a>
+                jest przestrzeganie zasad. <a href="<c:url value="/tv/${tv.slug}/reviews/1"/>" style="color: #00a8e6;">Read more</a>
             </article>
                 </li>
             </ul>
