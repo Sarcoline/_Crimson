@@ -232,7 +232,7 @@ public class PopulateDatabase {
             TvShow tv6 = new TvShow();
             tv6.setGenre("Drama");
             tv6.setTitle("Sherlock");
-            tv6.setNetwork("BBC");
+            tv6.setNetwork("BBC One");
             tv6.setOverallRating(5d);
             tv6.setTrailerUrl("https://www.youtube.com/watch?v=38_c6dh6Y6M");
             tv6.setCountry("UK");
@@ -253,7 +253,7 @@ public class PopulateDatabase {
             TvShow tv7 = new TvShow();
              tv7.setGenre("Drama");
              tv7.setTitle("Call the midwife");
-             tv7.setNetwork("BBC");
+             tv7.setNetwork("BBC One");
              tv7.setOverallRating(5d);
              tv7.setTrailerUrl("https://www.youtube.com/watch?v=aVfdZevxf_o");
              tv7.setCountry("UK");
