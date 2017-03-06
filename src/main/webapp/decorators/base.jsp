@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <link href="https://fonts.googleapis.com/css?family=Raleway|Roboto:900|Montserrat:700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway|Roboto:900|Montserrat:400" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/uikit.min.css' />">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/font-awesome-4.7.0/css/font-awesome.min.css'/>">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/slidenav.css' />">
@@ -16,18 +16,34 @@
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/notify.min.css' />">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/datepicker.min.css' />">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/form-file.min.css' />">
+    <link rel="stylesheet" type="text/css" href="<c:url value='/static/codemirror/lib/codemirror.css' />">
+    <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/htmleditor.min.css' />">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/style.css' />">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"
             type="application/javascript"></script>
+
+
     <script src="<c:url value='/static/uikit/js/uikit.min.js' />" type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/components/lightbox.min.js' />" type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/components/slider.min.js' />" type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/components/datepicker.min.js' />"
             type="application/javascript"></script>
+
     <script src="<c:url value='/static/uikit/js/components/notify.min.js' />" type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/components/pagination.min.js' />"
             type="application/javascript"></script>
-
+    <script src="<c:url value='/static/codemirror/lib/codemirror.js'/>"
+            type="application/javascript"></script>
+    <script src="<c:url value='/static/codemirror/mode/markdown/markdown.js'/>"
+            type="application/javascript"></script>
+    <script src="<c:url value='/static/codemirror/addon/mode/overlay.js'/>"
+            type="application/javascript"></script>
+    <script src="<c:url value='/static/codemirror/mode/xml/xml.js'/>"
+            type="application/javascript"></script>
+    <script src="<c:url value='/static/codemirror/mode/gfm/gfm.js'/>"
+            type="application/javascript"></script>
+    <script src="<c:url value='https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js' />" type="application/javascript"></script>
+    <script src="<c:url value='/static/uikit/js/components/htmleditor.js' />" type="application/javascript"></script>
     <title><decorator:title/></title>
     <sec:csrfMetaTags/>
 </head>

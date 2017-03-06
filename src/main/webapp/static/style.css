@@ -13,7 +13,7 @@ h2,
 h3,
 h4,
 h5 {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 
 }
 
@@ -54,7 +54,7 @@ a:hover {
 
 .uk-navbar-brand {
     color: #F9FBFC;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 1.5rem;
 }
 
@@ -398,6 +398,7 @@ img.center {
 
 }
 
+
 .overlay .item-header {
     font-size: larger;
     color: #F9FBFC;
@@ -426,3 +427,12 @@ div.login {
 .login h1 {
     color: #F9FBFC;
 }
+.review {
+    padding: 0 0 1em 0;
+    text-align: justify;
+    line-height: 1.5em;
+    font-size: 1.1rem;
+}
+ .review-title {
+     font-size: 5rem;
+ }

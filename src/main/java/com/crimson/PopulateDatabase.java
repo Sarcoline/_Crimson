@@ -256,7 +256,7 @@ public class PopulateDatabase {
              tv7.setNetwork("BBC");
              tv7.setOverallRating(5d);
              tv7.setTrailerUrl("https://www.youtube.com/watch?v=aVfdZevxf_o");
-             tv7.setCountry("USA");
+             tv7.setCountry("UK");
              tv7.setReleaseYear(2012);
              InputStream in35 = applicationContext.getResource("classpath:/images/midwife/poster.jpg").getInputStream();
              tv7.getPictures().put("poster", IOUtils.toByteArray(in35));

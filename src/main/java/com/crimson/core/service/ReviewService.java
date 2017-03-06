@@ -1,11 +1,12 @@
 package com.crimson.core.service;
 
+import com.crimson.core.dto.ReviewDTO;
 import com.crimson.core.model.Review;
 import java.util.List;
 
 public interface ReviewService {
 
-    void save(Review review);
+    void save(ReviewDTO reviewDTO);
 
     void delete(Review review);
 

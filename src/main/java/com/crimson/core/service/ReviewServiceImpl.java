@@ -1,6 +1,9 @@
 package com.crimson.core.service;
 
 import com.crimson.core.dao.ReviewDAO;
+import com.crimson.core.dao.TvShowDAO;
+import com.crimson.core.dao.UserDAO;
+import com.crimson.core.dto.ReviewDTO;
 import com.crimson.core.model.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,9 +13,16 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Autowired
     private ReviewDAO reviewDAO;
+    @Autowired
+    private TvShowDAO tvShowDAO;
+    @Autowired
+    private UserDAO userDAO;
 
     @Override
-    public void save(Review review) {
+    public void save(ReviewDTO reviewDTO) {
+        Review review = new Review(reviewDTO.getTitle(),reviewDTO.getIntroduction(),reviewDTO.getContent());
+        review.setTvShow(tvShowDAO.getById(reviewDTO.getTvShow().getId()));
+        review.setUser(userDAO.getById(reviewDTO.getAuthor().getId()));
         reviewDAO.save(review);
     }
 

@@ -1,17 +1,18 @@
 package com.crimson.core.dao;
 
+import com.crimson.core.dto.SearchFilterParameters;
 import com.crimson.core.model.*;
 import com.github.slugify.Slugify;
+import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 @Repository
@@ -247,5 +248,31 @@ public class TvShowDAOImpl implements TvShowDAO {
         session.saveOrUpdate(tvShow);
     }
 
-
+    @Override
+    public List<TvShow> filter(SearchFilterParameters parameters) {
+        Session session = sf.getCurrentSession();
+        Criteria c = session.createCriteria(TvShow.class);
+        if (parameters.getGenre() != null) {
+            c.add(Restrictions.eq("genre", parameters.getGenre()));
+        }
+        if (parameters.getReleaseYearStart() != null) {
+            c.add(Restrictions.ge("releaseYear", parameters.getReleaseYearStart()));
+        }
+        if (parameters.getReleaseYearEnd() != null) {
+            c.add(Restrictions.le("releaseYear", parameters.getReleaseYearEnd()));
+        }
+        if (parameters.getCountry() != null) {
+            c.add(Restrictions.eq("country", parameters.getCountry()));
+        }
+        if (parameters.getNetwork() != null) {
+            c.add(Restrictions.eq("network", parameters.getNetwork()));
+        }
+        if (parameters.getMinimalRating() != null) {
+            c.add(Restrictions.ge("overallRating", parameters.getMinimalRating()));
+        }
+        if (parameters.getMaximumRating() != null) {
+            c.add(Restrictions.le("overallRating", parameters.getMaximumRating()));
+        }
+        return c.list();
+    }
 }

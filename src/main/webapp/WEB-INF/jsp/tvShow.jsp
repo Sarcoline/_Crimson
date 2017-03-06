@@ -13,9 +13,11 @@
 
 <h1 class="title">${tv.title}
     <sec:authorize access="isAuthenticated()">
-        <small class="follow"><a id="follow"><i class="fa fa-heart-o" aria-hidden="true"
-                                                style="cursor: pointer"></i></a></small>
+        <small class="follow"><a id="follow"><i class="fa fa-heart-o" aria-hidden="true" onclick="onClick()"
+                              style="cursor: pointer"></i></a></small>
     </sec:authorize>
+    <div id="message" style="color:darkblue; font-size: large; text-align: center"></div>
+
 
 </h1>
 <h3 class="subtitle uk-text-muted">
@@ -90,7 +92,37 @@
                 </ul>
             </div>
         </div>
-        <h2 class="uk-margin-large-top">Comments: </h2>
+        <h2 class="uk-margin-large-top">Reviews (5): </h2>
+        <a class="uk-button uk-button-success"
+                href="/tv/${tv.slug}/reviews/write">Write
+        </a>
+        <div class="reviews">
+            <ul class="uk-list uk-list-line">
+                <li>
+            <article class="uk-article uk-margin-top">
+
+                <p class="uk-article-lead">Test review</p>
+                <p class="uk-article-meta">By user on date</p>
+                Film "Królowa" z Helen Mirren w roli tytułowej był zapowiadany jako obraz, który przypomni światu o
+                tragedii, jaką dla Brytyjczyków (i nie tylko) była śmierć księżnej Diany. Stephen Frears zobrazował
+                rozpacz tłumów, premiera, który próbował owej stracie zyskać, oraz Elżbietę II, dla której najważniejsze
+                jest przestrzeganie zasad. <a href="#" style="color: #00a8e6;">Read more</a>
+            </article>
+                </li>
+                <li>
+            <article class="uk-article uk-margin-top">
+
+                <p class="uk-article-lead">Test review</p>
+                <p class="uk-article-meta">By user on date</p>
+                Film "Królowa" z Helen Mirren w roli tytułowej był zapowiadany jako obraz, który przypomni światu o
+                tragedii, jaką dla Brytyjczyków (i nie tylko) była śmierć księżnej Diany. Stephen Frears zobrazował
+                rozpacz tłumów, premiera, który próbował owej stracie zyskać, oraz Elżbietę II, dla której najważniejsze
+                jest przestrzeganie zasad. <a href="<c:url value="/tv/${tv.slug}/reviews/1"/>" style="color: #00a8e6;">Read more</a>
+            </article>
+                </li>
+            </ul>
+        </div>
+        <h2 class="uk-margin-large-top">Comments (${comments.size()}): </h2>
         <button class="uk-button uk-button-success"
                 data-uk-toggle="{target:'#add-comment'}">Add
         </button>
@@ -108,7 +140,8 @@
                     <c:forEach items="${comments}" var="comment">
                         <article class="uk-comment uk-margin-top">
                             <header class="uk-comment-header">
-                                <img class="uk-comment-avatar" src="<c:url value="/images/user/${comment.user.name}"/> " width="50"
+                                <img class="uk-comment-avatar" src="<c:url value="/images/user/${comment.user.name}"/> "
+                                     width="50"
                                      height="50" alt="">
                                 <h4 class="uk-comment-title">${comment.user.name}</h4>
                                 <div class="uk-comment-meta">${comment.date} | <a
@@ -154,7 +187,8 @@
                         <br><strong>60 minutes</strong></p> <a class="uk-button uk-button-primary"
                                                                href=${tv.trailerUrl}
                                                                        data-uk-lightbox="{group:'group2'}">Watch
-                    trailer</a></div>
+                    trailer</a>
+                </div>
             </div>
         </div>
     </div>
@@ -196,6 +230,25 @@
                 </fieldset>
             </div>
         </div>
+    </div>
+</div>
+
+<div id="myyy-id" class="uk-modal">
+    <div class="uk-modal-dialog">
+        <a class="uk-modal-close uk-close"></a>
+        <div class="uk-modal-header">
+            <h2 class="uk-text-center">You follow it !</h2>
+            <div class="uk-grid">
+                <div class="uk-container-center">
+
+
+                    <a class="uk-button uk-button-default uk-modal-close">OK</a>
+                </div>
+            </div>
+
+
+        </div>
+
     </div>
 </div>
 <script src="<c:url value="/static/js/userActions.js"/>"></script>
@@ -271,6 +324,24 @@
         });
         </sec:authorize>
     });
+
+
+    var clicks = 0;
+    function onClick() {
+        clicks += 1;
+        var message = "";
+        if((clicks%2)==1)
+        { message = "You follow it!";}
+        else {message = "You do not follow it!";}
+
+        document.getElementById("message").innerHTML = message;
+
+    };
+
+
+
+
+
 </script>
 </body>
 </html>
