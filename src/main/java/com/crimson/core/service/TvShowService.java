@@ -1,6 +1,7 @@
 package com.crimson.core.service;
 
 import com.crimson.core.dto.ImageDTO;
+import com.crimson.core.dto.SearchFilterParameters;
 import com.crimson.core.dto.TvShowDTO;
 import com.crimson.core.dto.TvShowSearchDTO;
 import com.crimson.core.model.*;
@@ -66,4 +67,6 @@ public interface TvShowService {
     List<TvShowSearchDTO> tvShowsPaginationList(int pageNumber);
 
     long tvShowsSize();
+
+    List<TvShowSearchDTO> filter(SearchFilterParameters parameters);
 }

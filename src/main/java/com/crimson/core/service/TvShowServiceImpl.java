@@ -2,6 +2,7 @@ package com.crimson.core.service;
 
 import com.crimson.core.dao.TvShowDAO;
 import com.crimson.core.dto.ImageDTO;
+import com.crimson.core.dto.SearchFilterParameters;
 import com.crimson.core.dto.TvShowDTO;
 import com.crimson.core.dto.TvShowSearchDTO;
 import com.crimson.core.model.*;
@@ -223,5 +224,12 @@ public class TvShowServiceImpl implements TvShowService {
                 tvShow -> tvShows.add(mapperFacade.map(tvShow, TvShowSearchDTO.class))
         );
         return tvShows;
+    }
+
+    @Override
+    public List<TvShowSearchDTO> filter(SearchFilterParameters parameters) {
+        List<TvShowSearchDTO> tvs = new ArrayList<>();
+        tvShowDAO.filter(parameters).forEach(tvShow -> tvs.add(mapperFacade.map(tvShow,TvShowSearchDTO.class)));
+        return tvs;
     }
 }

@@ -55,13 +55,14 @@
                 url: 'add',
                 type: 'get',
                 data: episode,
-                success: function () {
+                success: function (data) {
                     UIkit.notify({
                         message: 'Successfully added: ' + episode.title + '!',
                         status: 'success',
                         timeout: 200,
                         pos: 'top-center'
                     });
+                    console.log(data.constructor);
                 },
                 error: function () {
                     UIkit.notify({
