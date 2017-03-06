@@ -13,9 +13,10 @@
 
 <h1 class="title">${tv.title}
     <sec:authorize access="isAuthenticated()">
-        <small class="follow"><a id="follow"><i class="fa fa-heart-o" aria-hidden="true"
+        <small class="follow"><a id="follow"><i class="fa fa-heart-o" aria-hidden="true" onclick="onClick()"
                                                 style="cursor: pointer"></i></a></small>
     </sec:authorize>
+    <div id="message" style="color:darkblue; font-size: large; text-align: center"></div>
 
 </h1>
 <h3 class="subtitle uk-text-muted">
@@ -204,7 +205,7 @@
                 </sec:authorize>
             </div>
             <div class="uk-width-1-2 center-rating">
-                <fieldset class="rating">
+                <fieldset class="rating" data-uk-modal="{target:'#rating-confirmation'}">
                     <input type="radio" id="star5" name="rating" value="10"/>
                     <label class="full" for="star5" title="10"></label>
                     <input type="radio" id="star4half" name="rating" value="9"/>
@@ -230,6 +231,26 @@
         </div>
     </div>
 </div>
+
+<div id="rating-confirmation" class="uk-modal">
+    <div class="uk-modal-dialog">
+        <a class="uk-modal-close uk-close"></a>
+        <div class="uk-modal-header">
+            <h2 class="uk-text-center" style="color: darkblue">Your rating is saved!</h2>
+            <div class="uk-grid">
+                <div class="uk-container-center">
+
+
+                    <a class="uk-button uk-button-default uk-modal-close">OK</a>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
 <script src="<c:url value="/static/js/userActions.js"/>"></script>
 <script src="<c:url value="/static/js/comment.js" />"></script>
 <script>
@@ -303,6 +324,18 @@
         });
         </sec:authorize>
     });
+
+    //follow confirmation
+    var clicks = 0;
+    function onClick() {
+        clicks += 1;
+        var message = "";
+        if((clicks%2)==1)
+        { message = "You follow it!";}
+        else {message = "You do not follow it!";}
+        document.getElementById("message").innerHTML = message;
+    };
+
 </script>
 </body>
 </html>
