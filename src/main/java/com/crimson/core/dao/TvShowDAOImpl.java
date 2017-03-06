@@ -1,5 +1,6 @@
 package com.crimson.core.dao;
 
+import com.crimson.core.dto.FilterResponse;
 import com.crimson.core.dto.SearchFilterParameters;
 import com.crimson.core.model.*;
 import com.github.slugify.Slugify;
@@ -249,7 +250,8 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
-    public List<TvShow> filter(SearchFilterParameters parameters) {
+    public FilterResponse filter(SearchFilterParameters parameters, int page) {
+        FilterResponse response = new FilterResponse();
         Session session = sf.getCurrentSession();
         Criteria c = session.createCriteria(TvShow.class);
         if (parameters.getGenre() != null) {
@@ -273,6 +275,18 @@ public class TvShowDAOImpl implements TvShowDAO {
         if (parameters.getMaximumRating() != null) {
             c.add(Restrictions.le("overallRating", parameters.getMaximumRating()));
         }
-        return c.list();
+        int lastPage;
+        int listSizeOnPage = 5;
+        int countResults = (c.list().size());
+        response.setSize(countResults);
+        if((countResults % listSizeOnPage) == 0) lastPage = (countResults / listSizeOnPage);
+        else lastPage = countResults / listSizeOnPage + 1;
+
+        if (page <= lastPage) {
+            c.setFirstResult((page - 1) * 5);
+            c.setMaxResults(5);
+        }
+        response.setTvShows(c.list());
+        return response;
     }
 }

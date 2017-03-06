@@ -1,5 +1,6 @@
 package com.crimson.core.dao;
 
+import com.crimson.core.dto.FilterResponse;
 import com.crimson.core.dto.SearchFilterParameters;
 import com.crimson.core.model.*;
 
@@ -49,5 +50,5 @@ public interface TvShowDAO extends BaseDAO<TvShow, Long> {
 
     void deleteComment(TvShow tvShow, Comment comment);
 
-    List<TvShow> filter(SearchFilterParameters parameters);
+    FilterResponse filter(SearchFilterParameters parameters, int page);
 }

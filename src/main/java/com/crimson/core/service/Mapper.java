@@ -35,6 +35,9 @@ public class Mapper extends ConfigurableMapper {
         factory.classMap(Comment.class, CommentDTO.class)
                 .byDefault()
                 .register();
+        factory.classMap(FilterResponse.class, FilterResponseDTO.class)
+                .byDefault()
+                .register();
         factory.getConverterFactory().registerConverter(new LocalDateConverter());
     }
 }

@@ -18,11 +18,12 @@
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/form-file.min.css' />">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/codemirror/lib/codemirror.css' />">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/uikit/css/components/htmleditor.min.css' />">
+    <link rel="stylesheet" type="text/css" href="<c:url value='/static/simplePagination/simplePagination.css' />">
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/style.css' />">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"
             type="application/javascript"></script>
 
-
+    <script src="<c:url value='/static/simplePagination/jquery.simplePagination.js' />" type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/uikit.min.js' />" type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/components/lightbox.min.js' />" type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/components/slider.min.js' />" type="application/javascript"></script>
