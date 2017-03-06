@@ -110,7 +110,9 @@ public @Data class TvShow {
     //Comments
     @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
-
+    //Reviews
+    @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Comment> reviews = new ArrayList<>();
 
 
 }
