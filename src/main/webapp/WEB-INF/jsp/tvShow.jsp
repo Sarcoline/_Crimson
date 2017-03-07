@@ -251,6 +251,25 @@
     </div>
 </div>
 
+
+<div id="myyy-id" class="uk-modal">
+    <div class="uk-modal-dialog">
+        <a class="uk-modal-close uk-close"></a>
+        <div class="uk-modal-header">
+            <h2 class="uk-text-center">You follow it !</h2>
+            <div class="uk-grid">
+                <div class="uk-container-center">
+
+
+                    <a class="uk-button uk-button-default uk-modal-close">OK</a>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
 <script src="<c:url value="/static/js/userActions.js"/>"></script>
 <script src="<c:url value="/static/js/comment.js" />"></script>
 <script>

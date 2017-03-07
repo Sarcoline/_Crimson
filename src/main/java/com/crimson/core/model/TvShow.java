@@ -33,7 +33,7 @@ public @Data class TvShow {
     @Column(name = "network")
     @NotNull
     @Size(min = 3, max = 30, message = "{invalid.size.network}")
-    @Pattern(regexp = "\\w+([+]?([ ]?\\w]+)?)*", message = "{invalid.pattern.network}")
+    @Pattern(regexp = "\\w+([+]?([ ]?\\w+)?)*", message = "{invalid.pattern.network}")
     private String network;
 
     @Column(name = "country")
@@ -110,7 +110,9 @@ public @Data class TvShow {
     //Comments
     @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
-
+    //Reviews
+    @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Comment> reviews = new ArrayList<>();
 
 
 }

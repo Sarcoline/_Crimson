@@ -2,6 +2,7 @@ package com.crimson.core.dao;
 
 import com.crimson.core.dto.FilterResponse;
 import com.crimson.core.dto.SearchFilterParameters;
+import com.crimson.core.dto.SearchFilterParameters;
 import com.crimson.core.model.*;
 
 import java.util.List;

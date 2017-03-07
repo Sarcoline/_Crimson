@@ -29,7 +29,6 @@
     <script src="<c:url value='/static/uikit/js/components/slider.min.js' />" type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/components/datepicker.min.js' />"
             type="application/javascript"></script>
-
     <script src="<c:url value='/static/uikit/js/components/notify.min.js' />" type="application/javascript"></script>
     <script src="<c:url value='/static/uikit/js/components/pagination.min.js' />"
             type="application/javascript"></script>
