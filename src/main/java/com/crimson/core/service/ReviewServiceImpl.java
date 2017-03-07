@@ -5,10 +5,15 @@ import com.crimson.core.dao.TvShowDAO;
 import com.crimson.core.dao.UserDAO;
 import com.crimson.core.dto.ReviewDTO;
 import com.crimson.core.model.Review;
+import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Service
+@Transactional
 public class ReviewServiceImpl implements ReviewService {
 
     @Autowired
@@ -17,12 +22,13 @@ public class ReviewServiceImpl implements ReviewService {
     private TvShowDAO tvShowDAO;
     @Autowired
     private UserDAO userDAO;
-
+    @Autowired
+    private MapperFacade mapperFacade;
     @Override
     public void save(ReviewDTO reviewDTO) {
         Review review = new Review(reviewDTO.getTitle(),reviewDTO.getIntroduction(),reviewDTO.getContent());
         review.setTvShow(tvShowDAO.getById(reviewDTO.getTvShow().getId()));
-        review.setUser(userDAO.getById(reviewDTO.getAuthor().getId()));
+        review.setUser(userDAO.getById(reviewDTO.getUser().getId()));
         reviewDAO.save(review);
     }
 

@@ -1,10 +1,7 @@
 package com.crimson.core.service;
 
 import com.crimson.core.dto.*;
-import com.crimson.core.model.Comment;
-import com.crimson.core.model.Episode;
-import com.crimson.core.model.TvShow;
-import com.crimson.core.model.User;
+import com.crimson.core.model.*;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.ConfigurableMapper;
 import org.springframework.stereotype.Component;
@@ -36,6 +33,9 @@ public class Mapper extends ConfigurableMapper {
                 .byDefault()
                 .register();
         factory.classMap(FilterResponse.class, FilterResponseDTO.class)
+                .byDefault()
+                .register();
+        factory.classMap(ReviewDTO.class, Review.class)
                 .byDefault()
                 .register();
         factory.getConverterFactory().registerConverter(new LocalDateConverter());

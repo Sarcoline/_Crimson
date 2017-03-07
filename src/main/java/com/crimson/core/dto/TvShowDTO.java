@@ -58,4 +58,6 @@ public class TvShowDTO {
 
     private List<CommentDTO> comments = new ArrayList<>();
 
+    private List<ReviewDTO> reviews = new ArrayList<>();
+
 }

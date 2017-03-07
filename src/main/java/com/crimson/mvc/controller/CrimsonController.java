@@ -1,10 +1,7 @@
 package com.crimson.mvc.controller;
 
 import com.crimson.core.dto.*;
-import com.crimson.core.service.EpisodeService;
-import com.crimson.core.service.RatingService;
-import com.crimson.core.service.TvShowService;
-import com.crimson.core.service.UserService;
+import com.crimson.core.service.*;
 import com.github.slugify.Slugify;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,28 +33,12 @@ public class CrimsonController {
     private RatingService ratingService;
     @Autowired
     private EpisodeService episodeService;
-
+    @Autowired
+    private ReviewService reviewService;
 
     @GetMapping("/{name}")
     @SuppressWarnings("unchecked")
     public String displayTvShow(Model model, @PathVariable("name") String name) {
-        String review = "<h1>Heading</h1>\n" +
-                "\n" +
-                "<p>Lorem ipsum dolor sit <strong>amet</strong>, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <a href=\"#\">This is a link</a></p>\n" +
-                "\n" +
-                "<ul>\n" +
-                "    <li>Item</li>\n" +
-                "    <li>Item</li>\n" +
-                "    <li>Item</li>\n" +
-                "</ul>\n" +
-                "\n" +
-                "<h2>Heading</h2>\n" +
-                "\n" +
-                "<p>Ut enim ad <em>minim</em> veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>\n" +
-                "\n" +
-                "<p>\n" +
-                "    Test paragraph\n" +
-                "</p>";
         TvShowDTO tv = tvShowService.getTvBySlug(name);
         boolean follow = false;
         int rating = 0;
@@ -75,7 +56,7 @@ public class CrimsonController {
 
         episodes.sort(Comparator.comparing(EpisodeDTO::getNumber));
         episodes.sort(Comparator.comparing(EpisodeDTO::getSeason));
-        int seasons = episodes.isEmpty() ? 0 :  episodes.get(episodes.size()-1).getSeason();
+        int seasons = episodes.isEmpty() ? 0 : episodes.get(episodes.size() - 1).getSeason();
         List<CommentDTO> comments = tv.getComments();
         comments.sort(Comparator.comparing(CommentDTO::getDate).reversed());
         model.addAttribute("comments", comments);
@@ -84,7 +65,7 @@ public class CrimsonController {
         model.addAttribute("seasons", seasons);
         model.addAttribute("rating", rating);
         model.addAttribute("follow", follow);
-        model.addAttribute("review", review);
+        model.addAttribute("reviews", tv.getReviews());
         return "tvShow";
     }
 
@@ -249,7 +230,7 @@ public class CrimsonController {
     @ResponseStatus(value = HttpStatus.OK)
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     public void postSearchAddEpisode(@RequestParam("title") String title, @RequestParam("episode") int number,
-                                     @RequestParam("season") int season,  @RequestParam("summary") String summary,
+                                     @RequestParam("season") int season, @RequestParam("summary") String summary,
                                      @RequestParam("releaseDate") String releaseDate,
                                      @PathVariable("name") String name) {
         EpisodeFromJson episode = new EpisodeFromJson();
@@ -263,7 +244,7 @@ public class CrimsonController {
     }
 
     @GetMapping(value = "/{name}/reviews/write")
-    @Secured({"ROLE_AUTHOR","ROLE_ADMIN"})
+    @Secured({"ROLE_AUTHOR", "ROLE_ADMIN"})
     public String writeReview(@PathVariable("name") String title, Model model) {
         TvShowDTO tv = tvShowService.getTvBySlug(title);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -276,17 +257,25 @@ public class CrimsonController {
 
     @RequestMapping(value = "/{name}/reviews/write", method = RequestMethod.POST)
     @Secured({"ROLE_AUTHOR", "ROLE_ADMIN"})
-    public String postReview(@ModelAttribute("review") ReviewDTO reviewDTO, @PathVariable("name") String title) {
+    public String postReview(@Valid @ModelAttribute("review") ReviewDTO reviewDTO, BindingResult bindingResult,
+                             @PathVariable("name") String title, Model model) {
         TvShowDTO tv = tvShowService.getTvBySlug(title);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("tv", tv);
+            return "writeReview";
+        }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
-        reviewDTO.setAuthor(user);
+        reviewDTO.setUser(user);
         reviewDTO.setTvShow(tv);
+        reviewService.save(reviewDTO);
         return String.format("redirect:/tv/%s", title);
     }
 
     @GetMapping(value = "/{name}/reviews/{id}")
-    public String displayReview(Model model) {
+    public String displayReview(Model model, @PathVariable("id") long id) {
+        model.addAttribute("review", reviewService.getReviewById(id));
         return "review";
     }
+
 }

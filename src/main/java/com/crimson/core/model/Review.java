@@ -25,12 +25,12 @@ public @Data class Review {
     private String title;
 
     @Column(name = "reviewIntroduction")
-    @Length(min = 5,max = 200)
+    @Length(min = 5,max = 500)
     @NotNull
     private String introduction;
 
     @Column(name = "reviewContent")
-    @Length(min = 5,max = 2000)
+    @Length(min = 5, max = 5000)
     @NotNull
     private String content;
 
