@@ -7,21 +7,19 @@
     <title>Crimson</title>
 </head>
 <body>
-
-<div class="uk-container uk-container-center uk-margin-large-top">
+<div class="index">
+<div class="uk-container" >
     <sec:authorize access="isAuthenticated()">
-        <h1>Hello ${name}!</h1>
-    </sec:authorize>
-    <sec:authorize access="hasRole('ROLE_ADMIN')">
-        <h2>You are admin!</h2>
+        <h1 class="welcome">Hello ${name}!</h1>
     </sec:authorize>
     <sec:authorize access="isAnonymous()">
-        <h1 id="hej">Hello World!</h1>
+        <h1 class="welcome">Welcome in <strong class="crimson"> Crimson </strong></h1>
     </sec:authorize>
-    <h2 class="uk-margin-large-top">Top 10</h2>
+    <div class="top-10">
+    <h2 class="uk-margin-large-top" style="color: #F9FBFC">Top 10</h2>
     <div class="uk-slidenav-position" data-uk-slider="{infinite: true}">
         <div class="uk-slider-container">
-            <ul class="uk-slider uk-grid-width-medium-1-5">
+            <ul class="uk-slider uk-grid-width-medium-1-3 uk-grid-width-large-1-5" >
                 <c:forEach items="${tvShows}" var="tvShow" varStatus="status">
                 <li><a href="<c:url value="/tv/${tvShow.slug}"/>">
                 <span class="item" style="background-image: url('<c:url value="/images/tv/${tvShow.slug}/poster"/>')">
@@ -34,8 +32,9 @@
         <a href="<c:url value="/"/>" class="uk-slidenav uk-slidenav-contrast uk-slidenav-previous" data-uk-slider-item="previous"></a>
         <a href="<c:url value="/"/>" class="uk-slidenav uk-slidenav-contrast uk-slidenav-next" data-uk-slider-item="next"></a>
     </div>
+    </div>
 
-
+</div>
 </div>
 </body>
 </html>

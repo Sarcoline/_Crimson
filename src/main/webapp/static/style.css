@@ -1,7 +1,7 @@
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
 html, body {
-    min-height: 140vh;
+    min-height: 100vh;
     overflow-x: hidden;
     font-family: 'Raleway', sans-serif;
     background: #f7f7f7;
@@ -29,9 +29,11 @@ a:hover {
 .uk-comment-avatar {
     margin-top: 8px;
 }
+
 .uk-comment-meta li {
     margin-left: -10px;
 }
+
 /*Navbar*/
 
 .uk-navbar {
@@ -351,7 +353,6 @@ img.center {
     height: 280px;
     background-size: cover;
     margin: 5px;
-    box-shadow: 3px 3px 6px #999;
 
 }
 
@@ -385,7 +386,6 @@ img.center {
     background-size: cover;
     margin-top: 5px;
 
-
 }
 
 .overlay {
@@ -397,7 +397,6 @@ img.center {
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 46%, rgba(213, 213, 213, 0) 55%, #000000 100%);
 
 }
-
 
 .overlay .item-header {
     font-size: larger;
@@ -427,12 +426,38 @@ div.login {
 .login h1 {
     color: #F9FBFC;
 }
+
 .review {
     padding: 0 0 1em 0;
     text-align: justify;
     line-height: 1.5em;
     font-size: 1.1rem;
 }
- .review-title {
-     font-size: 5rem;
- }
+
+.review-title {
+    font-size: 5rem;
+}
+
+.index {
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-image: url("http://wallpaper-gallery.net/images/tv-show-wallpapers/tv-show-wallpapers-25.jpg");
+
+}
+.welcome {
+    position: absolute;
+    color: #F9FBFC;
+    font-size: 6rem;
+    top: 10%;
+    line-height: 75px;
+}
+
+.crimson {
+    color: #B50C3C;
+}
+
+.top-10 {
+    top: 10vh;
+    position: relative;
+}

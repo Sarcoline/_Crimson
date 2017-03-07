@@ -51,10 +51,15 @@
             </form>
         </div>
         <div class="uk-width-medium-4-6  uk-width-small-1-1 uk-margin-large-left">
-            <div class="genreList uk-margin-large-top " id="filter"></div>
+            <div class="genreList uk-margin-large-top " id="filter">
+                <div class="loader loader--style2 uk-text-center uk-hidden" title="1">
+                   <c:import url="loading.jsp"/>
+                </div>
+            </div>
             <div class="pagination uk-margin-large-top">
             </div>
         </div>
+
     </div>
 </div>
 <script>
@@ -116,11 +121,11 @@
         $("#filterButton").on('click', function (event) {
             event.preventDefault();
             var startYear = $('#releaseYearStart').val();
-            parameters.releaseYearStart = startYear != 0 ?  startYear : null;
+            parameters.releaseYearStart = startYear != 0 ? startYear : null;
             var endYear = $('#releaseYearEnd').val();
-            parameters.releaseYearEnd = endYear != 0 ?  endYear : null;
+            parameters.releaseYearEnd = endYear != 0 ? endYear : null;
             var genre = $('#genre').val();
-            parameters.genre = genre != 0 ?  genre : null;
+            parameters.genre = genre != 0 ? genre : null;
             var e = document.getElementById("country");
             var country = e.options[e.selectedIndex].value;
             parameters.country = country != 0 ? country : null;
@@ -132,6 +137,7 @@
 
 
         var postJson = function (page) {
+            $('.loader').removeClass('uk-hidden');
             $.ajax({
                 headers: {
                     'Accept': 'application/json',
@@ -149,6 +155,7 @@
 
                     pagination.pagination('updateItems', data.size);
                     data.size == 0 ? $('#filter').html("<h1>There's no tvshows with given parameters</h1>") : $('#filter').html(result);
+                    $('.loader').addClass('uk-hidden');
                 }
             });
         };

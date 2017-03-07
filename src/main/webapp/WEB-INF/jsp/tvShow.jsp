@@ -92,9 +92,11 @@
             </div>
         </div>
         <h2 class="uk-margin-large-top">Reviews (${reviews.size()}): </h2>
+        <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_AUTHOR')">
         <a class="uk-button uk-button-success"
            href="/tv/${tv.slug}/reviews/write">Write
         </a>
+        </sec:authorize>
         <div class="reviews">
             <ul class="uk-list uk-list-line">
                 <c:forEach items="${tv.reviews}" var="review">

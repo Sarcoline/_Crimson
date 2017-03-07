@@ -54,16 +54,6 @@
             <li><a href="<c:url value="/user/${name}" />">Dashboard</a></li>
         </sec:authorize>
         <li class="uk-parent"><a href="<c:url value="/tv/list"/> ">TvShows</a></li>
-        <li class="uk-parent" data-uk-dropdown="{mode:'click'}" aria-haspopup="true" aria-expanded="false">
-            <a href="">Genre</a>
-            <div class="uk-dropdown uk-dropdown-navbar uk-dropdown-bottom navDropdown">
-                <ul class="uk-nav uk-nav-navbar">
-                    <li><a href="<c:url value="/tv/genre/drama"/> ">Drama</a></li>
-                    <li><a href="<c:url value="/tv/genre/fantasy"/> ">Fantasy</a></li>
-                    <li><a href="<c:url value="/tv/genre/comedy"/> ">Comedy</a></li>
-                </ul>
-            </div>
-        </li>
         <div class="uk-navbar-content uk-hidden-small">
             <div class="searchForm uk-form uk-margin-remove uk-display-inline-block">
                 <input id="search" name="search" type="text" placeholder="Search" autocomplete="off" size="40">
