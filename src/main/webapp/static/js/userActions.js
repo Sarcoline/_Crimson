@@ -14,6 +14,7 @@ var rateTvShow = function (label, rateValue, id) {
             type: "post",
             url: "/api/rate",
             data: {id: id, value: i}
+
         });
     });
 };
@@ -25,6 +26,7 @@ var followTvShow = function (follow,id) {
             type: "post",
             url: "/api/follow",
             data: {id: id}
+
         })
     });
 };
