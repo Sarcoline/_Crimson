@@ -5,8 +5,7 @@
     <title>List of Tv Shows</title>
 </head>
 <body>
-<div class="uk-margin-large-top">
-    <div class="uk-grid">
+    <div class="uk-grid uk-margin-large-top">
         <div class="uk-width-medium-1-6 uk-width-small-1-1 uk-margin-large-top">
             <form class="uk-form uk-form-stacked uk-margin-large-left" id="filterForm">
                 <div class="uk-form-row">
@@ -61,7 +60,6 @@
         </div>
 
     </div>
-</div>
 <script>
     $(function () {
         var pagination = $('.pagination');
@@ -98,6 +96,7 @@
                 maximumRating: null
             };
             $('#filterForm')[0].reset();
+            pagination.pagination('drawPage', 1);
             postJson(1);
         });
         var createFound = function (slug, title) {

@@ -88,8 +88,10 @@
         </ul>
     </div>
 </nav>
-
+<div id="wrapper">
 <decorator:body/>
+</div>
+<div class="footer"><strong>@Crimson</strong>.</div>
 <script>
     function formSubmit() {
         document.getElementById('logoutForm').submit();
