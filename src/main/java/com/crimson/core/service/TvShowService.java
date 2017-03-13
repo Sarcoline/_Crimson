@@ -1,9 +1,6 @@
 package com.crimson.core.service;
 
-import com.crimson.core.dto.ImageDTO;
-import com.crimson.core.dto.SearchFilterParameters;
-import com.crimson.core.dto.TvShowDTO;
-import com.crimson.core.dto.TvShowSearchDTO;
+import com.crimson.core.dto.*;
 import com.crimson.core.model.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -68,5 +65,5 @@ public interface TvShowService {
 
     long tvShowsSize();
 
-    List<TvShowSearchDTO> filter(SearchFilterParameters parameters);
+    FilterResponseDTO filter(SearchFilterParameters parameters, int page);
 }

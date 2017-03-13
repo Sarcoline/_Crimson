@@ -87,8 +87,8 @@ public class RestCrimsonController {
         return String.format("redirect:/tv/%s", tv.getSlug());
     }
 
-    @RequestMapping(value = "/filter", method = RequestMethod.POST)
-    public List<TvShowSearchDTO> filter(@RequestBody SearchFilterParameters parameters) {
-        return tvShowService.filter(parameters);
+    @RequestMapping(value = "/filter/{page}", method = RequestMethod.POST)
+    public FilterResponseDTO filter(@RequestBody SearchFilterParameters parameters,@PathVariable("page") int page) {
+        return tvShowService.filter(parameters, page);
     }
 }

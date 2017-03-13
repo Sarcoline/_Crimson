@@ -14,10 +14,9 @@
 <h1 class="title">${tv.title}
     <sec:authorize access="isAuthenticated()">
         <small class="follow"><a id="follow"><i class="fa fa-heart-o" aria-hidden="true" onclick="onClick()"
-                              style="cursor: pointer"></i></a></small>
+                                                style="cursor: pointer"></i></a></small>
     </sec:authorize>
     <div id="message" style="color:darkblue; font-size: large; text-align: center"></div>
-
 
 </h1>
 <h3 class="subtitle uk-text-muted">
@@ -92,34 +91,23 @@
                 </ul>
             </div>
         </div>
-        <h2 class="uk-margin-large-top">Reviews (5): </h2>
+        <h2 class="uk-margin-large-top">Reviews (${reviews.size()}): </h2>
         <a class="uk-button uk-button-success"
-                href="/tv/${tv.slug}/reviews/write">Write
+           href="/tv/${tv.slug}/reviews/write">Write
         </a>
         <div class="reviews">
             <ul class="uk-list uk-list-line">
-                <li>
-            <article class="uk-article uk-margin-top">
+                <c:forEach items="${tv.reviews}" var="review">
+                    <li>
+                        <article class="uk-article uk-margin-top">
 
-                <p class="uk-article-lead">Test review</p>
-                <p class="uk-article-meta">By user on date</p>
-                Film "Królowa" z Helen Mirren w roli tytułowej był zapowiadany jako obraz, który przypomni światu o
-                tragedii, jaką dla Brytyjczyków (i nie tylko) była śmierć księżnej Diany. Stephen Frears zobrazował
-                rozpacz tłumów, premiera, który próbował owej stracie zyskać, oraz Elżbietę II, dla której najważniejsze
-                jest przestrzeganie zasad. <a href="#" style="color: #00a8e6;">Read more</a>
-            </article>
-                </li>
-                <li>
-            <article class="uk-article uk-margin-top">
-
-                <p class="uk-article-lead">Test review</p>
-                <p class="uk-article-meta">By user on date</p>
-                Film "Królowa" z Helen Mirren w roli tytułowej był zapowiadany jako obraz, który przypomni światu o
-                tragedii, jaką dla Brytyjczyków (i nie tylko) była śmierć księżnej Diany. Stephen Frears zobrazował
-                rozpacz tłumów, premiera, który próbował owej stracie zyskać, oraz Elżbietę II, dla której najważniejsze
-                jest przestrzeganie zasad. <a href="<c:url value="/tv/${tv.slug}/reviews/1"/>" style="color: #00a8e6;">Read more</a>
-            </article>
-                </li>
+                            <p class="uk-article-lead">${review.title}</p>
+                            <p class="uk-article-meta">By <a href="<c:url value="/user/${review.user.name}"/> ">
+                            ${review.user.name}</a> on ${review.publicationDate}</p>
+                                ${review.introduction} <a href="<c:url value="/tv/${tv.slug}/reviews/${review.id}"/> " style="color: #00a8e6;">Read more</a>
+                        </article>
+                    </li>
+                </c:forEach>
             </ul>
         </div>
         <h2 class="uk-margin-large-top">Comments (${comments.size()}): </h2>
@@ -206,7 +194,7 @@
                 </sec:authorize>
             </div>
             <div class="uk-width-1-2 center-rating">
-                <fieldset class="rating">
+                <fieldset class="rating" data-uk-modal="{target:'#rating-confirmation'}">
                     <input type="radio" id="star5" name="rating" value="10"/>
                     <label class="full" for="star5" title="10"></label>
                     <input type="radio" id="star4half" name="rating" value="9"/>
@@ -233,6 +221,24 @@
     </div>
 </div>
 
+<div id="rating-confirmation" class="uk-modal">
+    <div class="uk-modal-dialog">
+        <a class="uk-modal-close uk-close"></a>
+        <div class="uk-modal-header">
+            <h2 class="uk-text-center" style="color: darkblue">Your rating is saved!</h2>
+            <div class="uk-grid">
+                <div class="uk-container-center">
+
+
+                    <a class="uk-button uk-button-default uk-modal-close">OK</a>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
 <div id="myyy-id" class="uk-modal">
     <div class="uk-modal-dialog">
         <a class="uk-modal-close uk-close"></a>
@@ -255,15 +261,12 @@
 <script src="<c:url value="/static/js/comment.js" />"></script>
 <script>
     $(function () {
-
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
         $(document).ajaxSend(function (e, xhr, options) {
             xhr.setRequestHeader(header, token);
         });
-
         <sec:authorize access="isAuthenticated()">
-
         var rating = parseFloat(${rating});
         var rateValue = $('.rateValue');
         var watchedThis = $('.watched-this');
@@ -277,18 +280,14 @@
         <c:if test="${follow == true}">
         $('i.fa-heart-o').addClass('fa-heart').removeClass('fa-heart-o');
         </c:if>
-
         //mark watched episodes
         markWatchedEpisodes(watchedThis, watched);
-
         //ajax request to rate tvShow
         rateTvShow(label, rateValue, id);
-
         //ajax request to follow tvShow
         followTvShow(follow, id);
         //ajax request to rate tvShow
         markAsWatched(watchedThis);
-
         //add comment
         commentInput.on('input', function () {
             var len = $(this).val().length;
@@ -324,8 +323,7 @@
         });
         </sec:authorize>
     });
-
-
+    //follow confirmation
     var clicks = 0;
     function onClick() {
         clicks += 1;
@@ -333,15 +331,8 @@
         if((clicks%2)==1)
         { message = "You follow it!";}
         else {message = "You do not follow it!";}
-
         document.getElementById("message").innerHTML = message;
-
     };
-
-
-
-
-
 </script>
 </body>
 </html>
