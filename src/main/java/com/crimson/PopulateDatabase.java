@@ -272,6 +272,31 @@ public class PopulateDatabase {
                    "Chronicles the lives of a group of midwives living in East London in the late 1950s to early 1960s.  ");
 
 
+            TvShow tv8 = new TvShow();
+            tv8.setGenre("Drama");
+            tv8.setTitle("Breaking Bad");
+            tv8.setNetwork("AMC");
+            tv8.setOverallRating(5d);
+            tv8.setTrailerUrl("https://www.youtube.com/watch?v=HhesaQXLuRY");
+            tv8.setCountry("USA");
+            tv8.setReleaseYear(2008);
+            InputStream in40 = applicationContext.getResource("classpath:/images/breakingBad/poster.jpg").getInputStream();
+            tv8.getPictures().put("poster", IOUtils.toByteArray(in40));
+            InputStream in41 = applicationContext.getResource("classpath:/images/breakingBad/back.jpg").getInputStream();
+            tv8.getPictures().put("back", IOUtils.toByteArray(in41));
+            InputStream in42 = applicationContext.getResource("classpath:/images/breakingBad/1.jpg").getInputStream();
+            tv8.getPictures().put("1", IOUtils.toByteArray(in42));
+            InputStream in43 = applicationContext.getResource("classpath:/images/breakingBad/2.jpg").getInputStream();
+            tv8.getPictures().put("2", IOUtils.toByteArray(in43));
+            InputStream in44 = applicationContext.getResource("classpath:/images/breakingBad/3.jpg").getInputStream();
+            tv8.getPictures().put("3", IOUtils.toByteArray(in44));
+            tv8.setDescription(
+                    "A high school chemistry teacher diagnosed with inoperable lung cancer turns to manufacturing and selling methamphetamine in order to secure his family's future.  ");
+
+
+
+
+
 
 
 
@@ -286,8 +311,8 @@ public class PopulateDatabase {
             user.setPassword("123");
             user.getRoles().add(roleService.getAllRoles().get(1));
             user.setSetting(new Setting(true, 10, 7));
-            InputStream in40 = applicationContext.getResource("classpath:/images/user/meow.jpg").getInputStream();
-            user.setProfilePic(IOUtils.toByteArray(in40));
+            InputStream in45 = applicationContext.getResource("classpath:/images/user/meow.jpg").getInputStream();
+            user.setProfilePic(IOUtils.toByteArray(in45));
             userDAO.saveUser(user);
             tvShowDAO.saveTvShow(tv);
             tvShowDAO.saveTvShow(tv1);
@@ -297,6 +322,7 @@ public class PopulateDatabase {
             tvShowDAO.saveTvShow(tv5);
             tvShowDAO.saveTvShow(tv6);
             tvShowDAO.saveTvShow(tv7);
+            tvShowDAO.saveTvShow(tv8);
         }
     }
 }
