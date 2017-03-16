@@ -20,7 +20,7 @@ public class TvShowDTO {
     @Size(min = 3, max = 30)
     private String title;
 
-    @Size(min = 3, max = 30)
+    @Size(min = 2, max = 30)
     @Pattern(regexp = "[A-Za-z0-9]*(([ ]?[A-Za-z0-9]+)?)*")
     private String network;
 

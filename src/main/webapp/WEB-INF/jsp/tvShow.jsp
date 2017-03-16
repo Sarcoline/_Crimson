@@ -93,9 +93,9 @@
         </div>
         <h2 class="uk-margin-large-top">Reviews (${reviews.size()}): </h2>
         <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_AUTHOR')">
-        <a class="uk-button uk-button-success"
-           href="/tv/${tv.slug}/reviews/write">Write
-        </a>
+            <a class="uk-button uk-button-success"
+               href="/tv/${tv.slug}/reviews/write">Write
+            </a>
         </sec:authorize>
         <div class="reviews">
             <ul class="uk-list uk-list-line">
@@ -105,8 +105,9 @@
 
                             <p class="uk-article-lead">${review.title}</p>
                             <p class="uk-article-meta">By <a href="<c:url value="/user/${review.user.name}"/> ">
-                            ${review.user.name}</a> on ${review.publicationDate}</p>
-                                ${review.introduction} <a href="<c:url value="/tv/${tv.slug}/reviews/${review.id}"/> " style="color: #00a8e6;">Read more</a>
+                                    ${review.user.name}</a> on ${review.publicationDate}</p>
+                                ${review.introduction} <a href="<c:url value="/tv/${tv.slug}/reviews/${review.id}"/> "
+                                                          style="color: #00a8e6;">Read more</a>
                         </article>
                     </li>
                 </c:forEach>
@@ -151,7 +152,7 @@
             <div class="uk-width-large-1-1 uk-width-small-1-2">
                 <div class="ratebox">
                     <p class="overall-rating">
-                      <c:out value="${tv.ratings.size() == 0 ? '?' : tv.overallRating}"/><small class="uk-text-muted" style="font-size: 2rem;">/10</small>
+                        <c:out value="${tv.ratings.size() == 0 ? '?' : tv.overallRating}"/><small class="uk-text-muted" style="font-size: 2rem;">/10</small>
                     </p>
                     <p class="uk-text-muted">${tv.ratings.size()} ratings</p>
                     <p class="uk-text-muted">${tv.users.size()} follows</p>
@@ -172,11 +173,10 @@
                         <br> <strong>${tv.network}</strong></p>
                     <p>Country:
                         <br><strong>${tv.country}</strong></p>
-                    <p>Episode Length:
-                        <br><strong>60 minutes</strong></p> <a class="uk-button uk-button-primary"
-                                                               href=${tv.trailerUrl}
-                                                                       data-uk-lightbox="{group:'group2'}">Watch
-                    trailer</a>
+                    <a class="uk-button uk-button-primary"
+                       href=${tv.trailerUrl}
+                               data-uk-lightbox="{group:'group2'}">Watch
+                        trailer</a>
                 </div>
             </div>
         </div>
@@ -332,9 +332,12 @@
     function onClick() {
         clicks += 1;
         var message = "";
-        if((clicks%2)==1)
-        { message = "You follow it!";}
-        else {message = "You do not follow it!";}
+        if ((clicks % 2) == 1) {
+            message = "You follow it!";
+        }
+        else {
+            message = "You do not follow it!";
+        }
         document.getElementById("message").innerHTML = message;
     }
 </script>

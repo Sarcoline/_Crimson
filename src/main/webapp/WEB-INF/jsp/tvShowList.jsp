@@ -66,7 +66,7 @@
 
         pagination.pagination({
             items: ${tvSize},
-            itemsOnPage: 5,
+            itemsOnPage: 20,
             cssStyle: 'light-theme'
         });
         var token = $("meta[name='_csrf']").attr("content");

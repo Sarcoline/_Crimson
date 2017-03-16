@@ -135,7 +135,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     @Override
     public int tvShowsLastPageNumber() {
         Session session = sf.getCurrentSession();
-        int listSizeOnPage = 5;
+        int listSizeOnPage = 25;
         Long countResults = (Long) session.createQuery("SELECT count (id) FROM TvShow  f").uniqueResult();
         if((countResults % listSizeOnPage) == 0) return (int) (countResults / listSizeOnPage);
         else return (int) (countResults / listSizeOnPage) + 1;
@@ -151,8 +151,8 @@ public class TvShowDAOImpl implements TvShowDAO {
         org.hibernate.query.Query selectQuery = session.createQuery("from TvShow ");
 
         if (pageNumber <= lastPage) {
-            selectQuery.setFirstResult((pageNumber - 1) * 5);
-            selectQuery.setMaxResults(5);
+            selectQuery.setFirstResult((pageNumber - 1) * 25);
+            selectQuery.setMaxResults(25);
             selectedList = selectQuery.list();
         }
         return selectedList;
@@ -276,15 +276,15 @@ public class TvShowDAOImpl implements TvShowDAO {
             c.add(Restrictions.le("overallRating", parameters.getMaximumRating()));
         }
         int lastPage;
-        int listSizeOnPage = 5;
+        int listSizeOnPage = 20;
         int countResults = (c.list().size());
         response.setSize(countResults);
         if((countResults % listSizeOnPage) == 0) lastPage = (countResults / listSizeOnPage);
         else lastPage = countResults / listSizeOnPage + 1;
 
         if (page <= lastPage) {
-            c.setFirstResult((page - 1) * 5);
-            c.setMaxResults(5);
+            c.setFirstResult((page - 1) * 20);
+            c.setMaxResults(20);
         }
         response.setTvShows(c.list());
         return response;
