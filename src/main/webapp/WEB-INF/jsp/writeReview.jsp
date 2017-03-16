@@ -32,7 +32,7 @@
             <form:textarea path="content"
                            class="uk-width-1-2 uk-form-large"
                            name='content'
-                           placeholder="content" data-uk-htmleditor="{markdown:true}"/>
+                           placeholder="content" data-uk-htmleditor="{markdown:false}"/>
         </div>
         <a href="<c:url value="/tv/${tv.slug}/"/>"
            class="uk-button uk-margin-top">Back</a>

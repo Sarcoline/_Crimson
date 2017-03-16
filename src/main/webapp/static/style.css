@@ -27,9 +27,7 @@ a:hover {
     text-decoration: none;
 }
 
-.uk-comment-avatar {
-    margin-top: 8px;
-}
+
 
 .uk-comment-meta li {
     margin-left: -10px;
@@ -437,6 +435,7 @@ div.login {
 
 .review-title {
     font-size: 5rem;
+    line-height: 120%;
 }
 
 .welcome {

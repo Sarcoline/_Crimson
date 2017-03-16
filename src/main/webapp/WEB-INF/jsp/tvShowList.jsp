@@ -5,7 +5,7 @@
     <title>List of Tv Shows</title>
 </head>
 <body>
-    <div class="uk-grid uk-margin-large-top">
+    <div class="uk-grid uk-margin-large-top uk-margin-large-bottom">
         <div class="uk-width-medium-1-6 uk-width-small-1-1 uk-margin-large-top">
             <form class="uk-form uk-form-stacked uk-margin-large-left" id="filterForm">
                 <div class="uk-form-row">
@@ -24,24 +24,52 @@
                            id="genre"/>
                 </div>
                 <div class="uk-form-row">
-                    <label class="uk-form-label" for="genre">Network</label>
-                    <select id="network">
+                    <label class="uk-form-label" for="network">Network</label>
+                    <select id="network" name="network">
                         <option selected value="0">Network</option>
                         <option value="HBO">HBO</option>
+                        <option value="Netflix">Netflix</option>
                         <option value="Showtime">Showtime</option>
                         <option value="NBC">NBC</option>
                         <option value="Canal+">Canal+</option>
                         <option value="Fox">Fox</option>
-                        <option value="BBC">BBC</option>
+                        <option value="BBC One">BBC One</option>
                     </select>
                 </div>
                 <div class="uk-form-row">
-                    <label class="uk-form-label" for="genre">Country</label>
-                    <select id="country">
+                    <label class="uk-form-label" for="country">Country</label>
+                    <select id="country" name="country">
                         <option selected value="0">Country</option>
                         <option value="USA">USA</option>
                         <option value="UK">UK</option>
                         <option value="Poland">Poland</option>
+                    </select>
+                </div>
+                <div class="uk-form-row">
+                    <label class="uk-form-label" for="genre">Rating between</label>
+                    <select id="ratingStart">
+                        <option value="1" selected>1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                    <select id="ratingEnd">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10" selected>10</option>
                     </select>
                 </div>
                 <br>
@@ -131,6 +159,16 @@
             var n = document.getElementById("network");
             var network = n.options[n.selectedIndex].value;
             parameters.network = network != 0 ? network : null;
+
+            var rStart = document.getElementById("ratingStart");
+            var ratingStart = rStart.options[rStart.selectedIndex].value;
+            console.log(ratingStart);
+            parameters.minimalRating = parseFloat(ratingStart);
+
+            var rEnd = document.getElementById("ratingEnd");
+            var ratingEnd = rEnd.options[rEnd.selectedIndex].value;
+            parameters.maximumRating = parseFloat(ratingEnd);
+            console.log(parameters);
             postJson(1);
         });
 

@@ -12,7 +12,7 @@ public @Data class SearchFilterParameters {
     Integer releaseYearEnd;
     String country;
     String network;
-    Integer minimalRating;
-    Integer maximumRating;
+    Double minimalRating;
+    Double maximumRating;
 
 }
