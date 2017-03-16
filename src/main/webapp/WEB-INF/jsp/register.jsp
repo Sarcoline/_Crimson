@@ -8,7 +8,7 @@
 <body>
 <div class="uk-container uk-container-center uk-margin-large-top">
     <div class=" uk-text-center">
-        <div class="uk-panel uk-panel-box uk-vertical-align-middle uk-margin-top login" style="width: 300px;">
+        <div class="uk-panel uk-panel-box uk-vertical-align-middle uk-margin-top login" style="width: 400px;">
             <h1>Register!</h1>
 
             <form:form modelAttribute="userDTO" method="POST" enctype="multipart/form-data" class="uk-form uk-form-stacked" >

@@ -183,17 +183,17 @@ public class CrimsonController {
         if (error != null) {
             model.addAttribute("error", "Error!");
         }
-        model.addAttribute("tv", new TvShowDTO());
+        model.addAttribute("tv", new TvShowAddDTO());
         return "addTvShow";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
-    public String addTvShow(@ModelAttribute("tv") @Valid TvShowDTO tvShowDTO, BindingResult bindingResult) throws IOException {
+    public String addTvShow(@ModelAttribute("tv") @Valid TvShowAddDTO tvShowAddDTO, BindingResult bindingResult) throws IOException {
         if (bindingResult.hasErrors()) {
             return "addTvShow";
         }
-        tvShowService.saveTvShowDTO(tvShowDTO);
+        tvShowService.saveTvShowDTO(tvShowAddDTO);
         return "redirect:/";
     }
 

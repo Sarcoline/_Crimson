@@ -57,7 +57,7 @@ public interface TvShowService {
 
     void updateTvShowPicture(String name, String key, MultipartFile pic1) throws IOException;
 
-    void saveTvShowDTO(TvShowDTO tvShowDTO) throws IOException;
+    void saveTvShowDTO(TvShowAddDTO tvShowDTO) throws IOException;
 
     int tvShowsLastPageNumber();
 

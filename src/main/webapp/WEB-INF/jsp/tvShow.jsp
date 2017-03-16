@@ -138,7 +138,7 @@
                                         href="<c:url value="/user/${comment.user.name}"/>">Profile</a></div>
                             </header>
                             <div class="uk-comment-body">
-                                <p>${comment.text}</p>
+                                <p><c:out value="${comment.text}"/></p>
                             </div>
                         </article>
                     </c:forEach>
@@ -151,8 +151,7 @@
             <div class="uk-width-large-1-1 uk-width-small-1-2">
                 <div class="ratebox">
                     <p class="overall-rating">
-                        ${tv.overallRating}
-                        <small class="uk-text-muted" style="font-size: 2rem;">/10</small>
+                      <c:out value="${tv.ratings.size() == 0 ? '?' : tv.overallRating}"/><small class="uk-text-muted" style="font-size: 2rem;">/10</small>
                     </p>
                     <p class="uk-text-muted">${tv.ratings.size()} ratings</p>
                     <p class="uk-text-muted">${tv.users.size()} follows</p>
@@ -278,6 +277,7 @@
         var label = $('label');
         var follow = $('#follow');
         var id = ${tv.id};
+
         if (rating != 0) rateValue.html(" " + rating);
         <c:if test="${follow == true}">
         $('i.fa-heart-o').addClass('fa-heart').removeClass('fa-heart-o');
@@ -296,12 +296,14 @@
             if (len >= 5 && len <= 200) sendButton.prop('disabled', false);
             else sendButton.prop('disabled', true);
         });
+
         sendButton.on('click', function (event) {
             event.preventDefault();
             var comment = {
                 text: commentInput.val(),
                 idTvShow: ${tv.id}
             };
+            console.log(comment);
             if (comment.text.length >= 5) {
                 $.ajax({
                     headers: {
@@ -334,7 +336,7 @@
         { message = "You follow it!";}
         else {message = "You do not follow it!";}
         document.getElementById("message").innerHTML = message;
-    };
+    }
 </script>
 </body>
 </html>

@@ -38,6 +38,9 @@ public class Mapper extends ConfigurableMapper {
         factory.classMap(ReviewDTO.class, Review.class)
                 .byDefault()
                 .register();
+        factory.classMap(TvShowAddDTO.class, TvShow.class)
+                .byDefault()
+                .register();
         factory.getConverterFactory().registerConverter(new LocalDateConverter());
     }
 }

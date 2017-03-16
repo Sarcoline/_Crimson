@@ -8,16 +8,17 @@
 </head>
 <body>
 <div class="index">
-    <div class="uk-container">
 
+    <div class="uk-container uk-container-center">
         <sec:authorize access="isAuthenticated()">
             <h1 class="welcome uk-margin-large-top">Hello ${name}!</h1>
         </sec:authorize>
         <sec:authorize access="isAnonymous()">
             <h1 class="welcome uk-margin-large-top">Welcome in <strong class="crimson"> Crimson </strong></h1>
         </sec:authorize>
+
         <div class="uk-grid">
-            <div class="top-10 uk-margin-top uk-width-1-1">
+            <div class="top-10 uk-margin-large-top uk-width-1-1">
                 <h2>Top 10</h2>
                 <div class="uk-slidenav-position" data-uk-slider="{infinite: true}">
                     <div class="uk-slider-container">

@@ -201,5 +201,4 @@ public class UserController {
         model.addAttribute("passwordDTO", new PasswordDTO());
         return "changePassword";
     }
-
 }
