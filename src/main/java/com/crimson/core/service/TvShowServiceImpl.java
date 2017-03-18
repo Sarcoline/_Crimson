@@ -165,7 +165,7 @@ public class TvShowServiceImpl implements TvShowService {
         unsortedList.sort(Comparator.comparing(TvShow::getOverallRating).reversed());
         unsortedList.forEach(
                 tv -> tvs.add(mapperFacade.map(tv, TvShowDTO.class)));
-        return tvs;
+        return tvs.subList(0,10);
     }
 
     @Override
