@@ -4,18 +4,14 @@ import com.crimson.core.dao.TvShowDAO;
 import com.crimson.core.dto.*;
 import com.crimson.core.model.*;
 import com.github.slugify.Slugify;
-import ma.glasnost.orika.Filter;
 import ma.glasnost.orika.MapperFacade;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -169,7 +165,7 @@ public class TvShowServiceImpl implements TvShowService {
         unsortedList.sort(Comparator.comparing(TvShow::getOverallRating).reversed());
         unsortedList.forEach(
                 tv -> tvs.add(mapperFacade.map(tv, TvShowDTO.class)));
-        return tvs;
+        return tvs.subList(0,10);
     }
 
     @Override
@@ -198,16 +194,14 @@ public class TvShowServiceImpl implements TvShowService {
     }
 
     @Override
-    public void saveTvShowDTO(TvShowDTO tvShowDTO) throws IOException {
-        Resource resource1 = applicationContext.getResource("classpath:/images/placeholder.png");
-        InputStream in1 = resource1.getInputStream();
-        byte[] pic = IOUtils.toByteArray(in1);
-        tvShowDTO.getPictures().put("1", pic);
-        tvShowDTO.getPictures().put("2", pic);
-        tvShowDTO.getPictures().put("3", pic);
-        tvShowDTO.getPictures().put("back", pic);
-        tvShowDTO.getPictures().put("poster", pic);
-        tvShowDAO.save(mapperFacade.map(tvShowDTO, TvShow.class));
+    public void saveTvShowDTO(TvShowAddDTO tvShowAddDTO) throws IOException {
+        TvShow tv = mapperFacade.map(tvShowAddDTO, TvShow.class);
+        tv.getPictures().put("1", tvShowAddDTO.getPic1().getBytes());
+        tv.getPictures().put("2", tvShowAddDTO.getPic2().getBytes());
+        tv.getPictures().put("3", tvShowAddDTO.getPic3().getBytes());
+        tv.getPictures().put("back", tvShowAddDTO.getBack().getBytes());
+        tv.getPictures().put("poster", tvShowAddDTO.getPoster().getBytes());
+        tvShowDAO.save(tv);
     }
 
     @Override

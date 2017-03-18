@@ -1,21 +1,18 @@
 package com.crimson.core.dto;
 
-import com.crimson.core.model.Rating;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.URL;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
-@Data
-public class TvShowDTO {
-
-    private Long id;
+/**
+ * Created by Meow on 16.03.2017.
+ */
+public @Data class TvShowAddDTO {
 
     @Size(min = 3, max = 30)
     private String title;
@@ -48,16 +45,15 @@ public class TvShowDTO {
 
     private String slug;
 
-    private HashMap<String, byte[]> pictures = new HashMap<>();
+    private MultipartFile back;
 
-    private List<EpisodeDTO> episodes = new ArrayList<>();
+    private MultipartFile poster;
 
-    private List<UserDTO> users = new ArrayList<>();
+    private MultipartFile pic1;
 
-    private List<Rating> ratings = new ArrayList<>();
+    private MultipartFile pic2;
 
-    private List<CommentDTO> comments = new ArrayList<>();
+    private MultipartFile pic3;
 
-    private List<ReviewDTO> reviews = new ArrayList<>();
 
 }

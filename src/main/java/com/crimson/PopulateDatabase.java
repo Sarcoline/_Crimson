@@ -5,7 +5,6 @@ import com.crimson.core.model.Episode;
 import com.crimson.core.model.Role;
 import com.crimson.core.model.Setting;
 import com.crimson.core.model.TvShow;
-import com.crimson.core.service.EpisodeService;
 import com.crimson.core.service.RoleService;
 import com.crimson.core.service.TvShowService;
 import com.crimson.core.service.UserService;
@@ -32,9 +31,6 @@ public class PopulateDatabase {
 
     @Autowired
     private TvShowService tvShowDAO;
-
-    @Autowired
-    private EpisodeService episodeService;
 
     @Autowired
     private UserService userDAO;
@@ -107,8 +103,6 @@ public class PopulateDatabase {
             tv1.setTrailerUrl("https://www.youtube.com/watch?v=ITsirWLf-W8");
             tv1.setCountry("USA");
             tv1.setReleaseYear(2008);
-
-
 
 
             List<Episode> ShamelessEpisodes = new ArrayList();
@@ -247,29 +241,36 @@ public class PopulateDatabase {
             tv6.getPictures().put("2", IOUtils.toByteArray(in33));
             InputStream in34 = applicationContext.getResource("classpath:/images/sherlock/3.jpg").getInputStream();
             tv6.getPictures().put("3", IOUtils.toByteArray(in34));
-            tv6.setDescription(
-                    "A modern update finds the famous sleuth and his doctor partner solving crime in 21st century London.  ");
+            tv6.setDescription("In this modernized version of the Conan Doyle characters, using his detective plots, " +
+                    "Sherlock Holmes lives in early 21st century London and acts more cocky towards Scotland Yard's " +
+                    "detective inspector Lestrade because he's actually less confident. Doctor Watson is now a fairly" +
+                    " young veteran of the Afghan war, less adoring and more active.");
 
             TvShow tv7 = new TvShow();
-             tv7.setGenre("Drama");
-             tv7.setTitle("Call the midwife");
-             tv7.setNetwork("BBC One");
-             tv7.setOverallRating(5d);
-             tv7.setTrailerUrl("https://www.youtube.com/watch?v=aVfdZevxf_o");
-             tv7.setCountry("UK");
-             tv7.setReleaseYear(2012);
-             InputStream in35 = applicationContext.getResource("classpath:/images/midwife/poster.jpg").getInputStream();
-             tv7.getPictures().put("poster", IOUtils.toByteArray(in35));
-             InputStream in36 = applicationContext.getResource("classpath:/images/midwife/back1.jpg").getInputStream();
-             tv7.getPictures().put("back", IOUtils.toByteArray(in36));
-             InputStream in37 = applicationContext.getResource("classpath:/images/midwife/1.jpg").getInputStream();
-             tv7.getPictures().put("1", IOUtils.toByteArray(in37));
-             InputStream in38 = applicationContext.getResource("classpath:/images/midwife/2.jpg").getInputStream();
-             tv7.getPictures().put("2", IOUtils.toByteArray(in38));
-             InputStream in39 = applicationContext.getResource("classpath:/images/midwife/3.jpg").getInputStream();
-             tv7.getPictures().put("3", IOUtils.toByteArray(in39));
-             tv7.setDescription(
-                   "Chronicles the lives of a group of midwives living in East London in the late 1950s to early 1960s.  ");
+            tv7.setGenre("Drama");
+            tv7.setTitle("Call the midwife");
+            tv7.setNetwork("BBC One");
+            tv7.setOverallRating(5d);
+            tv7.setTrailerUrl("https://www.youtube.com/watch?v=aVfdZevxf_o");
+            tv7.setCountry("UK");
+            tv7.setReleaseYear(2012);
+            InputStream in35 = applicationContext.getResource("classpath:/images/midwife/poster.jpg").getInputStream();
+            tv7.getPictures().put("poster", IOUtils.toByteArray(in35));
+            InputStream in36 = applicationContext.getResource("classpath:/images/midwife/back1.jpg").getInputStream();
+            tv7.getPictures().put("back", IOUtils.toByteArray(in36));
+            InputStream in37 = applicationContext.getResource("classpath:/images/midwife/1.jpg").getInputStream();
+            tv7.getPictures().put("1", IOUtils.toByteArray(in37));
+            InputStream in38 = applicationContext.getResource("classpath:/images/midwife/2.jpg").getInputStream();
+            tv7.getPictures().put("2", IOUtils.toByteArray(in38));
+            InputStream in39 = applicationContext.getResource("classpath:/images/midwife/3.jpg").getInputStream();
+            tv7.getPictures().put("3", IOUtils.toByteArray(in39));
+            tv7.setDescription("Based on the memoirs of Jennifer Worth; the story follows twenty-two year old Jenny," +
+                    " who in 1957 leaves her comfortable home to become a midwife in London's East End. She is" +
+                    " surprised to find that she will be living in a convent: Nonnatus House. Working alongside " +
+                    "fellow nurses and the medically-trained nuns, Jenny has her eyes opened to the harsh living " +
+                    "conditions of the slums, but she also discovers the warm hearts and the bravery of the mothers. " +
+                    "Even after Jenny leaves Nonnatus, she continues to chronicle the lives of the midwives who have" +
+                    "become her family.");
 
 
             TvShow tv8 = new TvShow();
@@ -280,6 +281,7 @@ public class PopulateDatabase {
             tv8.setTrailerUrl("https://www.youtube.com/watch?v=HhesaQXLuRY");
             tv8.setCountry("USA");
             tv8.setReleaseYear(2008);
+            tv8.setFinishYear(2013);
             InputStream in40 = applicationContext.getResource("classpath:/images/breakingBad/poster.jpg").getInputStream();
             tv8.getPictures().put("poster", IOUtils.toByteArray(in40));
             InputStream in41 = applicationContext.getResource("classpath:/images/breakingBad/back.jpg").getInputStream();
@@ -290,16 +292,158 @@ public class PopulateDatabase {
             tv8.getPictures().put("2", IOUtils.toByteArray(in43));
             InputStream in44 = applicationContext.getResource("classpath:/images/breakingBad/3.jpg").getInputStream();
             tv8.getPictures().put("3", IOUtils.toByteArray(in44));
-            tv8.setDescription(
-                    "A high school chemistry teacher diagnosed with inoperable lung cancer turns to manufacturing and selling methamphetamine in order to secure his family's future.  ");
+            tv8.setDescription("When chemistry teacher Walter White is diagnosed with Stage III cancer and given only two years to live, " +
+                    "he decides he has nothing to lose. He lives with his teenage son, who has cerebral palsy, and his wife, in New Mexico. " +
+                    "Determined to ensure that his family will have a secure future, Walt embarks on a career of drugs and crime. " +
+                    "He proves to be remarkably proficient in this new world as he begins manufacturing and selling methamphetamine with one of his former students. " +
+                    "The series tracks the impacts of a fatal diagnosis on a regular, hard working man, and explores how a " +
+                    "fatal diagnosis affects his morality and transforms him into a major player of the drug trade.");
 
 
+            TvShow tv9 = new TvShow();
+            tv9.setGenre("Adventure");
+            tv9.setTitle("Lost");
+            tv9.setNetwork("ABC");
+            tv9.setOverallRating(5d);
+            tv9.setTrailerUrl("https://www.youtube.com/watch?v=KTu8iDynwNc");
+            tv9.setCountry("USA");
+            tv9.setReleaseYear(2004);
+            tv9.setFinishYear(2010);
+            InputStream in45 = applicationContext.getResource("classpath:/images/lost/poster.jpg").getInputStream();
+            tv9.getPictures().put("poster", IOUtils.toByteArray(in45));
+            InputStream in46 = applicationContext.getResource("classpath:/images/lost/back.jpg").getInputStream();
+            tv9.getPictures().put("back", IOUtils.toByteArray(in46));
+            InputStream in47 = applicationContext.getResource("classpath:/images/lost/1.jpg").getInputStream();
+            tv9.getPictures().put("1", IOUtils.toByteArray(in47));
+            InputStream in48 = applicationContext.getResource("classpath:/images/lost/2.jpg").getInputStream();
+            tv9.getPictures().put("2", IOUtils.toByteArray(in48));
+            InputStream in49 = applicationContext.getResource("classpath:/images/lost/3.jpg").getInputStream();
+            tv9.getPictures().put("3", IOUtils.toByteArray(in49));
+            tv9.setDescription("Life is laid bare as a group of plane crash survivors find themselves stranded on a remote Pacific island. " +
+                    "The trauma of the crash soon becomes overshadowed by the island itself, " +
+                    "where unseen creatures stalk the jungle, paranormal happenings abound and astonishing coincidences reveal themselves. " +
+                    "In this unique environment emotions swell as the survivors battle their inner and outer demons, " +
+                    "and strive to live together - so that they won't die alone.");
 
 
+            TvShow tv10 = new TvShow();
+            tv10.setGenre("Crime");
+            tv10.setTitle("Fargo");
+            tv10.setNetwork("FX");
+            tv10.setOverallRating(5d);
+            tv10.setTrailerUrl("https://www.youtube.com/watch?v=gKs8DzjPDMU");
+            tv10.setCountry("USA");
+            tv10.setReleaseYear(2014);
+            InputStream in50 = applicationContext.getResource("classpath:/images/fargo/poster.jpg").getInputStream();
+            tv10.getPictures().put("poster", IOUtils.toByteArray(in50));
+            InputStream in51 = applicationContext.getResource("classpath:/images/fargo/back.jpg").getInputStream();
+            tv10.getPictures().put("back", IOUtils.toByteArray(in51));
+            InputStream in52 = applicationContext.getResource("classpath:/images/fargo/1.jpg").getInputStream();
+            tv10.getPictures().put("1", IOUtils.toByteArray(in52));
+            InputStream in53 = applicationContext.getResource("classpath:/images/fargo/2.jpg").getInputStream();
+            tv10.getPictures().put("2", IOUtils.toByteArray(in53));
+            InputStream in54 = applicationContext.getResource("classpath:/images/fargo/3.jpg").getInputStream();
+            tv10.getPictures().put("3", IOUtils.toByteArray(in54));
+            tv10.setDescription("Various chronicles of deception, intrigue and murder in and around frozen Minnesota." +
+                    " Yet all of these tales mysteriously lead back one way or another to Fargo, ND.");
 
 
+            TvShow tv11 = new TvShow();
+            tv11.setGenre("Horror");
+            tv11.setTitle("Stranger Things");
+            tv11.setNetwork("Netflix");
+            tv11.setOverallRating(5d);
+            tv11.setTrailerUrl("https://www.youtube.com/watch?v=gKs8DzjPDMU");
+            tv11.setCountry("USA");
+            tv11.setReleaseYear(2016);
+            InputStream in55 = applicationContext.getResource("classpath:/images/stranger-things/poster.jpg").getInputStream();
+            tv11.getPictures().put("poster", IOUtils.toByteArray(in55));
+            InputStream in56 = applicationContext.getResource("classpath:/images/stranger-things/back.jpg").getInputStream();
+            tv11.getPictures().put("back", IOUtils.toByteArray(in56));
+            InputStream in57 = applicationContext.getResource("classpath:/images/stranger-things/1.jpg").getInputStream();
+            tv11.getPictures().put("1", IOUtils.toByteArray(in57));
+            InputStream in58 = applicationContext.getResource("classpath:/images/stranger-things/2.jpg").getInputStream();
+            tv11.getPictures().put("2", IOUtils.toByteArray(in58));
+            InputStream in59 = applicationContext.getResource("classpath:/images/stranger-things/3.jpg").getInputStream();
+            tv11.getPictures().put("3", IOUtils.toByteArray(in59));
+            tv11.setDescription("In a small town where everyone knows everyone, a peculiar incident starts a chain of events that" +
+                    " leads to the disappearance of a child - which begins to tear at the fabric of an otherwise peaceful " +
+                    "community. Dark government agencies and seemingly malevolent supernatural forces converge on the town " +
+                    "while a few locals begin to understand that there's more going on than meets the eye.");
 
 
+            TvShow tv12 = new TvShow();
+            tv12.setGenre("Drama");
+            tv12.setTitle("Taboo");
+            tv12.setNetwork("FX");
+            tv12.setOverallRating(5d);
+            tv12.setTrailerUrl("https://www.youtube.com/watch?v=6ZYAQSlIhM4");
+            tv12.setCountry("USA");
+            tv12.setReleaseYear(2016);
+            InputStream in60 = applicationContext.getResource("classpath:/images/taboo/poster.jpg").getInputStream();
+            tv12.getPictures().put("poster", IOUtils.toByteArray(in60));
+            InputStream in61 = applicationContext.getResource("classpath:/images/taboo/back.jpg").getInputStream();
+            tv12.getPictures().put("back", IOUtils.toByteArray(in61));
+            InputStream in62 = applicationContext.getResource("classpath:/images/taboo/1.jpg").getInputStream();
+            tv12.getPictures().put("1", IOUtils.toByteArray(in62));
+            InputStream in63 = applicationContext.getResource("classpath:/images/taboo/2.jpg").getInputStream();
+            tv12.getPictures().put("2", IOUtils.toByteArray(in63));
+            InputStream in64 = applicationContext.getResource("classpath:/images/taboo/3.jpg").getInputStream();
+            tv12.getPictures().put("3", IOUtils.toByteArray(in64));
+            tv12.setDescription("James Keziah Delaney returns to 1814 London after 10 years in Africa to discover that" +
+                    " he has been left a mysterious legacy by his father. Driven to wage war on those who have wronged" +
+                    " him, Delaney finds himself in a face-off against the East India Company, whilst playing a " +
+                    "dangerous game between two warring nations, Britain and America.");
+
+
+            TvShow tv13 = new TvShow();
+            tv13.setGenre("Crime");
+            tv13.setTitle("True Detective");
+            tv13.setNetwork("HBO");
+            tv13.setOverallRating(5d);
+            tv13.setTrailerUrl("https://www.youtube.com/watch?v=mXG1netn9_g");
+            tv13.setCountry("USA");
+            tv13.setReleaseYear(2014);
+            InputStream in65 = applicationContext.getResource("classpath:/images/true-detective/poster.jpg").getInputStream();
+            tv13.getPictures().put("poster", IOUtils.toByteArray(in65));
+            InputStream in66 = applicationContext.getResource("classpath:/images/true-detective/back.jpg").getInputStream();
+            tv13.getPictures().put("back", IOUtils.toByteArray(in66));
+            InputStream in67 = applicationContext.getResource("classpath:/images/true-detective/1.jpg").getInputStream();
+            tv13.getPictures().put("1", IOUtils.toByteArray(in67));
+            InputStream in68 = applicationContext.getResource("classpath:/images/true-detective/2.jpg").getInputStream();
+            tv13.getPictures().put("2", IOUtils.toByteArray(in68));
+            InputStream in69 = applicationContext.getResource("classpath:/images/true-detective/3.jpg").getInputStream();
+            tv13.getPictures().put("3", IOUtils.toByteArray(in69));
+            tv13.setDescription("In 2012, Louisiana State Police Detectives Rust Cohle and Martin Hart are brought in " +
+                    "to revisit a homicide case they worked in 1995. As the inquiry unfolds in present day through " +
+                    "separate interrogations, the two former detectives narrate the story of their investigation, " +
+                    "reopening unhealed wounds, and drawing into question their supposed solving of a bizarre " +
+                    "ritualistic murder in 1995. The timelines braid and converge in 2012 as each man is pulled back " +
+                    "into a world they believed they'd left behind. In learning about each other and their killer, " +
+                    "it becomes clear that darkness lives on both sides of the law.");
+
+            TvShow tv14 = new TvShow();
+            tv14.setGenre("SciFi");
+            tv14.setTitle("Westworld");
+            tv14.setNetwork("HBO");
+            tv14.setOverallRating(5d);
+            tv14.setTrailerUrl("https://www.youtube.com/watch?v=IuS5huqOND4");
+            tv14.setCountry("USA");
+            tv14.setReleaseYear(2016);
+            InputStream in70 = applicationContext.getResource("classpath:/images/westworld/poster.jpg").getInputStream();
+            tv14.getPictures().put("poster", IOUtils.toByteArray(in70));
+            InputStream in71 = applicationContext.getResource("classpath:/images/westworld/back.jpg").getInputStream();
+            tv14.getPictures().put("back", IOUtils.toByteArray(in71));
+            InputStream in72 = applicationContext.getResource("classpath:/images/westworld/1.jpg").getInputStream();
+            tv14.getPictures().put("1", IOUtils.toByteArray(in72));
+            InputStream in73 = applicationContext.getResource("classpath:/images/westworld/2.jpg").getInputStream();
+            tv14.getPictures().put("2", IOUtils.toByteArray(in73));
+            InputStream in74 = applicationContext.getResource("classpath:/images/westworld/3.jpg").getInputStream();
+            tv14.getPictures().put("3", IOUtils.toByteArray(in74));
+            tv14.setDescription("Westworld isn't your typical amusement park. Intended for rich vacationers, the" +
+                    " futuristic park -- which is looked after by robotic \"hosts\" -- allows its visitors to " +
+                    "live out their fantasies through artificial consciousness. No matter how illicit the fantasy " +
+                    "may be, there are no consequences for the park's guests, allowing for any wish to be indulged.");
 
             Role role = new Role("USER");
             Role role1 = new Role("ADMIN");
@@ -311,8 +455,8 @@ public class PopulateDatabase {
             user.setPassword("123");
             user.getRoles().add(roleService.getAllRoles().get(1));
             user.setSetting(new Setting(true, 10, 7));
-            InputStream in45 = applicationContext.getResource("classpath:/images/user/meow.jpg").getInputStream();
-            user.setProfilePic(IOUtils.toByteArray(in45));
+            InputStream in100 = applicationContext.getResource("classpath:/images/user/meow.jpg").getInputStream();
+            user.setProfilePic(IOUtils.toByteArray(in100));
             userDAO.saveUser(user);
             tvShowDAO.saveTvShow(tv);
             tvShowDAO.saveTvShow(tv1);
@@ -323,6 +467,12 @@ public class PopulateDatabase {
             tvShowDAO.saveTvShow(tv6);
             tvShowDAO.saveTvShow(tv7);
             tvShowDAO.saveTvShow(tv8);
+            tvShowDAO.saveTvShow(tv9);
+            tvShowDAO.saveTvShow(tv10);
+            tvShowDAO.saveTvShow(tv11);
+            tvShowDAO.saveTvShow(tv12);
+            tvShowDAO.saveTvShow(tv13);
+            tvShowDAO.saveTvShow(tv14);
         }
     }
 }

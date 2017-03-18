@@ -4,6 +4,7 @@ import com.crimson.core.dto.EpisodeDTO;
 import com.crimson.core.dto.PasswordDTO;
 import com.crimson.core.dto.TvShowDTO;
 import com.crimson.core.dto.UserDTO;
+import com.crimson.core.service.ReviewService;
 import com.crimson.core.service.TvShowService;
 import com.crimson.core.service.UserService;
 import com.crimson.core.validator.UserValidator;
@@ -38,11 +39,15 @@ public class UserController {
     private TvShowService tvShowService;
 
     @Autowired
+    private ReviewService reviewService;
+
+    @Autowired
     private UserValidator userValidator;
 
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model) {
+        model.addAttribute("reviews", reviewService.getAllReviews());
         model.addAttribute("tvShows", tvShowService.getAllTvShowByMaxRating());
         return "index";
     }
@@ -196,5 +201,4 @@ public class UserController {
         model.addAttribute("passwordDTO", new PasswordDTO());
         return "changePassword";
     }
-
 }

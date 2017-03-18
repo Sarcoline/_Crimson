@@ -33,31 +33,31 @@
                     </div>
                     <div class="uk-width-1-3 center-user-info">
                         <ul class="uk-list">
-                            <li class="uk-text-muted"><strong
+                            <li class=""><strong
                                     style="font-size: 5rem;">${user.tvShows.size()}</strong></li>
 
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="" style="padding: 20px;">
-                <c:if test="${tvshows.size() == 0}">
-                    <h2 style="text-align: center">${user.name} is not following any tvshows :(</h2>
-                </c:if>
-                <div class="genreList uk-margin-large-top">
-                    <c:forEach items="${tvshows}" var="tv">
-                        <a href="<c:url value="/tv/${tv.slug}"/>"> <span class="item-smaller"
-                                                                         style="background-image: url('<c:url
-                                                                                 value="/images/tv/${tv.slug}/poster"/>')">
+            <c:if test="${user.name == name}">
+                <div class="uk-width-4-5 ">
+                    <div class="" style="padding: 20px;">
+                        <c:if test="${tvshows.size() == 0}">
+                            <h2 style="text-align: center">${user.name} is not following any tvshows :(</h2>
+                        </c:if>
+                        <div class="genreList ">
+                            <c:forEach items="${tvshows}" var="tv">
+                                <a href="<c:url value="/tv/${tv.slug}"/>"> <span class="item-smaller"
+                                                                                 style="background-image: url('<c:url
+                                                                                         value="/images/tv/${tv.slug}/poster"/>')">
                     <span class="overlay">
                         <span class="item-header">${tv.title}</span> </span>
             </span>
-                        </a>
-                    </c:forEach>
-                </div>
-            </div>
-            <c:if test="${user.name == name}">
-                <div class="uk-width-4-5 uk-margin-large-top">
+                                </a>
+                            </c:forEach>
+                        </div>
+                    </div>
                     <h2>Upcoming episodes
                         <small class="uk-text-muted">${user.setting.daysOfUpcomingEpisodes} days</small>
                     </h2>
@@ -71,13 +71,14 @@
                                         ${episode.tvShow.title} </a> - S${episode.season}E${episode.number} -
                                 </strong>
                                     <a class="watched-this" data-id="${episode.id}"><i class="fa fa-square-o"
-                                                                                   aria-hidden="true"></i></a>
+                                                                                       aria-hidden="true"></i></a>
                                         ${episode.title}
                                     <small class="episode-date uk-text-muted">${episode.releaseDate}</small>
                                 </p>
                             </li>
                         </c:forEach>
                     </ul>
+
                 </div>
             </c:if>
         </div>
@@ -128,13 +129,13 @@
     $(function () {
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
-        $(document).ajaxSend(function(e, xhr, options) {
+        $(document).ajaxSend(function (e, xhr, options) {
             xhr.setRequestHeader(header, token);
         });
         <sec:authorize access="isAuthenticated()">
         var watched = ${watchedEpisodesId};
         var rateThis = $('.watched-this');
-        markWatchedEpisodes(rateThis,watched);
+        markWatchedEpisodes(rateThis, watched);
         markAsWatched(rateThis);
         </sec:authorize>
     });
