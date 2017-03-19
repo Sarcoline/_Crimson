@@ -119,4 +119,15 @@ public class TestRoleDAO {
         Assert.assertEquals(listSize - 1, roleDAO.getById(role1.getIdRole()).getUsers().size());
         Assert.assertEquals(roleDAO.getById(role1.getIdRole()).getUsers().contains(user1), false);
     }
+
+    @Test
+    public void getUsersTest(){
+        roleDAO.addUser2Role(user1,role1);
+        userDAO.addRole2User(user1,role1);
+
+        roleDAO.addUser2Role(user2,role1);
+        userDAO.addRole2User(user2,role1);
+
+        Assert.assertEquals(roleDAO.getUsers(role1),role1.getUsers());
+    }
 }

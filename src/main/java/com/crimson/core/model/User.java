@@ -25,7 +25,6 @@ public @Data class User {
     @Column(name = "name", unique = true)
     @NotNull
     @Size(min = 3, max = 30, message = "{invalid.size.name}")
-    //no whitespace in name
     @Pattern(regexp = "[\\S]+", message = "{invalid.pattern.name}")
     private String name;
 
@@ -74,7 +73,7 @@ public @Data class User {
     private List<Rating> ratings = new ArrayList<>();
 
     //User2Setting
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
     private Setting setting;
 
     //User2Role
@@ -89,6 +88,6 @@ public @Data class User {
     private List<Comment> comments = new ArrayList<>();
 
     //Reviews
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Comment> reviews = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Review> reviews = new ArrayList<>();
 }

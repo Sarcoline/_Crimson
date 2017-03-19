@@ -49,7 +49,23 @@ public interface TvShowDAO extends BaseDAO<TvShow, Long> {
 
     void addComment(TvShow tvShow, Comment comment);
 
+    void addReview(TvShow tvShow, Review review);
+
     void deleteComment(TvShow tvShow, Comment comment);
 
+    void deleteReview(TvShow tvShow, Review review);
+
     FilterResponse filter(SearchFilterParameters parameters, int page);
+
+    List<User> getUsers(TvShow tv);
+
+    List<Genre> getGenres(TvShow tv);
+
+    List<Episode> getEpisodes(TvShow tv);
+
+    List<Rating> getRatings(TvShow tv);
+
+    List<Comment> getComments(TvShow tv);
+
+    List<Review> getReviews(TvShow tv);
 }

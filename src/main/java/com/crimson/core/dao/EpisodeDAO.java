@@ -4,6 +4,8 @@ import com.crimson.core.model.Episode;
 import com.crimson.core.model.TvShow;
 import com.crimson.core.model.User;
 
+import java.util.List;
+
 
 public interface EpisodeDAO extends BaseDAO<Episode, Long> {
 
@@ -18,4 +20,6 @@ public interface EpisodeDAO extends BaseDAO<Episode, Long> {
     void addTvShow2Episode(TvShow tvShow, Episode episode);
 
     void deleteTvShowFromEpisode(TvShow tvShow, Episode episode);
+
+    List<User> getUsers(Episode episode);
 }

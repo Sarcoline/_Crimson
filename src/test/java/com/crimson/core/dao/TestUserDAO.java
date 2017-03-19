@@ -40,6 +40,8 @@ public class TestUserDAO {
     @Autowired
     private CommentDAO commentDAO;
 
+    @Autowired ReviewDAO reviewDAO;
+
     private UserFactory userFactory = new UserFactory();
     private TvShowFactory tvShowFactory = new TvShowFactory();
     private EpisodeFactory episodeFactory = new EpisodeFactory();
@@ -47,6 +49,7 @@ public class TestUserDAO {
     private RoleFactory roleFactory = new RoleFactory();
     private RatingFactory ratingFactory = new RatingFactory();
     private CommentFactory commentFactory = new CommentFactory();
+    private ReviewFactory reviewFactory = new ReviewFactory();
 
     private User user = userFactory.getUser("aleks");
     private TvShow tvShow = tvShowFactory.getTvShow("test1");
@@ -59,6 +62,7 @@ public class TestUserDAO {
     private Role role1 = roleFactory.getRole("role_1");
     private Setting setting1 = settingFactory.getSetting("setting_1");
     private Comment comment = commentFactory.getComment("comment1");
+    private Review review = reviewFactory.getReview("review1");
 
     @Before
     public void setDB() {
@@ -74,6 +78,7 @@ public class TestUserDAO {
         roleDAO.save(role1);
         settingsDAO.save(setting1);
         commentDAO.save(comment);
+        reviewDAO.save(review);
     }
 
     @Test
@@ -312,5 +317,47 @@ public class TestUserDAO {
         Assert.assertEquals(userDAO.getById(user.getId()).getComments().size(), listSize-1);
     }
 
+    @Test
+    public void getTvShowsTest(){
+        userDAO.addTvShow2User(user,tvShow);
+        //tvShowDAO.addUser2TvShow(user,tvShow);
+        Assert.assertEquals(userDAO.getTvShows(user),user.getTvShows());
+    }
+
+    @Test
+    public void getEpisodesTest(){
+        userDAO.addEpisode2User(user,episode);
+        //episodeDAO.addUser2Episode(user,episode);
+        Assert.assertEquals(userDAO.getEpisodes(user),user.getEpisodes());
+    }
+
+    @Test
+    public void getRatingsTest(){
+        userDAO.addRating2User(user,rating);
+        rating.setUser(user);
+
+        Assert.assertEquals(userDAO.getRatings(user),user.getRatings());
+    }
+
+    @Test
+    public void getRolesTest(){
+        //userDAO.addRole2User(user,role1);
+        roleDAO.addUser2Role(user,role1);
+        Assert.assertEquals(userDAO.getRoles(user),user.getRoles());
+    }
+
+    @Test
+    public void getReviewsTest(){
+        userDAO.addReview(user,review);
+        review.setUser(user);
+        Assert.assertEquals(userDAO.getReviews(user),user.getReviews());
+    }
+
+    @Test
+    public void getCommentsTest(){
+        userDAO.addComment(user,comment);
+        comment.setUser(user);
+        Assert.assertEquals(userDAO.getComments(user),user.getComments());
+    }
 
 }

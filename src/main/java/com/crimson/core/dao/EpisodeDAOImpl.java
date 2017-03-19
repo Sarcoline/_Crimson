@@ -80,10 +80,7 @@ public class EpisodeDAOImpl implements EpisodeDAO {
     public void addUser2Episode(User user, Episode episode) {
         Session session = sessionFactory.getCurrentSession();
         if (!episode.getUsers().contains(user)) {
-            List<User> episodes = new ArrayList<>();
-            episodes.addAll(episode.getUsers());
-            episodes.add(user);
-            episode.setUsers(episodes);
+            episode.getUsers().add(user);
         }
         session.saveOrUpdate(episode);
     }
@@ -111,6 +108,16 @@ public class EpisodeDAOImpl implements EpisodeDAO {
             episode.setTvShow(null);
         }
         session.saveOrUpdate(episode);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<User> getUsers(Episode episode){
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "FROM User u JOIN FETCH u.episodes e where e.id = ?";
+        return session.createQuery(hql)
+                .setParameter(0, episode.getId())
+                .getResultList();
     }
 
 }

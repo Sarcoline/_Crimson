@@ -146,4 +146,11 @@ public class TestEpisodeDAO {
 
         Assert.assertEquals(episodeDAO.getById(episode.getId()).getTvShow(), null);
     }
+
+    @Test
+    public void getUsersTest(){
+        episodeDAO.addUser2Episode(user,episode);
+        userDAO.addEpisode2User(user,episode);
+        Assert.assertEquals(episodeDAO.getUsers(episode),episode.getUsers());
+    }
 }

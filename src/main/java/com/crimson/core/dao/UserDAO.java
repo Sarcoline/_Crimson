@@ -2,6 +2,8 @@ package com.crimson.core.dao;
 
 import com.crimson.core.model.*;
 
+import java.util.List;
+
 
 public interface UserDAO extends BaseDAO<User, Long> {
 
@@ -30,5 +32,21 @@ public interface UserDAO extends BaseDAO<User, Long> {
 
     void addComment(User user, Comment comment);
 
+    void addReview(User user, Review review);
+
     void deleteComment(User user, Comment comment);
+
+    void deleteReview(User user, Review review);
+
+    List<TvShow> getTvShows(User user);
+
+    List<Episode> getEpisodes(User user);
+
+    List<Rating> getRatings(User user);
+
+    List<Role> getRoles(User user);
+
+    List<Comment> getComments(User user);
+
+    List<Review> getReviews(User user);
 }

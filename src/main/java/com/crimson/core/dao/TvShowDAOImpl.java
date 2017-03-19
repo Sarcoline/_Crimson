@@ -243,9 +243,25 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
+    public void addReview(TvShow tvShow, Review review){
+        Session session = sf.getCurrentSession();
+        if (!tvShow.getReviews().contains(review)){
+            tvShow.getReviews().add(review);
+        }
+        session.saveOrUpdate(tvShow);
+    }
+
+    @Override
     public void deleteComment(TvShow tvShow, Comment comment){
         Session session = sf.getCurrentSession();
         tvShow.getComments().remove(comment);
+        session.saveOrUpdate(tvShow);
+    }
+
+    @Override
+    public void deleteReview(TvShow tvShow, Review review){
+        Session session = sf.getCurrentSession();
+        tvShow.getReviews().remove(review);
         session.saveOrUpdate(tvShow);
     }
 
@@ -288,5 +304,65 @@ public class TvShowDAOImpl implements TvShowDAO {
         }
         response.setTvShows(c.list());
         return response;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<User> getUsers(TvShow tv){
+        Session session = sf.getCurrentSession();
+        String hql = "FROM User u JOIN FETCH u.tvShows t where t.id = ?";
+        return session.createQuery(hql)
+                .setParameter(0, tv.getId())
+                .getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Genre> getGenres(TvShow tv){
+        Session session = sf.getCurrentSession();
+        String hql = "FROM Genre g JOIN FETCH g.tvShows t where t.id = ?";
+        return session.createQuery(hql)
+                .setParameter(0, tv.getId())
+                .getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Episode> getEpisodes(TvShow tv){
+        Session session = sf.getCurrentSession();
+        String hql = "FROM Episode e JOIN FETCH e.tvShow t where t.id = ?";
+        return session.createQuery(hql)
+                .setParameter(0, tv.getId())
+                .getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Rating> getRatings(TvShow tv){
+        Session session = sf.getCurrentSession();
+        String hql = "FROM Rating r JOIN FETCH r.tvShow t where t.id = ?";
+        return session.createQuery(hql)
+                .setParameter(0, tv.getId())
+                .getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Comment> getComments(TvShow tv){
+        Session session = sf.getCurrentSession();
+        String hql = "FROM Comment c JOIN FETCH c.tvShow t where t.id = ?";
+        return session.createQuery(hql)
+                .setParameter(0, tv.getId())
+                .getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Review> getReviews(TvShow tv){
+        Session session = sf.getCurrentSession();
+        String hql = "FROM Review r JOIN FETCH r.tvShow t where t.id = ?";
+        return session.createQuery(hql)
+                .setParameter(0, tv.getId())
+                .getResultList();
     }
 }

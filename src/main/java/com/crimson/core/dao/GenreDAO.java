@@ -3,6 +3,8 @@ package com.crimson.core.dao;
 import com.crimson.core.model.Genre;
 import com.crimson.core.model.TvShow;
 
+import java.util.List;
+
 
 public interface GenreDAO extends BaseDAO<Genre, Long> {
 
@@ -11,4 +13,6 @@ public interface GenreDAO extends BaseDAO<Genre, Long> {
     void addTvShow2Genre(Genre genre, TvShow tvShow);
 
     void deleteTvShowFromGenre(Genre genre, TvShow tvShow);
+
+    List<TvShow> getTvShows(Genre genre);
 }

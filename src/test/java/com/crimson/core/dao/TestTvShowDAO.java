@@ -25,6 +25,9 @@ public class TestTvShowDAO {
     private TvShowDAO tvShowDAO;
 
     @Autowired
+    private UserDAO userDAO;
+
+    @Autowired
     private GenreDAO genreDAO;
 
     @Autowired
@@ -33,18 +36,23 @@ public class TestTvShowDAO {
     @Autowired
     private CommentDAO commentDAO;
 
+    @Autowired
+    private ReviewDAO reviewDAO;
+
     private TvShowFactory tvShowFactory = new TvShowFactory();
     private GenreFactory genreFactory = new GenreFactory();
     private EpisodeFactory episodeFactory = new EpisodeFactory();
     private UserFactory userFactory = new UserFactory();
     private RatingFactory ratingFactory = new RatingFactory();
     private CommentFactory commentFactory = new CommentFactory();
+    private ReviewFactory reviewFactory = new ReviewFactory();
 
     private User user = userFactory.getUser("aleks");
     private Genre genre = genreFactory.getGenre("drama");
     private Episode episode = episodeFactory.getEpisode("episode_1");
     private Rating rating = ratingFactory.getRating(5);
     private Comment comment = commentFactory.getComment("comment1");
+    private Review review = reviewFactory.getReview("review1");
 
     private TvShow tvShow = tvShowFactory.getTvShow("test1");
     private TvShow tvShow2 = tvShowFactory.getTvShow("test2");
@@ -75,6 +83,7 @@ public class TestTvShowDAO {
         episodeDAO.save(episode);
         rating.setTvShow(tvShow);
         commentDAO.save(comment);
+        reviewDAO.save(review);
     }
 
     @Test
@@ -124,21 +133,11 @@ public class TestTvShowDAO {
 
     //Extra Methods
 
-//    @Test
-//    public void getAllTvShowByMaxRating(){
-//        List<TvShow> sortedList = tvShowDAO.getAllTvShowByMaxRating();
-//
-//        Assert.assertEquals(sortedList.get(0).getOverallRating(), tvShow2.getOverallRating());
-//        Assert.assertEquals(sortedList.get(1).getOverallRating(), tvShow3.getOverallRating());
-//        Assert.assertEquals(sortedList.get(2).getOverallRating(), tvShow.getOverallRating());
-//    }
-
-
     @Test
     public void tvShowsLastPageNumber() {
         int lastPage = tvShowDAO.tvShowsLastPageNumber();
 
-        Assert.assertEquals(lastPage, 2);
+        Assert.assertEquals(lastPage, 1);
     }
 
     @Test
@@ -283,4 +282,49 @@ public class TestTvShowDAO {
         Assert.assertEquals(tvShowDAO.getById(tvShow.getId()).getComments().contains(comment), false);
         Assert.assertEquals(tvShowDAO.getById(tvShow.getId()).getComments().size(), listSize-1);
     }
+
+    @Test
+    public void getUsersTest(){
+        tvShowDAO.addUser2TvShow(user,tvShow);
+        userDAO.addTvShow2User(user,tvShow);
+
+        Assert.assertEquals(tvShowDAO.getUsers(tvShow),tvShow.getUsers());
+    }
+
+    @Test
+    public void getGenresTest(){
+        tvShowDAO.addGenre2TvShow(tvShow,genre);
+        genreDAO.addTvShow2Genre(genre,tvShow);
+
+        Assert.assertEquals(tvShowDAO.getGenres(tvShow),tvShow.getGenres());
+    }
+
+    @Test
+    public void getEpisodesTest(){
+        episodeDAO.addTvShow2Episode(tvShow,episode);
+
+        Assert.assertEquals(tvShowDAO.getEpisodes(tvShow),tvShow.getEpisodes());
+    }
+
+    @Test
+    public void getRatingsTest(){
+        tvShowDAO.addRating2TvShow(tvShow,rating);
+
+        Assert.assertEquals(tvShowDAO.getRatings(tvShow),tvShow.getRatings());
+    }
+
+    @Test
+    public void getCommentsTest(){
+        tvShowDAO.addComment(tvShow,comment);
+        comment.setTvShow(tvShow);
+        Assert.assertEquals(tvShowDAO.getComments(tvShow),tvShow.getComments());
+    }
+
+    @Test
+    public void getReviewsTest(){
+        tvShowDAO.addReview(tvShow,review);
+        review.setTvShow(tvShow);
+        Assert.assertEquals(tvShowDAO.getReviews(tvShow),tvShow.getReviews());
+    }
+
 }
