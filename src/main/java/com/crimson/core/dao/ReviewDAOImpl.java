@@ -5,6 +5,7 @@ import com.crimson.core.model.Review;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
@@ -34,12 +35,14 @@ public class ReviewDAOImpl implements ReviewDAO{
     }
 
     @Override
+    @Cacheable("myCache")
     public List<Review> getAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("SELECT r FROM Review r", Review.class).getResultList();
     }
 
     @Override
+    @Cacheable("myCache")
     public Review getById(Long idReview) {
         Session session = sessionFactory.getCurrentSession();
         return session.find(Review.class, idReview);
@@ -47,6 +50,7 @@ public class ReviewDAOImpl implements ReviewDAO{
 
     @Override
     @SuppressWarnings("unchecked")
+    @Cacheable("myCache")
     public List<Review> getReviewByIdUser(Long idUser) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from Review r where r.user.id = ?";
@@ -57,6 +61,7 @@ public class ReviewDAOImpl implements ReviewDAO{
 
     @Override
     @SuppressWarnings("unchecked")
+    @Cacheable("myCache")
     public List<Review> getReviewByIdTvShow(Long idTvShow) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from Review r where r.tvShow.id = ?";
@@ -66,6 +71,7 @@ public class ReviewDAOImpl implements ReviewDAO{
     }
 
     @Override
+    @Cacheable("myCache")
     public List getReviews(long idTvShow, long idUser) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from Review r where r.tvShow.id = ? and r.user.id = ?";

@@ -6,6 +6,7 @@ import com.crimson.core.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -43,18 +44,21 @@ public class EpisodeDAOImpl implements EpisodeDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     public Episode getById(Long idEpisode) {
         Session session = sessionFactory.getCurrentSession();
         return session.find(Episode.class, idEpisode);
     }
 
     @Override
+    @Cacheable("myCache")
     public List<Episode> getAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("SELECT a FROM Episode a", Episode.class).getResultList();
     }
 
     @Override
+    @Cacheable("myCache")
     public Episode getEpisodeByTitle(String title) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From Episode a where a.title like :custTitle", Episode.class)
@@ -62,6 +66,7 @@ public class EpisodeDAOImpl implements EpisodeDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     public Episode getBySeasonAndEpisodeNumber(int season, int number, long idTv) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select e FROM Episode e where " +

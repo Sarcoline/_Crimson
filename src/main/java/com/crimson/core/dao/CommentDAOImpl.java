@@ -5,6 +5,7 @@ import com.crimson.core.model.Comment;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -35,18 +36,21 @@ public class CommentDAOImpl implements CommentDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     public Comment getById(Long idComment) {
         Session session = sessionFactory.getCurrentSession();
         return session.find(Comment.class, idComment);
     }
 
     @Override
+    @Cacheable("myCache")
     public List<Comment> getAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("SELECT a FROM Comment a", Comment.class).getResultList();
     }
 
     @Override
+    @Cacheable("myCache")
     public List<Comment> getCommentsByDate(LocalDate date) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From Comment a where a.date like :custDate", Comment.class).setParameter("custDate", date).getResultList();
@@ -54,6 +58,7 @@ public class CommentDAOImpl implements CommentDAO {
 
     @Override
     @SuppressWarnings("unchecked")
+    @Cacheable("myCache")
     public List<Comment> getCommentByIdUser(Long idUser) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from Comment s where s.user.id = ?";
@@ -64,6 +69,7 @@ public class CommentDAOImpl implements CommentDAO {
 
     @Override
     @SuppressWarnings("unchecked")
+    @Cacheable("myCache")
     public List<Comment> getCommentByIdTvShow(Long idTvShow) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from Comment s where s.tvShow.id = ?";
@@ -73,6 +79,7 @@ public class CommentDAOImpl implements CommentDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     public List getComments(long idTvShow, long idUser) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from Comment s where s.tvShow.id = ? and s.user.id = ?";
