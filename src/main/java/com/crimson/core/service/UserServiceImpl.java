@@ -1,8 +1,6 @@
 package com.crimson.core.service;
 
-import com.crimson.core.dao.RoleDAO;
-import com.crimson.core.dao.TvShowDAO;
-import com.crimson.core.dao.UserDAO;
+import com.crimson.core.dao.*;
 import com.crimson.core.dto.EpisodeDTO;
 import com.crimson.core.dto.TvShowDTO;
 import com.crimson.core.dto.UserDTO;
@@ -33,6 +31,21 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private TvShowDAO tvShowDAO;
+
+    @Autowired
+    private EpisodeDAO episodeDAO;
+
+    @Autowired
+    private RatingDAO ratingDAO;
+
+    @Autowired
+    private SettingsDAO settingsDAO;
+
+    @Autowired
+    private CommentDAO commentDAO;
+
+    @Autowired
+    private ReviewDAO reviewDAO;
 
     @Autowired
     private MapperFacade mapperFacade;
@@ -107,16 +120,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addTvShow2User(UserDTO userDTO, TvShowDTO tvShow) {
-        userDAO.getUserByName(userDTO.getName()).getTvShows().add(mapperFacade.map(tvShow, TvShow.class));
+    public void addTvShow2User(UserDTO userDTO, TvShowDTO tvShowDTO) {
+        User user = userDAO.getById(userDTO.getId());
+        TvShow tv = tvShowDAO.getById(tvShowDTO.getId());
+        if(!userDAO.getTvShows(user).contains(tv)){
+            userDAO.addTvShow2User(user,tv);
+        }
+        if(!tvShowDAO.getUsers(tv).contains(user)){
+            tvShowDAO.addUser2TvShow(user,tv);
+        }
     }
 
     @Override
     public void deleteTvShowFromUser(UserDTO userDTO, TvShowDTO tvShow) {
         User user = userDAO.getUserByName(userDTO.getName());
         TvShow tv = tvShowDAO.getById(tvShow.getId());
-        user.getTvShows().remove(tv);
-
+        if(userDAO.getTvShows(user).contains(tv)){
+            userDAO.deleteTvShowFromUser(user,tv);
+        }
+        if(tvShowDAO.getUsers(tv).contains(user)){
+            tvShowDAO.deleteUserFromTvShow(user,tv);
+        }
     }
 
     @Override
@@ -132,47 +156,158 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addEpisode2User(User user, Episode episode) {
-        userDAO.addEpisode2User(user, episode);
+        if(!userDAO.getEpisodes(user).contains(episode)){
+            userDAO.addEpisode2User(user, episode);
+        }
+        if(!episodeDAO.getUsers(episode).contains(user)){
+            episodeDAO.addUser2Episode(user,episode);
+        }
     }
 
     @Override
     public void deleteEpisodeFromUser(User user, Episode episode) {
-        userDAO.deleteEpisodeFromUser(user, episode);
+        if(userDAO.getEpisodes(user).contains(episode)){
+            userDAO.deleteEpisodeFromUser(user, episode);
+        }
+        if(episodeDAO.getUsers(episode).contains(user)){
+            episodeDAO.deleteUserFromEpisode(user,episode);
+        }
     }
 
     //Rating
 
     @Override
     public void addRating2User(User user, Rating rating) {
-        userDAO.addRating2User(user, rating);
+        if(!userDAO.getRatings(user).contains(rating)){
+            userDAO.addRating2User(user, rating);
+        }
+        if(rating.getUser() != user){
+            ratingDAO.addUser2Rating(rating,user);
+        }
     }
 
     @Override
     public void deleteRatingFromUser(User user, Rating rating) {
-        userDAO.deleteRatingFromUser(user, rating);
+        if(userDAO.getRatings(user).contains(rating)){
+            userDAO.deleteRatingFromUser(user, rating);
+        }
+        if(rating.getUser() == user){
+            ratingDAO.deleteUserFromRating(rating);
+        }
     }
 
     //User2Setting
     @Override
     public void addSetting2User(User user, Setting setting) {
-        userDAO.addSetting2User(user, setting);
+        if(user.getSetting() != setting){
+            userDAO.addSetting2User(user, setting);
+        }
+        if(setting.getUser() != user){
+            settingsDAO.addUser2Setting(user,setting);
+        }
     }
 
     @Override
     public void deleteSettingFromUser(User user, Setting setting) {
-        userDAO.deleteSettingFromUser(user);
+        if(user.getSetting() == setting){
+            userDAO.deleteSettingFromUser(user);
+        }
+        if(setting.getUser() == user){
+            settingsDAO.deleteUserFromSetting(setting);
+        }
     }
 
     //User2Role
 
     @Override
     public void addRole2User(User user, Role role) {
-        userDAO.addRole2User(user, role);
+        if(!userDAO.getRoles(user).contains(role)){
+            userDAO.addRole2User(user, role);
+        }
+        if(!roleDAO.getUsers(role).contains(user)){
+            roleDAO.addUser2Role(user,role);
+        }
     }
 
     @Override
     public void deleteRoleFromUser(User user, Role role) {
-        userDAO.deleteRoleFromUser(user, role);
+        if(userDAO.getRoles(user).contains(role)){
+            userDAO.deleteRoleFromUser(user, role);
+        }
+        if(roleDAO.getUsers(role).contains(user)){
+            roleDAO.deleteUserFromRole(user,role);
+        }
+
+    }
+
+    @Override
+    public void addComment(User user, Comment comment) {
+        if(!userDAO.getComments(user).contains(comment)){
+            userDAO.addComment(user,comment);
+        }
+        if(comment.getUser() != user){
+            commentDAO.addUser2Comment(comment,user);
+        }
+    }
+
+    @Override
+    public void addReview(User user, Review review) {
+        if(!userDAO.getReviews(user).contains(review)){
+            userDAO.addReview(user,review);
+        }
+        if(review.getUser() != user){
+            reviewDAO.addUser2Review(review,user);
+        }
+    }
+
+    @Override
+    public void deleteComment(User user, Comment comment) {
+        if(userDAO.getComments(user).contains(comment)){
+            userDAO.deleteComment(user,comment);
+        }
+        if(comment.getUser() == user){
+            commentDAO.deleteUserFromComment(comment);
+        }
+    }
+
+    @Override
+    public void deleteReview(User user, Review review) {
+        if(userDAO.getReviews(user).contains(review)){
+            userDAO.deleteReview(user,review);
+        }
+        if(review.getUser() == user){
+            reviewDAO.deleteUserFromReview(review);
+        }
+    }
+
+    @Override
+    public List<TvShow> getTvShows(User user) {
+        return userDAO.getTvShows(user);
+    }
+
+    @Override
+    public List<Episode> getEpisodes(User user) {
+        return userDAO.getEpisodes(user);
+    }
+
+    @Override
+    public List<Rating> getRatings(User user) {
+        return userDAO.getRatings(user);
+    }
+
+    @Override
+    public List<Role> getRoles(User user) {
+        return userDAO.getRoles(user);
+    }
+
+    @Override
+    public List<Comment> getComments(User user) {
+        return userDAO.getComments(user);
+    }
+
+    @Override
+    public List<Review> getReviews(User user) {
+        return userDAO.getReviews(user);
     }
 
 

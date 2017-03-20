@@ -1,6 +1,6 @@
 package com.crimson.core.service;
 
-import com.crimson.core.dao.TvShowDAO;
+import com.crimson.core.dao.*;
 import com.crimson.core.dto.*;
 import com.crimson.core.model.*;
 import com.github.slugify.Slugify;
@@ -24,10 +24,19 @@ public class TvShowServiceImpl implements TvShowService {
     @Autowired
     private TvShowDAO tvShowDAO;
     @Autowired
-    private MapperFacade mapperFacade;
-
+    private UserDAO userDAO;
     @Autowired
-    private ApplicationContext applicationContext;
+    private GenreDAO genreDAO;
+    @Autowired
+    private EpisodeDAO episodeDAO;
+    @Autowired
+    private RatingDAO ratingDAO;
+    @Autowired
+    private CommentDAO commentDAO;
+    @Autowired
+    private ReviewDAO reviewDAO;
+    @Autowired
+    private MapperFacade mapperFacade;
 
     @Override
     public void saveTvShow(TvShow tvShow) {
@@ -112,48 +121,160 @@ public class TvShowServiceImpl implements TvShowService {
 
     @Override
     public void addUser2TvShow(User user, TvShow tvShow) {
-        tvShowDAO.addUser2TvShow(user, tvShow);
+        if(!tvShowDAO.getUsers(tvShow).contains(user)){
+            tvShowDAO.addUser2TvShow(user, tvShow);
+        }
+        if(!userDAO.getTvShows(user).contains(tvShow)){
+            userDAO.addTvShow2User(user,tvShow);
+        }
     }
 
     @Override
     public void deleteUserFromTvShow(User user, TvShow tvShow) {
-        tvShowDAO.deleteUserFromTvShow(user, tvShow);
+        if(tvShowDAO.getUsers(tvShow).contains(user)) {
+            tvShowDAO.deleteUserFromTvShow(user, tvShow);
+        }
+        if(userDAO.getTvShows(user).contains(tvShow)){
+            userDAO.deleteTvShowFromUser(user,tvShow);
+        }
     }
 
     //TvShow2Genre
 
     @Override
     public void addGenre2TvShow(TvShow tvShow, Genre genre) {
-        tvShowDAO.addGenre2TvShow(tvShow, genre);
+        if(!tvShowDAO.getGenres(tvShow).contains(genre)){
+            tvShowDAO.addGenre2TvShow(tvShow, genre);
+        }
+        if(!genreDAO.getTvShows(genre).contains(tvShow)){
+            genreDAO.addTvShow2Genre(genre,tvShow);
+        }
     }
 
     @Override
     public void deleteGenreFromTvShow(TvShow tvShow, Genre genre) {
-        tvShowDAO.deleteGenreFromTvShow(tvShow, genre);
+        if(tvShowDAO.getGenres(tvShow).contains(genre)){
+            tvShowDAO.deleteGenreFromTvShow(tvShow, genre);
+        }
+        if(genreDAO.getTvShows(genre).contains(tvShow)){
+            genreDAO.deleteTvShowFromGenre(genre,tvShow);
+        }
     }
 
     //TvShow2Episode
 
     @Override
     public void addEpisode2TvShow(TvShow tvShow, Episode episode) {
-        tvShowDAO.addEpisode2TvShow(tvShow, episode);
+        if(!tvShowDAO.getEpisodes(tvShow).contains(episode)){
+            tvShowDAO.addEpisode2TvShow(tvShow, episode);
+        }
+        if(episode.getTvShow() != tvShow){
+            episodeDAO.addTvShow2Episode(tvShow,episode);
+        }
+
     }
 
     @Override
     public void deleteEpisodeFromTvShow(TvShow tvShow, Episode episode) {
-        tvShowDAO.deleteEpisodeFromTvShow(tvShow, episode);
+        if(tvShowDAO.getEpisodes(tvShow).contains(episode)){
+            tvShowDAO.deleteEpisodeFromTvShow(tvShow, episode);
+        }
+        if(episode.getTvShow() == tvShow){
+            episodeDAO.deleteTvShowFromEpisode(episode);
+        }
+
     }
 
     //TvShowRating
 
     @Override
     public void addRating2TvShow(TvShow tvShow, Rating rating) {
-        tvShowDAO.addRating2TvShow(tvShow, rating);
+        if(!tvShowDAO.getRatings(tvShow).contains(rating)){
+            tvShowDAO.addRating2TvShow(tvShow, rating);
+        }
+        if(rating.getTvShow() != tvShow){
+            ratingDAO.addTvShow2Rating(rating, tvShow);
+        }
     }
 
     @Override
     public void deleteRatingFromTvShow(TvShow tvShow, Rating rating) {
-        tvShowDAO.deleteRatingFromTvShow(tvShow, rating);
+        if(tvShowDAO.getRatings(tvShow).contains(rating)){
+            tvShowDAO.deleteRatingFromTvShow(tvShow, rating);
+        }
+        if(rating.getTvShow() == tvShow){
+            ratingDAO.deleteTvShowFromRating(rating);
+        }
+    }
+
+    @Override
+    public void addComment(TvShow tvShow, Comment comment) {
+        if(!tvShowDAO.getComments(tvShow).contains(comment)){
+            tvShowDAO.addComment(tvShow,comment);
+        }
+        if(comment.getTvShow() != tvShow){
+            commentDAO.addTvShow2Comment(comment,tvShow);
+        }
+    }
+
+    @Override
+    public void addReview(TvShow tvShow, Review review) {
+        if(!tvShowDAO.getReviews(tvShow).contains(review)){
+            tvShowDAO.addReview(tvShow,review);
+        }
+        if(review.getTvShow() != tvShow){
+            reviewDAO.addTvShow2Review(review,tvShow);
+        }
+    }
+
+    @Override
+    public void deleteComment(TvShow tvShow, Comment comment) {
+        if(tvShowDAO.getComments(tvShow).contains(comment)){
+            tvShowDAO.deleteComment(tvShow,comment);
+        }
+        if(comment.getTvShow() == tvShow){
+            commentDAO.deleteTvShowFromComment(comment);
+        }
+    }
+
+    @Override
+    public void deleteReview(TvShow tvShow, Review review) {
+        if(tvShowDAO.getReviews(tvShow).contains(review)){
+            tvShowDAO.deleteReview(tvShow,review);
+        }
+        if(review.getTvShow() == tvShow){
+            reviewDAO.deleteTvShowFromReview(review);
+        }
+    }
+
+    @Override
+    public List<User> getUsers(TvShow tv) {
+        return tvShowDAO.getUsers(tv);
+    }
+
+    @Override
+    public List<Genre> getGenres(TvShow tv) {
+        return tvShowDAO.getGenres(tv);
+    }
+
+    @Override
+    public List<Episode> getEpisodes(TvShow tv) {
+        return tvShowDAO.getEpisodes(tv);
+    }
+
+    @Override
+    public List<Rating> getRatings(TvShow tv) {
+        return tvShowDAO.getRatings(tv);
+    }
+
+    @Override
+    public List<Comment> getComments(TvShow tv) {
+        return tvShowDAO.getComments(tv);
+    }
+
+    @Override
+    public List<Review> getReviews(TvShow tv) {
+        return tvShowDAO.getReviews(tv);
     }
 
     //Extra Methods

@@ -2,6 +2,9 @@ package com.crimson.core.service;
 
 import com.crimson.core.dto.ReviewDTO;
 import com.crimson.core.model.Review;
+import com.crimson.core.model.TvShow;
+import com.crimson.core.model.User;
+
 import java.util.List;
 
 public interface ReviewService {
@@ -21,6 +24,14 @@ public interface ReviewService {
 
     @SuppressWarnings("unchecked")
     List<Review> getReviewByIdTvShow(Long idTvShow);
+
+    void addTvShow2Review(Review review, TvShow tvShow);
+
+    void addUser2Review(Review review, User user);
+
+    void deleteTvShowFromReview(Review review, TvShow tvShow);
+
+    void deleteUserFromReview(Review review, User user);
 
     List getReviews(long idTvShow, long idUser);
 }

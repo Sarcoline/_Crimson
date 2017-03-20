@@ -1,6 +1,7 @@
 package com.crimson.core.service;
 
 import com.crimson.core.dao.SettingsDAO;
+import com.crimson.core.dao.UserDAO;
 import com.crimson.core.model.Setting;
 import com.crimson.core.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,9 @@ import java.util.List;
 public class SettingsServiceImpl implements SettingsService {
 
     @Autowired
-    SettingsDAO settingsDAO;
+    private SettingsDAO settingsDAO;
+    @Autowired
+    private UserDAO userDAO;
 
     @Override
     public void saveSetting(Setting setting) {
@@ -47,12 +50,22 @@ public class SettingsServiceImpl implements SettingsService {
 
     @Override
     public void addUser2Setting(User user, Setting setting) {
-        settingsDAO.addUser2Setting(user, setting);
+        if(setting.getUser() != user){
+            settingsDAO.addUser2Setting(user, setting);
+        }
+        if(user.getSetting() != setting){
+            userDAO.addSetting2User(user,setting);
+        }
     }
 
     @Override
     public void deleteUserFromSetting(User user, Setting setting) {
-        settingsDAO.deleteUserFromSetting(setting);
+        if(setting.getUser() == user){
+            settingsDAO.deleteUserFromSetting(setting);
+        }
+        if(user.getSetting() == setting){
+            userDAO.deleteSettingFromUser(user);
+        }
     }
 
 }

@@ -20,4 +20,6 @@ public interface RoleService {
     void addUser2Role(User user, Role role);
 
     void deleteUserFromRole(User user, Role role);
+
+    List<User> getUsers(Role role);
 }

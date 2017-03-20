@@ -1,6 +1,7 @@
 package com.crimson.core.service;
 
 import com.crimson.core.dao.RoleDAO;
+import com.crimson.core.dao.UserDAO;
 import com.crimson.core.model.Role;
 import com.crimson.core.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Autowired
     private RoleDAO roleDAO;
+    @Autowired
+    private UserDAO userDAO;
 
     @Override
     public void saveRole(Role role) {
@@ -43,11 +46,26 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void addUser2Role(User user, Role role) {
-        roleDAO.addUser2Role(user, role);
+        if(!roleDAO.getUsers(role).contains(user)){
+            roleDAO.addUser2Role(user, role);
+        }
+        if(!userDAO.getRoles(user).contains(role)){
+            userDAO.addRole2User(user,role);
+        }
     }
 
     @Override
     public void deleteUserFromRole(User user, Role role) {
-        roleDAO.deleteUserFromRole(user, role);
+        if(roleDAO.getUsers(role).contains(user)){
+            roleDAO.deleteUserFromRole(user, role);
+        }
+        if(userDAO.getRoles(user).contains(role)) {
+            userDAO.deleteRoleFromUser(user, role);
+        }
+    }
+
+    @Override
+    public List<User> getUsers(Role role) {
+        return roleDAO.getUsers(role);
     }
 }

@@ -13,7 +13,6 @@ public interface UserDAO extends BaseDAO<User, Long> {
 
     void deleteTvShowFromUser(User user, TvShow tvShow);
 
-    //User2Episode
     void addEpisode2User(User user, Episode episode);
 
     void deleteEpisodeFromUser(User user, Episode episode);

@@ -3,6 +3,8 @@ package com.crimson.core.service;
 import com.crimson.core.dto.TvShowDTO;
 import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.Rating;
+import com.crimson.core.model.TvShow;
+import com.crimson.core.model.User;
 
 import java.util.List;
 
@@ -23,6 +25,14 @@ public interface RatingService {
     List<Rating> getAllRatings();
 
     Rating getRating(long idtv, long iduser);
+
+    void addTvShow2Rating(Rating rating, TvShow tvShow);
+
+    void deleteTvShowFromRating(Rating rating, TvShow tvShow);
+
+    void addUser2Rating(Rating rating, User user);
+
+    void deleteUserFromRating(Rating rating, User user);
 
     void saveUserRating(UserDTO userDTO, TvShowDTO tvShowDTO, int value);
 

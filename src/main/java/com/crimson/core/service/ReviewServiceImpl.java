@@ -5,6 +5,8 @@ import com.crimson.core.dao.TvShowDAO;
 import com.crimson.core.dao.UserDAO;
 import com.crimson.core.dto.ReviewDTO;
 import com.crimson.core.model.Review;
+import com.crimson.core.model.TvShow;
+import com.crimson.core.model.User;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,13 +24,12 @@ public class ReviewServiceImpl implements ReviewService {
     private TvShowDAO tvShowDAO;
     @Autowired
     private UserDAO userDAO;
-    @Autowired
-    private MapperFacade mapperFacade;
+
     @Override
     public void save(ReviewDTO reviewDTO) {
         Review review = new Review(reviewDTO.getTitle(),reviewDTO.getIntroduction(),reviewDTO.getContent());
-        review.setTvShow(tvShowDAO.getById(reviewDTO.getTvShow().getId()));
-        review.setUser(userDAO.getById(reviewDTO.getUser().getId()));
+        addTvShow2Review(review,tvShowDAO.getById(reviewDTO.getTvShow().getId()));
+        addUser2Review(review,userDAO.getById(reviewDTO.getUser().getId()));
         reviewDAO.save(review);
     }
 
@@ -60,6 +61,46 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public List<Review> getReviewByIdTvShow(Long idTvShow) {
         return reviewDAO.getReviewByIdTvShow(idTvShow);
+    }
+
+    @Override
+    public void addTvShow2Review(Review review, TvShow tvShow) {
+        if(review.getTvShow() != tvShow){
+            reviewDAO.addTvShow2Review(review,tvShow);
+        }
+        if(!tvShowDAO.getReviews(tvShow).contains(review)){
+            tvShowDAO.addReview(tvShow,review);
+        }
+    }
+
+    @Override
+    public void addUser2Review(Review review, User user) {
+        if(review.getUser() != user){
+            reviewDAO.addUser2Review(review,user);
+        }
+        if(!userDAO.getReviews(user).contains(review)){
+            userDAO.addReview(user,review);
+        }
+    }
+
+    @Override
+    public void deleteTvShowFromReview(Review review, TvShow tvShow) {
+        if(review.getTvShow() == tvShow){
+            reviewDAO.deleteTvShowFromReview(review);
+        }
+        if(tvShowDAO.getReviews(tvShow).contains(review)){
+            tvShowDAO.deleteReview(tvShow,review);
+        }
+    }
+
+    @Override
+    public void deleteUserFromReview(Review review, User user) {
+        if(review.getUser() == user){
+            reviewDAO.deleteUserFromReview(review);
+        }
+        if(userDAO.getReviews(user).contains(review)){
+            userDAO.deleteReview(user,review);
+        }
     }
 
     @Override

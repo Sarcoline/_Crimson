@@ -6,6 +6,8 @@ import com.crimson.core.dao.TvShowDAO;
 import com.crimson.core.dao.UserDAO;
 import com.crimson.core.dto.CommentDTO;
 import com.crimson.core.model.Comment;
+import com.crimson.core.model.TvShow;
+import com.crimson.core.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,8 +28,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void save(CommentDTO commentDTO) {
         Comment comment1 = new Comment(commentDTO.getText(),commentDTO.getDate());
-        comment1.setTvShow(tvShowDAO.getById(commentDTO.getIdTvShow()));
-        comment1.setUser(userDAO.getById(commentDTO.getUser().getId()));
+        addTvShow2Comment(comment1,tvShowDAO.getById(commentDTO.getIdTvShow()));
+        addUser2Comment(comment1,userDAO.getById(commentDTO.getUser().getId()));
         commentDAO.save(comment1);
     }
 
@@ -39,6 +41,46 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void update(Comment comment) {
         commentDAO.update(comment);
+    }
+
+    @Override
+    public void addTvShow2Comment(Comment comment, TvShow tvShow) {
+        if(comment.getTvShow() != tvShow){
+            commentDAO.addTvShow2Comment(comment,tvShow);
+        }
+        if (!tvShowDAO.getComments(tvShow).contains(comment)) {
+            tvShowDAO.addComment(tvShow, comment);
+        }
+    }
+
+    @Override
+    public void deleteTvShowFromComment(Comment comment, TvShow tvShow) {
+        if(comment.getTvShow() == tvShow){
+            commentDAO.deleteTvShowFromComment(comment);
+        }
+        if (tvShowDAO.getComments(tvShow).contains(comment)) {
+            tvShowDAO.deleteComment(tvShow,comment);
+        }
+    }
+
+    @Override
+    public void addUser2Comment(Comment comment, User user) {
+        if(comment.getUser() != user){
+            commentDAO.addUser2Comment(comment,user);
+        }
+        if(!userDAO.getComments(user).contains(comment)){
+            userDAO.addComment(user,comment);
+        }
+    }
+
+    @Override
+    public void deleteUserFromComment(Comment comment, User user) {
+        if(comment.getUser() == user){
+            commentDAO.deleteUserFromComment(comment);
+        }
+        if(userDAO.getComments(user).contains(comment)){
+            userDAO.deleteComment(user,comment);
+        }
     }
 
     @Override

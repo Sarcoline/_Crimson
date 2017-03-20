@@ -29,7 +29,6 @@ public interface UserService {
 
     void deleteTvShowFromUser(UserDTO user, TvShowDTO tvShow);
 
-    //User2Episode
     void addEpisode2User(User user, Episode episode);
 
     void deleteEpisodeFromUser(User user, Episode episode);
@@ -42,7 +41,6 @@ public interface UserService {
 
     void deleteRatingFromUser(User user, Rating rating);
 
-    //User2Setting
     void addSetting2User(User user, Setting setting);
 
     void deleteSettingFromUser(User user, Setting setting);
@@ -50,6 +48,26 @@ public interface UserService {
     void addRole2User(User user, Role role);
 
     void deleteRoleFromUser(User user, Role role);
+
+    void addComment(User user, Comment comment);
+
+    void addReview(User user, Review review);
+
+    void deleteComment(User user, Comment comment);
+
+    void deleteReview(User user, Review review);
+
+    List<TvShow> getTvShows(User user);
+
+    List<Episode> getEpisodes(User user);
+
+    List<Rating> getRatings(User user);
+
+    List<Role> getRoles(User user);
+
+    List<Comment> getComments(User user);
+
+    List<Review> getReviews(User user);
 
     //Extra Methods
     List<TvShowDTO> getUserTvShowsSortedByMaxRating(UserDTO user);

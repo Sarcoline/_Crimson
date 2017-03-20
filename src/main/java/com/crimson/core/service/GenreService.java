@@ -22,4 +22,6 @@ public interface GenreService {
     void addTvShow2Genre(Genre genre, TvShow tvShow);
 
     void deleteTvShowFromGenre(Genre genre, TvShow tvShow);
+
+    List<TvShow> getTvShows(Genre genre);
 }

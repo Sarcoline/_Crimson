@@ -1,6 +1,7 @@
 package com.crimson.core.service;
 
 import com.crimson.core.dao.GenreDAO;
+import com.crimson.core.dao.TvShowDAO;
 import com.crimson.core.model.Genre;
 import com.crimson.core.model.TvShow;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class GenreServiceImpl implements GenreService {
 
     @Autowired
     private GenreDAO genreDAO;
+
+    @Autowired
+    private TvShowDAO tvShowDAO;
 
     @Override
     public void addGenre(Genre genre) {
@@ -52,11 +56,26 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public void addTvShow2Genre(Genre genre, TvShow tvShow) {
-        genreDAO.addTvShow2Genre(genre, tvShow);
+        if(!genreDAO.getTvShows(genre).contains(tvShow)){
+            genreDAO.addTvShow2Genre(genre, tvShow);
+        }
+        if(!tvShowDAO.getGenres(tvShow).contains(genre)){
+            tvShowDAO.addGenre2TvShow(tvShow,genre);
+        }
     }
 
     @Override
     public void deleteTvShowFromGenre(Genre genre, TvShow tvShow) {
-        genreDAO.deleteTvShowFromGenre(genre, tvShow);
+        if(genreDAO.getTvShows(genre).contains(tvShow)){
+            genreDAO.deleteTvShowFromGenre(genre, tvShow);
+        }
+        if(tvShowDAO.getGenres(tvShow).contains(genre)){
+            tvShowDAO.deleteGenreFromTvShow(tvShow,genre);
+        }
+    }
+
+    @Override
+    public List<TvShow> getTvShows(Genre genre){
+        return genreDAO.getTvShows(genre);
     }
 }
