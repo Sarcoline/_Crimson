@@ -115,7 +115,7 @@ public class TestGenreDAO {
     @Test
     public void getTvShowsTest(){
         genreDAO.addTvShow2Genre(genre,tvShow);
-        //tvShowDAO.addGenre2TvShow(tvShow,genre);
+        tvShowDAO.addGenre2TvShow(tvShow,genre);
         Assert.assertEquals(genreDAO.getTvShows(genre),genre.getTvShows());
     }
 

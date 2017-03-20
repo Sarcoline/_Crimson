@@ -130,6 +130,34 @@ public class TestCommentDAO {
     }
 
     @Test
+    public void addTvShow2CommentTest() {
+        commentDAO.addTvShow2Comment(comment1,tvShow);
+
+        Assert.assertEquals(commentDAO.getById(comment1.getId()).getTvShow().equals(tvShow), true);
+    }
+
+    @Test
+    public void deleteTvShowFromCommentTest() {
+        commentDAO.deleteTvShowFromComment(comment1);
+
+        Assert.assertEquals(commentDAO.getById(comment1.getId()).getTvShow(), null);
+    }
+
+    @Test
+    public void addUser2CommentTest() {
+        commentDAO.addUser2Comment(comment1,user);
+
+        Assert.assertEquals(commentDAO.getById(comment1.getId()).getUser().equals(user), true);
+    }
+
+    @Test
+    public void deleteUserFromCommentTest() {
+        commentDAO.deleteUserFromComment(comment1);
+
+        Assert.assertEquals(commentDAO.getById(comment1.getId()).getUser(), null);
+    }
+
+    @Test
     public void getCommentTest(){
         comment1.setUser(user);
         comment1.setTvShow(tvShow);

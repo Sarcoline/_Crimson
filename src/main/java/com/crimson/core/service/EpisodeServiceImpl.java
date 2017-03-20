@@ -98,7 +98,7 @@ public class EpisodeServiceImpl implements EpisodeService {
 
     @Override
     public void deleteTvShowFromEpisode(TvShow tvShow, Episode episode) {
-        episodeDAO.deleteTvShowFromEpisode(tvShow, episode);
+        episodeDAO.deleteTvShowFromEpisode(episode);
     }
 
 

@@ -107,4 +107,32 @@ public class TestRatingDAO {
         rating.setUser(user);
         rating.setValue(6);
     }
+
+    @Test
+    public void addTvShow2CommentTest() {
+        ratingDAO.addTvShow2Rating(rating,tvShow);
+
+        Assert.assertEquals(ratingDAO.getById(rating.getId()).getTvShow().equals(tvShow), true);
+    }
+
+    @Test
+    public void deleteTvShowFromCommentTest() {
+        ratingDAO.deleteTvShowFromRating(rating);
+
+        Assert.assertEquals(ratingDAO.getById(rating.getId()).getTvShow(), null);
+    }
+
+    @Test
+    public void addUser2CommentTest() {
+        ratingDAO.addUser2Rating(rating,user);
+
+        Assert.assertEquals(ratingDAO.getById(rating.getId()).getUser().equals(user), true);
+    }
+
+    @Test
+    public void deleteUserFromCommentTest() {
+        ratingDAO.deleteUserFromRating(rating);
+
+        Assert.assertEquals(ratingDAO.getById(rating.getId()).getUser(), null);
+    }
 }

@@ -57,11 +57,9 @@ public class SettingsDAOImpl implements SettingsDAO {
     }
 
     @Override
-    public void deleteUserFromSetting(User user, Setting setting) {
+    public void deleteUserFromSetting(Setting setting) {
         Session session = sessionFactory.getCurrentSession();
-        if (setting.getUser() == user) {
-            setting.setUser(null);
-        }
+        setting.setUser(null);
         session.saveOrUpdate(setting);
     }
 }

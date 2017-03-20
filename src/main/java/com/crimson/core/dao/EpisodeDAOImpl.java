@@ -8,7 +8,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -79,9 +78,7 @@ public class EpisodeDAOImpl implements EpisodeDAO {
     @Override
     public void addUser2Episode(User user, Episode episode) {
         Session session = sessionFactory.getCurrentSession();
-        if (!episode.getUsers().contains(user)) {
-            episode.getUsers().add(user);
-        }
+        episode.getUsers().add(user);
         session.saveOrUpdate(episode);
     }
 
@@ -102,11 +99,9 @@ public class EpisodeDAOImpl implements EpisodeDAO {
     }
 
     @Override
-    public void deleteTvShowFromEpisode(TvShow tvShow, Episode episode) {
+    public void deleteTvShowFromEpisode(Episode episode) {
         Session session = sessionFactory.getCurrentSession();
-        if (episode.getTvShow() == tvShow) {
-            episode.setTvShow(null);
-        }
+        episode.setTvShow(null);
         session.saveOrUpdate(episode);
     }
 

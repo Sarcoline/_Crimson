@@ -19,7 +19,7 @@ public interface EpisodeDAO extends BaseDAO<Episode, Long> {
 
     void addTvShow2Episode(TvShow tvShow, Episode episode);
 
-    void deleteTvShowFromEpisode(TvShow tvShow, Episode episode);
+    void deleteTvShowFromEpisode(Episode episode);
 
     List<User> getUsers(Episode episode);
 }

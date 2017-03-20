@@ -102,7 +102,7 @@ public class TestSettingDAO {
 
         Assert.assertEquals(settingsDAO.getById(setting1.getId()).getUser(), user1);
 
-        settingsDAO.deleteUserFromSetting(user1, setting1);
+        settingsDAO.deleteUserFromSetting(setting1);
 
         Assert.assertEquals(settingsDAO.getById(setting1.getId()).getUser(), null);
     }

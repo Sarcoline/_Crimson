@@ -142,7 +142,7 @@ public class TestEpisodeDAO {
 
     @Test
     public void deleteTvShowFromEpisodeTest() {
-        episodeDAO.deleteTvShowFromEpisode(tvShow, episode);
+        episodeDAO.deleteTvShowFromEpisode(episode);
 
         Assert.assertEquals(episodeDAO.getById(episode.getId()).getTvShow(), null);
     }

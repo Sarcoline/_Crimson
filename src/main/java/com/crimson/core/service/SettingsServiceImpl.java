@@ -52,7 +52,7 @@ public class SettingsServiceImpl implements SettingsService {
 
     @Override
     public void deleteUserFromSetting(User user, Setting setting) {
-        settingsDAO.deleteUserFromSetting(user, setting);
+        settingsDAO.deleteUserFromSetting(setting);
     }
 
 }

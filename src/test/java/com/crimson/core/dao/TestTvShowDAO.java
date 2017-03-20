@@ -39,6 +39,9 @@ public class TestTvShowDAO {
     @Autowired
     private ReviewDAO reviewDAO;
 
+    @Autowired
+    private RatingDAO ratingDAO;
+
     private TvShowFactory tvShowFactory = new TvShowFactory();
     private GenreFactory genreFactory = new GenreFactory();
     private EpisodeFactory episodeFactory = new EpisodeFactory();
@@ -284,10 +287,32 @@ public class TestTvShowDAO {
     }
 
     @Test
+    public void addReviewTest(){
+        int listSize = tvShowDAO.getReviews(tvShow).size();
+
+        tvShowDAO.addReview(tvShow, review);
+        reviewDAO.addTvShow2Review(review,tvShow);
+
+        Assert.assertEquals(tvShowDAO.getById(tvShow.getId()).getReviews().contains(review), true);
+        Assert.assertEquals(tvShowDAO.getById(tvShow.getId()).getReviews().size(), listSize+1);
+    }
+
+    @Test
+    public void deleteReviewTest(){
+        addReviewTest();
+
+        int listSize = tvShowDAO.getReviews(tvShow).size();
+        tvShowDAO.deleteReview(tvShow, review);
+        reviewDAO.deleteTvShowFromReview(review);
+
+        Assert.assertEquals(tvShowDAO.getById(tvShow.getId()).getReviews().contains(review), false);
+        Assert.assertEquals(tvShowDAO.getById(tvShow.getId()).getReviews().size(), listSize-1);
+    }
+
+    @Test
     public void getUsersTest(){
         tvShowDAO.addUser2TvShow(user,tvShow);
         userDAO.addTvShow2User(user,tvShow);
-
         Assert.assertEquals(tvShowDAO.getUsers(tvShow),tvShow.getUsers());
     }
 
@@ -295,35 +320,34 @@ public class TestTvShowDAO {
     public void getGenresTest(){
         tvShowDAO.addGenre2TvShow(tvShow,genre);
         genreDAO.addTvShow2Genre(genre,tvShow);
-
         Assert.assertEquals(tvShowDAO.getGenres(tvShow),tvShow.getGenres());
     }
 
     @Test
     public void getEpisodesTest(){
         episodeDAO.addTvShow2Episode(tvShow,episode);
-
+        episodeDAO.addTvShow2Episode(tvShow,episode);
         Assert.assertEquals(tvShowDAO.getEpisodes(tvShow),tvShow.getEpisodes());
     }
 
     @Test
     public void getRatingsTest(){
         tvShowDAO.addRating2TvShow(tvShow,rating);
-
+        ratingDAO.addTvShow2Rating(rating,tvShow);
         Assert.assertEquals(tvShowDAO.getRatings(tvShow),tvShow.getRatings());
     }
 
     @Test
     public void getCommentsTest(){
         tvShowDAO.addComment(tvShow,comment);
-        comment.setTvShow(tvShow);
+        commentDAO.addTvShow2Comment(comment,tvShow);
         Assert.assertEquals(tvShowDAO.getComments(tvShow),tvShow.getComments());
     }
 
     @Test
     public void getReviewsTest(){
         tvShowDAO.addReview(tvShow,review);
-        review.setTvShow(tvShow);
+        reviewDAO.addTvShow2Review(review,tvShow);
         Assert.assertEquals(tvShowDAO.getReviews(tvShow),tvShow.getReviews());
     }
 

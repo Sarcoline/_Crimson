@@ -6,7 +6,6 @@ import com.crimson.core.dao.TvShowDAO;
 import com.crimson.core.dao.UserDAO;
 import com.crimson.core.dto.CommentDTO;
 import com.crimson.core.model.Comment;
-import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,9 +22,6 @@ public class CommentServiceImpl implements CommentService {
     private TvShowDAO tvShowDAO;
     @Autowired
     private UserDAO userDAO;
-
-    @Autowired
-    private MapperFacade mapperFacade;
 
     @Override
     public void save(CommentDTO commentDTO) {
@@ -69,7 +65,6 @@ public class CommentServiceImpl implements CommentService {
     public List<Comment> getCommentByIdTvShow(Long idTvShow) {
         return commentDAO.getCommentByIdTvShow(idTvShow);
     }
-
 
     @Override
     public List getComments(long idTvShow, long idUser) {

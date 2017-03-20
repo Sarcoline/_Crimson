@@ -160,7 +160,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteSettingFromUser(User user, Setting setting) {
-        userDAO.deleteSettingFromUser(user, setting);
+        userDAO.deleteSettingFromUser(user);
     }
 
     //User2Role

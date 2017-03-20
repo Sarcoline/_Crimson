@@ -2,6 +2,8 @@ package com.crimson.core.dao;
 
 
 import com.crimson.core.model.Comment;
+import com.crimson.core.model.TvShow;
+import com.crimson.core.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +52,34 @@ public class CommentDAOImpl implements CommentDAO {
     public List<Comment> getCommentsByDate(LocalDate date) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From Comment a where a.date like :custDate", Comment.class).setParameter("custDate", date).getResultList();
+    }
+
+    @Override
+    public void addTvShow2Comment(Comment comment, TvShow tvShow) {
+        Session session = sessionFactory.getCurrentSession();
+        comment.setTvShow(tvShow);
+        session.saveOrUpdate(comment);
+    }
+
+    @Override
+    public void deleteTvShowFromComment(Comment comment) {
+        Session session = sessionFactory.getCurrentSession();
+        comment.setTvShow(null);
+        session.saveOrUpdate(comment);
+    }
+
+    @Override
+    public void addUser2Comment(Comment comment, User user) {
+        Session session = sessionFactory.getCurrentSession();
+        comment.setUser(user);
+        session.saveOrUpdate(comment);
+    }
+
+    @Override
+    public void deleteUserFromComment(Comment comment) {
+        Session session = sessionFactory.getCurrentSession();
+        comment.setUser(null);
+        session.saveOrUpdate(comment);
     }
 
     @Override

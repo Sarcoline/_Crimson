@@ -24,7 +24,7 @@ public interface UserDAO extends BaseDAO<User, Long> {
 
     void addSetting2User(User user, Setting setting);
 
-    void deleteSettingFromUser(User user, Setting setting);
+    void deleteSettingFromUser(User user);
 
     void addRole2User(User user, Role role);
 

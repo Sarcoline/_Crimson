@@ -59,9 +59,7 @@ public class GenreDAOImpl implements GenreDAO {
     @Override
     public void addTvShow2Genre(Genre genre, TvShow tvShow) {
         Session session = sessionFactory.getCurrentSession();
-        if (!genre.getTvShows().contains(tvShow)) {
-            genre.getTvShows().add(tvShow);
-        }
+        genre.getTvShows().add(tvShow);
         session.saveOrUpdate(genre);
     }
 

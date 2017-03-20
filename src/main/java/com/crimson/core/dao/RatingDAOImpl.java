@@ -1,6 +1,8 @@
 package com.crimson.core.dao;
 
 import com.crimson.core.model.Rating;
+import com.crimson.core.model.TvShow;
+import com.crimson.core.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +72,34 @@ public class RatingDAOImpl implements RatingDAO {
                 .setParameter(1, iduser)
                 .getResultList();
         return rating.isEmpty() ? new Rating() : (Rating) rating.get(0);
+    }
+
+    @Override
+    public void addTvShow2Rating(Rating rating, TvShow tvShow) {
+        Session session = sessionFactory.getCurrentSession();
+        rating.setTvShow(tvShow);
+        session.saveOrUpdate(rating);
+    }
+
+    @Override
+    public void deleteTvShowFromRating(Rating rating) {
+        Session session = sessionFactory.getCurrentSession();
+        rating.setTvShow(null);
+        session.saveOrUpdate(rating);
+    }
+
+    @Override
+    public void addUser2Rating(Rating rating, User user) {
+        Session session = sessionFactory.getCurrentSession();
+        rating.setUser(user);
+        session.saveOrUpdate(rating);
+    }
+
+    @Override
+    public void deleteUserFromRating(Rating rating) {
+        Session session = sessionFactory.getCurrentSession();
+        rating.setUser(null);
+        session.saveOrUpdate(rating);
     }
 
 }

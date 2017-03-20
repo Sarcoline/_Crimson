@@ -2,6 +2,8 @@ package com.crimson.core.dao;
 
 
 import com.crimson.core.model.Review;
+import com.crimson.core.model.TvShow;
+import com.crimson.core.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,34 @@ public class ReviewDAOImpl implements ReviewDAO{
     public Review getById(Long idReview) {
         Session session = sessionFactory.getCurrentSession();
         return session.find(Review.class, idReview);
+    }
+
+    @Override
+    public void addTvShow2Review(Review review, TvShow tvShow) {
+        Session session = sessionFactory.getCurrentSession();
+        review.setTvShow(tvShow);
+        session.saveOrUpdate(review);
+    }
+
+    @Override
+    public void deleteTvShowFromReview(Review review) {
+        Session session = sessionFactory.getCurrentSession();
+        review.setTvShow(null);
+        session.saveOrUpdate(review);
+    }
+
+    @Override
+    public void addUser2Review(Review review, User user) {
+        Session session = sessionFactory.getCurrentSession();
+        review.setUser(user);
+        session.saveOrUpdate(review);
+    }
+
+    @Override
+    public void deleteUserFromReview(Review review) {
+        Session session = sessionFactory.getCurrentSession();
+        review.setUser(null);
+        session.saveOrUpdate(review);
     }
 
     @Override

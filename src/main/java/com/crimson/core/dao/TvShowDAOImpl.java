@@ -164,9 +164,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     @Override
     public void addUser2TvShow(User user, TvShow tvShow) {
         Session session = sf.getCurrentSession();
-        if (!tvShow.getUsers().contains(user)) {
-            tvShow.getUsers().add(user);
-        }
+        tvShow.getUsers().add(user);
         session.saveOrUpdate(tvShow);
     }
 
@@ -182,9 +180,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     @Override
     public void addGenre2TvShow(TvShow tvShow, Genre genre) {
         Session session = sf.getCurrentSession();
-        if (!tvShow.getGenres().contains(genre)) {
-            tvShow.getGenres().add(genre);
-        }
+        tvShow.getGenres().add(genre);
         session.saveOrUpdate(tvShow);
     }
 
@@ -200,9 +196,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     @Override
     public void addEpisode2TvShow(TvShow tvShow, Episode episode) {
         Session session = sf.getCurrentSession();
-        if (!tvShow.getEpisodes().contains(episode)) {
-            tvShow.getEpisodes().add(episode);
-        }
+        tvShow.getEpisodes().add(episode);
         session.saveOrUpdate(tvShow);
     }
 
@@ -218,9 +212,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     @Override
     public void addRating2TvShow(TvShow tvShow, Rating rating) {
         Session session = sf.getCurrentSession();
-        if (!tvShow.getRatings().contains(rating)) {
-            tvShow.getRatings().add(rating);
-        }
+        tvShow.getRatings().add(rating);
         session.saveOrUpdate(tvShow);
     }
 
@@ -236,18 +228,14 @@ public class TvShowDAOImpl implements TvShowDAO {
     @Override
     public void addComment(TvShow tvShow, Comment comment){
         Session session = sf.getCurrentSession();
-        if (!tvShow.getComments().contains(comment)){
-            tvShow.getComments().add(comment);
-        }
+        tvShow.getComments().add(comment);
         session.saveOrUpdate(tvShow);
     }
 
     @Override
     public void addReview(TvShow tvShow, Review review){
         Session session = sf.getCurrentSession();
-        if (!tvShow.getReviews().contains(review)){
-            tvShow.getReviews().add(review);
-        }
+        tvShow.getReviews().add(review);
         session.saveOrUpdate(tvShow);
     }
 

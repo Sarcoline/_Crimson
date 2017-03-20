@@ -59,9 +59,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void addTvShow2User(User user, TvShow tvShow) {
         Session session = sessionFactory.getCurrentSession();
-        if (!user.getTvShows().contains(tvShow)) {
-            user.getTvShows().add(tvShow);
-        }
+        user.getTvShows().add(tvShow);
         session.saveOrUpdate(user);
 
     }
@@ -77,9 +75,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void addEpisode2User(User user, Episode episode) {
         Session session = sessionFactory.getCurrentSession();
-        if (!user.getEpisodes().contains(episode)) {
-            user.getEpisodes().add(episode);
-        }
+        user.getEpisodes().add(episode);
         session.saveOrUpdate(user);
     }
 
@@ -95,9 +91,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void addRating2User(User user, Rating rating) {
         Session session = sessionFactory.getCurrentSession();
-        if (!user.getRatings().contains(rating)) {
-            user.getRatings().add(rating);
-        }
+        user.getRatings().add(rating);
         session.saveOrUpdate(user);
     }
 
@@ -118,11 +112,9 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void deleteSettingFromUser(User user, Setting setting) {
+    public void deleteSettingFromUser(User user) {
         Session session = sessionFactory.getCurrentSession();
-        if (user.getSetting() == setting) {
-            user.setSetting(null);
-        }
+        user.setSetting(null);
         session.saveOrUpdate(user);
     }
 
@@ -131,9 +123,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void addRole2User(User user, Role role) {
         Session session = sessionFactory.getCurrentSession();
-        if (!user.getRoles().contains(role)) {
-            user.getRoles().add(role);
-        }
+        user.getRoles().add(role);
         session.saveOrUpdate(user);
     }
 
@@ -149,18 +139,14 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void addComment(User user, Comment comment){
         Session session = sessionFactory.getCurrentSession();
-        if (!user.getComments().contains(comment)){
-            user.getComments().add(comment);
-        }
+        user.getComments().add(comment);
         session.saveOrUpdate(user);
     }
 
     @Override
     public void addReview(User user, Review review){
         Session session = sessionFactory.getCurrentSession();
-        if (!user.getReviews().contains(review)){
-            user.getReviews().add(review);
-        }
+        user.getReviews().add(review);
         session.saveOrUpdate(user);
     }
 

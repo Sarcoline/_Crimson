@@ -7,5 +7,5 @@ public interface SettingsDAO extends BaseDAO<Setting, Long> {
 
     void addUser2Setting(User user, Setting setting);
 
-    void deleteUserFromSetting(User user, Setting setting);
+    void deleteUserFromSetting(Setting setting);
 }
