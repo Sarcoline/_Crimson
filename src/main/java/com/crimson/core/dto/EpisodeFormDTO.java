@@ -33,4 +33,10 @@ public @Data class EpisodeFormDTO {
     private Integer version;
 
     private TvShow tvShow;
+
+    @Override
+    public String toString()
+    {
+        return "EpisodeFromDTO["+ id + "_" + title + "]";
+    }
 }

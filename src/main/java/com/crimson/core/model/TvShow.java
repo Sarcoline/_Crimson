@@ -114,5 +114,9 @@ public @Data class TvShow {
     @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Review> reviews = new ArrayList<>();
 
-
+    @Override
+    public String toString()
+    {
+        return "TvShow["+ id + "_" + slug + "]";
+    }
 }

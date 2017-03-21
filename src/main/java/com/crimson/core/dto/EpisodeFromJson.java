@@ -14,4 +14,10 @@ public @Data class EpisodeFromJson {
     private String releaseDate;
     private long idTvShow;
     private long id;
+
+    @Override
+    public String toString()
+    {
+        return "EpisodeFromJson["+ id + "_" + title + "]";
+    }
 }

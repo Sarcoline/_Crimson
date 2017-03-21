@@ -60,4 +60,9 @@ public class TvShowDTO {
 
     private List<ReviewDTO> reviews = new ArrayList<>();
 
+    @Override
+    public String toString()
+    {
+        return "TvShowDTO["+ id + "_" + slug + "]";
+    }
 }

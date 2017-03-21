@@ -44,5 +44,9 @@ public @Data class Genre {
             inverseJoinColumns = @JoinColumn(name = "idTvShow"))
     private List<TvShow> tvShows = new ArrayList<>();
 
-
+    @Override
+    public String toString()
+    {
+        return "Genre["+ id + "_" + name + "]";
+    }
 }

@@ -61,4 +61,9 @@ public @Data class Review {
     @PrimaryKeyJoinColumn(name = "idTvShow")
     private TvShow tvShow;
 
+    @Override
+    public String toString()
+    {
+        return "Review["+ id + "_" + title + "]";
+    }
 }

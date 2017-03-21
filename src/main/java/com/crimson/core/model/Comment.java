@@ -9,6 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
+import static org.apache.taglibs.standard.functions.Functions.substring;
+
 @Entity
 @NoArgsConstructor
 @Table(name = "comment")
@@ -48,4 +50,10 @@ public @Data class Comment {
     @ManyToOne(fetch = FetchType.EAGER)
     @PrimaryKeyJoinColumn(name = "idTvShow")
     private TvShow tvShow;
+
+    @Override
+    public String toString()
+    {
+        return "Comment["+ id + "_" + substring(text,0,10) + "...]";
+    }
 }

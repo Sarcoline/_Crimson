@@ -42,4 +42,9 @@ public @Data class Setting {
     @PrimaryKeyJoinColumn
     private User user;
 
+    @Override
+    public String toString()
+    {
+        return "SettingOfUser["+ id + "_" + user.getName() + "]";
+    }
 }

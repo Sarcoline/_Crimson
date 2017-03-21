@@ -17,4 +17,10 @@ public @Data class PasswordDTO {
     private String matchingPassword;
 
     private String oldPassword;
+
+    @Override
+    public String toString()
+    {
+        return "PasswordDTO[x]";
+    }
 }

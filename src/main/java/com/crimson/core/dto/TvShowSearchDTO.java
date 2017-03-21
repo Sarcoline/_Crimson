@@ -12,4 +12,9 @@ public @Data class TvShowSearchDTO {
     private Double overallRating;
 
     private String slug;
+    @Override
+    public String toString()
+    {
+        return "TvShowSearchDTO["+ id + "_" + slug + "]";
+    }
 }

@@ -47,4 +47,9 @@ public @Data class UserDTO {
 
     private List<EpisodeDTO> episodes;
 
+    @Override
+    public String toString()
+    {
+        return "UserDTO["+ id + "_" + name + "]";
+    }
 }

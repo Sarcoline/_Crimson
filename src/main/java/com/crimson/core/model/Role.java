@@ -38,4 +38,9 @@ public @Data class Role {
     @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<User> users = new ArrayList<>();
 
+    @Override
+    public String toString()
+    {
+        return "Role["+ idRole + "_" + roleName + "]";
+    }
 }

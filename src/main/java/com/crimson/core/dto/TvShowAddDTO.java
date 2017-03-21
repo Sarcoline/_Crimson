@@ -55,5 +55,9 @@ public @Data class TvShowAddDTO {
 
     private MultipartFile pic3;
 
-
+    @Override
+    public String toString()
+    {
+        return "TvShowAddDTO[new_" + slug + "]";
+    }
 }

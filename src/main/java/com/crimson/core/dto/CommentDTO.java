@@ -6,6 +6,8 @@ import org.hibernate.validator.constraints.Range;
 
 import java.time.LocalDate;
 
+import static org.apache.taglibs.standard.functions.Functions.substring;
+
 @NoArgsConstructor
 public @Data class CommentDTO {
 
@@ -30,4 +32,9 @@ public @Data class CommentDTO {
     private UserDTO user;
     private LocalDate date;
 
+    @Override
+    public String toString()
+    {
+        return "CommentDTO["+ id + "_" + substring(text,0,10) + "...]";
+    }
 }

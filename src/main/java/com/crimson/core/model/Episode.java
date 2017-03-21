@@ -41,7 +41,7 @@ public @Data class Episode {
     private LocalDate releaseDate;
 
     @Column(name = "episodeSummary")
-    @Length(max = 1000)
+    @Length(max = 2000)
     private String episodeSummary;
 
     @Column(name = "idTvShow")
@@ -71,4 +71,9 @@ public @Data class Episode {
     @JoinColumn(name = "idTvShow", insertable = false, updatable = false)
     private TvShow tvShow;
 
+    @Override
+    public String toString()
+    {
+        return "Episode["+ id + "_" + title + "]";
+    }
 }

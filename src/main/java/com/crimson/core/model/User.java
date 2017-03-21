@@ -90,4 +90,10 @@ public @Data class User {
     //Reviews
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Review> reviews = new ArrayList<>();
+
+    @Override
+    public String toString()
+    {
+        return "User["+ id + "_" + name + "]";
+    }
 }

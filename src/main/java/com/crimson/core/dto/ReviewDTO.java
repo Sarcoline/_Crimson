@@ -30,4 +30,9 @@ public @Data class ReviewDTO {
     @NotNull
     String content;
 
+    @Override
+    public String toString()
+    {
+        return "ReviewDTO["+ id + "_" + title + "]";
+    }
 }

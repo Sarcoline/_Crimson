@@ -37,4 +37,10 @@ public @Data class EpisodeDTO {
     private List<User> users = new ArrayList<>();
 
     private TvShow tvShow;
+
+    @Override
+    public String toString()
+    {
+        return "EpisodeDTO["+ id + "_" + title + "]";
+    }
 }

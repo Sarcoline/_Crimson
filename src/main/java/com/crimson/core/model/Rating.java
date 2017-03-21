@@ -41,4 +41,10 @@ public @Data class Rating {
         this.value = value;
         this.version = version;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Raiting["+ id + "_val" + value + "]";
+    }
 }
