@@ -4,8 +4,12 @@ package com.crimson.context;
 import com.crimson.core.CorePackageMarker;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
+import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -64,5 +68,17 @@ public class CoreApplicationContext {
         HibernateTransactionManager txManager = new HibernateTransactionManager();
         txManager.setSessionFactory(sessionFactory);
         return txManager;
+    }
+
+    @Bean
+    public CacheManager getEhCacheManager(){
+        return  new EhCacheCacheManager(getEhCacheFactory().getObject());
+    }
+    @Bean
+    public EhCacheManagerFactoryBean getEhCacheFactory(){
+        EhCacheManagerFactoryBean factoryBean = new EhCacheManagerFactoryBean();
+        factoryBean.setConfigLocation(new ClassPathResource("ehcache.xml"));
+        factoryBean.setShared(true);
+        return factoryBean;
     }
 }

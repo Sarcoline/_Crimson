@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
@@ -31,18 +32,21 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     public List<TvShow> getAll() {
         Session session = sf.getCurrentSession();
         return session.createQuery("Select a From TvShow a", TvShow.class).getResultList();
     }
 
     @Override
+    @Cacheable("myCache")
     public TvShow getById(Long id) {
         Session session = sf.getCurrentSession();
         return session.find(TvShow.class, id);
     }
 
     @Override
+    @Cacheable("myCache")
     public TvShow getTvByIdWithEpisodes(Long id) {
         Session session = sf.getCurrentSession();
 
@@ -53,6 +57,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     public TvShow getTvBySlug(String slug) {
         Session session = sf.getCurrentSession();
         return session.createQuery("Select a From TvShow a where a.slug like :custSlug", TvShow.class)
@@ -60,6 +65,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     public List<TvShow> getTvByGenre(String genre) {
         Session session = sf.getCurrentSession();
         return session.createQuery("Select a From TvShow a where a.genre like :custGenre", TvShow.class)
@@ -68,6 +74,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     public List<TvShow> getTvByCountry(String country) {
         Session session = sf.getCurrentSession();
         return session.createQuery("Select a From TvShow a where a.country like :custCountry", TvShow.class)
@@ -75,6 +82,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     public List<TvShow> getTvByYear(int releaseYear) {
         Session session = sf.getCurrentSession();
         return session.createQuery("Select a From TvShow a where a.releaseYear = :custReleaseYear", TvShow.class)
@@ -82,6 +90,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     public List<TvShow> getTvByNetwork(String network) {
         Session session = sf.getCurrentSession();
         return session.createQuery("Select a From TvShow a where a.network like :custNetwork", TvShow.class)

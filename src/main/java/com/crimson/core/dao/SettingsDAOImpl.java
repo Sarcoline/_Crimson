@@ -5,6 +5,7 @@ import com.crimson.core.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,12 +23,14 @@ public class SettingsDAOImpl implements SettingsDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     public List<Setting> getAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From Setting a", Setting.class).getResultList();
     }
 
     @Override
+    @Cacheable("myCache")
     public Setting getById(Long id) {
         Session session = sessionFactory.getCurrentSession();
         return session.find(Setting.class, id);

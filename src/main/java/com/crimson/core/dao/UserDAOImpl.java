@@ -4,6 +4,7 @@ import com.crimson.core.model.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     public List<User> getAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From User a", User.class).getResultList();
@@ -47,6 +49,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     public User getUserByName(String name) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From User a where a.name like :custName", User.class)
