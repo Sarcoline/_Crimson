@@ -19,7 +19,7 @@ public interface UserService {
 
     void deleteUser(UserDTO userDTO);
 
-    void updateUser(UserDTO userDTO) throws IOException;
+    void updateUser(UserDTO userDTO);
 
     void changeProfilePic(UserDTO userDTO, MultipartFile file) throws IOException;
 

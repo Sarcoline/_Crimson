@@ -140,28 +140,28 @@ public class UserDAOImpl implements UserDAO {
     //User2Comment
 
     @Override
-    public void addComment(User user, Comment comment){
+    public void addComment(User user, Comment comment) {
         Session session = sessionFactory.getCurrentSession();
         user.getComments().add(comment);
         session.saveOrUpdate(user);
     }
 
     @Override
-    public void addReview(User user, Review review){
+    public void addReview(User user, Review review) {
         Session session = sessionFactory.getCurrentSession();
         user.getReviews().add(review);
         session.saveOrUpdate(user);
     }
 
     @Override
-    public void deleteComment(User user, Comment comment){
+    public void deleteComment(User user, Comment comment) {
         Session session = sessionFactory.getCurrentSession();
         user.getComments().remove(comment);
         session.saveOrUpdate(user);
     }
 
     @Override
-    public void deleteReview(User user, Review review){
+    public void deleteReview(User user, Review review) {
         Session session = sessionFactory.getCurrentSession();
         user.getReviews().remove(review);
         session.saveOrUpdate(user);
@@ -169,7 +169,7 @@ public class UserDAOImpl implements UserDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<TvShow> getTvShows(User user){
+    public List<TvShow> getTvShows(User user) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM TvShow t JOIN FETCH t.users u where u.id = ?";
         return session.createQuery(hql)
@@ -179,7 +179,7 @@ public class UserDAOImpl implements UserDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Episode> getEpisodes(User user){
+    public List<Episode> getEpisodes(User user) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Episode e JOIN FETCH e.users u where u.id = ?";
         return session.createQuery(hql)
@@ -189,7 +189,7 @@ public class UserDAOImpl implements UserDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Rating> getRatings(User user){
+    public List<Rating> getRatings(User user) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Rating r JOIN FETCH r.user u where u.id = ?";
         return session.createQuery(hql)
@@ -199,7 +199,7 @@ public class UserDAOImpl implements UserDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Role> getRoles(User user){
+    public List<Role> getRoles(User user) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Role r JOIN FETCH r.users u where u.id = ?";
         return session.createQuery(hql)
@@ -209,7 +209,7 @@ public class UserDAOImpl implements UserDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Review> getReviews(User user){
+    public List<Review> getReviews(User user) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Review r JOIN FETCH r.user u where u.id = ?";
         return session.createQuery(hql)
@@ -219,7 +219,7 @@ public class UserDAOImpl implements UserDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Comment> getComments(User user){
+    public List<Comment> getComments(User user) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Comment c JOIN FETCH c.user u where u.id = ?";
         return session.createQuery(hql)

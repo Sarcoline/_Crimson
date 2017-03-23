@@ -88,7 +88,7 @@ public class RestCrimsonController {
     }
 
     @RequestMapping(value = "/filter/{page}", method = RequestMethod.POST)
-    public FilterResponseDTO filter(@RequestBody SearchFilterParameters parameters,@PathVariable("page") int page) {
+    public FilterResponseDTO filter(@RequestBody SearchFilterParameters parameters, @PathVariable("page") int page) {
         return tvShowService.filter(parameters, page);
     }
 }

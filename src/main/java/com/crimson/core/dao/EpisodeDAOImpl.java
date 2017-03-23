@@ -112,7 +112,7 @@ public class EpisodeDAOImpl implements EpisodeDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<User> getUsers(Episode episode){
+    public List<User> getUsers(Episode episode) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM User u JOIN FETCH u.episodes e where e.id = ?";
         return session.createQuery(hql)

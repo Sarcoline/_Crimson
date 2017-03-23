@@ -9,9 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-/**
- * Created by Meow on 16.03.2017.
- */
 public @Data class TvShowAddDTO {
 
     @Size(min = 3, max = 30)

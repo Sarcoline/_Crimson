@@ -146,7 +146,7 @@ public class TvShowDAOImpl implements TvShowDAO {
         Session session = sf.getCurrentSession();
         int listSizeOnPage = 25;
         Long countResults = (Long) session.createQuery("SELECT count (id) FROM TvShow  f").uniqueResult();
-        if((countResults % listSizeOnPage) == 0) return (int) (countResults / listSizeOnPage);
+        if ((countResults % listSizeOnPage) == 0) return (int) (countResults / listSizeOnPage);
         else return (int) (countResults / listSizeOnPage) + 1;
     }
 
@@ -235,34 +235,35 @@ public class TvShowDAOImpl implements TvShowDAO {
     //TvShow2Comment
 
     @Override
-    public void addComment(TvShow tvShow, Comment comment){
+    public void addComment(TvShow tvShow, Comment comment) {
         Session session = sf.getCurrentSession();
         tvShow.getComments().add(comment);
         session.saveOrUpdate(tvShow);
     }
 
     @Override
-    public void addReview(TvShow tvShow, Review review){
+    public void addReview(TvShow tvShow, Review review) {
         Session session = sf.getCurrentSession();
         tvShow.getReviews().add(review);
         session.saveOrUpdate(tvShow);
     }
 
     @Override
-    public void deleteComment(TvShow tvShow, Comment comment){
+    public void deleteComment(TvShow tvShow, Comment comment) {
         Session session = sf.getCurrentSession();
         tvShow.getComments().remove(comment);
         session.saveOrUpdate(tvShow);
     }
 
     @Override
-    public void deleteReview(TvShow tvShow, Review review){
+    public void deleteReview(TvShow tvShow, Review review) {
         Session session = sf.getCurrentSession();
         tvShow.getReviews().remove(review);
         session.saveOrUpdate(tvShow);
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public FilterResponse filter(SearchFilterParameters parameters, int page) {
         FilterResponse response = new FilterResponse();
         Session session = sf.getCurrentSession();
@@ -292,7 +293,7 @@ public class TvShowDAOImpl implements TvShowDAO {
         int listSizeOnPage = 20;
         int countResults = (c.list().size());
         response.setSize(countResults);
-        if((countResults % listSizeOnPage) == 0) lastPage = (countResults / listSizeOnPage);
+        if ((countResults % listSizeOnPage) == 0) lastPage = (countResults / listSizeOnPage);
         else lastPage = countResults / listSizeOnPage + 1;
 
         if (page <= lastPage) {
@@ -305,7 +306,7 @@ public class TvShowDAOImpl implements TvShowDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<User> getUsers(TvShow tv){
+    public List<User> getUsers(TvShow tv) {
         Session session = sf.getCurrentSession();
         String hql = "FROM User u JOIN FETCH u.tvShows t where t.id = ?";
         return session.createQuery(hql)
@@ -315,7 +316,7 @@ public class TvShowDAOImpl implements TvShowDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Genre> getGenres(TvShow tv){
+    public List<Genre> getGenres(TvShow tv) {
         Session session = sf.getCurrentSession();
         String hql = "FROM Genre g JOIN FETCH g.tvShows t where t.id = ?";
         return session.createQuery(hql)
@@ -325,7 +326,7 @@ public class TvShowDAOImpl implements TvShowDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Episode> getEpisodes(TvShow tv){
+    public List<Episode> getEpisodes(TvShow tv) {
         Session session = sf.getCurrentSession();
         String hql = "FROM Episode e JOIN FETCH e.tvShow t where t.id = ?";
         return session.createQuery(hql)
@@ -335,7 +336,7 @@ public class TvShowDAOImpl implements TvShowDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Rating> getRatings(TvShow tv){
+    public List<Rating> getRatings(TvShow tv) {
         Session session = sf.getCurrentSession();
         String hql = "FROM Rating r JOIN FETCH r.tvShow t where t.id = ?";
         return session.createQuery(hql)
@@ -345,7 +346,7 @@ public class TvShowDAOImpl implements TvShowDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Comment> getComments(TvShow tv){
+    public List<Comment> getComments(TvShow tv) {
         Session session = sf.getCurrentSession();
         String hql = "FROM Comment c JOIN FETCH c.tvShow t where t.id = ?";
         return session.createQuery(hql)
@@ -355,7 +356,7 @@ public class TvShowDAOImpl implements TvShowDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Review> getReviews(TvShow tv){
+    public List<Review> getReviews(TvShow tv) {
         Session session = sf.getCurrentSession();
         String hql = "FROM Review r JOIN FETCH r.tvShow t where t.id = ?";
         return session.createQuery(hql)

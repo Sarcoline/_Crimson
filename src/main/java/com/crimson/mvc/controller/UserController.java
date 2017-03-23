@@ -125,7 +125,7 @@ public class UserController {
         List<EpisodeDTO> watchedEpisodes = user.getEpisodes();
         List watchedEpisodesId = new ArrayList<>();
         watchedEpisodes.forEach(episode -> watchedEpisodesId.add(episode.getId()));
-        List<EpisodeDTO> upcoming =  userService.getAllUpcomingUserEpisodes(user, tvs, watchedEpisodes);
+        List<EpisodeDTO> upcoming = userService.getAllUpcomingUserEpisodes(user, tvs, watchedEpisodes);
 
         model.addAttribute("tvshows", tvs);
         model.addAttribute("watchedEpisodes", Lists.reverse(watchedEpisodes));
