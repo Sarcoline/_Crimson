@@ -115,6 +115,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDTO getUserByToken(String token) {
+        return mapperFacade.map(userDAO.getUserByToken(token), UserDTO.class);
+    }
+
+    @Override
     public boolean checkFollow(UserDTO userDTO, TvShowDTO tvShow) {
         return userDAO.getUserByName(userDTO.getName()).getTvShows().contains(tvShowDAO.getById(tvShow.getId()));
     }
@@ -387,6 +392,14 @@ public class UserServiceImpl implements UserService {
     public void updateSettings(UserDTO userDTO, int days) {
         User user = userDAO.getById(userDTO.getId());
         user.getSetting().setDaysOfUpcomingEpisodes(days);
+        userDAO.update(user);
+    }
+
+    @Override
+    public void confirmUser(String token) {
+        User user = userDAO.getUserByToken(token);
+        user.setToken(null);
+        user.setActive(true);
         userDAO.update(user);
     }
 }

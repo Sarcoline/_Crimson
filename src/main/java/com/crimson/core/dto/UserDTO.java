@@ -39,6 +39,10 @@ public @Data class UserDTO {
 
     private Setting setting;
 
+    private boolean active;
+
+    private String token;
+
     private List<Role> roles = new ArrayList<>();
 
     private List<Rating> ratings;

@@ -466,3 +466,7 @@ div.login {
 #wrapper {
     min-height: 100%;
 }
+
+.uk-comment-avatar {
+    margin-top: 10px;
+}

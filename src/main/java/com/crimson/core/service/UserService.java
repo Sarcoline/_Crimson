@@ -37,6 +37,8 @@ public interface UserService {
 
     void addRating2User(User user, Rating rating);
 
+    UserDTO getUserByToken(String token);
+
     boolean checkFollow(UserDTO userDTO, TvShowDTO tvShow);
 
     void deleteRatingFromUser(User user, Rating rating);
@@ -81,4 +83,6 @@ public interface UserService {
     boolean checkOldPassword(UserDTO userDTO, String password);
 
     void updateSettings(UserDTO user, int days);
+
+    void confirmUser(String token);
 }

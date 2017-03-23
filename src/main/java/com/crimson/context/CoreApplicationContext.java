@@ -15,6 +15,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
@@ -22,6 +23,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
+@EnableAsync
 @ComponentScan(basePackageClasses = CorePackageMarker.class)
 @Import(AspectConfiguration.class)
 @PropertySource("classpath:/hibernate.properties")

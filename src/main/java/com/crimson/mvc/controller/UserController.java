@@ -4,6 +4,7 @@ import com.crimson.core.dto.EpisodeDTO;
 import com.crimson.core.dto.PasswordDTO;
 import com.crimson.core.dto.TvShowDTO;
 import com.crimson.core.dto.UserDTO;
+import com.crimson.core.service.MailService;
 import com.crimson.core.service.ReviewService;
 import com.crimson.core.service.TvShowService;
 import com.crimson.core.service.UserService;
@@ -20,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,6 +46,9 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
+    @Autowired
+    private MailService mailService;
+
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model) {
@@ -55,6 +60,7 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(
             @RequestParam(value = "error", required = false) String error,
+            @RequestParam(value = "confirmed", required = false) String confirmed,
             @RequestParam(value = "logout", required = false) String logout,
             @RequestParam(value = "registered", required = false) String registered, Model model) {
 
@@ -68,7 +74,10 @@ public class UserController {
             model.addAttribute("error", "Invalid username and password!");
         }
         if (registered != null) {
-            model.addAttribute("msg", "Registered successfully! You can log in.");
+            model.addAttribute("msg", "We sent you verification email.");
+        }
+        if (confirmed != null) {
+            model.addAttribute("msg", "Verifivation complete. You can log in now!");
         }
         if (logout != null) {
             model.addAttribute("msg", "You've been logged out successfully.");
@@ -84,7 +93,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String registration(@Valid UserDTO userDTO, BindingResult bindingResult) throws IOException {
+    public String registration(@Valid UserDTO userDTO, BindingResult bindingResult) throws IOException, MessagingException {
         userValidator.validate(userDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
@@ -93,8 +102,18 @@ public class UserController {
         if (userDTO.getUploadedPic().isEmpty()) {
             userDTO.setUploadedPic(null);
         }
+
+        String token = java.util.UUID.randomUUID().toString();
+        userDTO.setToken(token);
+        mailService.sendConfirmationMail(userDTO.getEmail(), token);
         userService.saveUser(userDTO);
         return "redirect:/login?registered";
+    }
+
+    @GetMapping(value = "/confirm/{token}")
+    public String confirmAccount (@PathVariable("token") String token) {
+        userService.confirmUser(token);
+        return "redirect:/login?confirmed";
     }
 
     @RequestMapping(value = "/updatePicture", method = RequestMethod.POST)

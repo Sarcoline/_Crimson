@@ -38,6 +38,12 @@ public @Data class User {
     @Size(min = 3, max = 100, message = "{invalid.password}")
     private String password;
 
+    @Column(name = "active")
+    private boolean active = false;
+
+    @Column(name = "token")
+    private String token;
+
     @Lob
     private byte[] profilePic;
 
@@ -46,12 +52,13 @@ public @Data class User {
     private int version;
 
     @Builder
-    public User(String name, String email, String password, byte[] profilePic, int version){
+    public User(String name, String email, String password, byte[] profilePic, int version, boolean active){
         this.name = name;
         this.email = email;
         this.password = password;
         this.profilePic = profilePic;
         this.version = version;
+        this.active = active;
     }
 
 

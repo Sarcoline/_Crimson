@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -281,7 +282,7 @@ public class CrimsonController {
     }
 
     @GetMapping(value = "/send")
-    public void sendMail() {
+    public void sendMail() throws MessagingException {
         mailService.sendMail("crimson@crimson.com",
                 "kaamil.kot@gmail.com",
                 "Testing123",

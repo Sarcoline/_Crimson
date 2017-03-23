@@ -55,6 +55,14 @@ public class UserDAOImpl implements UserDAO {
         return session.createQuery("Select a From User a where a.name like :custName", User.class)
                 .setParameter("custName", name).getSingleResult();
     }
+
+    @Override
+    @Cacheable("myCache")
+    public User getUserByToken(String token) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("Select a From User a where a.token like :custToken", User.class)
+                .setParameter("custToken", token).getSingleResult();
+    }
     //RELATIONSHIPS
 
     //User2TvShow

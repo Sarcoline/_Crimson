@@ -1,6 +1,7 @@
 package com.crimson.core.dao;
 
 import com.crimson.core.model.*;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
 
@@ -8,6 +9,9 @@ import java.util.List;
 public interface UserDAO extends BaseDAO<User, Long> {
 
     User getUserByName(String name);
+
+    @Cacheable("myCache")
+    User getUserByToken(String token);
 
     void addTvShow2User(User user, TvShow tvShow);
 
