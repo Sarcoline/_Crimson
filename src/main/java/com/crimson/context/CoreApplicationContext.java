@@ -11,6 +11,8 @@ import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -50,7 +52,7 @@ public class CoreApplicationContext {
 
     private Properties hibernateProperties() {
         Properties properties = new Properties();
-        properties.put("hibernate.hbm2ddl.auto", "create");
+        //properties.put("hibernate.hbm2ddl.auto", "create");
         properties.put("hibernate.c3p0.min_size", 5);
         properties.put("hibernate.c3p0.max_size", 20);
         properties.put("hibernate.c3p0.timeout", 300);
@@ -80,5 +82,23 @@ public class CoreApplicationContext {
         factoryBean.setConfigLocation(new ClassPathResource("ehcache.xml"));
         factoryBean.setShared(true);
         return factoryBean;
+    }
+
+    @Bean (name = "mailSender")
+    public JavaMailSender mailSender() {
+        JavaMailSenderImpl sender = new JavaMailSenderImpl();
+
+        Properties properties = new Properties();
+        properties.put("mail.smtp.auth", true);
+        properties.put("mail.smtp.starttls.enable", true);
+
+        sender.setJavaMailProperties(properties);
+        sender.setHost("smtp.gmail.com");
+        sender.setPort(587);
+        sender.setProtocol("smtp");
+        sender.setUsername(environment.getRequiredProperty("mail.username"));
+        sender.setPassword(environment.getRequiredProperty("mail.password"));
+
+        return sender;
     }
 }

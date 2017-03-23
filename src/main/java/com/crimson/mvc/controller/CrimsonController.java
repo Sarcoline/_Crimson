@@ -35,6 +35,8 @@ public class CrimsonController {
     private EpisodeService episodeService;
     @Autowired
     private ReviewService reviewService;
+    @Autowired
+    private MailService mailService;
 
     @GetMapping("/{name}")
     @SuppressWarnings("unchecked")
@@ -278,4 +280,11 @@ public class CrimsonController {
         return "review";
     }
 
+    @GetMapping(value = "/send")
+    public void sendMail() {
+        mailService.sendMail("crimson@crimson.com",
+                "kaamil.kot@gmail.com",
+                "Testing123",
+                "Testing only \n\n Hello Spring Email Sender");
+    }
 }
