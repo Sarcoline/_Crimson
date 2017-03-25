@@ -31,10 +31,8 @@ public interface CommentService {
 
     List<Comment> getCommentByDate(LocalDate date);
 
-    @SuppressWarnings("unchecked")
     List<Comment> getCommentByIdUser(Long idUser);
 
-    @SuppressWarnings("unchecked")
     List<Comment> getCommentByIdTvShow(Long idTvShow);
 
     List getComments(long idTvShow, long idUser);

@@ -19,14 +19,19 @@ public class RestCrimsonController {
 
     @Autowired
     private TvShowService tvShowService;
+
     @Autowired
     private UserService userService;
+
     @Autowired
     private EpisodeService episodeService;
+
     @Autowired
     private RatingService ratingService;
+
     @Autowired
     private CommentService commentService;
+
 
     @RequestMapping(value = "/search/{pattern}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
@@ -96,9 +101,9 @@ public class RestCrimsonController {
     @ResponseStatus(value = HttpStatus.OK)
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     public void addEpisodesFromJsonPost(@RequestParam("title") String title, @RequestParam("episode") int number,
-                                     @RequestParam("season") int season, @RequestParam("summary") String summary,
-                                     @RequestParam("releaseDate") String releaseDate,
-                                     @PathVariable("name") String name) {
+                                        @RequestParam("season") int season, @RequestParam("summary") String summary,
+                                        @RequestParam("releaseDate") String releaseDate,
+                                        @PathVariable("name") String name) {
         EpisodeFromJson episode = new EpisodeFromJson();
         episode.setTitle(title);
         episode.setReleaseDate(releaseDate);

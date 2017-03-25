@@ -19,10 +19,8 @@ public interface ReviewService {
 
     List<Review> getAllReviews();
 
-    @SuppressWarnings("unchecked")
     List<Review> getReviewByIdUser(Long idUser);
 
-    @SuppressWarnings("unchecked")
     List<Review> getReviewByIdTvShow(Long idTvShow);
 
     void addTvShow2Review(Review review, TvShow tvShow);

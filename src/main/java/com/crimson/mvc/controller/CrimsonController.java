@@ -14,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,19 +26,23 @@ public class CrimsonController {
 
     @Autowired
     private TvShowService tvShowService;
+
     @Autowired
     private UserService userService;
+
     @Autowired
     private RatingService ratingService;
+
     @Autowired
     private EpisodeService episodeService;
+
     @Autowired
     private ReviewService reviewService;
+
     @Autowired
     private MailService mailService;
 
     @GetMapping("/{name}")
-    @SuppressWarnings("unchecked")
     public String displayTvShow(Model model, @PathVariable("name") String name) {
         TvShowDTO tv = tvShowService.getTvBySlug(name);
         boolean follow = false;
@@ -51,7 +54,7 @@ public class CrimsonController {
             follow = userService.checkFollow(user, tv);
             rating = ratingService.getRating(tv.getId(), user.getId()).getValue();
             model.addAttribute("user", user);
-            List watchedEpisodesId = new ArrayList();
+            List<Long> watchedEpisodesId = new ArrayList<>();
             user.getEpisodes().forEach(episode -> watchedEpisodesId.add(episode.getId()));
             model.addAttribute("watchedEpisodesId", watchedEpisodesId);
         }
@@ -261,13 +264,5 @@ public class CrimsonController {
     public String displayReview(Model model, @PathVariable("id") long id) {
         model.addAttribute("review", reviewService.getReviewById(id));
         return "review";
-    }
-
-    @GetMapping(value = "/send")
-    public void sendMail() throws MessagingException {
-        mailService.sendMail("crimson@crimson.com",
-                "kaamil.kot@gmail.com",
-                "Testing123",
-                "Testing only \n\n Hello Spring Email Sender");
     }
 }

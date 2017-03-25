@@ -19,8 +19,10 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Autowired
     private ReviewDAO reviewDAO;
+
     @Autowired
     private TvShowDAO tvShowDAO;
+
     @Autowired
     private UserDAO userDAO;
 

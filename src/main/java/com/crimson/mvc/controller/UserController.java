@@ -110,7 +110,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/confirm/{token}")
-    public String confirmAccount (@PathVariable("token") String token) {
+    public String confirmAccount(@PathVariable("token") String token) {
         userService.confirmUser(token);
         return "redirect:/login?confirmed";
     }
@@ -134,14 +134,13 @@ public class UserController {
     }
 
     @GetMapping("/user/{name}")
-    @SuppressWarnings("unchecked")
     public String displayUser(Model model, @PathVariable("name") String name) {
 
         UserDTO user = userService.getUserByName(name);
         List<TvShowDTO> tvs = user.getTvShows();
         List<TvShowDTO> favorites = userService.getUserTvShowsSortedByMaxRating(user);
         List<EpisodeDTO> watchedEpisodes = user.getEpisodes();
-        List watchedEpisodesId = new ArrayList<>();
+        List<Long> watchedEpisodesId = new ArrayList<>();
         watchedEpisodes.forEach(episode -> watchedEpisodesId.add(episode.getId()));
         List<EpisodeDTO> upcoming = userService.getAllUpcomingUserEpisodes(user, tvs, watchedEpisodes);
 
@@ -232,7 +231,7 @@ public class UserController {
     public String postResetPassword(@RequestParam("email") String email) throws MessagingException {
         UserDTO userDTO = userService.getUserByEmail(email);
         if (userDTO == null) {
-            return  "redirect:/user/resetPassword?usernotfound";
+            return "redirect:/user/resetPassword?usernotfound";
         }
 
         String token = UUID.randomUUID().toString();
@@ -243,7 +242,7 @@ public class UserController {
 
     @RequestMapping(value = "/user/changePassword", method = RequestMethod.GET)
     public String changePassword(Model model, @RequestParam("id") long id,
-                                  @RequestParam("token") String token) {
+                                 @RequestParam("token") String token) {
         String result = userService.validatePasswordResetToken(id, token);
         if (result != null) {
             return "redirect:/login?error";

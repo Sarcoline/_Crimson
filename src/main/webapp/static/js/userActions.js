@@ -19,7 +19,7 @@ var rateTvShow = function (label, rateValue, id) {
     });
 };
 
-var followTvShow = function (follow,id) {
+var followTvShow = function (follow, id) {
     follow.on('click', function () {
         $(this).find('i').toggleClass('fa-heart-o fa-heart');
         $.ajax({
@@ -27,7 +27,7 @@ var followTvShow = function (follow,id) {
             url: "/api/follow",
             data: {id: id}
 
-        })
+        });
     });
 };
 

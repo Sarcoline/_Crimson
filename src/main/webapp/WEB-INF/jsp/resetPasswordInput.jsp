@@ -55,10 +55,10 @@
     </div>
 </div>
 <script>
-    $(":password").keyup(function(){
-        if($("#password").val() != $("#matchPassword").val()){
+    $(":password").keyup(function () {
+        if ($("#password").val() !== $("#matchPassword").val()) {
             $("#globalError").show().html("o chuj");
-        }else{
+        } else {
             $("#globalError").html("").hide();
         }
     });

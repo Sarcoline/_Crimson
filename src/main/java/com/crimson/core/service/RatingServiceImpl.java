@@ -22,10 +22,13 @@ public class RatingServiceImpl implements RatingService {
 
     @Autowired
     private RatingDAO ratingDAO;
+
     @Autowired
     private TvShowDAO tvShowDAO;
+
     @Autowired
     private UserDAO userDAO;
+
     @Autowired
     private MapperFacade mapperFacade;
 

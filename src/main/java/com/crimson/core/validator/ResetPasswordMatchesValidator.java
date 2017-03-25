@@ -5,9 +5,6 @@ import com.crimson.core.dto.PasswordResetDTO;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-/**
- * Created by Meow on 25.03.2017.
- */
 public class ResetPasswordMatchesValidator implements ConstraintValidator<ResetPasswordMatches, Object> {
 
     @Override

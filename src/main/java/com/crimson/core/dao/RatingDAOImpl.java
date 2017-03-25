@@ -67,7 +67,6 @@ public class RatingDAOImpl implements RatingDAO {
         return session.createQuery("SELECT a FROM  Rating a", Rating.class).getResultList();
     }
 
-    //podobno proper way?
     @Override
     @Cacheable("myCache")
     public Rating getRating(long idtv, long iduser) {

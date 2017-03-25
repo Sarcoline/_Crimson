@@ -11,7 +11,8 @@
                     <p>${error}</p>
                 </div>
             </c:if>
-            <form name='resetForm' action="<c:url value='/user/resetPassword' />" method='POST' class="uk-form uk-form-stacked">
+            <form name='resetForm' action="<c:url value='/user/resetPassword' />" method='POST'
+                  class="uk-form uk-form-stacked">
                 <div class="uk-form-row">
                     <input class="uk-width-1-1 uk-form-large" type="text" name='email' placeholder="Email"
                            autofocus></div>

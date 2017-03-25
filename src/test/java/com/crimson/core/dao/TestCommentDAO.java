@@ -56,7 +56,6 @@ public class TestCommentDAO {
     public void saveTest(){
         Comment comment = Comment.builder()
                 .text("TEST")
-                .date(LocalDate.parse("2017-02-27"))
                 .build();
         int listSize = commentDAO.getAll().size();
 

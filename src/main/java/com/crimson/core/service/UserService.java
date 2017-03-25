@@ -13,7 +13,7 @@ import java.util.List;
 public interface UserService {
     void saveUser(UserDTO userDTO) throws IOException;
 
-    List<User> getAllUsers();
+    List<UserDTO> getAllUsers();
 
     User getUserById(Long id);
 
@@ -71,7 +71,6 @@ public interface UserService {
 
     List<Review> getReviews(User user);
 
-    //Extra Methods
     List<TvShowDTO> getUserTvShowsSortedByMaxRating(UserDTO user);
 
     List<EpisodeDTO> getAllUnwatchedUserEpisodes(UserDTO user);

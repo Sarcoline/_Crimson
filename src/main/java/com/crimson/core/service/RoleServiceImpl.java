@@ -16,6 +16,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Autowired
     private RoleDAO roleDAO;
+
     @Autowired
     private UserDAO userDAO;
 

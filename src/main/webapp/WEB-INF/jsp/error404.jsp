@@ -9,9 +9,9 @@
 
 <body>
 <div class="content">
- <h1 class="lost">It seems that you are</h1>
- <h1 class="error">404</h1>
- <a href="/" class="link">Go to home page</a>
+    <h1 class="lost">It seems that you are</h1>
+    <h1 class="error">404</h1>
+    <a href="/" class="link">Go to home page</a>
 </div>
 </body>
 </html>

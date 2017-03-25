@@ -16,6 +16,7 @@ public class SettingsServiceImpl implements SettingsService {
 
     @Autowired
     private SettingsDAO settingsDAO;
+
     @Autowired
     private UserDAO userDAO;
 

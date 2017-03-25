@@ -63,10 +63,10 @@
                 <div class="uk-form-row">
                     <form:errors path="description" cssClass="uk-alert uk-alert-danger" element="div"/>
                     <form:textarea path="description" value="${tv.description}" class="uk-width-1-1 uk-form-large"
-                                type="text"
+                                   type="text"
                                    style="height: 200px;"
-                                name='description'
-                                placeholder="Description"/>
+                                   name='description'
+                                   placeholder="Description"/>
                 </div>
                 <div class="uk-form-row">
                     <form:errors path="trailerUrl" cssClass="uk-alert uk-alert-danger" element="div"/>
@@ -92,7 +92,8 @@
         </div>
         <div class="uk-width-1-2">
             <c:forEach items="${tv.pictures}" var="pictures" varStatus="status">
-                <form class="uk-form uk-margin-bottom" method="post" action="<c:url value="/tv/${tv.slug}/updatePicture" />" enctype="multipart/form-data">
+                <form class="uk-form uk-margin-bottom" method="post"
+                      action="<c:url value="/tv/${tv.slug}/updatePicture" />" enctype="multipart/form-data">
                     <img src="<c:url value="/images/tv/${tv.slug}/${pictures.key}"/>" width="200" height="200">
                     <br>
                     <input type="file" name="pic1" required/>

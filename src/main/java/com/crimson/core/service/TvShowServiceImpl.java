@@ -22,18 +22,25 @@ public class TvShowServiceImpl implements TvShowService {
 
     @Autowired
     private TvShowDAO tvShowDAO;
+
     @Autowired
     private UserDAO userDAO;
+
     @Autowired
     private GenreDAO genreDAO;
+
     @Autowired
     private EpisodeDAO episodeDAO;
+
     @Autowired
     private RatingDAO ratingDAO;
+
     @Autowired
     private CommentDAO commentDAO;
+
     @Autowired
     private ReviewDAO reviewDAO;
+
     @Autowired
     private MapperFacade mapperFacade;
 
@@ -276,7 +283,6 @@ public class TvShowServiceImpl implements TvShowService {
         return tvShowDAO.getReviews(tv);
     }
 
-    //Extra Methods
 
     @Override
     public List<TvShowDTO> getAllTvShowByMaxRating() {

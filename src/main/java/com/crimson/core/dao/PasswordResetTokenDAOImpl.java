@@ -8,9 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * Created by Meow on 24.03.2017.
- */
 @Repository
 public class PasswordResetTokenDAOImpl implements PasswordResetTokenDAO {
 
@@ -30,18 +27,21 @@ public class PasswordResetTokenDAOImpl implements PasswordResetTokenDAO {
     }
 
     @Override
-    public void update(PasswordResetToken object) {
-
+    public void update(PasswordResetToken token) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(token);
     }
 
     @Override
     public List<PasswordResetToken> getAll() {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("SELECT a FROM PasswordResetToken a", PasswordResetToken.class).getResultList();
     }
 
     @Override
     public PasswordResetToken getById(Long key) {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        return session.find(PasswordResetToken.class, key);
     }
 
     @Override

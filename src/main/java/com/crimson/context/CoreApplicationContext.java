@@ -16,6 +16,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
@@ -24,6 +25,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @EnableAsync
+@EnableScheduling
 @ComponentScan(basePackageClasses = CorePackageMarker.class)
 @Import(AspectConfiguration.class)
 @PropertySource("classpath:/hibernate.properties")
@@ -54,7 +56,7 @@ public class CoreApplicationContext {
 
     private Properties hibernateProperties() {
         Properties properties = new Properties();
-        properties.put("hibernate.hbm2ddl.auto", "create");
+        //properties.put("hibernate.hbm2ddl.auto", "create");
         properties.put("hibernate.c3p0.min_size", 5);
         properties.put("hibernate.c3p0.max_size", 20);
         properties.put("hibernate.c3p0.timeout", 300);

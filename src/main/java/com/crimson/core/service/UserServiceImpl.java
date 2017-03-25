@@ -61,9 +61,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordResetTokenDAO passwordResetTokenDAO;
 
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
-
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 
@@ -80,15 +77,14 @@ public class UserServiceImpl implements UserService {
             InputStream in = context.getResource("classpath:/images/user/user.jpg").getInputStream();
             user.setProfilePic(IOUtils.toByteArray(in));
         }
-
-
         userDAO.save(user);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public List<User> getAllUsers() {
-        return userDAO.getAll();
+    public List<UserDTO> getAllUsers() {
+        List<UserDTO> users = new ArrayList<>();
+        userDAO.getAll().forEach(user -> users.add(mapperFacade.map(user, UserDTO.class)));
+        return users;
     }
 
     @Override
@@ -157,9 +153,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public List<TvShowDTO> getUserTvShows(UserDTO userDTO) {
-        List tvs = new ArrayList();
+        List<TvShowDTO> tvs = new ArrayList<>();
         userDAO.getUserByName(userDTO.getName()).getTvShows().forEach(
                 tv -> tvs.add(mapperFacade.map(tv, TvShowDTO.class)));
         return tvs;
@@ -323,8 +318,6 @@ public class UserServiceImpl implements UserService {
         return userDAO.getReviews(user);
     }
 
-
-    //Extra Methods
     @Override
     public List<TvShowDTO> getUserTvShowsSortedByMaxRating(UserDTO userDTO) {
 
@@ -353,12 +346,9 @@ public class UserServiceImpl implements UserService {
                     allUnwatchedUserEpisodes.add(mapperFacade.map(episode, EpisodeDTO.class));
             });
         });
-
-
         return allUnwatchedUserEpisodes;
     }
 
-    //TODO slow af
     @Override
     public List<EpisodeDTO> getAllUpcomingUserEpisodes(UserDTO userDTO, List<TvShowDTO> tvs, List<EpisodeDTO> watchedEpisodes) {
 

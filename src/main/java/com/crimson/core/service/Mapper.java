@@ -13,7 +13,6 @@ public class Mapper extends ConfigurableMapper {
         factory.classMap(User.class, UserDTO.class)
                 .byDefault()
                 .register();
-
         factory.classMap(TvShow.class, TvShowDTO.class)
                 .byDefault()
                 .register();

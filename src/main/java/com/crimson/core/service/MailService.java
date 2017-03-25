@@ -48,10 +48,20 @@ public class MailService {
     public void sendPasswordResetMail(UserDTO to, String token) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         String body = String.format("<h3>Click to reset your password</h3>" +
-                "<a href='http://localhost:8080/user/changePassword?id=%s&token=%s'>Click to reset</a>", to.getId() ,token);
+                "<a href='http://localhost:8080/user/changePassword?id=%s&token=%s'>Click to reset</a>", to.getId(), token);
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
         helper.setTo(to.getEmail());
         helper.setSubject("Crimson - Reset your password");
+        helper.setText(body, true);
+        mailSender.send(mimeMessage);
+    }
+
+    public void sendMailWithEpisodes(String to, String body) throws MessagingException {
+
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+        helper.setTo(to);
+        helper.setSubject("Crimson - Daily episode list");
         helper.setText(body, true);
         mailSender.send(mimeMessage);
     }

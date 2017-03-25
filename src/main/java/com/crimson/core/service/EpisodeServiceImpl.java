@@ -25,11 +25,13 @@ public class EpisodeServiceImpl implements EpisodeService {
 
     @Autowired
     private EpisodeDAO episodeDAO;
+
     @Autowired
     private UserDAO userDAO;
 
     @Autowired
     private TvShowDAO tvShowDAO;
+
     @Autowired
     private MapperFacade mapperFacade;
 
@@ -187,7 +189,5 @@ public class EpisodeServiceImpl implements EpisodeService {
                     .build();
             episodeDAO.save(ep);
         }
-
-
     }
 }

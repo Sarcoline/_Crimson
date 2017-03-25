@@ -21,14 +21,16 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     private CommentDAO commentDAO;
+
     @Autowired
     private TvShowDAO tvShowDAO;
+
     @Autowired
     private UserDAO userDAO;
 
     @Override
     public void save(CommentDTO commentDTO) {
-        Comment comment1 = new Comment(commentDTO.getText(), commentDTO.getDate());
+        Comment comment1 = new Comment(commentDTO.getText());
         addTvShow2Comment(comment1, tvShowDAO.getById(commentDTO.getIdTvShow()));
         addUser2Comment(comment1, userDAO.getById(commentDTO.getUser().getId()));
         commentDAO.save(comment1);

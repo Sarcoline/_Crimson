@@ -234,8 +234,7 @@ public class UserDAOImpl implements UserDAO {
             user = session.createQuery("Select a From User a where a.email like :custEmail", User.class)
                     .setParameter("custEmail", email).getSingleResult();
 
-        }
-        catch (NoResultException e) {
+        } catch (NoResultException e) {
             return null;
         }
         return user;
