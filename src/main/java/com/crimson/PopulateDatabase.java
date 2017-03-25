@@ -451,7 +451,7 @@ public class PopulateDatabase {
             roleService.saveRole(role1);
             UserDTO user = new UserDTO();
             user.setName("TestUser");
-            user.setEmail("test@email.com");
+            user.setEmail("kissakot@gmail.com");
             user.setPassword("123");
             user.setActive(true);
             user.getRoles().add(roleService.getAllRoles().get(1));

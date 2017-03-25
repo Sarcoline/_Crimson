@@ -4,7 +4,6 @@ import com.crimson.core.dto.*;
 import com.crimson.core.service.*;
 import com.github.slugify.Slugify;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -223,27 +222,10 @@ public class CrimsonController {
         return "tvShowList";
     }
 
-    @GetMapping(value = "/{name}/edit/episodes/addSearch")
-    public String searchAddEpisode(@PathVariable("name") String name, Model model) {
+    @GetMapping(value = "/{name}/edit/episodes/api")
+    public String addEpisodesFromJson(@PathVariable("name") String name, Model model) {
         model.addAttribute("name", name);
         return "addEpisodesFromJson";
-    }
-
-    @RequestMapping(value = "/{name}/edit/episodes/addSearch/add", method = RequestMethod.GET)
-    @ResponseStatus(value = HttpStatus.OK)
-    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
-    public void postSearchAddEpisode(@RequestParam("title") String title, @RequestParam("episode") int number,
-                                     @RequestParam("season") int season, @RequestParam("summary") String summary,
-                                     @RequestParam("releaseDate") String releaseDate,
-                                     @PathVariable("name") String name) {
-        EpisodeFromJson episode = new EpisodeFromJson();
-        episode.setTitle(title);
-        episode.setReleaseDate(releaseDate);
-        episode.setEpisode(number);
-        episode.setSeason(season);
-        episode.setSummary(summary);
-        episode.setIdTvShow(tvShowService.getTvBySlug(name).getId());
-        episodeService.saveEpisodeJSON(episode);
     }
 
     @GetMapping(value = "/{name}/reviews/write")

@@ -9,6 +9,10 @@ import ma.glasnost.orika.MapperFacade;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,9 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 
 @Service
@@ -55,6 +57,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private RoleDAO roleDAO;
+
+    @Autowired
+    private PasswordResetTokenDAO passwordResetTokenDAO;
+
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -401,5 +409,56 @@ public class UserServiceImpl implements UserService {
         user.setToken(null);
         user.setActive(true);
         userDAO.update(user);
+    }
+
+    @Override
+    public UserDTO getUserByEmail(String email) {
+        User user = userDAO.getUserByEmail(email);
+        return mapperFacade.map(user, UserDTO.class);
+    }
+
+    @Override
+    public void createPasswordResetTokenForUser(UserDTO userDTO, String token) {
+        PasswordResetToken myToken = new PasswordResetToken(token, userDAO.getById(userDTO.getId()));
+        passwordResetTokenDAO.save(myToken);
+    }
+
+    @Override
+    public String validatePasswordResetToken(long id, String token) {
+        PasswordResetToken passToken =
+                passwordResetTokenDAO.findByToken(token);
+        if ((passToken == null) || (passToken.getUser()
+                .getId() != id)) {
+            return "invalidToken";
+        }
+
+        Calendar cal = Calendar.getInstance();
+        if ((passToken.getExpiryDate()
+                .getTime() - cal.getTime()
+                .getTime()) <= 0) {
+            return "expired";
+        }
+
+        User user = passToken.getUser();
+        Authentication auth = new UsernamePasswordAuthenticationToken(
+                user, null, Collections.singletonList(
+                new SimpleGrantedAuthority("CHANGE_PASSWORD_PRIVILEGE")));
+        SecurityContextHolder.getContext().setAuthentication(auth);
+        return null;
+    }
+
+    @Override
+    public void changeUserPassword(User user, String password) {
+        user.setPassword(encoder.encode(password));
+        userDAO.update(user);
+    }
+
+    @Override
+    public void deletePasswordResetToken(String token) {
+        PasswordResetToken tokenObj = passwordResetTokenDAO.findByToken(token);
+        User user = tokenObj.getUser();
+        user.setPasswordResetToken(null);
+        userDAO.update(user);
+        passwordResetTokenDAO.delete(tokenObj);
     }
 }

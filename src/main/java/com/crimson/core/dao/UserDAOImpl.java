@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
 
@@ -223,6 +224,21 @@ public class UserDAOImpl implements UserDAO {
         return session.createQuery(hql)
                 .setParameter(0, user.getId())
                 .getResultList();
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        Session session = sessionFactory.getCurrentSession();
+        User user;
+        try {
+            user = session.createQuery("Select a From User a where a.email like :custEmail", User.class)
+                    .setParameter("custEmail", email).getSingleResult();
+
+        }
+        catch (NoResultException e) {
+            return null;
+        }
+        return user;
     }
 
     @SuppressWarnings("unchecked")

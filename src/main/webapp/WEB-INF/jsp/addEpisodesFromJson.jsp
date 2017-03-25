@@ -52,7 +52,7 @@
 
         var postJson = function (episode) {
             $.ajax({
-                url: 'add',
+                url: '/api/' + tvshow + '/add',
                 type: 'get',
                 data: episode,
                 success: function (data) {

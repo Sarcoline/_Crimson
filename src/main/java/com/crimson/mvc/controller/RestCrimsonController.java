@@ -91,4 +91,21 @@ public class RestCrimsonController {
     public FilterResponseDTO filter(@RequestBody SearchFilterParameters parameters, @PathVariable("page") int page) {
         return tvShowService.filter(parameters, page);
     }
+
+    @RequestMapping(value = "/{name}/add", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
+    public void addEpisodesFromJsonPost(@RequestParam("title") String title, @RequestParam("episode") int number,
+                                     @RequestParam("season") int season, @RequestParam("summary") String summary,
+                                     @RequestParam("releaseDate") String releaseDate,
+                                     @PathVariable("name") String name) {
+        EpisodeFromJson episode = new EpisodeFromJson();
+        episode.setTitle(title);
+        episode.setReleaseDate(releaseDate);
+        episode.setEpisode(number);
+        episode.setSeason(season);
+        episode.setSummary(summary);
+        episode.setIdTvShow(tvShowService.getTvBySlug(name).getId());
+        episodeService.saveEpisodeJSON(episode);
+    }
 }

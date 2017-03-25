@@ -83,6 +83,9 @@ public @Data class User {
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
     private Setting setting;
 
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
+    private PasswordResetToken passwordResetToken;
+
     //User2Role
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "User2Role",
@@ -101,6 +104,6 @@ public @Data class User {
     @Override
     public String toString()
     {
-        return "User["+ id + "_" + name + "]";
+        return name;
     }
 }

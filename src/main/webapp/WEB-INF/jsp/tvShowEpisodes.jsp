@@ -36,7 +36,7 @@
            class="uk-button uk-margin-top">Back</a>
         <a href="<c:url value="/tv/${name}/edit/episodes/add/"/>"
            class="uk-button uk-button-success uk-margin-top" style="float: right">Add</a>
-        <a href="<c:url value="/tv/${name}/edit/episodes/addSearch/"/>"
+        <a href="<c:url value="/tv/${name}/edit/episodes/api/"/>"
            class="uk-button uk-button-primary uk-margin-top">Try to add from external api</a>
     </div>
 </div>

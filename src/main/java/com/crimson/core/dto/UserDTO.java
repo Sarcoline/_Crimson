@@ -1,9 +1,10 @@
 package com.crimson.core.dto;
 
+import com.crimson.core.model.PasswordResetToken;
 import com.crimson.core.model.Rating;
 import com.crimson.core.model.Role;
 import com.crimson.core.model.Setting;
-import com.crimson.core.validator.PasswordMatches;
+import com.crimson.core.validator.UserPasswordMatches;
 import lombok.Data;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -14,7 +15,7 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
-@PasswordMatches
+@UserPasswordMatches
 public @Data class UserDTO {
 
     private Long id;
@@ -42,6 +43,8 @@ public @Data class UserDTO {
     private boolean active;
 
     private String token;
+
+    private PasswordResetToken passwordResetToken;
 
     private List<Role> roles = new ArrayList<>();
 

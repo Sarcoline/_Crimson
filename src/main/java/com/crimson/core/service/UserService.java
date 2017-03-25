@@ -85,4 +85,14 @@ public interface UserService {
     void updateSettings(UserDTO user, int days);
 
     void confirmUser(String token);
+
+    UserDTO getUserByEmail(String email);
+
+    void createPasswordResetTokenForUser(UserDTO userDTO, String token);
+
+    String validatePasswordResetToken(long id, String token);
+
+    void changeUserPassword(User user, String password);
+
+    void deletePasswordResetToken(String token);
 }

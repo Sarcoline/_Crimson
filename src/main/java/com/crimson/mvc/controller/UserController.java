@@ -1,9 +1,7 @@
 package com.crimson.mvc.controller;
 
-import com.crimson.core.dto.EpisodeDTO;
-import com.crimson.core.dto.PasswordDTO;
-import com.crimson.core.dto.TvShowDTO;
-import com.crimson.core.dto.UserDTO;
+import com.crimson.core.dto.*;
+import com.crimson.core.model.User;
 import com.crimson.core.service.MailService;
 import com.crimson.core.service.ReviewService;
 import com.crimson.core.service.TvShowService;
@@ -30,6 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Controller
 public class UserController {
@@ -219,5 +218,54 @@ public class UserController {
         }
         model.addAttribute("passwordDTO", new PasswordDTO());
         return "changePassword";
+    }
+
+    @GetMapping(value = "/user/resetPassword")
+    public String resetPassword(Model model, @RequestParam(value = "usernotfound", required = false) String usernotfound) {
+        if (usernotfound != null) {
+            model.addAttribute("error", "User with that mail doesn't exist");
+        }
+        return "resetPassword";
+    }
+
+    @RequestMapping(value = "/user/resetPassword", method = RequestMethod.POST)
+    public String postResetPassword(@RequestParam("email") String email) throws MessagingException {
+        UserDTO userDTO = userService.getUserByEmail(email);
+        if (userDTO == null) {
+            return  "redirect:/user/resetPassword?usernotfound";
+        }
+
+        String token = UUID.randomUUID().toString();
+        userService.createPasswordResetTokenForUser(userDTO, token);
+        mailService.sendPasswordResetMail(userDTO, token);
+        return "resetPasswordSent";
+    }
+
+    @RequestMapping(value = "/user/changePassword", method = RequestMethod.GET)
+    public String changePassword(Model model, @RequestParam("id") long id,
+                                  @RequestParam("token") String token) {
+        String result = userService.validatePasswordResetToken(id, token);
+        if (result != null) {
+            return "redirect:/login?error";
+        }
+        model.addAttribute("passwordResetDTO", new PasswordResetDTO());
+
+        return "resetPasswordInput";
+    }
+
+    @RequestMapping(value = "/user/changePassword", method = RequestMethod.POST)
+    public String savePassword(@Valid PasswordResetDTO passwordResetDTO, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "resetPasswordInput";
+        }
+        User user =
+                (User) SecurityContextHolder.getContext()
+                        .getAuthentication().getPrincipal();
+
+        userService.changeUserPassword(user, passwordResetDTO.getPassword());
+        userService.deletePasswordResetToken(passwordResetDTO.getToken());
+
+        return "redirect:/login";
     }
 }
