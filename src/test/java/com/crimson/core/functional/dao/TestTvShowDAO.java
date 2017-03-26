@@ -1,6 +1,7 @@
-package com.crimson.core.dao;
+package com.crimson.core.functional.dao;
 
 import com.crimson.context.TestSpringCore;
+import com.crimson.core.dao.*;
 import com.crimson.core.factory.*;
 import com.crimson.core.model.*;
 import org.junit.Assert;

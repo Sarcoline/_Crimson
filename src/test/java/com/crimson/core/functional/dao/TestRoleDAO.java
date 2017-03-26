@@ -1,7 +1,9 @@
-package com.crimson.core.dao;
+package com.crimson.core.functional.dao;
 
 
 import com.crimson.context.TestSpringCore;
+import com.crimson.core.dao.RoleDAO;
+import com.crimson.core.dao.UserDAO;
 import com.crimson.core.factory.RoleFactory;
 import com.crimson.core.factory.UserFactory;
 import com.crimson.core.model.Role;
