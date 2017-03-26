@@ -81,7 +81,7 @@ public interface UserService {
 
     boolean checkOldPassword(UserDTO userDTO, String password);
 
-    void updateSettings(UserDTO user, int days);
+    void updateSettings(UserDTO user, int days, boolean send);
 
     void confirmUser(String token);
 

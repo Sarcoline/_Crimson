@@ -124,15 +124,6 @@ public class UserController {
         return "redirect:/user/edit";
     }
 
-    @RequestMapping(value = "/updateSettings", method = RequestMethod.POST)
-    public String updateSettings(@RequestParam("days") int days) throws Exception {
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDTO user = userService.getUserByName(auth.getName());
-        userService.updateSettings(user, days);
-        return "redirect:/user/edit";
-    }
-
     @GetMapping("/user/{name}")
     public String displayUser(Model model, @PathVariable("name") String name) {
 

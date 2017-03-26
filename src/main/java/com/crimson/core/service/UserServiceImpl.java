@@ -387,9 +387,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateSettings(UserDTO userDTO, int days) {
+    public void updateSettings(UserDTO userDTO, int days, boolean send) {
         User user = userDAO.getById(userDTO.getId());
         user.getSetting().setDaysOfUpcomingEpisodes(days);
+        user.getSetting().setSendEpisodeList(send);
         userDAO.update(user);
     }
 

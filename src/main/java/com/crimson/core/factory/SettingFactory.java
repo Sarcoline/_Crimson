@@ -12,7 +12,7 @@ public class SettingFactory {
             case "setting_1": {
                 setting = Setting.builder()
                         .daysOfUpcomingEpisodes(10)
-                        .episodesFromBegining(true)
+                        .sendEpisodeList(true)
                         .build();
                 break;
             }
@@ -20,7 +20,7 @@ public class SettingFactory {
             case "setting_2": {
                 setting = Setting.builder()
                         .daysOfUpcomingEpisodes(10)
-                        .episodesFromBegining(false)
+                        .sendEpisodeList(false)
                         .build();
                 break;
             }
@@ -28,7 +28,7 @@ public class SettingFactory {
             case "setting_3": {
                 setting = Setting.builder()
                         .daysOfUpcomingEpisodes(7)
-                        .episodesFromBegining(false)
+                        .sendEpisodeList(false)
                         .build();
                 break;
             }

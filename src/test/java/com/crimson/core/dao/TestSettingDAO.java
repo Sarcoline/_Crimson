@@ -52,7 +52,7 @@ public class TestSettingDAO {
     public void saveTest() {
         Setting setting = Setting.builder()
                 .daysOfUpcomingEpisodes(10)
-                .episodesFromBegining(true)
+                .sendEpisodeList(true)
                 .numberOfEpisodesOnUserPage(25)
                 .build();
 

@@ -113,4 +113,12 @@ public class RestCrimsonController {
         episode.setIdTvShow(tvShowService.getTvBySlug(name).getId());
         episodeService.saveEpisodeJSON(episode);
     }
+
+    @RequestMapping(value = "/updateSettings", method = RequestMethod.POST)
+    public void updateSettings(@RequestParam("days") int days, @RequestParam("send") boolean send) throws Exception {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDTO user = userService.getUserByName(auth.getName());
+        userService.updateSettings(user, days, send);
+    }
 }
