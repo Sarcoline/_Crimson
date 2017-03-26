@@ -29,7 +29,7 @@ public class MailScheduler {
         List<UserDTO> users = userService.getAllUsers();
         users.forEach(user -> {
             List<EpisodeDTO> upcoming = userService.getAllUpcomingUserEpisodes(user, user.getTvShows(), user.getEpisodes());
-            if (upcoming.size() > 0) {
+            if (upcoming.size() > 0 && user.getSetting().getSendEpisodeList()) {
                 String body = "<h3>Hey, it's your daily episodes list: </h3>" +
                         "<ul>";
                 StringBuilder sB = new StringBuilder(body);
@@ -39,7 +39,7 @@ public class MailScheduler {
                 sB.append("</ul>");
                 body = sB.toString();
                 try {
-                    mailService.sendMailWithEpisodes(user.getEmail(), body);
+                    mailService.sendMail(user.getEmail(),"Crimson - Daily episode list", body);
                 } catch (MessagingException e) {
                     e.printStackTrace();
                 }

@@ -55,8 +55,10 @@
         <div class="uk-form-row">
         <label class="uk-form-label" for="days">Send me daily episode list</label>
             <select name="select" id="sendMail">
+
                 <option value="true">Send</option>
-                <option value="false" selected>Turn off</option>
+                <option value="false" <c:if test="${!userDTO.setting.sendEpisodeList}"> selected
+                </c:if>>Turn off</option>
             </select>
         </div>
         <div class="uk-form-row">

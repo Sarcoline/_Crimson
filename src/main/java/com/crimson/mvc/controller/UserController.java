@@ -104,7 +104,9 @@ public class UserController {
 
         String token = java.util.UUID.randomUUID().toString();
         userDTO.setToken(token);
-        mailService.sendConfirmationMail(userDTO.getEmail(), token);
+        String body = String.format("<h1>Your account has been created</h1><h3>Confirm your email</h3>" +
+                "<a href='http://localhost:8080/confirm/%s'>Click to confirm</a>", token);
+        mailService.sendMail(userDTO.getEmail(), "Crimson - Confirm your email", body);
         userService.saveUser(userDTO);
         return "redirect:/login?registered";
     }
@@ -227,7 +229,9 @@ public class UserController {
 
         String token = UUID.randomUUID().toString();
         userService.createPasswordResetTokenForUser(userDTO, token);
-        mailService.sendPasswordResetMail(userDTO, token);
+        String body = String.format("<h3>Click to reset your password</h3>" +
+                "<a href='http://localhost:8080/user/changePassword?id=%s&token=%s'>Click to reset</a>", userDTO.getId(), token);
+        mailService.sendMail(userDTO.getEmail(), "Crimson - Reset your password", body);
         return "resetPasswordSent";
     }
 
