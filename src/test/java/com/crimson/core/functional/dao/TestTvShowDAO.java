@@ -134,33 +134,6 @@ public class TestTvShowDAO {
         Assert.assertEquals(getTvShowByIdTest.getTitle(), tvShow.getTitle());
     }
 
-    //Extra Methods
-
-    @Test
-    public void tvShowsLastPageNumber() {
-        int lastPage = tvShowDAO.tvShowsLastPageNumber();
-
-        Assert.assertEquals(lastPage, 1);
-    }
-
-    @Test
-    public void tvShowsPaginationList() {
-        List<TvShow> tvShows = tvShowDAO.tvShowsPaginationList(1);
-        tvShows.addAll(tvShowDAO.tvShowsPaginationList(2));
-
-        Assert.assertEquals(tvShows.get(0), tvShow);
-        Assert.assertEquals(tvShows.get(1), tvShow2);
-        Assert.assertEquals(tvShows.get(2), tvShow3);
-        Assert.assertEquals(tvShows.get(3), tvShow4);
-        Assert.assertEquals(tvShows.get(4), tvShow5);
-        Assert.assertEquals(tvShows.get(5), tvShow6);
-        Assert.assertEquals(tvShows.get(6), tvShow7);
-        Assert.assertEquals(tvShows.get(7), tvShow8);
-        Assert.assertEquals(tvShows.get(8), tvShow9);
-        Assert.assertEquals(tvShows.get(9), tvShow10);
-
-    }
-
 
     //RELATIONSHIP TESTS
 

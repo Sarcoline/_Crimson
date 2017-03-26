@@ -3,6 +3,7 @@ package com.crimson.core.dao;
 import com.crimson.context.TestSpringCore;
 import com.crimson.core.factory.*;
 import com.crimson.core.model.*;
+import org.aspectj.lang.annotation.SuppressAjWarnings;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

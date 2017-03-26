@@ -5,6 +5,9 @@ import com.crimson.core.dto.*;
 import com.crimson.core.model.*;
 import com.github.slugify.Slugify;
 import ma.glasnost.orika.MapperFacade;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -330,22 +333,70 @@ public class TvShowServiceImpl implements TvShowService {
         tvShowDAO.save(tv);
     }
 
+
     @Override
     public int tvShowsLastPageNumber() {
-        return tvShowDAO.tvShowsLastPageNumber();
+        int listSizeOnPage = 20;
+        Long countResults = tvShowDAO.getTvShowsToPaginationByQuery();
+        if ((countResults % listSizeOnPage) == 0) return (int) (countResults / listSizeOnPage);
+        else return (int) (countResults / listSizeOnPage) + 1;
     }
 
     @Override
-    public List<TvShowSearchDTO> tvShowsPaginationList(int pageNumber) {
-        List<TvShowSearchDTO> tvShows = new ArrayList<>();
-        tvShowDAO.tvShowsPaginationList(pageNumber).forEach(
-                tvShow -> tvShows.add(mapperFacade.map(tvShow, TvShowSearchDTO.class))
+    public List<TvShowSearchDTO> tvShowsPaginationList(int pageNumber){
+        int lastPage = tvShowsLastPageNumber();
+        List tvShows = new ArrayList<>();
+        List<TvShowSearchDTO> tvShowsToReturn = new ArrayList<>();
+        if (lastPage <= pageNumber)
+        {
+            tvShows = tvShowDAO.queryGettingTvShowListForPage(pageNumber, 25);
+        }
+        tvShows.forEach(
+                tvShow -> tvShowsToReturn.add(mapperFacade.map(tvShow, TvShowSearchDTO.class))
         );
-        return tvShows;
+
+        return tvShowsToReturn;
     }
 
-    @Override
-    public FilterResponseDTO filter(SearchFilterParameters parameters, int page) {
-        return mapperFacade.map(tvShowDAO.filter(parameters, page), FilterResponseDTO.class);
+    public FilterResponseDTO filter(SearchFilterParameters parameters, int page){
+        FilterResponse response = new FilterResponse();
+        Session session = tvShowDAO.getSession();
+        Criteria c = session.createCriteria(TvShow.class);
+        if (parameters.getGenre() != null) {
+            c.add(Restrictions.eq("genre", parameters.getGenre()));
+        }
+        if (parameters.getReleaseYearStart() != null) {
+            c.add(Restrictions.ge("releaseYear", parameters.getReleaseYearStart()));
+        }
+        if (parameters.getReleaseYearEnd() != null) {
+            c.add(Restrictions.le("releaseYear", parameters.getReleaseYearEnd()));
+        }
+        if (parameters.getCountry() != null) {
+            c.add(Restrictions.eq("country", parameters.getCountry()));
+        }
+        if (parameters.getNetwork() != null) {
+            c.add(Restrictions.eq("network", parameters.getNetwork()));
+        }
+        if (parameters.getMinimalRating() != null) {
+            c.add(Restrictions.ge("overallRating", parameters.getMinimalRating()));
+        }
+        if (parameters.getMaximumRating() != null) {
+            c.add(Restrictions.le("overallRating", parameters.getMaximumRating()));
+        }
+        int lastPage;
+        int listSizeOnPage = 20;
+        int countResults = (c.list().size());
+        response.setSize(countResults);
+        if ((countResults % listSizeOnPage) == 0) lastPage = (countResults / listSizeOnPage);
+        else lastPage = countResults / listSizeOnPage + 1;
+
+        if (page <= lastPage) {
+            c.setFirstResult((page - 1) * 20);
+            c.setMaxResults(20);
+        }
+        response.setTvShows(c.list());
+        return mapperFacade.map(response, FilterResponseDTO.class);
     }
+
+
 }
