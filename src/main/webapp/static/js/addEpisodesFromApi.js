@@ -1,5 +1,6 @@
-var addEpisodes = function (tvshow) {
-
+var addEpisodes = function (tvshow, idTv) {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
     var getJson = function () {
         var im;
         $.getJSON('http://api.tvmaze.com/singlesearch/shows?q=' + tvshow, function (data) {
@@ -24,24 +25,30 @@ var addEpisodes = function (tvshow) {
         });
     };
     getJson();
-
-    var postJson = function (episode) {
+    var postJson = function (episodes) {
+        $(document).ajaxSend(function (e, xhr, options) {
+            xhr.setRequestHeader(header, token);
+        });
         $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
             url: '/api/' + tvshow + '/add',
-            type: 'get',
-            data: episode,
+            type: 'post',
+            data: JSON.stringify(episodes),
             success: function (data) {
                 UIkit.notify({
-                    message: 'Successfully added: ' + episode.title + '!',
-                    status: 'success',
-                    timeout: 200,
-                    pos: 'top-center'
+                    message: 'Successfully added ' + episodes.length + ' episodes!',
+                    status: 'info',
+                    timeout: 5000,
+                    pos: 'bottom-right'
                 });
                 console.log(data.constructor);
             },
             error: function () {
                 UIkit.notify({
-                    message: 'Error with adding: ' + episode.title + '!',
+                    message: 'Error with adding: ' + episodes.title + '!',
                     status: 'danger',
                     timeout: 5000,
                     pos: 'top-center'
@@ -49,8 +56,8 @@ var addEpisodes = function (tvshow) {
             }
         });
     };
-
     $('#saveAll').on('click', function () {
+        var episodes = [];
         $("#test").find("li").each(function (index, li) {
             var a = li.firstElementChild;
             var episode = {
@@ -58,21 +65,26 @@ var addEpisodes = function (tvshow) {
                 releaseDate: a.dataset.date,
                 season: a.dataset.season,
                 episode: a.dataset.episode,
-                summary: a.dataset.summary
+                summary: a.dataset.summary,
+                idTvShow: idTv
             };
-            postJson(episode);
+            episodes.push(episode);
         });
+        postJson(episodes);
+        console.log(episodes);
     });
-
     $('#test').on("click", "a", function (e) {
+        var episodes = [];
         e.preventDefault();
         var episode = {
             title: $(this).data('title'),
             releaseDate: $(this).data('date'),
             season: $(this).data('season'),
             episode: $(this).data('episode'),
-            summary: $(this).data('summary')
+            summary: $(this).data('summary'),
+            idTvShow: idTv
         };
-        postJson(episode);
+        episodes.push(episode);
+        postJson(episodes);
     });
 };

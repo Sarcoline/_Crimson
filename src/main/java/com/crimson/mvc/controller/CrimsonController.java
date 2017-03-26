@@ -227,6 +227,7 @@ public class CrimsonController {
 
     @GetMapping(value = "/{name}/edit/episodes/api")
     public String addEpisodesFromJson(@PathVariable("name") String name, Model model) {
+        model.addAttribute("id", tvShowService.getTvBySlug(name).getId());
         model.addAttribute("name", name);
         return "addEpisodesFromJson";
     }

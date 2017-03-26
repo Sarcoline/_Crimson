@@ -76,7 +76,7 @@ public class UserController {
             model.addAttribute("msg", "We sent you verification email.");
         }
         if (confirmed != null) {
-            model.addAttribute("msg", "Verifivation complete. You can log in now!");
+            model.addAttribute("msg", "Verification complete. You can log in now!");
         }
         if (logout != null) {
             model.addAttribute("msg", "You've been logged out successfully.");

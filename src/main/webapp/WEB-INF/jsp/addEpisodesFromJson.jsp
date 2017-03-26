@@ -23,7 +23,7 @@
 <script src="<c:url value="/static/js/addEpisodesFromApi.js"/> ">
 </script>
 <script>
-    addEpisodes('${name}');
+    addEpisodes('${name}','${id}');
 </script>
 </body>
 </html>

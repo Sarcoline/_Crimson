@@ -159,35 +159,40 @@ public class EpisodeServiceImpl implements EpisodeService {
     }
 
     @Override
-    public void saveEpisodeJSON(EpisodeFromJson episodeFromJson) {
+    public void saveEpisodeJSON(List<EpisodeFromJson> episodesFromJson, long tvShowId) {
 
-        Episode epRet;
-        boolean exsist = false;
-        for (Episode episode : tvShowDAO.getById(episodeFromJson.getIdTvShow()).getEpisodes()) {
-            if (episode.getNumber() == episodeFromJson.getEpisode()
-                    && episode.getSeason() == episodeFromJson.getSeason()) exsist = true;
-        }
-        if (exsist) {
-            epRet = episodeDAO.getBySeasonAndEpisodeNumber(
-                    episodeFromJson.getSeason(), episodeFromJson.getEpisode(), episodeFromJson.getIdTvShow());
+        episodesFromJson.forEach(episodeFromJson -> {
 
-            epRet.setReleaseDate(LocalDate.parse(episodeFromJson.getReleaseDate()));
-            epRet.setTitle(episodeFromJson.getTitle());
-            epRet.setSeason(episodeFromJson.getSeason());
-            epRet.setNumber(episodeFromJson.getEpisode());
-            epRet.setEpisodeSummary(episodeFromJson.getSummary());
-            episodeDAO.update(epRet);
-        } else {
 
-            Episode ep = Episode.builder()
-                    .episodeSummary(episodeFromJson.getSummary())
-                    .title(episodeFromJson.getTitle())
-                    .number(episodeFromJson.getEpisode())
-                    .season(episodeFromJson.getSeason())
-                    .releaseDate(LocalDate.parse(episodeFromJson.getReleaseDate()))
-                    .idTvShow(episodeFromJson.getIdTvShow())
-                    .build();
-            episodeDAO.save(ep);
-        }
+            Episode epRet;
+            boolean exsist = false;
+            for (Episode episode : tvShowDAO.getById(episodeFromJson.getIdTvShow()).getEpisodes()) {
+                if (episode.getNumber() == episodeFromJson.getEpisode()
+                        && episode.getSeason() == episodeFromJson.getSeason()) exsist = true;
+            }
+            if (exsist) {
+                epRet = episodeDAO.getBySeasonAndEpisodeNumber(
+                        episodeFromJson.getSeason(), episodeFromJson.getEpisode(), tvShowId);
+
+                epRet.setReleaseDate(LocalDate.parse(episodeFromJson.getReleaseDate()));
+                epRet.setTitle(episodeFromJson.getTitle());
+                epRet.setSeason(episodeFromJson.getSeason());
+                epRet.setNumber(episodeFromJson.getEpisode());
+                epRet.setEpisodeSummary(episodeFromJson.getSummary());
+                episodeDAO.update(epRet);
+            } else {
+
+                Episode ep = Episode.builder()
+                        .episodeSummary(episodeFromJson.getSummary())
+                        .title(episodeFromJson.getTitle())
+                        .number(episodeFromJson.getEpisode())
+                        .season(episodeFromJson.getSeason())
+                        .releaseDate(LocalDate.parse(episodeFromJson.getReleaseDate()))
+                        .idTvShow(episodeFromJson.getIdTvShow())
+                        .build();
+                episodeDAO.save(ep);
+            }
+
+        });
     }
 }

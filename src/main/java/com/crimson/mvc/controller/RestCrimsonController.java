@@ -97,21 +97,12 @@ public class RestCrimsonController {
         return tvShowService.filter(parameters, page);
     }
 
-    @RequestMapping(value = "/{name}/add", method = RequestMethod.GET)
+    @RequestMapping(value = "/{name}/add", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
-    public void addEpisodesFromJsonPost(@RequestParam("title") String title, @RequestParam("episode") int number,
-                                        @RequestParam("season") int season, @RequestParam("summary") String summary,
-                                        @RequestParam("releaseDate") String releaseDate,
+    public void addEpisodesFromJsonPost(@RequestBody List<EpisodeFromJson> episodes,
                                         @PathVariable("name") String name) {
-        EpisodeFromJson episode = new EpisodeFromJson();
-        episode.setTitle(title);
-        episode.setReleaseDate(releaseDate);
-        episode.setEpisode(number);
-        episode.setSeason(season);
-        episode.setSummary(summary);
-        episode.setIdTvShow(tvShowService.getTvBySlug(name).getId());
-        episodeService.saveEpisodeJSON(episode);
+        episodeService.saveEpisodeJSON(episodes, tvShowService.getTvBySlug(name).getId());
     }
 
     @RequestMapping(value = "/updateSettings", method = RequestMethod.POST)
