@@ -13,7 +13,7 @@
 
 <h1 class="title">${tv.title}
     <sec:authorize access="isAuthenticated()">
-        <small class="follow"><a id="follow"><i class="fa fa-heart-o" aria-hidden="true" onclick="onClick()"
+        <small class="follow"><a id="follow"><i class="fa fa-heart-o" aria-hidden="true"
                                                 style="cursor: pointer"></i></a></small>
     </sec:authorize>
     <div id="message" style="color:darkblue; font-size: large; text-align: center"></div>
@@ -222,42 +222,7 @@
     </div>
 </div>
 
-<div id="rating-confirmation" class="uk-modal">
-    <div class="uk-modal-dialog">
-        <a class="uk-modal-close uk-close"></a>
-        <div class="uk-modal-header">
-            <h2 class="uk-text-center" style="color: darkblue">Your rating is saved!</h2>
-            <div class="uk-grid">
-                <div class="uk-container-center">
 
-
-                    <a class="uk-button uk-button-default uk-modal-close">OK</a>
-                </div>
-            </div>
-
-
-        </div>
-
-    </div>
-</div>
-<div id="myyy-id" class="uk-modal">
-    <div class="uk-modal-dialog">
-        <a class="uk-modal-close uk-close"></a>
-        <div class="uk-modal-header">
-            <h2 class="uk-text-center">You follow it !</h2>
-            <div class="uk-grid">
-                <div class="uk-container-center">
-
-
-                    <a class="uk-button uk-button-default uk-modal-close">OK</a>
-                </div>
-            </div>
-
-
-        </div>
-
-    </div>
-</div>
 <div id="adultWarning" class="uk-modal uk-open" aria-hidden="false" style="overflow-y: auto; display: none;">
     <div class="uk-modal-dialog uk-modal-dialog-blank warning">
         <div class="uk-grid uk-flex-middle" data-uk-grid-margin="">
@@ -310,17 +275,18 @@
         var label = $('label');
         var follow = $('#follow');
         var id = ${tv.id};
+		var title = '${tv.title}';
 
-        if (rating !== 0) rateValue.html(" " + rating);
+        if (rating != 0) rateValue.html(" " + rating);
         <c:if test="${follow == true}">
         $('i.fa-heart-o').addClass('fa-heart').removeClass('fa-heart-o');
         </c:if>
         //mark watched episodes
         markWatchedEpisodes(watchedThis, watched);
         //ajax request to rate tvShow
-        rateTvShow(label, rateValue, id);
+        rateTvShow(label, rateValue, id, title);
         //ajax request to follow tvShow
-        followTvShow(follow, id);
+        followTvShow(follow, id, title);
         //ajax request to rate tvShow
         markAsWatched(watchedThis);
         //add comment
@@ -360,19 +326,7 @@
         });
         </sec:authorize>
     });
-    //follow confirmation
-    var clicks = 0;
-    function onClick() {
-        clicks += 1;
-        var message = "";
-        if ((clicks % 2) == 1) {
-            message = "You follow it!";
-        }
-        else {
-            message = "You do not follow it!";
-        }
-        document.getElementById("message").innerHTML = message;
-    }
+    
 </script>
 </body>
 </html>

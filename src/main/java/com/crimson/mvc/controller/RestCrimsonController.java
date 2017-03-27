@@ -69,27 +69,34 @@ public class RestCrimsonController {
         else episodeService.addUser2Episode(user, episode);
     }
 
-    @RequestMapping(value = "/rate", method = RequestMethod.POST)
+     @RequestMapping(value = "/rate", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
     @Secured("ROLE_USER")
-    public void rate(@RequestParam("id") long id, @RequestParam("value") int value) {
+    @ResponseBody
+    public String rate(@RequestParam("id") long id, @RequestParam("value") int value) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
         TvShowDTO tv = tvShowService.getTvById(id);
         ratingService.saveUserRating(user, tv, value);
+        return "rated";
     }
 
-    @RequestMapping(value = "/follow", method = RequestMethod.POST)
+   @RequestMapping(value = "/follow", method = RequestMethod.POST)
     @Secured("ROLE_USER")
+    @ResponseBody
     public String follow(@RequestParam("id") Long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDTO user = userService.getUserByName(auth.getName());
         TvShowDTO tv = tvShowService.getTvById(id);
-
-        if (userService.checkFollow(user, tv)) userService.deleteTvShowFromUser(user, tv);
-        else userService.addTvShow2User(user, tv);
-
-        return String.format("redirect:/tv/%s", tv.getSlug());
+        String response;
+        if (userService.checkFollow(user, tv)) {
+            userService.deleteTvShowFromUser(user, tv);
+            response = "unfollow";
+        } else {
+            userService.addTvShow2User(user, tv);
+            response = "follow";
+        }
+        return response;
     }
 
     @RequestMapping(value = "/filter/{page}", method = RequestMethod.POST)
