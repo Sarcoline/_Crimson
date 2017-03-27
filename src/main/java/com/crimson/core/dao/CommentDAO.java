@@ -20,10 +20,8 @@ public interface CommentDAO extends BaseDAO<Comment, Long> {
 
     void deleteUserFromComment(Comment comment);
 
-    @SuppressWarnings("unchecked")
     List<Comment> getCommentByIdUser(Long idUser);
 
-    @SuppressWarnings("unchecked")
     List<Comment> getCommentByIdTvShow(Long idTvShow);
 
     List getComments(long idTvShow, long idUser);

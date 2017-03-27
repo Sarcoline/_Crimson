@@ -17,7 +17,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc
 @EnableGlobalMethodSecurity(securedEnabled = true)
 @ComponentScan(basePackageClasses = MvcPackageMarker.class)
-@Import({SecurityApplicationContext.class, CoreApplicationContext.class})
+@Import({CoreApplicationContext.class})
 public class MvcApplicationContext extends WebMvcConfigurerAdapter {
 
 

@@ -46,13 +46,24 @@
 
 
     <h2 class="uk-margin-large-top">Edit settings </h2>
-    <form class="uk-form uk-form-stacked" method="post" action="<c:url value="/updateSettings" />">
+    <form class="uk-form uk-form-stacked" >
+        <div class="uk-form-row">
         <label class="uk-form-label" for="days">Days of upcoming episodes</label>
         <input type="number" name="days" placeholder="Days of upcoming episodes"
                id="days" value="${settings.daysOfUpcomingEpisodes}"/>
-        <input type="hidden" name="${_csrf.parameterName}"
-               value="${_csrf.token}"/>
-        <input class="uk-button uk-button-primary" type="submit" value="Save"/>
+        </div>
+        <div class="uk-form-row">
+        <label class="uk-form-label" for="days">Send me daily episode list</label>
+            <select name="select" id="sendMail">
+
+                <option value="true">Send</option>
+                <option value="false" <c:if test="${!userDTO.setting.sendEpisodeList}"> selected
+                </c:if>>Turn off</option>
+            </select>
+        </div>
+        <div class="uk-form-row">
+        <a class="uk-button uk-button-primary" id="saveSettings">Save</a>
+        </div>
     </form>
     <h2 class="uk-margin-large-top">Change profile picture</h2>
     <img src="<c:url value="/images/user/${userDTO.name}"/> " alt="" width="200" height="200">
@@ -94,6 +105,36 @@
     </div>
 </div>
 <script>
+
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    $(document).ajaxSend(function (e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    });
+
+    $('#saveSettings').on('click', function () {
+        var e = document.getElementById("sendMail");
+        var send = e.options[e.selectedIndex].value;
+        var days = $('#days').val();
+        console.log(send);
+        console.log(days);
+        $.ajax({
+            type: "post",
+            url: "/api/updateSettings",
+            data: {days: days, send: send},
+            success: function () {
+                UIkit.notify({
+                    message: 'Settings updated',
+                    status: 'info',
+                    timeout: 3000,
+                    pos: 'bottom-right'
+                });
+            },
+            error: function () {
+                console.log('not ok')
+            }
+        });
+    });
     var previewFile = function () {
         var preview = document.querySelector('img');
         var file = document.querySelector('input[type=file]').files[0];

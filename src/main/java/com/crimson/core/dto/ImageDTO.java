@@ -2,9 +2,7 @@ package com.crimson.core.dto;
 
 import lombok.Data;
 
-import java.util.Arrays;
 import java.util.HashMap;
-
 
 public @Data class ImageDTO {
 

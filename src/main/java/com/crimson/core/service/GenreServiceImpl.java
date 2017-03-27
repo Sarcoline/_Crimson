@@ -56,26 +56,26 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public void addTvShow2Genre(Genre genre, TvShow tvShow) {
-        if(!genreDAO.getTvShows(genre).contains(tvShow)){
+        if (!genreDAO.getTvShows(genre).contains(tvShow)) {
             genreDAO.addTvShow2Genre(genre, tvShow);
         }
-        if(!tvShowDAO.getGenres(tvShow).contains(genre)){
-            tvShowDAO.addGenre2TvShow(tvShow,genre);
+        if (!tvShowDAO.getGenres(tvShow).contains(genre)) {
+            tvShowDAO.addGenre2TvShow(tvShow, genre);
         }
     }
 
     @Override
     public void deleteTvShowFromGenre(Genre genre, TvShow tvShow) {
-        if(genreDAO.getTvShows(genre).contains(tvShow)){
+        if (genreDAO.getTvShows(genre).contains(tvShow)) {
             genreDAO.deleteTvShowFromGenre(genre, tvShow);
         }
-        if(tvShowDAO.getGenres(tvShow).contains(genre)){
-            tvShowDAO.deleteGenreFromTvShow(tvShow,genre);
+        if (tvShowDAO.getGenres(tvShow).contains(genre)) {
+            tvShowDAO.deleteGenreFromTvShow(tvShow, genre);
         }
     }
 
     @Override
-    public List<TvShow> getTvShows(Genre genre){
+    public List<TvShow> getTvShows(Genre genre) {
         return genreDAO.getTvShows(genre);
     }
 }

@@ -6,10 +6,10 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 
-public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, Object> {
+public class UserPasswordMatchesValidator implements ConstraintValidator<UserPasswordMatches, Object> {
 
     @Override
-    public void initialize(final PasswordMatches constraintAnnotation) {
+    public void initialize(final UserPasswordMatches constraintAnnotation) {
     }
 
     @Override

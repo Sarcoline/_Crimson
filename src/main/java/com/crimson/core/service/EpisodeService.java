@@ -42,5 +42,5 @@ public interface EpisodeService {
 
     void addEpisodeFromForm(EpisodeFormDTO episodeFormDTO);
 
-    void saveEpisodeJSON(EpisodeFromJson episodeFromJson);
+    void saveEpisodeJSON(List<EpisodeFromJson> episodeFromJson, long tvShowId);
 }

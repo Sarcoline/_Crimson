@@ -27,8 +27,6 @@ a:hover {
     text-decoration: none;
 }
 
-
-
 .uk-comment-meta li {
     margin-left: -10px;
 }
@@ -465,4 +463,8 @@ div.login {
 
 #wrapper {
     min-height: 100%;
+}
+
+.uk-comment-avatar {
+    margin-top: 10px;
 }

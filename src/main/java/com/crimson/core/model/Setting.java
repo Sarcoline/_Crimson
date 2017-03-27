@@ -17,8 +17,8 @@ public @Data class Setting {
     @Column(name = "idSetting")
     private Long id;
 
-    @Column(name = "episodesFromBegining")
-    private Boolean episodesFromBegining;
+    @Column(name = "sendEpisodeList")
+    private Boolean sendEpisodeList;
 
     @Column(name = "numberOfEpisodesOnUserPage")
     @Range(max = 99, message = "{invalid.numberOfEpisodesOnUserPage}")
@@ -32,8 +32,8 @@ public @Data class Setting {
     int version;
 
     @Builder
-    public Setting(Boolean episodesFromBegining, int numberOfEpisodesOnUserPage, int daysOfUpcomingEpisodes){
-        this.episodesFromBegining = episodesFromBegining;
+    public Setting(Boolean sendEpisodeList, int numberOfEpisodesOnUserPage, int daysOfUpcomingEpisodes){
+        this.sendEpisodeList = sendEpisodeList;
         this.numberOfEpisodesOnUserPage = numberOfEpisodesOnUserPage;
         this.daysOfUpcomingEpisodes = daysOfUpcomingEpisodes;
     }

@@ -1,16 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Meow
-  Date: 20.02.2017
-  Time: 15:28
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Edit ${episode.title}</title>
+    <content tag="local_script">
+        <script src="<c:url value='/static/uikit/js/components/datepicker.min.js' />"
+                type="application/javascript"></script>
+    </content>
 </head>
 <body>
 <div class="uk-container uk-container-center uk-margin-large-top">

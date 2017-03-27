@@ -4,6 +4,22 @@
 <html>
 <head>
     <title>Write review for ${tv.title}</title>
+    <content tag="local_script">
+        <script src="<c:url value='/static/codemirror/lib/codemirror.js'/>"
+                type="application/javascript"></script>
+        <script src="<c:url value='/static/codemirror/mode/markdown/markdown.js'/>"
+                type="application/javascript"></script>
+        <script src="<c:url value='/static/codemirror/addon/mode/overlay.js'/>"
+                type="application/javascript"></script>
+        <script src="<c:url value='/static/codemirror/mode/xml/xml.js'/>"
+                type="application/javascript"></script>
+        <script src="<c:url value='/static/codemirror/mode/gfm/gfm.js'/>"
+                type="application/javascript"></script>
+        <script src="<c:url value='https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js' />"
+                type="application/javascript"></script>
+        <script src="<c:url value='/static/uikit/js/components/htmleditor.js' />"
+                type="application/javascript"></script>
+    </content>
 </head>
 <body>
 <div class="uk-container uk-container-center uk-margin-large-top">
@@ -14,9 +30,9 @@
             <form:errors path="title" cssClass="uk-alert uk-alert-danger" element="div"/>
             <form:label path="title" for="title" class="uk-form-label">Title</form:label>
             <form:input path="title"
-                           class="uk-width-1-2 uk-form-large"
-                           name='title'
-                           placeholder="Title"/>
+                        class="uk-width-1-2 uk-form-large"
+                        name='title'
+                        placeholder="Title"/>
         </div>
         <div class="uk-form-row">
             <form:errors path="introduction" cssClass="uk-alert uk-alert-danger" element="div"/>

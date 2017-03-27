@@ -4,8 +4,10 @@ import com.crimson.core.model.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
 
@@ -23,6 +25,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     public List<User> getAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From User a", User.class).getResultList();
@@ -47,10 +50,19 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     public User getUserByName(String name) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From User a where a.name like :custName", User.class)
                 .setParameter("custName", name).getSingleResult();
+    }
+
+    @Override
+    @Cacheable("myCache")
+    public User getUserByToken(String token) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("Select a From User a where a.token like :custToken", User.class)
+                .setParameter("custToken", token).getSingleResult();
     }
     //RELATIONSHIPS
 
@@ -137,28 +149,28 @@ public class UserDAOImpl implements UserDAO {
     //User2Comment
 
     @Override
-    public void addComment(User user, Comment comment){
+    public void addComment(User user, Comment comment) {
         Session session = sessionFactory.getCurrentSession();
         user.getComments().add(comment);
         session.saveOrUpdate(user);
     }
 
     @Override
-    public void addReview(User user, Review review){
+    public void addReview(User user, Review review) {
         Session session = sessionFactory.getCurrentSession();
         user.getReviews().add(review);
         session.saveOrUpdate(user);
     }
 
     @Override
-    public void deleteComment(User user, Comment comment){
+    public void deleteComment(User user, Comment comment) {
         Session session = sessionFactory.getCurrentSession();
         user.getComments().remove(comment);
         session.saveOrUpdate(user);
     }
 
     @Override
-    public void deleteReview(User user, Review review){
+    public void deleteReview(User user, Review review) {
         Session session = sessionFactory.getCurrentSession();
         user.getReviews().remove(review);
         session.saveOrUpdate(user);
@@ -166,7 +178,7 @@ public class UserDAOImpl implements UserDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<TvShow> getTvShows(User user){
+    public List<TvShow> getTvShows(User user) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM TvShow t JOIN FETCH t.users u where u.id = ?";
         return session.createQuery(hql)
@@ -176,7 +188,7 @@ public class UserDAOImpl implements UserDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Episode> getEpisodes(User user){
+    public List<Episode> getEpisodes(User user) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Episode e JOIN FETCH e.users u where u.id = ?";
         return session.createQuery(hql)
@@ -186,7 +198,7 @@ public class UserDAOImpl implements UserDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Rating> getRatings(User user){
+    public List<Rating> getRatings(User user) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Rating r JOIN FETCH r.user u where u.id = ?";
         return session.createQuery(hql)
@@ -196,7 +208,7 @@ public class UserDAOImpl implements UserDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Role> getRoles(User user){
+    public List<Role> getRoles(User user) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Role r JOIN FETCH r.users u where u.id = ?";
         return session.createQuery(hql)
@@ -206,7 +218,7 @@ public class UserDAOImpl implements UserDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Review> getReviews(User user){
+    public List<Review> getReviews(User user) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Review r JOIN FETCH r.user u where u.id = ?";
         return session.createQuery(hql)
@@ -214,9 +226,23 @@ public class UserDAOImpl implements UserDAO {
                 .getResultList();
     }
 
+    @Override
+    public User getUserByEmail(String email) {
+        Session session = sessionFactory.getCurrentSession();
+        User user;
+        try {
+            user = session.createQuery("Select a From User a where a.email like :custEmail", User.class)
+                    .setParameter("custEmail", email).getSingleResult();
+
+        } catch (NoResultException e) {
+            return null;
+        }
+        return user;
+    }
+
     @SuppressWarnings("unchecked")
     @Override
-    public List<Comment> getComments(User user){
+    public List<Comment> getComments(User user) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Comment c JOIN FETCH c.user u where u.id = ?";
         return session.createQuery(hql)

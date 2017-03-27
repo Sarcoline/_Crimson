@@ -132,8 +132,8 @@
                         <article class="uk-comment uk-margin-top">
                             <header class="uk-comment-header">
                                 <img class="uk-comment-avatar" src="<c:url value="/images/user/${comment.user.name}"/> "
-                                     width="50"
-                                     height="50" alt="">
+                                     style="width: 50px; height: 50px;"
+                                     alt="">
                                 <h4 class="uk-comment-title">${comment.user.name}</h4>
                                 <div class="uk-comment-meta">${comment.date} | <a
                                         href="<c:url value="/user/${comment.user.name}"/>">Profile</a></div>
@@ -278,7 +278,7 @@
         var follow = $('#follow');
         var id = ${tv.id};
 
-        if (rating != 0) rateValue.html(" " + rating);
+        if (rating !== 0) rateValue.html(" " + rating);
         <c:if test="${follow == true}">
         $('i.fa-heart-o').addClass('fa-heart').removeClass('fa-heart-o');
         </c:if>

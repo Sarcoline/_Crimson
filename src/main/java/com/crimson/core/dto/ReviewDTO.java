@@ -7,9 +7,6 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-/**
- * Created by Meow on 05.03.2017.
- */
 @NoArgsConstructor
 public @Data class ReviewDTO {
 

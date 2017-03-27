@@ -19,14 +19,19 @@ public class RestCrimsonController {
 
     @Autowired
     private TvShowService tvShowService;
+
     @Autowired
     private UserService userService;
+
     @Autowired
     private EpisodeService episodeService;
+
     @Autowired
     private RatingService ratingService;
+
     @Autowired
     private CommentService commentService;
+
 
     @RequestMapping(value = "/search/{pattern}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
@@ -88,7 +93,23 @@ public class RestCrimsonController {
     }
 
     @RequestMapping(value = "/filter/{page}", method = RequestMethod.POST)
-    public FilterResponseDTO filter(@RequestBody SearchFilterParameters parameters,@PathVariable("page") int page) {
+    public FilterResponseDTO filter(@RequestBody SearchFilterParameters parameters, @PathVariable("page") int page) {
         return tvShowService.filter(parameters, page);
+    }
+
+    @RequestMapping(value = "/{name}/add", method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.OK)
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
+    public void addEpisodesFromJsonPost(@RequestBody List<EpisodeFromJson> episodes,
+                                        @PathVariable("name") String name) {
+        episodeService.saveEpisodeJSON(episodes, tvShowService.getTvBySlug(name).getId());
+    }
+
+    @RequestMapping(value = "/updateSettings", method = RequestMethod.POST)
+    public void updateSettings(@RequestParam("days") int days, @RequestParam("send") boolean send) throws Exception {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDTO user = userService.getUserByName(auth.getName());
+        userService.updateSettings(user, days, send);
     }
 }

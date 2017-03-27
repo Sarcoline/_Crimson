@@ -37,7 +37,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     private User buildUserForAuthentication(com.crimson.core.model.User user,
                                             List<GrantedAuthority> authorities) {
         return new User(user.getName(), user.getPassword(),
-                true, true, true, true, authorities);
+                user.isActive(), true, true, true, authorities);
     }
 
     private List<GrantedAuthority> buildUserAuthority(com.crimson.core.model.User user) {

@@ -5,6 +5,7 @@ import com.crimson.core.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,12 +23,14 @@ public class RoleDAOImpl implements RoleDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     public List<Role> getAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From Role a", Role.class).getResultList();
     }
 
     @Override
+    @Cacheable("myCache")
     public Role getById(Long id) {
         Session session = sessionFactory.getCurrentSession();
         return session.find(Role.class, id);
@@ -64,7 +67,7 @@ public class RoleDAOImpl implements RoleDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<User> getUsers(Role role){
+    public List<User> getUsers(Role role) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM User u JOIN FETCH u.roles r where r.idRole = ?";
         return session.createQuery(hql)

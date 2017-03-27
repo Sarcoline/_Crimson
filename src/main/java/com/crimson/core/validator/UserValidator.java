@@ -25,8 +25,8 @@ public class UserValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         UserDTO userDTO = (UserDTO) target;
-        List<User> userList = userService.getAllUsers();
-        for (User userTmp : userList) {
+        List<UserDTO> userList = userService.getAllUsers();
+        for (UserDTO userTmp : userList) {
             if (userTmp.getName().contains(userDTO.getName())) {
                 errors.rejectValue("name", "", "User already exist");
             }

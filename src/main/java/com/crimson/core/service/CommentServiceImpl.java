@@ -14,22 +14,25 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+
 @Service
 @Transactional
 public class CommentServiceImpl implements CommentService {
 
     @Autowired
     private CommentDAO commentDAO;
+
     @Autowired
     private TvShowDAO tvShowDAO;
+
     @Autowired
     private UserDAO userDAO;
 
     @Override
     public void save(CommentDTO commentDTO) {
-        Comment comment1 = new Comment(commentDTO.getText(),commentDTO.getDate());
-        addTvShow2Comment(comment1,tvShowDAO.getById(commentDTO.getIdTvShow()));
-        addUser2Comment(comment1,userDAO.getById(commentDTO.getUser().getId()));
+        Comment comment1 = new Comment(commentDTO.getText());
+        addTvShow2Comment(comment1, tvShowDAO.getById(commentDTO.getIdTvShow()));
+        addUser2Comment(comment1, userDAO.getById(commentDTO.getUser().getId()));
         commentDAO.save(comment1);
     }
 
@@ -45,8 +48,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void addTvShow2Comment(Comment comment, TvShow tvShow) {
-        if(comment.getTvShow() != tvShow){
-            commentDAO.addTvShow2Comment(comment,tvShow);
+        if (comment.getTvShow() != tvShow) {
+            commentDAO.addTvShow2Comment(comment, tvShow);
         }
         if (!tvShowDAO.getComments(tvShow).contains(comment)) {
             tvShowDAO.addComment(tvShow, comment);
@@ -55,31 +58,31 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void deleteTvShowFromComment(Comment comment, TvShow tvShow) {
-        if(comment.getTvShow() == tvShow){
+        if (comment.getTvShow() == tvShow) {
             commentDAO.deleteTvShowFromComment(comment);
         }
         if (tvShowDAO.getComments(tvShow).contains(comment)) {
-            tvShowDAO.deleteComment(tvShow,comment);
+            tvShowDAO.deleteComment(tvShow, comment);
         }
     }
 
     @Override
     public void addUser2Comment(Comment comment, User user) {
-        if(comment.getUser() != user){
-            commentDAO.addUser2Comment(comment,user);
+        if (comment.getUser() != user) {
+            commentDAO.addUser2Comment(comment, user);
         }
-        if(!userDAO.getComments(user).contains(comment)){
-            userDAO.addComment(user,comment);
+        if (!userDAO.getComments(user).contains(comment)) {
+            userDAO.addComment(user, comment);
         }
     }
 
     @Override
     public void deleteUserFromComment(Comment comment, User user) {
-        if(comment.getUser() == user){
+        if (comment.getUser() == user) {
             commentDAO.deleteUserFromComment(comment);
         }
-        if(userDAO.getComments(user).contains(comment)){
-            userDAO.deleteComment(user,comment);
+        if (userDAO.getComments(user).contains(comment)) {
+            userDAO.deleteComment(user, comment);
         }
     }
 

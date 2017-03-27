@@ -25,11 +25,13 @@ public class EpisodeServiceImpl implements EpisodeService {
 
     @Autowired
     private EpisodeDAO episodeDAO;
+
     @Autowired
     private UserDAO userDAO;
 
     @Autowired
     private TvShowDAO tvShowDAO;
+
     @Autowired
     private MapperFacade mapperFacade;
 
@@ -72,11 +74,11 @@ public class EpisodeServiceImpl implements EpisodeService {
     public void addUser2Episode(UserDTO userDTO, EpisodeDTO episodeDTO) {
         User user = userDAO.getById(userDTO.getId());
         Episode episode = episodeDAO.getById(episodeDTO.getId());
-        if(!userDAO.getEpisodes(user).contains(episode)){
+        if (!userDAO.getEpisodes(user).contains(episode)) {
             userDAO.addEpisode2User(user, episode);
         }
-        if(!episodeDAO.getUsers(episode).contains(user)){
-            episodeDAO.addUser2Episode(user,episode);
+        if (!episodeDAO.getUsers(episode).contains(user)) {
+            episodeDAO.addUser2Episode(user, episode);
         }
 
     }
@@ -85,17 +87,17 @@ public class EpisodeServiceImpl implements EpisodeService {
     public void deleteUserFromEpisode(UserDTO userDTO, EpisodeDTO episodeDTO) {
         Episode episode = episodeDAO.getById(episodeDTO.getId());
         User user = userDAO.getById(userDTO.getId());
-        if(userDAO.getEpisodes(user).contains(episode)){
+        if (userDAO.getEpisodes(user).contains(episode)) {
             userDAO.deleteEpisodeFromUser(user, episode);
         }
-        if(episodeDAO.getUsers(episode).contains(user)){
-            episodeDAO.deleteUserFromEpisode(user,episode);
+        if (episodeDAO.getUsers(episode).contains(user)) {
+            episodeDAO.deleteUserFromEpisode(user, episode);
         }
     }
 
     @Override
-    public List<User> getUsers(Episode episode){
-       return episodeDAO.getUsers(episode);
+    public List<User> getUsers(Episode episode) {
+        return episodeDAO.getUsers(episode);
     }
 
     @Override
@@ -108,21 +110,21 @@ public class EpisodeServiceImpl implements EpisodeService {
 
     @Override
     public void addTvShow2Episode(TvShow tvShow, Episode episode) {
-        if(episode.getTvShow() != tvShow){
+        if (episode.getTvShow() != tvShow) {
             episodeDAO.addTvShow2Episode(tvShow, episode);
         }
-        if(!tvShowDAO.getEpisodes(tvShow).contains(episode)){
-            tvShowDAO.addEpisode2TvShow(tvShow,episode);
+        if (!tvShowDAO.getEpisodes(tvShow).contains(episode)) {
+            tvShowDAO.addEpisode2TvShow(tvShow, episode);
         }
     }
 
     @Override
     public void deleteTvShowFromEpisode(TvShow tvShow, Episode episode) {
-        if(episode.getTvShow() == tvShow){
+        if (episode.getTvShow() == tvShow) {
             episodeDAO.deleteTvShowFromEpisode(episode);
         }
-        if(tvShowDAO.getEpisodes(tvShow).contains(episode)){
-            tvShowDAO.deleteEpisodeFromTvShow(tvShow,episode);
+        if (tvShowDAO.getEpisodes(tvShow).contains(episode)) {
+            tvShowDAO.deleteEpisodeFromTvShow(tvShow, episode);
         }
     }
 
@@ -157,37 +159,40 @@ public class EpisodeServiceImpl implements EpisodeService {
     }
 
     @Override
-    public void saveEpisodeJSON(EpisodeFromJson episodeFromJson) {
+    public void saveEpisodeJSON(List<EpisodeFromJson> episodesFromJson, long tvShowId) {
 
-        Episode epRet;
-        boolean exsist = false;
-        for (Episode episode : tvShowDAO.getById(episodeFromJson.getIdTvShow()).getEpisodes()) {
-            if (episode.getNumber() == episodeFromJson.getEpisode()
-                    && episode.getSeason() == episodeFromJson.getSeason()) exsist = true;
-        }
-        if (exsist) {
-            epRet = episodeDAO.getBySeasonAndEpisodeNumber(
-                    episodeFromJson.getSeason(), episodeFromJson.getEpisode(), episodeFromJson.getIdTvShow());
-
-            epRet.setReleaseDate(LocalDate.parse(episodeFromJson.getReleaseDate()));
-            epRet.setTitle(episodeFromJson.getTitle());
-            epRet.setSeason(episodeFromJson.getSeason());
-            epRet.setNumber(episodeFromJson.getEpisode());
-            epRet.setEpisodeSummary(episodeFromJson.getSummary());
-            episodeDAO.update(epRet);
-        } else {
-
-            Episode ep = Episode.builder()
-                    .episodeSummary(episodeFromJson.getSummary())
-                    .title(episodeFromJson.getTitle())
-                    .number(episodeFromJson.getEpisode())
-                    .season(episodeFromJson.getSeason())
-                    .releaseDate(LocalDate.parse(episodeFromJson.getReleaseDate()))
-                    .idTvShow(episodeFromJson.getIdTvShow())
-                    .build();
-            episodeDAO.save(ep);
-        }
+        episodesFromJson.forEach(episodeFromJson -> {
 
 
+            Episode epRet;
+            boolean exsist = false;
+            for (Episode episode : tvShowDAO.getById(episodeFromJson.getIdTvShow()).getEpisodes()) {
+                if (episode.getNumber() == episodeFromJson.getEpisode()
+                        && episode.getSeason() == episodeFromJson.getSeason()) exsist = true;
+            }
+            if (exsist) {
+                epRet = episodeDAO.getBySeasonAndEpisodeNumber(
+                        episodeFromJson.getSeason(), episodeFromJson.getEpisode(), tvShowId);
+
+                epRet.setReleaseDate(LocalDate.parse(episodeFromJson.getReleaseDate()));
+                epRet.setTitle(episodeFromJson.getTitle());
+                epRet.setSeason(episodeFromJson.getSeason());
+                epRet.setNumber(episodeFromJson.getEpisode());
+                epRet.setEpisodeSummary(episodeFromJson.getSummary());
+                episodeDAO.update(epRet);
+            } else {
+
+                Episode ep = Episode.builder()
+                        .episodeSummary(episodeFromJson.getSummary())
+                        .title(episodeFromJson.getTitle())
+                        .number(episodeFromJson.getEpisode())
+                        .season(episodeFromJson.getSeason())
+                        .releaseDate(LocalDate.parse(episodeFromJson.getReleaseDate()))
+                        .idTvShow(episodeFromJson.getIdTvShow())
+                        .build();
+                episodeDAO.save(ep);
+            }
+
+        });
     }
 }

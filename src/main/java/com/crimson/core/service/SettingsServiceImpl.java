@@ -16,6 +16,7 @@ public class SettingsServiceImpl implements SettingsService {
 
     @Autowired
     private SettingsDAO settingsDAO;
+
     @Autowired
     private UserDAO userDAO;
 
@@ -50,20 +51,20 @@ public class SettingsServiceImpl implements SettingsService {
 
     @Override
     public void addUser2Setting(User user, Setting setting) {
-        if(setting.getUser() != user){
+        if (setting.getUser() != user) {
             settingsDAO.addUser2Setting(user, setting);
         }
-        if(user.getSetting() != setting){
-            userDAO.addSetting2User(user,setting);
+        if (user.getSetting() != setting) {
+            userDAO.addSetting2User(user, setting);
         }
     }
 
     @Override
     public void deleteUserFromSetting(User user, Setting setting) {
-        if(setting.getUser() == user){
+        if (setting.getUser() == user) {
             settingsDAO.deleteUserFromSetting(setting);
         }
-        if(user.getSetting() == setting){
+        if (user.getSetting() == setting) {
             userDAO.deleteSettingFromUser(user);
         }
     }

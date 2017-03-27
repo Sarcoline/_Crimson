@@ -12,9 +12,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target({TYPE, ANNOTATION_TYPE})
 @Retention(RUNTIME)
-@Constraint(validatedBy = PasswordMatchesValidator.class)
+@Constraint(validatedBy = UserPasswordMatchesValidator.class)
 @Documented
-public @interface PasswordMatches {
+public @interface UserPasswordMatches {
 
     String message() default "Password mismatch";
 

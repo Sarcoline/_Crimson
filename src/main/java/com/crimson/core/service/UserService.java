@@ -13,13 +13,13 @@ import java.util.List;
 public interface UserService {
     void saveUser(UserDTO userDTO) throws IOException;
 
-    List<User> getAllUsers();
+    List<UserDTO> getAllUsers();
 
     User getUserById(Long id);
 
     void deleteUser(UserDTO userDTO);
 
-    void updateUser(UserDTO userDTO) throws IOException;
+    void updateUser(UserDTO userDTO);
 
     void changeProfilePic(UserDTO userDTO, MultipartFile file) throws IOException;
 
@@ -36,6 +36,8 @@ public interface UserService {
     List<TvShowDTO> getUserTvShows(UserDTO userDTO);
 
     void addRating2User(User user, Rating rating);
+
+    UserDTO getUserByToken(String token);
 
     boolean checkFollow(UserDTO userDTO, TvShowDTO tvShow);
 
@@ -69,7 +71,6 @@ public interface UserService {
 
     List<Review> getReviews(User user);
 
-    //Extra Methods
     List<TvShowDTO> getUserTvShowsSortedByMaxRating(UserDTO user);
 
     List<EpisodeDTO> getAllUnwatchedUserEpisodes(UserDTO user);
@@ -80,5 +81,17 @@ public interface UserService {
 
     boolean checkOldPassword(UserDTO userDTO, String password);
 
-    void updateSettings(UserDTO user, int days);
+    void updateSettings(UserDTO user, int days, boolean send);
+
+    void confirmUser(String token);
+
+    UserDTO getUserByEmail(String email);
+
+    void createPasswordResetTokenForUser(UserDTO userDTO, String token);
+
+    String validatePasswordResetToken(long id, String token);
+
+    void changeUserPassword(User user, String password);
+
+    void deletePasswordResetToken(String token);
 }

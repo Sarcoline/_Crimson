@@ -22,10 +22,13 @@ public class RatingServiceImpl implements RatingService {
 
     @Autowired
     private RatingDAO ratingDAO;
+
     @Autowired
     private TvShowDAO tvShowDAO;
+
     @Autowired
     private UserDAO userDAO;
+
     @Autowired
     private MapperFacade mapperFacade;
 
@@ -71,41 +74,41 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public void addTvShow2Rating(Rating rating, TvShow tvShow) {
-        if(rating.getTvShow() != tvShow){
-            ratingDAO.addTvShow2Rating(rating,tvShow);
+        if (rating.getTvShow() != tvShow) {
+            ratingDAO.addTvShow2Rating(rating, tvShow);
         }
-        if(!tvShowDAO.getRatings(tvShow).contains(rating)){
-            tvShowDAO.addRating2TvShow(tvShow,rating);
+        if (!tvShowDAO.getRatings(tvShow).contains(rating)) {
+            tvShowDAO.addRating2TvShow(tvShow, rating);
         }
     }
 
     @Override
     public void deleteTvShowFromRating(Rating rating, TvShow tvShow) {
-        if(rating.getTvShow() == tvShow){
+        if (rating.getTvShow() == tvShow) {
             ratingDAO.deleteTvShowFromRating(rating);
         }
-        if(tvShowDAO.getRatings(tvShow).contains(rating)){
-            tvShowDAO.deleteRatingFromTvShow(tvShow,rating);
+        if (tvShowDAO.getRatings(tvShow).contains(rating)) {
+            tvShowDAO.deleteRatingFromTvShow(tvShow, rating);
         }
     }
 
     @Override
     public void addUser2Rating(Rating rating, User user) {
-        if(rating.getUser() != user){
-            ratingDAO.addUser2Rating(rating,user);
+        if (rating.getUser() != user) {
+            ratingDAO.addUser2Rating(rating, user);
         }
-        if(!userDAO.getRatings(user).contains(rating)){
-            userDAO.addRating2User(user,rating);
+        if (!userDAO.getRatings(user).contains(rating)) {
+            userDAO.addRating2User(user, rating);
         }
     }
 
     @Override
     public void deleteUserFromRating(Rating rating, User user) {
-        if(rating.getUser() == user){
+        if (rating.getUser() == user) {
             ratingDAO.deleteUserFromRating(rating);
         }
-        if(userDAO.getRatings(user).contains(rating)){
-            userDAO.deleteRatingFromUser(user,rating);
+        if (userDAO.getRatings(user).contains(rating)) {
+            userDAO.deleteRatingFromUser(user, rating);
         }
     }
 
@@ -115,8 +118,8 @@ public class RatingServiceImpl implements RatingService {
         TvShow tvShow = mapperFacade.map(tvShowDTO, TvShow.class);
         Rating rating = new Rating();
         rating.setValue(value);
-        addTvShow2Rating(rating,tvShow);
-        addUser2Rating(rating,user);
+        addTvShow2Rating(rating, tvShow);
+        addUser2Rating(rating, user);
         saveRating(rating);
         calculateRating(tvShow.getId());
     }

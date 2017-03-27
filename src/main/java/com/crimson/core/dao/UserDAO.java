@@ -9,6 +9,8 @@ public interface UserDAO extends BaseDAO<User, Long> {
 
     User getUserByName(String name);
 
+    User getUserByToken(String token);
+
     void addTvShow2User(User user, TvShow tvShow);
 
     void deleteTvShowFromUser(User user, TvShow tvShow);
@@ -48,4 +50,6 @@ public interface UserDAO extends BaseDAO<User, Long> {
     List<Comment> getComments(User user);
 
     List<Review> getReviews(User user);
+
+    User getUserByEmail(String email);
 }

@@ -1,6 +1,9 @@
-package com.crimson.core.dao;
+package com.crimson.core.functional.dao;
 
 import com.crimson.context.TestSpringCore;
+import com.crimson.core.dao.CommentDAO;
+import com.crimson.core.dao.TvShowDAO;
+import com.crimson.core.dao.UserDAO;
 import com.crimson.core.factory.CommentFactory;
 import com.crimson.core.factory.TvShowFactory;
 import com.crimson.core.factory.UserFactory;
@@ -56,7 +59,6 @@ public class TestCommentDAO {
     public void saveTest(){
         Comment comment = Comment.builder()
                 .text("TEST")
-                .date(LocalDate.parse("2017-02-27"))
                 .build();
         int listSize = commentDAO.getAll().size();
 

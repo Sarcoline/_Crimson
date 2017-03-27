@@ -5,12 +5,9 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 @Aspect
 @Component
-public class LogHandler{
+public class LogHandler {
     private final Logger logger = Logger.getLogger(getClass());
 
     @Before("execution(* com.crimson.*.*.*.*(..))")
@@ -25,15 +22,15 @@ public class LogHandler{
 
     @AfterReturning(
             pointcut = "execution(* com.crimson.*.*.*.*(..))",
-            returning= "result")
+            returning = "result")
     public void logAfterReturning(JoinPoint joinPoint, Object result) {
         if (result == null) result = true;
-        logger.info(joinPoint.getSignature() + " - " + joinPoint.getSignature().getName() + ": returned value of " + result );
+        logger.info(joinPoint.getSignature() + " - " + joinPoint.getSignature().getName() + ": returned value of " + result);
     }
 
     @AfterThrowing(
             pointcut = "execution(* com.crimson.*.*.*.*(..))",
-            throwing= "error")
+            throwing = "error")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable error) {
         logger.error(joinPoint.getSignature() + " - " + joinPoint.getSignature().getName() + ": returned exception!", error);
     }

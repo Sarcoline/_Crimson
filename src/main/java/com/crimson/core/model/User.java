@@ -38,6 +38,12 @@ public @Data class User {
     @Size(min = 3, max = 100, message = "{invalid.password}")
     private String password;
 
+    @Column(name = "active")
+    private boolean active = false;
+
+    @Column(name = "token")
+    private String token;
+
     @Lob
     private byte[] profilePic;
 
@@ -46,12 +52,13 @@ public @Data class User {
     private int version;
 
     @Builder
-    public User(String name, String email, String password, byte[] profilePic, int version){
+    public User(String name, String email, String password, byte[] profilePic, int version, boolean active){
         this.name = name;
         this.email = email;
         this.password = password;
         this.profilePic = profilePic;
         this.version = version;
+        this.active = active;
     }
 
 
@@ -76,6 +83,9 @@ public @Data class User {
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
     private Setting setting;
 
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
+    private PasswordResetToken passwordResetToken;
+
     //User2Role
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "User2Role",
@@ -94,6 +104,6 @@ public @Data class User {
     @Override
     public String toString()
     {
-        return "User["+ id + "_" + name + "]";
+        return name;
     }
 }

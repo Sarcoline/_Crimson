@@ -34,7 +34,7 @@ public @Data class Comment {
     private int version;
 
     @Builder
-    public Comment(String text, LocalDate date){
+    public Comment(String text){
         this.text = text;
         this.date = LocalDate.now();
     }

@@ -6,6 +6,7 @@ import com.crimson.core.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -35,12 +36,14 @@ public class RatingDAOImpl implements RatingDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     public Rating getRatingByIdUser(Long idUser) {
         Session session = sessionFactory.getCurrentSession();
         return session.find(Rating.class, idUser);
     }
 
     @Override
+    @Cacheable("myCache")
     public Rating getById(Long id) {
         Session session = sessionFactory.getCurrentSession();
         return session.find(Rating.class, id);
@@ -48,6 +51,7 @@ public class RatingDAOImpl implements RatingDAO {
 
     @Override
     @SuppressWarnings("unchecked")
+    @Cacheable("myCache")
     public List<Rating> getRatingByIdTvShow(Long idTvShow) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from Rating s where s.tvShow.id = ?";
@@ -57,13 +61,14 @@ public class RatingDAOImpl implements RatingDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     public List<Rating> getAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("SELECT a FROM  Rating a", Rating.class).getResultList();
     }
 
-    //podobno proper way?
     @Override
+    @Cacheable("myCache")
     public Rating getRating(long idtv, long iduser) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from Rating s where s.tvShow.id = ? and s.user.id = ?";

@@ -11,7 +11,8 @@
         <div class="uk-panel uk-panel-box uk-vertical-align-middle uk-margin-top login" style="width: 400px;">
             <h1>Register!</h1>
 
-            <form:form modelAttribute="userDTO" method="POST" enctype="multipart/form-data" class="uk-form uk-form-stacked" >
+            <form:form modelAttribute="userDTO" method="POST" enctype="multipart/form-data"
+                       class="uk-form uk-form-stacked">
                 <form:errors cssClass="uk-alert uk-alert-danger" element="div"/>
                 <div class="uk-form-row">
                     <form:errors path="name" cssClass="uk-alert uk-alert-danger" element="div"/>
@@ -33,10 +34,11 @@
                     <form:input path="email" value="" class="uk-width-1-1 uk-form-large" type="text" name='email'
                                 placeholder="Email"/>
                 </div>
-                <div class="uk-form-row uk-form-file" >
+                <div class="uk-form-row uk-form-file">
                     <form:errors path="uploadedPic" cssClass="uk-alert uk-alert-danger" element="div"/>
                     <button class="uk-button">Select profile picture</button>
-                    <form:input path="uploadedPic" value="" class="uk-width-1-1 uk-form-large" type="file" name="profilePic"/>
+                    <form:input path="uploadedPic" value="" class="uk-width-1-1 uk-form-large" type="file"
+                                name="profilePic"/>
                 </div>
                 <div class="uk-form-row">
                     <input class="uk-width-1-1 uk-button uk-button-primary uk-button-large" name="submit" type="submit"

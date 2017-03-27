@@ -1,6 +1,7 @@
-package com.crimson.core.dao;
+package com.crimson.core.functional.dao;
 
 import com.crimson.context.TestSpringCore;
+import com.crimson.core.dao.*;
 import com.crimson.core.factory.*;
 import com.crimson.core.model.*;
 import org.junit.Assert;
@@ -132,33 +133,6 @@ public class TestTvShowDAO {
         TvShow getTvShowByIdTest = tvShowDAO.getById(tvShow.getId());
 
         Assert.assertEquals(getTvShowByIdTest.getTitle(), tvShow.getTitle());
-    }
-
-    //Extra Methods
-
-    @Test
-    public void tvShowsLastPageNumber() {
-        int lastPage = tvShowDAO.tvShowsLastPageNumber();
-
-        Assert.assertEquals(lastPage, 1);
-    }
-
-    @Test
-    public void tvShowsPaginationList() {
-        List<TvShow> tvShows = tvShowDAO.tvShowsPaginationList(1);
-        tvShows.addAll(tvShowDAO.tvShowsPaginationList(2));
-
-        Assert.assertEquals(tvShows.get(0), tvShow);
-        Assert.assertEquals(tvShows.get(1), tvShow2);
-        Assert.assertEquals(tvShows.get(2), tvShow3);
-        Assert.assertEquals(tvShows.get(3), tvShow4);
-        Assert.assertEquals(tvShows.get(4), tvShow5);
-        Assert.assertEquals(tvShows.get(5), tvShow6);
-        Assert.assertEquals(tvShows.get(6), tvShow7);
-        Assert.assertEquals(tvShows.get(7), tvShow8);
-        Assert.assertEquals(tvShows.get(8), tvShow9);
-        Assert.assertEquals(tvShows.get(9), tvShow10);
-
     }
 
 

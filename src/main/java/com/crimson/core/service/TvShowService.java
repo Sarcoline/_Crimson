@@ -68,7 +68,6 @@ public interface TvShowService {
 
     List<Review> getReviews(TvShow tv);
 
-    //Extra Methods
     List<TvShowDTO> getAllTvShowByMaxRating();
 
     List<TvShowSearchDTO> searchTvShow(String pattern);

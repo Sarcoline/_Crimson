@@ -451,12 +451,11 @@ public class PopulateDatabase {
             roleService.saveRole(role1);
             UserDTO user = new UserDTO();
             user.setName("TestUser");
-            user.setEmail("test@email.com");
+            user.setEmail("kissakot@gmail.com");
             user.setPassword("123");
+            user.setActive(true);
             user.getRoles().add(roleService.getAllRoles().get(1));
             user.setSetting(new Setting(true, 10, 7));
-            InputStream in100 = applicationContext.getResource("classpath:/images/user/meow.jpg").getInputStream();
-            user.setProfilePic(IOUtils.toByteArray(in100));
             userDAO.saveUser(user);
             tvShowDAO.saveTvShow(tv);
             tvShowDAO.saveTvShow(tv1);

@@ -17,10 +17,8 @@ public interface ReviewDAO extends BaseDAO<Review, Long> {
 
     void deleteUserFromReview(Review review);
 
-    @SuppressWarnings("unchecked")
     List<Review> getReviewByIdUser(Long idUser);
 
-    @SuppressWarnings("unchecked")
     List<Review> getReviewByIdTvShow(Long idTvShow);
 
     List getReviews(long idTvShow, long idUser);

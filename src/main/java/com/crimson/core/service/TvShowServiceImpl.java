@@ -5,8 +5,10 @@ import com.crimson.core.dto.*;
 import com.crimson.core.model.*;
 import com.github.slugify.Slugify;
 import ma.glasnost.orika.MapperFacade;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,18 +25,25 @@ public class TvShowServiceImpl implements TvShowService {
 
     @Autowired
     private TvShowDAO tvShowDAO;
+
     @Autowired
     private UserDAO userDAO;
+
     @Autowired
     private GenreDAO genreDAO;
+
     @Autowired
     private EpisodeDAO episodeDAO;
+
     @Autowired
     private RatingDAO ratingDAO;
+
     @Autowired
     private CommentDAO commentDAO;
+
     @Autowired
     private ReviewDAO reviewDAO;
+
     @Autowired
     private MapperFacade mapperFacade;
 
@@ -121,21 +130,21 @@ public class TvShowServiceImpl implements TvShowService {
 
     @Override
     public void addUser2TvShow(User user, TvShow tvShow) {
-        if(!tvShowDAO.getUsers(tvShow).contains(user)){
+        if (!tvShowDAO.getUsers(tvShow).contains(user)) {
             tvShowDAO.addUser2TvShow(user, tvShow);
         }
-        if(!userDAO.getTvShows(user).contains(tvShow)){
-            userDAO.addTvShow2User(user,tvShow);
+        if (!userDAO.getTvShows(user).contains(tvShow)) {
+            userDAO.addTvShow2User(user, tvShow);
         }
     }
 
     @Override
     public void deleteUserFromTvShow(User user, TvShow tvShow) {
-        if(tvShowDAO.getUsers(tvShow).contains(user)) {
+        if (tvShowDAO.getUsers(tvShow).contains(user)) {
             tvShowDAO.deleteUserFromTvShow(user, tvShow);
         }
-        if(userDAO.getTvShows(user).contains(tvShow)){
-            userDAO.deleteTvShowFromUser(user,tvShow);
+        if (userDAO.getTvShows(user).contains(tvShow)) {
+            userDAO.deleteTvShowFromUser(user, tvShow);
         }
     }
 
@@ -143,21 +152,21 @@ public class TvShowServiceImpl implements TvShowService {
 
     @Override
     public void addGenre2TvShow(TvShow tvShow, Genre genre) {
-        if(!tvShowDAO.getGenres(tvShow).contains(genre)){
+        if (!tvShowDAO.getGenres(tvShow).contains(genre)) {
             tvShowDAO.addGenre2TvShow(tvShow, genre);
         }
-        if(!genreDAO.getTvShows(genre).contains(tvShow)){
-            genreDAO.addTvShow2Genre(genre,tvShow);
+        if (!genreDAO.getTvShows(genre).contains(tvShow)) {
+            genreDAO.addTvShow2Genre(genre, tvShow);
         }
     }
 
     @Override
     public void deleteGenreFromTvShow(TvShow tvShow, Genre genre) {
-        if(tvShowDAO.getGenres(tvShow).contains(genre)){
+        if (tvShowDAO.getGenres(tvShow).contains(genre)) {
             tvShowDAO.deleteGenreFromTvShow(tvShow, genre);
         }
-        if(genreDAO.getTvShows(genre).contains(tvShow)){
-            genreDAO.deleteTvShowFromGenre(genre,tvShow);
+        if (genreDAO.getTvShows(genre).contains(tvShow)) {
+            genreDAO.deleteTvShowFromGenre(genre, tvShow);
         }
     }
 
@@ -165,21 +174,21 @@ public class TvShowServiceImpl implements TvShowService {
 
     @Override
     public void addEpisode2TvShow(TvShow tvShow, Episode episode) {
-        if(!tvShowDAO.getEpisodes(tvShow).contains(episode)){
+        if (!tvShowDAO.getEpisodes(tvShow).contains(episode)) {
             tvShowDAO.addEpisode2TvShow(tvShow, episode);
         }
-        if(episode.getTvShow() != tvShow){
-            episodeDAO.addTvShow2Episode(tvShow,episode);
+        if (episode.getTvShow() != tvShow) {
+            episodeDAO.addTvShow2Episode(tvShow, episode);
         }
 
     }
 
     @Override
     public void deleteEpisodeFromTvShow(TvShow tvShow, Episode episode) {
-        if(tvShowDAO.getEpisodes(tvShow).contains(episode)){
+        if (tvShowDAO.getEpisodes(tvShow).contains(episode)) {
             tvShowDAO.deleteEpisodeFromTvShow(tvShow, episode);
         }
-        if(episode.getTvShow() == tvShow){
+        if (episode.getTvShow() == tvShow) {
             episodeDAO.deleteTvShowFromEpisode(episode);
         }
 
@@ -189,60 +198,60 @@ public class TvShowServiceImpl implements TvShowService {
 
     @Override
     public void addRating2TvShow(TvShow tvShow, Rating rating) {
-        if(!tvShowDAO.getRatings(tvShow).contains(rating)){
+        if (!tvShowDAO.getRatings(tvShow).contains(rating)) {
             tvShowDAO.addRating2TvShow(tvShow, rating);
         }
-        if(rating.getTvShow() != tvShow){
+        if (rating.getTvShow() != tvShow) {
             ratingDAO.addTvShow2Rating(rating, tvShow);
         }
     }
 
     @Override
     public void deleteRatingFromTvShow(TvShow tvShow, Rating rating) {
-        if(tvShowDAO.getRatings(tvShow).contains(rating)){
+        if (tvShowDAO.getRatings(tvShow).contains(rating)) {
             tvShowDAO.deleteRatingFromTvShow(tvShow, rating);
         }
-        if(rating.getTvShow() == tvShow){
+        if (rating.getTvShow() == tvShow) {
             ratingDAO.deleteTvShowFromRating(rating);
         }
     }
 
     @Override
     public void addComment(TvShow tvShow, Comment comment) {
-        if(!tvShowDAO.getComments(tvShow).contains(comment)){
-            tvShowDAO.addComment(tvShow,comment);
+        if (!tvShowDAO.getComments(tvShow).contains(comment)) {
+            tvShowDAO.addComment(tvShow, comment);
         }
-        if(comment.getTvShow() != tvShow){
-            commentDAO.addTvShow2Comment(comment,tvShow);
+        if (comment.getTvShow() != tvShow) {
+            commentDAO.addTvShow2Comment(comment, tvShow);
         }
     }
 
     @Override
     public void addReview(TvShow tvShow, Review review) {
-        if(!tvShowDAO.getReviews(tvShow).contains(review)){
-            tvShowDAO.addReview(tvShow,review);
+        if (!tvShowDAO.getReviews(tvShow).contains(review)) {
+            tvShowDAO.addReview(tvShow, review);
         }
-        if(review.getTvShow() != tvShow){
-            reviewDAO.addTvShow2Review(review,tvShow);
+        if (review.getTvShow() != tvShow) {
+            reviewDAO.addTvShow2Review(review, tvShow);
         }
     }
 
     @Override
     public void deleteComment(TvShow tvShow, Comment comment) {
-        if(tvShowDAO.getComments(tvShow).contains(comment)){
-            tvShowDAO.deleteComment(tvShow,comment);
+        if (tvShowDAO.getComments(tvShow).contains(comment)) {
+            tvShowDAO.deleteComment(tvShow, comment);
         }
-        if(comment.getTvShow() == tvShow){
+        if (comment.getTvShow() == tvShow) {
             commentDAO.deleteTvShowFromComment(comment);
         }
     }
 
     @Override
     public void deleteReview(TvShow tvShow, Review review) {
-        if(tvShowDAO.getReviews(tvShow).contains(review)){
-            tvShowDAO.deleteReview(tvShow,review);
+        if (tvShowDAO.getReviews(tvShow).contains(review)) {
+            tvShowDAO.deleteReview(tvShow, review);
         }
-        if(review.getTvShow() == tvShow){
+        if (review.getTvShow() == tvShow) {
             reviewDAO.deleteTvShowFromReview(review);
         }
     }
@@ -277,7 +286,6 @@ public class TvShowServiceImpl implements TvShowService {
         return tvShowDAO.getReviews(tv);
     }
 
-    //Extra Methods
 
     @Override
     public List<TvShowDTO> getAllTvShowByMaxRating() {
@@ -286,7 +294,7 @@ public class TvShowServiceImpl implements TvShowService {
         unsortedList.sort(Comparator.comparing(TvShow::getOverallRating).reversed());
         unsortedList.forEach(
                 tv -> tvs.add(mapperFacade.map(tv, TvShowDTO.class)));
-        return tvs.subList(0,10);
+        return tvs.subList(0, 10);
     }
 
     @Override
@@ -325,22 +333,70 @@ public class TvShowServiceImpl implements TvShowService {
         tvShowDAO.save(tv);
     }
 
+
     @Override
     public int tvShowsLastPageNumber() {
-        return tvShowDAO.tvShowsLastPageNumber();
+        int listSizeOnPage = 20;
+        Long countResults = tvShowDAO.getTvShowsToPaginationByQuery();
+        if ((countResults % listSizeOnPage) == 0) return (int) (countResults / listSizeOnPage);
+        else return (int) (countResults / listSizeOnPage) + 1;
     }
 
     @Override
-    public List<TvShowSearchDTO> tvShowsPaginationList(int pageNumber) {
-        List<TvShowSearchDTO> tvShows = new ArrayList<>();
-        tvShowDAO.tvShowsPaginationList(pageNumber).forEach(
-                tvShow -> tvShows.add(mapperFacade.map(tvShow, TvShowSearchDTO.class))
+    public List<TvShowSearchDTO> tvShowsPaginationList(int pageNumber){
+        int lastPage = tvShowsLastPageNumber();
+        List tvShows = new ArrayList<>();
+        List<TvShowSearchDTO> tvShowsToReturn = new ArrayList<>();
+        if (lastPage <= pageNumber)
+        {
+            tvShows = tvShowDAO.queryGettingTvShowListForPage(pageNumber, 25);
+        }
+        tvShows.forEach(
+                tvShow -> tvShowsToReturn.add(mapperFacade.map(tvShow, TvShowSearchDTO.class))
         );
-        return tvShows;
+
+        return tvShowsToReturn;
     }
 
-    @Override
-    public FilterResponseDTO filter(SearchFilterParameters parameters, int page) {
-        return mapperFacade.map(tvShowDAO.filter(parameters,page), FilterResponseDTO.class);
+    public FilterResponseDTO filter(SearchFilterParameters parameters, int page){
+        FilterResponse response = new FilterResponse();
+        Session session = tvShowDAO.getSession();
+        Criteria c = session.createCriteria(TvShow.class);
+        if (parameters.getGenre() != null) {
+            c.add(Restrictions.eq("genre", parameters.getGenre()));
+        }
+        if (parameters.getReleaseYearStart() != null) {
+            c.add(Restrictions.ge("releaseYear", parameters.getReleaseYearStart()));
+        }
+        if (parameters.getReleaseYearEnd() != null) {
+            c.add(Restrictions.le("releaseYear", parameters.getReleaseYearEnd()));
+        }
+        if (parameters.getCountry() != null) {
+            c.add(Restrictions.eq("country", parameters.getCountry()));
+        }
+        if (parameters.getNetwork() != null) {
+            c.add(Restrictions.eq("network", parameters.getNetwork()));
+        }
+        if (parameters.getMinimalRating() != null) {
+            c.add(Restrictions.ge("overallRating", parameters.getMinimalRating()));
+        }
+        if (parameters.getMaximumRating() != null) {
+            c.add(Restrictions.le("overallRating", parameters.getMaximumRating()));
+        }
+        int lastPage;
+        int listSizeOnPage = 20;
+        int countResults = (c.list().size());
+        response.setSize(countResults);
+        if ((countResults % listSizeOnPage) == 0) lastPage = (countResults / listSizeOnPage);
+        else lastPage = countResults / listSizeOnPage + 1;
+
+        if (page <= lastPage) {
+            c.setFirstResult((page - 1) * 20);
+            c.setMaxResults(20);
+        }
+        response.setTvShows(c.list());
+        return mapperFacade.map(response, FilterResponseDTO.class);
     }
+
+
 }
