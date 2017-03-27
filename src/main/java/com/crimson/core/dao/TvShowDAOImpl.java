@@ -24,6 +24,11 @@ public class TvShowDAOImpl implements TvShowDAO {
     private SessionFactory sessionFactory;
 
     @Override
+    public Session getSession(){
+        return sessionFactory.getCurrentSession();
+    }
+
+    @Override
     public void save(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
         Slugify slg = new Slugify();
@@ -140,32 +145,25 @@ public class TvShowDAOImpl implements TvShowDAO {
         return (long) q.getSingleResult();
     }
 
-    //Wyrzuca ostatnia stronę przy pagination dla TvShow
+
+    //Zwraca ilość seriali w bazie do obliczenia ostatniej strony
     @Override
-    public int tvShowsLastPageNumber() {
+    public Long getTvShowsToPaginationByQuery()
+    {
         Session session = sessionFactory.getCurrentSession();
-        int listSizeOnPage = 25;
-        Long countResults = (Long) session.createQuery("SELECT count (id) FROM TvShow  f").uniqueResult();
-        if ((countResults % listSizeOnPage) == 0) return (int) (countResults / listSizeOnPage);
-        else return (int) (countResults / listSizeOnPage) + 1;
+        return (Long) session.createQuery("SELECT count (id) FROM TvShow  f").uniqueResult();
     }
 
-    //Wyrzuca listę tvShow dla danej strony
+    //Zwraca listę seriali dla podanej strony
     @Override
-    @SuppressWarnings("unchecked")
-    public List<TvShow> tvShowsPaginationList(int pageNumber) {
+    public List queryGettingTvShowListForPage(int pageNumber, int maxResults){
         Session session = sessionFactory.getCurrentSession();
-        int lastPage = tvShowsLastPageNumber();
-        List<TvShow> selectedList = new ArrayList<>();
         org.hibernate.query.Query selectQuery = session.createQuery("from TvShow ");
-
-        if (pageNumber <= lastPage) {
-            selectQuery.setFirstResult((pageNumber - 1) * 25);
-            selectQuery.setMaxResults(25);
-            selectedList = selectQuery.list();
-        }
-        return selectedList;
+        selectQuery.setFirstResult((pageNumber - 1) * 25);
+        selectQuery.setMaxResults(25);
+        return selectQuery.list();
     }
+
     //RELATIONSHIPS
 
     //User2TvShow
@@ -264,48 +262,6 @@ public class TvShowDAOImpl implements TvShowDAO {
 
     @Override
     @SuppressWarnings("unchecked")
-    public FilterResponse filter(SearchFilterParameters parameters, int page) {
-        FilterResponse response = new FilterResponse();
-        Session session = sessionFactory.getCurrentSession();
-        Criteria c = session.createCriteria(TvShow.class);
-        if (parameters.getGenre() != null) {
-            c.add(Restrictions.eq("genre", parameters.getGenre()));
-        }
-        if (parameters.getReleaseYearStart() != null) {
-            c.add(Restrictions.ge("releaseYear", parameters.getReleaseYearStart()));
-        }
-        if (parameters.getReleaseYearEnd() != null) {
-            c.add(Restrictions.le("releaseYear", parameters.getReleaseYearEnd()));
-        }
-        if (parameters.getCountry() != null) {
-            c.add(Restrictions.eq("country", parameters.getCountry()));
-        }
-        if (parameters.getNetwork() != null) {
-            c.add(Restrictions.eq("network", parameters.getNetwork()));
-        }
-        if (parameters.getMinimalRating() != null) {
-            c.add(Restrictions.ge("overallRating", parameters.getMinimalRating()));
-        }
-        if (parameters.getMaximumRating() != null) {
-            c.add(Restrictions.le("overallRating", parameters.getMaximumRating()));
-        }
-        int lastPage;
-        int listSizeOnPage = 20;
-        int countResults = (c.list().size());
-        response.setSize(countResults);
-        if ((countResults % listSizeOnPage) == 0) lastPage = (countResults / listSizeOnPage);
-        else lastPage = countResults / listSizeOnPage + 1;
-
-        if (page <= lastPage) {
-            c.setFirstResult((page - 1) * 20);
-            c.setMaxResults(20);
-        }
-        response.setTvShows(c.list());
-        return response;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
     public List<User> getUsers(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM User u JOIN FETCH u.tvShows t where t.id = ?";
@@ -363,4 +319,5 @@ public class TvShowDAOImpl implements TvShowDAO {
                 .setParameter(0, tv.getId())
                 .getResultList();
     }
+
 }

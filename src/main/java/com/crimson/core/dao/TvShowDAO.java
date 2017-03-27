@@ -3,10 +3,13 @@ package com.crimson.core.dao;
 import com.crimson.core.dto.FilterResponse;
 import com.crimson.core.dto.SearchFilterParameters;
 import com.crimson.core.model.*;
+import org.hibernate.Session;
 
 import java.util.List;
 
 public interface TvShowDAO extends BaseDAO<TvShow, Long> {
+
+    Session getSession();
 
     TvShow getTvByIdWithEpisodes(Long id);
 
@@ -26,9 +29,9 @@ public interface TvShowDAO extends BaseDAO<TvShow, Long> {
 
     long tvShowsSize();
 
-    int tvShowsLastPageNumber();
+    Long getTvShowsToPaginationByQuery();
 
-    List<TvShow> tvShowsPaginationList(int pageNumber);
+    List queryGettingTvShowListForPage(int pageNumber, int maxResults);
 
     void addUser2TvShow(User user, TvShow tvShow);
 
@@ -53,8 +56,6 @@ public interface TvShowDAO extends BaseDAO<TvShow, Long> {
     void deleteComment(TvShow tvShow, Comment comment);
 
     void deleteReview(TvShow tvShow, Review review);
-
-    FilterResponse filter(SearchFilterParameters parameters, int page);
 
     List<User> getUsers(TvShow tv);
 

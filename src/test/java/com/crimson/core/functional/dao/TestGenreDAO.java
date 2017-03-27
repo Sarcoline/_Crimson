@@ -1,6 +1,8 @@
-package com.crimson.core.dao;
+package com.crimson.core.functional.dao;
 
 import com.crimson.context.TestSpringCore;
+import com.crimson.core.dao.GenreDAO;
+import com.crimson.core.dao.TvShowDAO;
 import com.crimson.core.factory.GenreFactory;
 import com.crimson.core.factory.TvShowFactory;
 import com.crimson.core.model.Genre;
