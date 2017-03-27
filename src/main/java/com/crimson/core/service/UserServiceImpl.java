@@ -452,4 +452,12 @@ public class UserServiceImpl implements UserService {
         userDAO.update(user);
         passwordResetTokenDAO.delete(tokenObj);
     }
+
+    @Override
+    public void setIsAdult(long id) {
+        User user = userDAO.getById(id);
+        user.setAdult(true);
+        userDAO.update(user);
+    }
+
 }

@@ -112,4 +112,9 @@ public class RestCrimsonController {
         UserDTO user = userService.getUserByName(auth.getName());
         userService.updateSettings(user, days, send);
     }
+
+    @RequestMapping(value = "/setadult", method = RequestMethod.POST)
+    public void setIsAdult(@RequestParam("id") long id) {
+        userService.setIsAdult(id);
+    }
 }

@@ -404,6 +404,7 @@ public class PopulateDatabase {
             tv13.setTrailerUrl("https://www.youtube.com/watch?v=mXG1netn9_g");
             tv13.setCountry("USA");
             tv13.setReleaseYear(2014);
+            tv13.setForAdult(true);
             InputStream in65 = applicationContext.getResource("classpath:/images/true-detective/poster.jpg").getInputStream();
             tv13.getPictures().put("poster", IOUtils.toByteArray(in65));
             InputStream in66 = applicationContext.getResource("classpath:/images/true-detective/back.jpg").getInputStream();

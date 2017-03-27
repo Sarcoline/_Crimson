@@ -258,6 +258,23 @@
 
     </div>
 </div>
+<div id="adultWarning" class="uk-modal uk-open" aria-hidden="false" style="overflow-y: auto; display: none;">
+    <div class="uk-modal-dialog uk-modal-dialog-blank warning">
+        <div class="uk-grid uk-flex-middle" data-uk-grid-margin="">
+            <div class="uk-width-medium-1-2 uk-height-viewport uk-cover-background uk-row-first"
+                 style="background-image: url('http://i.imgur.com/Ipg62jA.jpg');"></div>
+            <div class="uk-width-medium-1-2">
+                <h1>Warning! Adults only!</h1>
+                <div class="uk-width-medium-1-2">
+                    <p>You are about to enter site that may contain content of adult nature. Are you sure you want to
+                        continue?</p>
+                    <a href="<c:url value="/"/> " class="uk-button uk-button-large">Back</a>
+                    <button id="imAdult" class="uk-button uk-button-primary uk-button-large">Enter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="<c:url value="/static/js/userActions.js"/>"></script>
 <script src="<c:url value="/static/js/comment.js" />"></script>
 <script>
@@ -266,6 +283,22 @@
         var header = $("meta[name='_csrf_header']").attr("content");
         $(document).ajaxSend(function (e, xhr, options) {
             xhr.setRequestHeader(header, token);
+        });
+
+        var userAdult = false;
+        var forAdult = ${tv.forAdult};
+        <sec:authorize access="isAuthenticated()">
+        userAdult = ${user.adult};
+        </sec:authorize>
+        var modal = UIkit.modal("#adultWarning");
+        if (!userAdult) {
+            if(forAdult) $('#adultWarning').css('display', 'block');
+        }
+        $('#imAdult').on('click', function () {
+            modal.hide();
+            <sec:authorize access="isAuthenticated()">
+            $.post("/api/setadult", {id:${user.id}});
+            </sec:authorize>
         });
         <sec:authorize access="isAuthenticated()">
         var rating = parseFloat(${rating});
