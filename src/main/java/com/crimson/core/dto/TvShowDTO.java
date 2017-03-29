@@ -42,6 +42,8 @@ public class TvShowDTO {
 
     private int finishYear;
 
+    private boolean forAdult;
+
     @Size(min = 3, max = 20)
     @Pattern(regexp = "[A-z][a-z]+")
     private String genre;

@@ -94,4 +94,6 @@ public interface UserService {
     void changeUserPassword(User user, String password);
 
     void deletePasswordResetToken(String token);
+
+    void setIsAdult(long id);
 }

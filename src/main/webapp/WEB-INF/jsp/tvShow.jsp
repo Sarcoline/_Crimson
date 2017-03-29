@@ -13,7 +13,7 @@
 
 <h1 class="title">${tv.title}
     <sec:authorize access="isAuthenticated()">
-        <small class="follow"><a id="follow"><i class="fa fa-heart-o" aria-hidden="true" onclick="onClick()"
+        <small class="follow"><a id="follow"><i class="fa fa-heart-o" aria-hidden="true"
                                                 style="cursor: pointer"></i></a></small>
     </sec:authorize>
     <div id="message" style="color:darkblue; font-size: large; text-align: center"></div>
@@ -222,40 +222,22 @@
     </div>
 </div>
 
-<div id="rating-confirmation" class="uk-modal">
-    <div class="uk-modal-dialog">
-        <a class="uk-modal-close uk-close"></a>
-        <div class="uk-modal-header">
-            <h2 class="uk-text-center" style="color: darkblue">Your rating is saved!</h2>
-            <div class="uk-grid">
-                <div class="uk-container-center">
 
-
-                    <a class="uk-button uk-button-default uk-modal-close">OK</a>
+<div id="adultWarning" class="uk-modal uk-open" aria-hidden="false" style="overflow-y: auto; display: none;">
+    <div class="uk-modal-dialog uk-modal-dialog-blank warning">
+        <div class="uk-grid uk-flex-middle" data-uk-grid-margin="">
+            <div class="uk-width-medium-1-2 uk-height-viewport uk-cover-background uk-row-first"
+                 style="background-image: url('http://i.imgur.com/Ipg62jA.jpg');"></div>
+            <div class="uk-width-medium-1-2">
+                <h1>Warning! Adults only!</h1>
+                <div class="uk-width-medium-1-2">
+                    <p>You are about to enter site that may contain content of adult nature. Are you sure you want to
+                        continue?</p>
+                    <a href="<c:url value="/"/> " class="uk-button uk-button-large">Back</a>
+                    <button id="imAdult" class="uk-button uk-button-primary uk-button-large">Enter</button>
                 </div>
             </div>
-
-
         </div>
-
-    </div>
-</div>
-<div id="myyy-id" class="uk-modal">
-    <div class="uk-modal-dialog">
-        <a class="uk-modal-close uk-close"></a>
-        <div class="uk-modal-header">
-            <h2 class="uk-text-center">You follow it !</h2>
-            <div class="uk-grid">
-                <div class="uk-container-center">
-
-
-                    <a class="uk-button uk-button-default uk-modal-close">OK</a>
-                </div>
-            </div>
-
-
-        </div>
-
     </div>
 </div>
 <script src="<c:url value="/static/js/userActions.js"/>"></script>
@@ -267,6 +249,22 @@
         $(document).ajaxSend(function (e, xhr, options) {
             xhr.setRequestHeader(header, token);
         });
+
+        var userAdult = false;
+        var forAdult = ${tv.forAdult};
+        <sec:authorize access="isAuthenticated()">
+        userAdult = ${user.adult};
+        </sec:authorize>
+        var modal = UIkit.modal("#adultWarning");
+        if (!userAdult) {
+            if(forAdult) $('#adultWarning').css('display', 'block');
+        }
+        $('#imAdult').on('click', function () {
+            modal.hide();
+            <sec:authorize access="isAuthenticated()">
+            $.post("/api/setadult", {id:${user.id}});
+            </sec:authorize>
+        });
         <sec:authorize access="isAuthenticated()">
         var rating = parseFloat(${rating});
         var rateValue = $('.rateValue');
@@ -277,17 +275,18 @@
         var label = $('label');
         var follow = $('#follow');
         var id = ${tv.id};
+		var title = '${tv.title}';
 
-        if (rating !== 0) rateValue.html(" " + rating);
+        if (rating != 0) rateValue.html(" " + rating);
         <c:if test="${follow == true}">
         $('i.fa-heart-o').addClass('fa-heart').removeClass('fa-heart-o');
         </c:if>
         //mark watched episodes
         markWatchedEpisodes(watchedThis, watched);
         //ajax request to rate tvShow
-        rateTvShow(label, rateValue, id);
+        rateTvShow(label, rateValue, id, title);
         //ajax request to follow tvShow
-        followTvShow(follow, id);
+        followTvShow(follow, id, title);
         //ajax request to rate tvShow
         markAsWatched(watchedThis);
         //add comment
@@ -327,19 +326,7 @@
         });
         </sec:authorize>
     });
-    //follow confirmation
-    var clicks = 0;
-    function onClick() {
-        clicks += 1;
-        var message = "";
-        if ((clicks % 2) == 1) {
-            message = "You follow it!";
-        }
-        else {
-            message = "You do not follow it!";
-        }
-        document.getElementById("message").innerHTML = message;
-    }
+    
 </script>
 </body>
 </html>

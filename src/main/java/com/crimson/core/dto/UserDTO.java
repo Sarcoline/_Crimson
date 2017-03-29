@@ -42,6 +42,8 @@ public @Data class UserDTO {
 
     private boolean active;
 
+    private boolean adult;
+
     private String token;
 
     private PasswordResetToken passwordResetToken;

@@ -41,6 +41,8 @@ public @Data class User {
     @Column(name = "active")
     private boolean active = false;
 
+    private boolean adult = false;
+
     @Column(name = "token")
     private String token;
 

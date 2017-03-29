@@ -67,6 +67,8 @@ public @Data class TvShow {
 
     private int finishYear;
 
+    private boolean forAdult = false;
+
     @Column(name = "slug")
     @Size(max = 20, message = "{invalid.size.slug}")
     @Pattern(regexp = "[\\w-]*", message = "{invalid.pattern.slug}")
