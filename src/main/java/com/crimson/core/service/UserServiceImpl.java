@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
         Role role = roleDAO.getAll().get(0);
         User user = mapperFacade.map(userDTO, User.class);
         user.setPassword(encoder.encode(user.getPassword()));
-        user.getRoles().add(role);
+        addRole2User(user,role);
         user.setSetting(new Setting(false, 10, 7));
         if (userDTO.getUploadedPic() != null) {
             user.setProfilePic(userDTO.getUploadedPic().getBytes());

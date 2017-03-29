@@ -180,9 +180,9 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public List<TvShow> getTvShows(User user) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "FROM TvShow t JOIN FETCH t.users u where u.id = ?";
+        String hql = "FROM TvShow t JOIN FETCH t.users u where u.id = :id";
         return session.createQuery(hql)
-                .setParameter(0, user.getId())
+                .setParameter("id", user.getId())
                 .getResultList();
     }
 
@@ -190,9 +190,9 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public List<Episode> getEpisodes(User user) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "FROM Episode e JOIN FETCH e.users u where u.id = ?";
+        String hql = "FROM Episode e JOIN FETCH e.users u where u.id = :id";
         return session.createQuery(hql)
-                .setParameter(0, user.getId())
+                .setParameter("id", user.getId())
                 .getResultList();
     }
 
@@ -200,9 +200,9 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public List<Rating> getRatings(User user) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "FROM Rating r JOIN FETCH r.user u where u.id = ?";
+        String hql = "FROM Rating r JOIN FETCH r.user u where u.id = :id";
         return session.createQuery(hql)
-                .setParameter(0, user.getId())
+                .setParameter("id", user.getId())
                 .getResultList();
     }
 
@@ -210,9 +210,9 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public List<Role> getRoles(User user) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "FROM Role r JOIN FETCH r.users u where u.id = ?";
+        String hql = "FROM Role r JOIN FETCH r.users u where u.id = :id";
         return session.createQuery(hql)
-                .setParameter(0, user.getId())
+                .setParameter("id", user.getId())
                 .getResultList();
     }
 
@@ -220,9 +220,9 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public List<Review> getReviews(User user) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "FROM Review r JOIN FETCH r.user u where u.id = ?";
+        String hql = "FROM Review r JOIN FETCH r.user u where u.id = :id";
         return session.createQuery(hql)
-                .setParameter(0, user.getId())
+                .setParameter("id", user.getId())
                 .getResultList();
     }
 
@@ -244,9 +244,9 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public List<Comment> getComments(User user) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "FROM Comment c JOIN FETCH c.user u where u.id = ?";
+        String hql = "FROM Comment c JOIN FETCH c.user u where u.id = :id";
         return session.createQuery(hql)
-                .setParameter(0, user.getId())
+                .setParameter("id", user.getId())
                 .getResultList();
     }
 }

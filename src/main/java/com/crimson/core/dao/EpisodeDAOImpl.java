@@ -114,9 +114,9 @@ public class EpisodeDAOImpl implements EpisodeDAO {
     @Override
     public List<User> getUsers(Episode episode) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "FROM User u JOIN FETCH u.episodes e where e.id = ?";
+        String hql = "FROM User u JOIN FETCH u.episodes e where e.id = :id";
         return session.createQuery(hql)
-                .setParameter(0, episode.getId())
+                .setParameter("id", episode.getId())
                 .getResultList();
     }
 

@@ -37,4 +37,10 @@ public @Data class PasswordResetToken {
         cal.add(Calendar.MINUTE, PasswordResetToken.EXPIRATION);
         return new Date(cal.getTime().getTime());
     }
+
+    @Override
+    public String toString()
+    {
+        return String.format("PasswordResetToken[%d]", id);
+    }
 }

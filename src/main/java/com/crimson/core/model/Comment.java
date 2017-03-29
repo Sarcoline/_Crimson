@@ -54,6 +54,6 @@ public @Data class Comment {
     @Override
     public String toString()
     {
-        return "Comment["+ id + "_" + substring(text,0,10) + "...]";
+        return String.format("Comment[%d_%s...]", id, substring(text, 0, 10));
     }
 }

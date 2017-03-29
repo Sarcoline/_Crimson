@@ -63,6 +63,6 @@ public class TvShowDTO {
     @Override
     public String toString()
     {
-        return "TvShowDTO["+ id + "_" + slug + "]";
+        return String.format("TvShowDTO[%d_%s]", id, slug);
     }
 }

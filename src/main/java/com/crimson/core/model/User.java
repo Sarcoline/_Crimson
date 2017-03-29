@@ -104,6 +104,6 @@ public @Data class User {
     @Override
     public String toString()
     {
-        return name;
+        return String.format("User[%s]", name);
     }
 }

@@ -41,6 +41,6 @@ public @Data class Role {
     @Override
     public String toString()
     {
-        return "Role["+ idRole + "_" + roleName + "]";
+        return String.format("Role[%d_%s]", idRole, roleName);
     }
 }

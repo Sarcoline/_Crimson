@@ -37,6 +37,6 @@ public @Data class EpisodeFormDTO {
     @Override
     public String toString()
     {
-        return "EpisodeFromDTO["+ id + "_" + title + "]";
+        return String.format("EpisodeFromDTO[%d_%s]", id, title);
     }
 }

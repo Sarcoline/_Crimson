@@ -91,9 +91,9 @@ public class CommentDAOImpl implements CommentDAO {
     @Cacheable("myCache")
     public List<Comment> getCommentByIdUser(Long idUser) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "from Comment s where s.user.id = ?";
+        String hql = "from Comment s where s.user.id = :idusr";
         return session.createQuery(hql)
-                .setParameter(0, idUser)
+                .setParameter("idusr", idUser)
                 .getResultList();
     }
 
@@ -102,9 +102,9 @@ public class CommentDAOImpl implements CommentDAO {
     @Cacheable("myCache")
     public List<Comment> getCommentByIdTvShow(Long idTvShow) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "from Comment s where s.tvShow.id = ?";
+        String hql = "from Comment s where s.tvShow.id = :idtv";
         return session.createQuery(hql)
-                .setParameter(0, idTvShow)
+                .setParameter("idtv", idTvShow)
                 .getResultList();
     }
 
@@ -112,10 +112,10 @@ public class CommentDAOImpl implements CommentDAO {
     @Cacheable("myCache")
     public List getComments(long idTvShow, long idUser) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "from Comment s where s.tvShow.id = ? and s.user.id = ?";
+        String hql = "from Comment s where s.tvShow.id = :idtv and s.user.id = :idusr";
         return session.createQuery(hql)
-                .setParameter(0, idTvShow)
-                .setParameter(1, idUser)
+                .setParameter("idtv", idTvShow)
+                .setParameter("idusr", idUser)
                 .getResultList();
     }
 }

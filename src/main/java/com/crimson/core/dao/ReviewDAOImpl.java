@@ -84,9 +84,9 @@ public class ReviewDAOImpl implements ReviewDAO {
     @Cacheable("myCache")
     public List<Review> getReviewByIdUser(Long idUser) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "from Review r where r.user.id = ?";
+        String hql = "from Review r where r.user.id = :id";
         return session.createQuery(hql)
-                .setParameter(0, idUser)
+                .setParameter("id", idUser)
                 .getResultList();
     }
 
@@ -95,9 +95,9 @@ public class ReviewDAOImpl implements ReviewDAO {
     @Cacheable("myCache")
     public List<Review> getReviewByIdTvShow(Long idTvShow) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "from Review r where r.tvShow.id = ?";
+        String hql = "from Review r where r.tvShow.id = :id";
         return session.createQuery(hql)
-                .setParameter(0, idTvShow)
+                .setParameter("id", idTvShow)
                 .getResultList();
     }
 
@@ -105,10 +105,10 @@ public class ReviewDAOImpl implements ReviewDAO {
     @Cacheable("myCache")
     public List getReviews(long idTvShow, long idUser) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "from Review r where r.tvShow.id = ? and r.user.id = ?";
+        String hql = "from Review r where r.tvShow.id = :idtv and r.user.id = :idusr";
         return session.createQuery(hql)
-                .setParameter(0, idTvShow)
-                .setParameter(1, idUser)
+                .setParameter("idtv", idTvShow)
+                .setParameter("idusr", idUser)
                 .getResultList();
     }
 }

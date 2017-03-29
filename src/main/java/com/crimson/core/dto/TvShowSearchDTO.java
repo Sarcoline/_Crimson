@@ -15,6 +15,6 @@ public @Data class TvShowSearchDTO {
     @Override
     public String toString()
     {
-        return "TvShowSearchDTO["+ id + "_" + slug + "]";
+        return String.format("TvShowSearchDTO[%d_%s]", id, slug);
     }
 }

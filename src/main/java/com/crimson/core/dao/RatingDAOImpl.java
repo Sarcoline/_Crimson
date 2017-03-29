@@ -54,9 +54,9 @@ public class RatingDAOImpl implements RatingDAO {
     @Cacheable("myCache")
     public List<Rating> getRatingByIdTvShow(Long idTvShow) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "from Rating s where s.tvShow.id = ?";
+        String hql = "from Rating s where s.tvShow.id = :id";
         return session.createQuery(hql)
-                .setParameter(0, idTvShow)
+                .setParameter("id", idTvShow)
                 .getResultList();
     }
 
@@ -71,10 +71,10 @@ public class RatingDAOImpl implements RatingDAO {
     @Cacheable("myCache")
     public Rating getRating(long idtv, long iduser) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "from Rating s where s.tvShow.id = ? and s.user.id = ?";
+        String hql = "from Rating s where s.tvShow.id = :idtv and s.user.id = :idusr";
         List rating = session.createQuery(hql)
-                .setParameter(0, idtv)
-                .setParameter(1, iduser)
+                .setParameter("idtv", idtv)
+                .setParameter("idusr", iduser)
                 .getResultList();
         return rating.isEmpty() ? new Rating() : (Rating) rating.get(0);
     }

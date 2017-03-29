@@ -64,6 +64,6 @@ public @Data class Review {
     @Override
     public String toString()
     {
-        return "Review["+ id + "_" + title + "]";
+        return String.format("Review[%d_%s]", id, title);
     }
 }
