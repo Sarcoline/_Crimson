@@ -67,14 +67,18 @@
                 <ul id="tab-content" class="uk-switcher ">
                     <c:forEach begin="1" end="${seasons}" varStatus="count">
                         <li aria-hidden="false" class="">
-                            <h3>Season ${count.count}</h3>
+                            <h3>Season ${count.count} <sec:authorize access="isAuthenticated()">
+                                <a id="" class="uk-button uk-button-success uk-button-small watched-season"
+                                   style="float: right;" data-season="${count.count}" data-slug="${tv.slug}">Mark as watched</a>
+                            </sec:authorize>
+                            </h3>
                             <ul class="uk-list uk-list-line">
                                 <c:forEach items="${episodes}" var="episode">
                                     <c:if test="${episode.season == count.count}">
                                         <li>
                                             <p><strong> ${episode.number}. </strong>
                                                 <sec:authorize access="isAuthenticated()">
-                                                    <a class="watched-this" data-id="${episode.id}"><i
+                                                    <a class="watched-this" data-season="${count.count}" data-id="${episode.id}"><i
                                                             class="fa fa-square-o"
                                                             aria-hidden="true"></i></a>
 
@@ -114,9 +118,11 @@
             </ul>
         </div>
         <h2 class="uk-margin-large-top">Comments (${comments.size()}): </h2>
+        <sec:authorize access="isAuthenticated()">
         <button class="uk-button uk-button-success"
                 data-uk-toggle="{target:'#add-comment'}">Add
         </button>
+        </sec:authorize>
         <form class="uk-form uk-margin-top uk-margin-large-bottom uk-hidden" id="add-comment">
             <div class="uk-form-row">
                 <textarea id="commenttext" class="uk-width-1-2 uk-form-large" rows="5"
@@ -269,6 +275,7 @@
         var rating = parseFloat(${rating});
         var rateValue = $('.rateValue');
         var watchedThis = $('.watched-this');
+        var watchedSeason = $('.watched-season');
         var sendButton = $('#send-comment');
         var commentInput = $('#commenttext');
         var watched = ${watchedEpisodesId};
@@ -289,6 +296,8 @@
         followTvShow(follow, id, title);
         //ajax request to rate tvShow
         markAsWatched(watchedThis);
+
+        markSeasonAsWatched(watchedSeason);
         //add comment
         commentInput.on('input', function () {
             var len = $(this).val().length;
@@ -326,7 +335,6 @@
         });
         </sec:authorize>
     });
-    
 </script>
 </body>
 </html>

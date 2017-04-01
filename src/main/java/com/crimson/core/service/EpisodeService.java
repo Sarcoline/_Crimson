@@ -1,9 +1,6 @@
 package com.crimson.core.service;
 
-import com.crimson.core.dto.EpisodeDTO;
-import com.crimson.core.dto.EpisodeFormDTO;
-import com.crimson.core.dto.EpisodeFromJson;
-import com.crimson.core.dto.UserDTO;
+import com.crimson.core.dto.*;
 import com.crimson.core.model.Episode;
 import com.crimson.core.model.TvShow;
 import com.crimson.core.model.User;
@@ -43,4 +40,6 @@ public interface EpisodeService {
     void addEpisodeFromForm(EpisodeFormDTO episodeFormDTO);
 
     void saveEpisodeJSON(List<EpisodeFromJson> episodeFromJson, long tvShowId);
+
+    void addUserToSeason(UserDTO user, int season, TvShowDTO tv);
 }

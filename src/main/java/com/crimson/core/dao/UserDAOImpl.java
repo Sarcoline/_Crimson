@@ -227,6 +227,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     public User getUserByEmail(String email) {
         Session session = sessionFactory.getCurrentSession();
         User user;
@@ -240,8 +241,17 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
+    @Cacheable("myCache")
+    public byte[] getUserProfilePicture(String name) {
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "select u.profilePic from User u where u.name = :custName";
+        return (byte[]) session.createQuery(hql).setParameter("custName", name).getSingleResult();
+    }
+
+    @Override
+    @Cacheable("myCache")
+    @SuppressWarnings("unchecked")
     public List<Comment> getComments(User user) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Comment c JOIN FETCH c.user u where u.id = ?";

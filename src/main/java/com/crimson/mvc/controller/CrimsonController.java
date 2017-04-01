@@ -39,8 +39,6 @@ public class CrimsonController {
     @Autowired
     private ReviewService reviewService;
 
-    @Autowired
-    private MailService mailService;
 
     @GetMapping("/{name}")
     public String displayTvShow(Model model, @PathVariable("name") String name) {

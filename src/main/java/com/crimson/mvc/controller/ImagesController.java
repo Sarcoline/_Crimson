@@ -24,12 +24,13 @@ public class ImagesController {
     @ResponseBody
     @RequestMapping(value = "/images/tv/{name}/{image}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] GetShowImage(@PathVariable String image, @PathVariable String name) throws IOException {
-        return tvShowService.getTvPictures(name).getPictures().get(image);
+        return tvShowService.getTvPics(name, image);
     }
 
     @ResponseBody
     @RequestMapping(value = "/images/user/{name}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] GetUserImage(@PathVariable String name) throws IOException {
-        return userService.getUserByName(name).getProfilePic();
+        return userService.getUserProfilePicture(name);
+
     }
 }

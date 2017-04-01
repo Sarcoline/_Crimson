@@ -3,10 +3,7 @@ package com.crimson.core.service;
 import com.crimson.core.dao.EpisodeDAO;
 import com.crimson.core.dao.TvShowDAO;
 import com.crimson.core.dao.UserDAO;
-import com.crimson.core.dto.EpisodeDTO;
-import com.crimson.core.dto.EpisodeFormDTO;
-import com.crimson.core.dto.EpisodeFromJson;
-import com.crimson.core.dto.UserDTO;
+import com.crimson.core.dto.*;
 import com.crimson.core.model.Episode;
 import com.crimson.core.model.TvShow;
 import com.crimson.core.model.User;
@@ -193,6 +190,13 @@ public class EpisodeServiceImpl implements EpisodeService {
                 episodeDAO.save(ep);
             }
 
+        });
+    }
+
+    @Override
+    public void addUserToSeason(UserDTO user, int season, TvShowDTO tv) {
+        tv.getEpisodes().forEach(episode -> {
+            if (!checkWatched(user, episode) && episode.getSeason() == season) addUser2Episode(user,episode);
         });
     }
 }

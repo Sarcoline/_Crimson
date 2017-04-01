@@ -37,14 +37,13 @@ var addEpisodes = function (tvshow, idTv) {
             url: '/api/' + tvshow + '/add',
             type: 'post',
             data: JSON.stringify(episodes),
-            success: function (data) {
+            success: function () {
                 UIkit.notify({
                     message: 'Successfully added ' + episodes.length + ' episodes!',
                     status: 'info',
                     timeout: 5000,
                     pos: 'bottom-right'
                 });
-                console.log(data.constructor);
             },
             error: function () {
                 UIkit.notify({
@@ -71,7 +70,6 @@ var addEpisodes = function (tvshow, idTv) {
             episodes.push(episode);
         });
         postJson(episodes);
-        console.log(episodes);
     });
     $('#test').on("click", "a", function (e) {
         var episodes = [];

@@ -52,4 +52,6 @@ public interface UserDAO extends BaseDAO<User, Long> {
     List<Review> getReviews(User user);
 
     User getUserByEmail(String email);
+
+    byte[] getUserProfilePicture(String name);
 }

@@ -26,6 +26,8 @@ public interface TvShowService {
 
     List<TvShow> getTvByNetwork(String network);
 
+    byte[] getTvPics(String slug, String name);
+
     void deleteTvShow(TvShowDTO tvshow);
 
     void updateTvShow(TvShowDTO tvshow);
@@ -68,7 +70,7 @@ public interface TvShowService {
 
     List<Review> getReviews(TvShow tv);
 
-    List<TvShowDTO> getAllTvShowByMaxRating();
+    List<TvShowSearchDTO> getAllTvShowByMaxRating();
 
     List<TvShowSearchDTO> searchTvShow(String pattern);
 

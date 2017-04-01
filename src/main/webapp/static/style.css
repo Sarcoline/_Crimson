@@ -322,14 +322,20 @@ img.center {
     transform: translateY(-20%)
 }
 
-.fa-check-square-o {
+a.watched-this i.fa-check-square-o {
     color: #8cc14c;
     float: right;
     font-size: 1.4rem;
     margin-left: 5px;
 }
 
-.fa-square-o {
+a.watched-season i.fa-check-square-o {
+    color: #8cc14c;
+    font-size: 1.4rem;
+    margin-left: 5px;
+}
+
+a.watched-this i.fa-square-o {
     margin-right: 3px;
     margin-left: 5px;
     float: right;
@@ -337,10 +343,19 @@ img.center {
     color: #999;
 }
 
-.fa-square-o:hover {
+a.watched-season i.fa-square-o {
+    margin-left: 5px;
+    color: #999;
+    font-size: 1.4rem;
+}
+
+a.watched-this i.fa-square-o:hover {
     color: #8cc14c;
 }
 
+a.watched-season i.fa-square-o:hover {
+    color: #8cc14c;
+}
 /*genreList*/
 
 .item {

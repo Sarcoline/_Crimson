@@ -3,6 +3,7 @@ package com.crimson.core.service;
 import com.crimson.core.dao.*;
 import com.crimson.core.dto.EpisodeDTO;
 import com.crimson.core.dto.TvShowDTO;
+import com.crimson.core.dto.TvShowSearchDTO;
 import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.*;
 import ma.glasnost.orika.MapperFacade;
@@ -124,8 +125,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public byte[] getUserProfilePicture(String name) {
+        return userDAO.getUserProfilePicture(name);
+    }
+
+    @Override
     public boolean checkFollow(UserDTO userDTO, TvShowDTO tvShow) {
-        return userDAO.getUserByName(userDTO.getName()).getTvShows().contains(tvShowDAO.getById(tvShow.getId()));
+       return userDAO.getUserByName(userDTO.getName()).getTvShows().contains(tvShowDAO.getById(tvShow.getId()));
     }
 
     @Override
@@ -319,12 +325,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<TvShowDTO> getUserTvShowsSortedByMaxRating(UserDTO userDTO) {
+    public List<TvShowSearchDTO> getUserTvShowsSortedByMaxRating(UserDTO userDTO) {
 
-        List<TvShowDTO> sortedList = new ArrayList<>();
+        List<TvShowSearchDTO> sortedList = new ArrayList<>();
         List<Rating> unsortedList = userDTO.getRatings();
         unsortedList.sort(Comparator.comparingInt(Rating::getValue).reversed());
-        unsortedList.forEach(rating -> sortedList.add(mapperFacade.map(rating.getTvShow(), TvShowDTO.class)));
+        unsortedList.forEach(rating -> sortedList.add(mapperFacade.map(rating.getTvShow(), TvShowSearchDTO.class)));
 
         return sortedList;
     }

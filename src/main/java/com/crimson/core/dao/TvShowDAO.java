@@ -1,10 +1,9 @@
 package com.crimson.core.dao;
 
-import com.crimson.core.dto.FilterResponse;
-import com.crimson.core.dto.SearchFilterParameters;
 import com.crimson.core.model.*;
 import org.hibernate.Session;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface TvShowDAO extends BaseDAO<TvShow, Long> {
@@ -68,4 +67,8 @@ public interface TvShowDAO extends BaseDAO<TvShow, Long> {
     List<Comment> getComments(TvShow tv);
 
     List<Review> getReviews(TvShow tv);
+
+    HashMap<String, byte[]> getTvShowPicture(String slug);
+
+    List<TvShow> getTvShowsByMaxRating();
 }

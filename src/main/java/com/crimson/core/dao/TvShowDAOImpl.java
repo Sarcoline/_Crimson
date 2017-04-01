@@ -1,20 +1,16 @@
 package com.crimson.core.dao;
 
-import com.crimson.core.dto.FilterResponse;
-import com.crimson.core.dto.SearchFilterParameters;
 import com.crimson.core.model.*;
 import com.github.slugify.Slugify;
-import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Repository
@@ -261,6 +257,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     @SuppressWarnings("unchecked")
     public List<User> getUsers(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
@@ -271,6 +268,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     @SuppressWarnings("unchecked")
     public List<Genre> getGenres(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
@@ -281,6 +279,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     @SuppressWarnings("unchecked")
     public List<Episode> getEpisodes(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
@@ -291,6 +290,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     @SuppressWarnings("unchecked")
     public List<Rating> getRatings(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
@@ -301,6 +301,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     @SuppressWarnings("unchecked")
     public List<Comment> getComments(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
@@ -311,6 +312,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
+    @Cacheable("myCache")
     @SuppressWarnings("unchecked")
     public List<Review> getReviews(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
@@ -320,4 +322,22 @@ public class TvShowDAOImpl implements TvShowDAO {
                 .getResultList();
     }
 
+    @Override
+    @Cacheable("myCache")
+    public HashMap<String, byte[]> getTvShowPicture(String slug) {
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "select u.pictures from TvShow u where u.slug = :custName";
+        HashMap<String, byte[]> pic = (HashMap<String, byte[]>) session.createQuery(hql).setParameter("custName", slug).getSingleResult();
+        return pic;
+    }
+
+    @Override
+    @Cacheable("myCache")
+    @SuppressWarnings("unchecked")
+    public List<TvShow> getTvShowsByMaxRating() {
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "from TvShow t order by t.overallRating desc ";
+        return session.createQuery(hql).setMaxResults(10)
+                .getResultList();
+    }
 }

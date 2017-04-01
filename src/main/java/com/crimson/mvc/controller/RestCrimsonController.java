@@ -69,6 +69,16 @@ public class RestCrimsonController {
         else episodeService.addUser2Episode(user, episode);
     }
 
+    @RequestMapping(value = "/watchedseason", method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.OK)
+    @Secured("ROLE_USER")
+    public void watchedSeason(@RequestParam("season") int season, @RequestParam("slug") String slug) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDTO user = userService.getUserByName(auth.getName());
+
+        episodeService.addUserToSeason(user, season, tvShowService.getTvBySlug(slug));
+    }
+
      @RequestMapping(value = "/rate", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
     @Secured("ROLE_USER")

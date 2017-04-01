@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 
@@ -96,6 +95,11 @@ public class TvShowServiceImpl implements TvShowService {
     @Override
     public ImageDTO getTvPictures(String slug) {
         return mapperFacade.map(tvShowDAO.getTvBySlug(slug), ImageDTO.class);
+    }
+
+    @Override
+    public byte[] getTvPics(String slug, String name) {
+        return tvShowDAO.getTvShowPicture(slug).get(name);
     }
 
     @Override
@@ -288,13 +292,12 @@ public class TvShowServiceImpl implements TvShowService {
 
 
     @Override
-    public List<TvShowDTO> getAllTvShowByMaxRating() {
-        List<TvShowDTO> tvs = new ArrayList<>();
-        List<TvShow> unsortedList = tvShowDAO.getAll();
-        unsortedList.sort(Comparator.comparing(TvShow::getOverallRating).reversed());
-        unsortedList.forEach(
-                tv -> tvs.add(mapperFacade.map(tv, TvShowDTO.class)));
-        return tvs.subList(0, 10);
+    public List<TvShowSearchDTO> getAllTvShowByMaxRating() {
+        List<TvShow> tvShows = tvShowDAO.getTvShowsByMaxRating();
+        List<TvShowSearchDTO> tvs = new ArrayList<>();
+        tvShows.forEach(
+                tv -> tvs.add(mapperFacade.map(tv, TvShowSearchDTO.class)));
+        return tvs;
     }
 
     @Override

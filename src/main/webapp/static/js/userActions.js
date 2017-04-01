@@ -59,3 +59,15 @@ var markAsWatched = function (watchedThis) {
         });
     });
 };
+
+var markSeasonAsWatched = function (watchedSeason) {
+  watchedSeason.on('click', function () {
+      var season = $(this).data('season');
+      var slug = $(this).data('slug');
+      var x = $("a.watched-this[data-season='" + season + "']");
+      x.each(function () {
+         $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
+      });
+      $.post('/api/watchedseason',{season: season, slug: slug });
+  })
+};

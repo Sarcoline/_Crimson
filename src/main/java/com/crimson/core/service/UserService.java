@@ -2,6 +2,7 @@ package com.crimson.core.service;
 
 import com.crimson.core.dto.EpisodeDTO;
 import com.crimson.core.dto.TvShowDTO;
+import com.crimson.core.dto.TvShowSearchDTO;
 import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,6 +40,8 @@ public interface UserService {
 
     UserDTO getUserByToken(String token);
 
+    byte[] getUserProfilePicture(String name);
+
     boolean checkFollow(UserDTO userDTO, TvShowDTO tvShow);
 
     void deleteRatingFromUser(User user, Rating rating);
@@ -71,7 +74,7 @@ public interface UserService {
 
     List<Review> getReviews(User user);
 
-    List<TvShowDTO> getUserTvShowsSortedByMaxRating(UserDTO user);
+    List<TvShowSearchDTO> getUserTvShowsSortedByMaxRating(UserDTO user);
 
     List<EpisodeDTO> getAllUnwatchedUserEpisodes(UserDTO user);
 
