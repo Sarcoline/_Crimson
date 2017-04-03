@@ -115,7 +115,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getUserByName(String name) {
         return mapperFacade.map(userDAO.getUserByName(name), UserDTO.class);
-
     }
 
     @Override
@@ -125,7 +124,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkFollow(UserDTO userDTO, TvShowDTO tvShow) {
-        return userDAO.getUserByName(userDTO.getName()).getTvShows().contains(tvShowDAO.getById(tvShow.getId()));
+        return getTvShows(userDAO.getUserByName(userDTO.getName())).contains(tvShowDAO.getById(tvShow.getId()));
     }
 
     @Override
@@ -155,7 +154,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<TvShowDTO> getUserTvShows(UserDTO userDTO) {
         List<TvShowDTO> tvs = new ArrayList<>();
-        userDAO.getUserByName(userDTO.getName()).getTvShows().forEach(
+        userDAO.getTvShows(userDAO.getUserByName(userDTO.getName())).forEach(
                 tv -> tvs.add(mapperFacade.map(tv, TvShowDTO.class)));
         return tvs;
     }
@@ -333,14 +332,14 @@ public class UserServiceImpl implements UserService {
     public List<EpisodeDTO> getAllUnwatchedUserEpisodes(UserDTO userDTO) {
 
         User user = userDAO.getById(userDTO.getId());
-        List<TvShow> allFollowedUserTvShows = user.getTvShows();
+        List<TvShow> allFollowedUserTvShows = userDAO.getTvShows(user);
 
         List<EpisodeDTO> allUnwatchedUserEpisodes = new ArrayList<>();
 
-        List<Episode> allWatchedUserEpisodes = user.getEpisodes();
+        List<Episode> allWatchedUserEpisodes = userDAO.getEpisodes(user);
 
         allFollowedUserTvShows.forEach(tvShow -> {
-            List<Episode> tvShowEpisodes = tvShow.getEpisodes();
+            List<Episode> tvShowEpisodes = tvShowDAO.getEpisodes(tvShow);
             tvShowEpisodes.forEach(episode -> {
                 if (!allWatchedUserEpisodes.contains(episode))
                     allUnwatchedUserEpisodes.add(mapperFacade.map(episode, EpisodeDTO.class));
