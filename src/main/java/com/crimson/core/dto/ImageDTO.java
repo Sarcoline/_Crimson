@@ -11,6 +11,6 @@ public @Data class ImageDTO {
     @Override
     public String toString()
     {
-        return "ImageDTO[images_size" + pictures.size() + "]";
+        return String.format("ImageDTO[images_size%d]", pictures.size());
     }
 }

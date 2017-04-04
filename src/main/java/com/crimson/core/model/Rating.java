@@ -45,6 +45,6 @@ public @Data class Rating {
     @Override
     public String toString()
     {
-        return "Raiting["+ id + "_val" + value + "]";
+        return String.format("Raiting[%d_val%d]", id, value);
     }
 }

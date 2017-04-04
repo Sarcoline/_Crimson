@@ -55,6 +55,6 @@ public @Data class TvShowAddDTO {
     @Override
     public String toString()
     {
-        return "TvShowAddDTO[new_" + slug + "]";
+        return String.format("TvShowAddDTO[new_%s]", slug);
     }
 }

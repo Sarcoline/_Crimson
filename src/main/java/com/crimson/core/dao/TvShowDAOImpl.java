@@ -261,9 +261,9 @@ public class TvShowDAOImpl implements TvShowDAO {
     @SuppressWarnings("unchecked")
     public List<User> getUsers(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "FROM User u JOIN FETCH u.tvShows t where t.id = ?";
+        String hql = "FROM User u JOIN FETCH u.tvShows t where t.id = :id";
         return session.createQuery(hql)
-                .setParameter(0, tv.getId())
+                .setParameter("id", tv.getId())
                 .getResultList();
     }
 
@@ -272,9 +272,9 @@ public class TvShowDAOImpl implements TvShowDAO {
     @SuppressWarnings("unchecked")
     public List<Genre> getGenres(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "FROM Genre g JOIN FETCH g.tvShows t where t.id = ?";
+        String hql = "FROM Genre g JOIN FETCH g.tvShows t where t.id = :id";
         return session.createQuery(hql)
-                .setParameter(0, tv.getId())
+                .setParameter("id", tv.getId())
                 .getResultList();
     }
 
@@ -283,9 +283,9 @@ public class TvShowDAOImpl implements TvShowDAO {
     @SuppressWarnings("unchecked")
     public List<Episode> getEpisodes(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "FROM Episode e JOIN FETCH e.tvShow t where t.id = ?";
+        String hql = "FROM Episode e JOIN FETCH e.tvShow t where t.id = :id";
         return session.createQuery(hql)
-                .setParameter(0, tv.getId())
+                .setParameter("id", tv.getId())
                 .getResultList();
     }
 
@@ -294,9 +294,9 @@ public class TvShowDAOImpl implements TvShowDAO {
     @SuppressWarnings("unchecked")
     public List<Rating> getRatings(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "FROM Rating r JOIN FETCH r.tvShow t where t.id = ?";
+        String hql = "FROM Rating r JOIN FETCH r.tvShow t where t.id = :id";
         return session.createQuery(hql)
-                .setParameter(0, tv.getId())
+                .setParameter("id", tv.getId())
                 .getResultList();
     }
 
@@ -305,9 +305,9 @@ public class TvShowDAOImpl implements TvShowDAO {
     @SuppressWarnings("unchecked")
     public List<Comment> getComments(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "FROM Comment c JOIN FETCH c.tvShow t where t.id = ?";
+        String hql = "FROM Comment c JOIN FETCH c.tvShow t where t.id = :id";
         return session.createQuery(hql)
-                .setParameter(0, tv.getId())
+                .setParameter("id", tv.getId())
                 .getResultList();
     }
 
@@ -316,9 +316,9 @@ public class TvShowDAOImpl implements TvShowDAO {
     @SuppressWarnings("unchecked")
     public List<Review> getReviews(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "FROM Review r JOIN FETCH r.tvShow t where t.id = ?";
+        String hql = "FROM Review r JOIN FETCH r.tvShow t where t.id = :id";
         return session.createQuery(hql)
-                .setParameter(0, tv.getId())
+                .setParameter("id", tv.getId())
                 .getResultList();
     }
 

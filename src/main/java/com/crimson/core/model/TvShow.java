@@ -119,6 +119,6 @@ public @Data class TvShow {
     @Override
     public String toString()
     {
-        return "TvShow["+ id + "_" + slug + "]";
+        return String.format("TvShow[%d_%s]", id, slug);
     }
 }

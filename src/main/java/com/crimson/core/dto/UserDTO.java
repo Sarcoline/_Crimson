@@ -59,6 +59,6 @@ public @Data class UserDTO {
     @Override
     public String toString()
     {
-        return "UserDTO["+ id + "_" + name + "]";
+        return String.format("UserDTO[%d_%s]", id, name);
     }
 }

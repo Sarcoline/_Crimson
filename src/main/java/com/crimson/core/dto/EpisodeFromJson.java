@@ -15,6 +15,6 @@ public @Data class EpisodeFromJson {
     @Override
     public String toString()
     {
-        return "EpisodeFromJson["+ id + "_" + title + "]";
+        return String.format("EpisodeFromJson[%d_%s]", id, title);
     }
 }

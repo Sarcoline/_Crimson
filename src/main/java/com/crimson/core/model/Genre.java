@@ -47,6 +47,6 @@ public @Data class Genre {
     @Override
     public String toString()
     {
-        return "Genre["+ id + "_" + name + "]";
+        return String.format("Genre[%d_%s]", id, name);
     }
 }

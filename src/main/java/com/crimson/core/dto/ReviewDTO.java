@@ -30,6 +30,6 @@ public @Data class ReviewDTO {
     @Override
     public String toString()
     {
-        return "ReviewDTO["+ id + "_" + title + "]";
+        return String.format("ReviewDTO[%d_%s]", id, title);
     }
 }

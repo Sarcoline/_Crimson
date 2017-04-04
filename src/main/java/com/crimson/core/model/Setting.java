@@ -45,6 +45,6 @@ public @Data class Setting {
     @Override
     public String toString()
     {
-        return "SettingOfUser["+ id + "_" + user.getName() + "]";
+        return String.format("Setting[%d]", id);
     }
 }
