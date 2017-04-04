@@ -1,6 +1,5 @@
 package com.crimson.core.unit.dao;
 
-import com.crimson.context.TestSpringCore;
 import com.crimson.core.dao.TvShowDAO;
 import com.crimson.core.dao.TvShowDAOImpl;
 import com.crimson.core.model.*;
@@ -10,24 +9,15 @@ import org.hibernate.query.Query;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
 
-@ContextConfiguration(classes = TestSpringCore.class)
-@Transactional
-@Rollback
-@RunWith(MockitoJUnitRunner.class)
 public class TestTvShowDAO {
 
     @Mock
@@ -465,9 +455,9 @@ public class TestTvShowDAO {
         List<User> users = new ArrayList<>();
         TvShow tvShow = new TvShow();
         when(sessionFactory.getCurrentSession()).thenReturn(session);
-        String hql = "FROM User u JOIN FETCH u.tvShows t where t.id = ?";
+        String hql = "FROM User u JOIN FETCH u.tvShows t where t.id = :id";
         when(session.createQuery(hql)).thenReturn(query);
-        when(query.setParameter(0, tvShow.getId())).thenReturn(query);
+        when(query.setParameter("id", tvShow.getId())).thenReturn(query);
         when(query.getResultList()).thenReturn(users);
 
         //when
@@ -476,7 +466,7 @@ public class TestTvShowDAO {
         //then
         verify(sessionFactory, times(1)).getCurrentSession();
         verify(session, times(1)).createQuery(hql);
-        verify(query, times(1)).setParameter(0, tvShow.getId());
+        verify(query, times(1)).setParameter("id", tvShow.getId());
         verify(query, times(1)).getResultList();
     }
 
@@ -487,9 +477,9 @@ public class TestTvShowDAO {
         List<User> users = new ArrayList<>();
         TvShow tvShow = new TvShow();
         when(sessionFactory.getCurrentSession()).thenReturn(session);
-        String hql = "FROM Genre g JOIN FETCH g.tvShows t where t.id = ?";
+        String hql = "FROM Genre g JOIN FETCH g.tvShows t where t.id = :id";
         when(session.createQuery(hql)).thenReturn(query);
-        when(query.setParameter(0, tvShow.getId())).thenReturn(query);
+        when(query.setParameter("id", tvShow.getId())).thenReturn(query);
         when(query.getResultList()).thenReturn(users);
 
         //when
@@ -498,7 +488,7 @@ public class TestTvShowDAO {
         //then
         verify(sessionFactory, times(1)).getCurrentSession();
         verify(session, times(1)).createQuery(hql);
-        verify(query, times(1)).setParameter(0, tvShow.getId());
+        verify(query, times(1)).setParameter("id", tvShow.getId());
         verify(query, times(1)).getResultList();
     }
 
@@ -509,9 +499,9 @@ public class TestTvShowDAO {
         List<User> users = new ArrayList<>();
         TvShow tvShow = new TvShow();
         when(sessionFactory.getCurrentSession()).thenReturn(session);
-        String hql = "FROM Episode e JOIN FETCH e.tvShow t where t.id = ?";
+        String hql = "FROM Episode e JOIN FETCH e.tvShow t where t.id = :id";
         when(session.createQuery(hql)).thenReturn(query);
-        when(query.setParameter(0, tvShow.getId())).thenReturn(query);
+        when(query.setParameter("id", tvShow.getId())).thenReturn(query);
         when(query.getResultList()).thenReturn(users);
 
         //when
@@ -520,7 +510,7 @@ public class TestTvShowDAO {
         //then
         verify(sessionFactory, times(1)).getCurrentSession();
         verify(session, times(1)).createQuery(hql);
-        verify(query, times(1)).setParameter(0, tvShow.getId());
+        verify(query, times(1)).setParameter("id", tvShow.getId());
         verify(query, times(1)).getResultList();
     }
 
@@ -531,9 +521,9 @@ public class TestTvShowDAO {
         List<User> users = new ArrayList<>();
         TvShow tvShow = new TvShow();
         when(sessionFactory.getCurrentSession()).thenReturn(session);
-        String hql = "FROM Rating r JOIN FETCH r.tvShow t where t.id = ?";
+        String hql = "FROM Rating r JOIN FETCH r.tvShow t where t.id = :id";
         when(session.createQuery(hql)).thenReturn(query);
-        when(query.setParameter(0, tvShow.getId())).thenReturn(query);
+        when(query.setParameter("id", tvShow.getId())).thenReturn(query);
         when(query.getResultList()).thenReturn(users);
 
         //when
@@ -542,7 +532,7 @@ public class TestTvShowDAO {
         //then
         verify(sessionFactory, times(1)).getCurrentSession();
         verify(session, times(1)).createQuery(hql);
-        verify(query, times(1)).setParameter(0, tvShow.getId());
+        verify(query, times(1)).setParameter("id", tvShow.getId());
         verify(query, times(1)).getResultList();
     }
 
@@ -553,9 +543,9 @@ public class TestTvShowDAO {
         List<User> users = new ArrayList<>();
         TvShow tvShow = new TvShow();
         when(sessionFactory.getCurrentSession()).thenReturn(session);
-        String hql = "FROM Comment c JOIN FETCH c.tvShow t where t.id = ?";
+        String hql = "FROM Comment c JOIN FETCH c.tvShow t where t.id = :id";
         when(session.createQuery(hql)).thenReturn(query);
-        when(query.setParameter(0, tvShow.getId())).thenReturn(query);
+        when(query.setParameter("id", tvShow.getId())).thenReturn(query);
         when(query.getResultList()).thenReturn(users);
 
         //when
@@ -564,7 +554,7 @@ public class TestTvShowDAO {
         //then
         verify(sessionFactory, times(1)).getCurrentSession();
         verify(session, times(1)).createQuery(hql);
-        verify(query, times(1)).setParameter(0, tvShow.getId());
+        verify(query, times(1)).setParameter("id", tvShow.getId());
         verify(query, times(1)).getResultList();
     }
 
@@ -575,9 +565,9 @@ public class TestTvShowDAO {
         List<User> users = new ArrayList<>();
         TvShow tvShow = new TvShow();
         when(sessionFactory.getCurrentSession()).thenReturn(session);
-        String hql = "FROM Review r JOIN FETCH r.tvShow t where t.id = ?";
+        String hql = "FROM Review r JOIN FETCH r.tvShow t where t.id = :id";
         when(session.createQuery(hql)).thenReturn(query);
-        when(query.setParameter(0, tvShow.getId())).thenReturn(query);
+        when(query.setParameter("id", tvShow.getId())).thenReturn(query);
         when(query.getResultList()).thenReturn(users);
 
         //when
@@ -586,7 +576,7 @@ public class TestTvShowDAO {
         //then
         verify(sessionFactory, times(1)).getCurrentSession();
         verify(session, times(1)).createQuery(hql);
-        verify(query, times(1)).setParameter(0, tvShow.getId());
+        verify(query, times(1)).setParameter("id", tvShow.getId());
         verify(query, times(1)).getResultList();
     }
 }

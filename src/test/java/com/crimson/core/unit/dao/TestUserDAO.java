@@ -332,10 +332,10 @@ public class TestUserDAO {
         //given
         User user = new User();
         List<TvShow> tvShows = new ArrayList<>();
-        String hql = "FROM TvShow t JOIN FETCH t.users u where u.id = ?";
+        String hql = "FROM TvShow t JOIN FETCH t.users u where u.id = :id";
         when(sessionFactory.getCurrentSession()).thenReturn(session);
         when(session.createQuery(hql)).thenReturn(query);
-        when(query.setParameter(0, user.getId())).thenReturn(query);
+        when(query.setParameter("id", user.getId())).thenReturn(query);
         when(query.getResultList()).thenReturn(tvShows);
 
         //when
@@ -344,7 +344,7 @@ public class TestUserDAO {
         //then
         verify(sessionFactory, times(1)).getCurrentSession();
         verify(session, times(1)).createQuery(anyString());
-        verify(query, times(1)).setParameter(anyInt(), anyLong());
+        verify(query, times(1)).setParameter(anyString(), anyLong());
         verify(query, times(1)).getResultList();
         Assert.assertEquals(getTvShows.equals(tvShows), true);
     }
@@ -354,10 +354,10 @@ public class TestUserDAO {
         //given
         User user = new User();
         List<Rating> ratings = new ArrayList<>();
-        String hql = "FROM Rating r JOIN FETCH r.user u where u.id = ?";
+        String hql = "FROM Rating r JOIN FETCH r.user u where u.id = :id";
         when(sessionFactory.getCurrentSession()).thenReturn(session);
         when(session.createQuery(hql)).thenReturn(query);
-        when(query.setParameter(0, user.getId())).thenReturn(query);
+        when(query.setParameter("id", user.getId())).thenReturn(query);
         when(query.getResultList()).thenReturn(ratings);
 
         //when
@@ -366,7 +366,7 @@ public class TestUserDAO {
         //then
         verify(sessionFactory, times(1)).getCurrentSession();
         verify(session, times(1)).createQuery(anyString());
-        verify(query, times(1)).setParameter(anyInt(), anyLong());
+        verify(query, times(1)).setParameter(anyString(), anyLong());
         verify(query, times(1)).getResultList();
         Assert.assertEquals(getRatings.equals(ratings), true);
     }
@@ -376,10 +376,10 @@ public class TestUserDAO {
         //given
         User user = new User();
         List<Role> roles = new ArrayList<>();
-        String hql = "FROM Role r JOIN FETCH r.users u where u.id = ?";
+        String hql = "FROM Role r JOIN FETCH r.users u where u.id = :id";
         when(sessionFactory.getCurrentSession()).thenReturn(session);
         when(session.createQuery(hql)).thenReturn(query);
-        when(query.setParameter(0, user.getId())).thenReturn(query);
+        when(query.setParameter("id", user.getId())).thenReturn(query);
         when(query.getResultList()).thenReturn(roles);
 
         //when
@@ -388,7 +388,7 @@ public class TestUserDAO {
         //then
         verify(sessionFactory, times(1)).getCurrentSession();
         verify(session, times(1)).createQuery(anyString());
-        verify(query, times(1)).setParameter(anyInt(), anyLong());
+        verify(query, times(1)).setParameter(anyString(), anyLong());
         verify(query, times(1)).getResultList();
         Assert.assertEquals(gettedRoles.equals(roles), true);
     }
@@ -398,10 +398,10 @@ public class TestUserDAO {
         //given
         User user = new User();
         List<Review> reviews = new ArrayList<>();
-        String hql = "FROM Review r JOIN FETCH r.user u where u.id = ?";
+        String hql = "FROM Review r JOIN FETCH r.user u where u.id = :id";
         when(sessionFactory.getCurrentSession()).thenReturn(session);
         when(session.createQuery(hql)).thenReturn(query);
-        when(query.setParameter(0, user.getId())).thenReturn(query);
+        when(query.setParameter("id", user.getId())).thenReturn(query);
         when(query.getResultList()).thenReturn(reviews);
 
         //when
@@ -410,7 +410,7 @@ public class TestUserDAO {
         //then
         verify(sessionFactory, times(1)).getCurrentSession();
         verify(session, times(1)).createQuery(anyString());
-        verify(query, times(1)).setParameter(anyInt(), anyLong());
+        verify(query, times(1)).setParameter(anyString(), anyLong());
         verify(query, times(1)).getResultList();
         Assert.assertEquals(gettedReviews.equals(reviews), true);
     }
@@ -421,10 +421,10 @@ public class TestUserDAO {
         //given
         User user = new User();
         List<Comment> comments = new ArrayList<>();
-        String hql = "FROM Comment c JOIN FETCH c.user u where u.id = ?";
+        String hql = "FROM Comment c JOIN FETCH c.user u where u.id = :id";
         when(sessionFactory.getCurrentSession()).thenReturn(session);
         when(session.createQuery(hql)).thenReturn(query);
-        when(query.setParameter(0, user.getId())).thenReturn(query);
+        when(query.setParameter("id", user.getId())).thenReturn(query);
         when(query.getResultList()).thenReturn(comments);
 
         //when
@@ -433,7 +433,7 @@ public class TestUserDAO {
         //then
         verify(sessionFactory, times(1)).getCurrentSession();
         verify(session, times(1)).createQuery(anyString());
-        verify(query, times(1)).setParameter(anyInt(), anyLong());
+        verify(query, times(1)).setParameter(anyString(), anyLong());
         verify(query, times(1)).getResultList();
         Assert.assertEquals(gettedComments.equals(comments), true);
     }
