@@ -1,25 +1,28 @@
 package com.crimson.core.unit.dao;
 
 import com.crimson.context.TestSpringCore;
-import com.crimson.core.dao.TvShowDAO;
 import com.crimson.core.dao.UserDAO;
-import com.crimson.core.model.TvShow;
-import com.crimson.core.model.User;
+import com.crimson.core.dao.UserDAOImpl;
+import com.crimson.core.model.*;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ContextConfiguration(classes = TestSpringCore.class)
 @Transactional
@@ -27,71 +30,414 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class TestUserDAO {
 
-    private static UserDAO userDAO;
-    private static TvShowDAO tvShowDAO;
+    @Mock
+    private Session session;
 
+    @Mock
+    private SessionFactory sessionFactory;
 
-    private static User user;
-    private static User user2;
-    private static TvShow tvShow;
-    private static TvShow tvShow2;
+    @Mock
+    private Query query;
 
-    @BeforeClass
-    public static void setUp(){
-        userDAO = mock(UserDAO.class);
-        tvShowDAO = mock(TvShowDAO.class);
-        user = User.builder().name("Test").build();
-        user2 = User.builder().name("Test").build();
-        tvShow = TvShow.builder().build();
-        tvShow2 = TvShow.builder().build();
+    @InjectMocks
+    private UserDAO userDAO = new UserDAOImpl();
 
-        when(userDAO.getAll()).thenReturn(Arrays.asList(user, user2));
-        when(userDAO.getById(user.getId())).thenReturn(user);
-        when(userDAO.getUserByName(user.getName())).thenReturn(user);
-        when(userDAO.getUserByEmail(user.getEmail())).thenReturn(user);
-        when(userDAO.getUserByToken(user.getToken())).thenReturn(user);
-        when(userDAO.getTvShows(user)).thenReturn(Arrays.asList(tvShow, tvShow2));
+    @Before
+    public void setUp(){
+        MockitoAnnotations.initMocks(this);
     }
+
+    @Test
+    public void saveTest() throws Exception{
+        //given
+        User user = new User();
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        doNothing().when(session).persist(anyObject());
+
+        //when
+        userDAO.save(user);
+
+        //then
+        verify(sessionFactory, times(1)).getCurrentSession();
+        verify(session, times(1)).persist(anyObject());
+    }
+
+    //TODO dowiedzieć się czy to jest poprawne
+    @Test
+    @SuppressWarnings("unchecked")
+    public void getAllTest() throws Exception{
+        //given
+        List<User> users = new ArrayList<>();
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        when(session.createQuery("Select a From User a",User.class)).thenReturn(query);
+        when(query.getResultList()).thenReturn(users);
+
+        //when
+        List<User> getUsers = userDAO.getAll();
+
+        //then
+        verify(sessionFactory, times(1)).getCurrentSession();
+        verify(session, times(1)).createQuery("Select a From User a",User.class);
+        verify(query, times(1)).getResultList();
+        Assert.assertEquals(getUsers.size(), 0);
+    }
+
+    @Test
+    public void getUserByIdTest() throws Exception{
+        //given
+        User user = new User();
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        when(session.find(User.class, user.getId())).thenReturn(user);
+
+        //when
+        User getUser = userDAO.getById(user.getId());
+
+        //then
+        verify(sessionFactory, times(1)).getCurrentSession();
+        verify(session, times(1)).find(User.class, user.getId());
+        Assert.assertEquals(user.equals(getUser), true);
+    }
+
+    @Test
+    public void deleteUserTest() throws Exception{
+        //given
+        User user = new User();
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        doNothing().when(session).delete(user);
+
+        //when
+        userDAO.delete(user);
+
+        //then
+        verify(sessionFactory, times(1)).getCurrentSession();
+        verify(session, times(1)).delete(user);
+    }
+
+    @Test
+    public void updateTest() throws Exception{
+        //given
+        User user = new User();
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        doNothing().when(session).saveOrUpdate(user);
+
+        //when
+        user.setName("New name");
+        userDAO.update(user);
+
+        //then
+        verify(sessionFactory, times(1)).getCurrentSession();
+        verify(session, times(1)).saveOrUpdate(user);
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void getUserByName() throws Exception{
+        //given
+        User user = new User();
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        when(session.createQuery("Select a From User a where a.name like :custName", User.class)).thenReturn(query);
+        when(query.setParameter("custName", user.getName())).thenReturn(query);
+        when(query.getSingleResult()).thenReturn(user);
+
+        //when
+        User getUser = userDAO.getUserByName(user.getName());
+
+        //then
+        verify(sessionFactory, times(1)).getCurrentSession();
+        verify(session, times(1)).createQuery("Select a From User a where a.name like :custName", User.class);
+        verify(query, times(1)).setParameter("custName", user.getName());
+        verify(query, times(1)).getSingleResult();
+        Assert.assertEquals(user.equals(getUser), true);
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void getUserByToken() throws Exception{
+        //given
+        User user = new User();
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        when(session.createQuery("Select a From User a where a.token like :custToken", User.class)).thenReturn(query);
+        when(query.setParameter("custToken", user.getToken())).thenReturn(query);
+        when(query.getSingleResult()).thenReturn(user);
+
+        //when
+        User getUser = userDAO.getUserByToken(user.getToken());
+
+        //then
+        verify(sessionFactory, times(1)).getCurrentSession();
+        verify(session, times(1)).createQuery("Select a From User a where a.token like :custToken", User.class);
+        verify(query, times(1)).setParameter("custToken", user.getToken());
+        verify(query, times(1)).getSingleResult();
+        Assert.assertEquals(user.equals(getUser), true);
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void getUserByEmailTest() throws Exception{
+        //given
+        User user = new User();
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        when(session.createQuery("Select a From User a where a.email like :custEmail", User.class)).thenReturn(query);
+        when(query.setParameter("custEmail", user.getEmail())).thenReturn(query);
+        when(query.getSingleResult()).thenReturn(user);
+
+        //when
+        User gettedUser = userDAO.getUserByEmail(user.getEmail());
+
+        //then
+
+        verify(sessionFactory, times(1)).getCurrentSession();
+        verify(session, times(1)).createQuery("Select a From User a where a.email like :custEmail", User.class);
+        verify(query, times(1)).setParameter("custEmail", user.getEmail());
+        verify(query, times(1)).getSingleResult();
+        Assert.assertEquals(gettedUser.equals(user), true);
+    }
+
+
+    //RELATIONSHIPS TESTS
+
+    @Test
+    public void addTvShow2UserTest() throws Exception{
+        //given
+        User user = new User();
+        TvShow tvShow = new TvShow();
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        doNothing().when(session).saveOrUpdate(user);
+
+        //when
+        userDAO.addTvShow2User(user, tvShow);
+
+        //then
+        verify(sessionFactory, times(1)).getCurrentSession();
+        verify(session, times(1)).saveOrUpdate(user);
+    }
+
+    //TODO Zapytać o takie testy przy relacjach
+
+    public void deleteTvShowFromYUserTest() throws Exception{
+        //given
+        User user = new User();
+        TvShow tvShow = new TvShow();
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        doNothing().when(session).saveOrUpdate(user);
+
+        //when
+        userDAO.deleteTvShowFromUser(user, tvShow);
+
+        //then
+        verify(sessionFactory, times(1)).getCurrentSession();
+        verify(session, times(1)).remove(user);
+    }
+
+    @Test
+    public void addEpisode2UserTest() throws Exception{
+        //given
+        User user = new User();
+        Episode episode = new Episode();
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        doNothing().when(session).saveOrUpdate(user);
+
+        //when
+        userDAO.addEpisode2User(user, episode);
+
+        //then
+        verify(sessionFactory, times(1)).getCurrentSession();
+        verify(session, times(1)).saveOrUpdate(user);
+    }
+
+    @Test
+    public void addRating2UserTest() throws Exception{
+        //given
+        User user = new User();
+        Rating rating = new Rating();
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        doNothing().when(session).saveOrUpdate(user);
+
+        //when
+        userDAO.addRating2User(user, rating);
+
+        //then
+        verify(sessionFactory, times(1)).getCurrentSession();
+        verify(session, times(1)).saveOrUpdate(user);
+    }
+
+    @Test
+    public void addSetting2UserTest() throws Exception{
+        //given
+        User user = new User();
+        Setting setting = new Setting();
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        doNothing().when(session).saveOrUpdate(user);
+
+        //when
+        userDAO.addSetting2User(user, setting);
+
+        //then
+        verify(sessionFactory, times(1)).getCurrentSession();
+        verify(session, times(1)).saveOrUpdate(user);
+    }
+
+    @Test
+    public void addRole2UserTest() throws Exception{
+        //given
+        User user = new User();
+        Role role = new Role();
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        doNothing().when(session).saveOrUpdate(user);
+
+        //when
+        userDAO.addRole2User(user, role);
+
+        //then
+        verify(sessionFactory, times(1)).getCurrentSession();
+        verify(session, times(1)).saveOrUpdate(user);
+    }
+
+    @Test
+    public void addCommentTest() throws Exception{
+        //given
+        User user = new User();
+        Comment comment = new Comment();
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        doNothing().when(session).saveOrUpdate(user);
+
+        //when
+        userDAO.addComment(user, comment);
+
+        //then
+        verify(sessionFactory, times(1)).getCurrentSession();
+        verify(session, times(1)).saveOrUpdate(user);
+    }
+
+    @Test
+    public void addReviewTest() throws Exception{
+        //given
+        User user = new User();
+        Review review = new Review();
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        doNothing().when(session).saveOrUpdate(user);
+
+        //when
+        userDAO.addReview(user, review);
+
+        //then
+        verify(sessionFactory, times(1)).getCurrentSession();
+        verify(session, times(1)).saveOrUpdate(user);
+    }
+
+    //RELATIONSHIPS GETS
 
     @Test
     public void getTvShowsTest() throws Exception{
-        List<TvShow> tvShows = userDAO.getTvShows(user);
-        Assert.assertEquals(2, tvShows.size());
-        Mockito.verify(userDAO, Mockito.times(1)).getTvShows(user);
+        //given
+        User user = new User();
+        List<TvShow> tvShows = new ArrayList<>();
+        String hql = "FROM TvShow t JOIN FETCH t.users u where u.id = ?";
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        when(session.createQuery(hql)).thenReturn(query);
+        when(query.setParameter(0, user.getId())).thenReturn(query);
+        when(query.getResultList()).thenReturn(tvShows);
+
+        //when
+        List<TvShow> getTvShows = userDAO.getTvShows(user);
+
+        //then
+        verify(sessionFactory, times(1)).getCurrentSession();
+        verify(session, times(1)).createQuery(anyString());
+        verify(query, times(1)).setParameter(anyInt(), anyLong());
+        verify(query, times(1)).getResultList();
+        Assert.assertEquals(getTvShows.equals(tvShows), true);
     }
 
     @Test
-    public void getAllTest() throws Exception{
-        List<User> allUsers = userDAO.getAll();
-        Assert.assertEquals(2, allUsers.size());
-        Mockito.verify(userDAO, Mockito.times(1)).getAll();
+    public void getRatingsTest() throws Exception{
+        //given
+        User user = new User();
+        List<Rating> ratings = new ArrayList<>();
+        String hql = "FROM Rating r JOIN FETCH r.user u where u.id = ?";
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        when(session.createQuery(hql)).thenReturn(query);
+        when(query.setParameter(0, user.getId())).thenReturn(query);
+        when(query.getResultList()).thenReturn(ratings);
+
+        //when
+        List<Rating> getRatings = userDAO.getRatings(user);
+
+        //then
+        verify(sessionFactory, times(1)).getCurrentSession();
+        verify(session, times(1)).createQuery(anyString());
+        verify(query, times(1)).setParameter(anyInt(), anyLong());
+        verify(query, times(1)).getResultList();
+        Assert.assertEquals(getRatings.equals(ratings), true);
     }
 
     @Test
-    public void getByIdTest() throws Exception{
-        User userTmp = userDAO.getById(user.getId());
-        Assert.assertEquals(userTmp.equals(user), true);
-        Mockito.verify(userDAO, Mockito.times(1)).getById(user.getId());
+    public void getRolesTest() throws Exception{
+        //given
+        User user = new User();
+        List<Role> roles = new ArrayList<>();
+        String hql = "FROM Role r JOIN FETCH r.users u where u.id = ?";
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        when(session.createQuery(hql)).thenReturn(query);
+        when(query.setParameter(0, user.getId())).thenReturn(query);
+        when(query.getResultList()).thenReturn(roles);
+
+        //when
+        List<Role> gettedRoles = userDAO.getRoles(user);
+
+        //then
+        verify(sessionFactory, times(1)).getCurrentSession();
+        verify(session, times(1)).createQuery(anyString());
+        verify(query, times(1)).setParameter(anyInt(), anyLong());
+        verify(query, times(1)).getResultList();
+        Assert.assertEquals(gettedRoles.equals(roles), true);
     }
 
     @Test
-    public void getUserByName() throws Exception{
-        User userTmp = userDAO.getUserByName(user.getName());
-        Assert.assertEquals(userTmp.equals(user), true);
-        Mockito.verify(userDAO, Mockito.times(1)).getUserByName(user.getName());
+    public void getReviewsTest() throws Exception{
+        //given
+        User user = new User();
+        List<Review> reviews = new ArrayList<>();
+        String hql = "FROM Review r JOIN FETCH r.user u where u.id = ?";
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        when(session.createQuery(hql)).thenReturn(query);
+        when(query.setParameter(0, user.getId())).thenReturn(query);
+        when(query.getResultList()).thenReturn(reviews);
+
+        //when
+        List<Review> gettedReviews = userDAO.getReviews(user);
+
+        //then
+        verify(sessionFactory, times(1)).getCurrentSession();
+        verify(session, times(1)).createQuery(anyString());
+        verify(query, times(1)).setParameter(anyInt(), anyLong());
+        verify(query, times(1)).getResultList();
+        Assert.assertEquals(gettedReviews.equals(reviews), true);
     }
 
-    @Test
-    public void getUserByEmailTest() throws Exception{
-        User userTmp = userDAO.getUserByEmail(user.getEmail());
-        Assert.assertEquals(userTmp.equals(user), true);
-        Mockito.verify(userDAO, Mockito.times(1)).getUserByEmail(user.getEmail());
-    }
 
     @Test
-    public void getUserByTokenTest() throws Exception{
-        User userTmp = userDAO.getUserByToken(user.getToken());
-        Assert.assertEquals(userTmp.equals(user), true);
-        Mockito.verify(userDAO, Mockito.times(1)).getUserByToken(user.getToken());
+    public void getCommentsTest() throws Exception{
+        //given
+        User user = new User();
+        List<Comment> comments = new ArrayList<>();
+        String hql = "FROM Comment c JOIN FETCH c.user u where u.id = ?";
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        when(session.createQuery(hql)).thenReturn(query);
+        when(query.setParameter(0, user.getId())).thenReturn(query);
+        when(query.getResultList()).thenReturn(comments);
+
+        //when
+        List<Comment> gettedComments = userDAO.getComments(user);
+
+        //then
+        verify(sessionFactory, times(1)).getCurrentSession();
+        verify(session, times(1)).createQuery(anyString());
+        verify(query, times(1)).setParameter(anyInt(), anyLong());
+        verify(query, times(1)).getResultList();
+        Assert.assertEquals(gettedComments.equals(comments), true);
     }
+
+
+
 }
