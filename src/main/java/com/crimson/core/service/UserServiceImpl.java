@@ -131,7 +131,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean checkFollow(UserDTO userDTO, TvShowDTO tvShow) {
        return userDAO.getUserByName(userDTO.getName()).getTvShows().contains(tvShowDAO.getById(tvShow.getId()));
-        return getTvShows(userDAO.getUserByName(userDTO.getName())).contains(tvShowDAO.getById(tvShow.getId()));
     }
 
     @Override
@@ -346,7 +345,7 @@ public class UserServiceImpl implements UserService {
         List<Episode> allWatchedUserEpisodes = userDAO.getEpisodes(user);
 
         allFollowedUserTvShows.forEach(tvShow -> {
-            List<Episode> tvShowEpisodes = tvShowDAO.getEpisodes(tvShow);
+            List<Episode> tvShowEpisodes = tvShow.getEpisodes();
             tvShowEpisodes.forEach(episode -> {
                 if (!allWatchedUserEpisodes.contains(episode))
                     allUnwatchedUserEpisodes.add(mapperFacade.map(episode, EpisodeDTO.class));

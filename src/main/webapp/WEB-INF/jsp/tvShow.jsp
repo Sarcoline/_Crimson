@@ -138,7 +138,7 @@
                         <article class="uk-comment uk-margin-top">
                             <header class="uk-comment-header">
                                 <img class="uk-comment-avatar" src="<c:url value="/images/user/${comment.user.name}"/> "
-                                     style="width: 50px; height: 50px;"
+                                     style="width: 40px; height: 30px;"
                                      alt="">
                                 <h4 class="uk-comment-title">${comment.user.name}</h4>
                                 <div class="uk-comment-meta">${comment.date} | <a
