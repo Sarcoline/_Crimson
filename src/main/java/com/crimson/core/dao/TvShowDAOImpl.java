@@ -33,21 +33,21 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public List<TvShow> getAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From TvShow a", TvShow.class).getResultList();
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public TvShow getById(Long id) {
         Session session = sessionFactory.getCurrentSession();
         return session.find(TvShow.class, id);
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public TvShow getTvByIdWithEpisodes(Long id) {
         Session session = sessionFactory.getCurrentSession();
 
@@ -58,7 +58,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public TvShow getTvBySlug(String slug) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From TvShow a where a.slug like :custSlug", TvShow.class)
@@ -66,7 +66,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public List<TvShow> getTvByGenre(String genre) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From TvShow a where a.genre like :custGenre", TvShow.class)
@@ -75,7 +75,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public List<TvShow> getTvByCountry(String country) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From TvShow a where a.country like :custCountry", TvShow.class)
@@ -83,7 +83,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public List<TvShow> getTvByYear(int releaseYear) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From TvShow a where a.releaseYear = :custReleaseYear", TvShow.class)
@@ -91,7 +91,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public List<TvShow> getTvByNetwork(String network) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From TvShow a where a.network like :custNetwork", TvShow.class)
@@ -257,7 +257,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     @SuppressWarnings("unchecked")
     public List<User> getUsers(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
@@ -268,7 +268,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     @SuppressWarnings("unchecked")
     public List<Genre> getGenres(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
@@ -279,7 +279,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     @SuppressWarnings("unchecked")
     public List<Episode> getEpisodes(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
@@ -290,7 +290,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     @SuppressWarnings("unchecked")
     public List<Rating> getRatings(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
@@ -301,7 +301,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     @SuppressWarnings("unchecked")
     public List<Comment> getComments(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
@@ -312,7 +312,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     @SuppressWarnings("unchecked")
     public List<Review> getReviews(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
@@ -323,7 +323,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public HashMap<String, byte[]> getTvShowPicture(String slug) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "select u.pictures from TvShow u where u.slug = :custName";
@@ -332,7 +332,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     @SuppressWarnings("unchecked")
     public List<TvShow> getTvShowsByMaxRating() {
         Session session = sessionFactory.getCurrentSession();

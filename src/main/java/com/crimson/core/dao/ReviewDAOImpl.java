@@ -38,14 +38,14 @@ public class ReviewDAOImpl implements ReviewDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public List<Review> getAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("SELECT r FROM Review r", Review.class).getResultList();
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public Review getById(Long idReview) {
         Session session = sessionFactory.getCurrentSession();
         return session.find(Review.class, idReview);
@@ -81,7 +81,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 
     @Override
     @SuppressWarnings("unchecked")
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public List<Review> getReviewByIdUser(Long idUser) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from Review r where r.user.id = :id";
@@ -92,7 +92,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 
     @Override
     @SuppressWarnings("unchecked")
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public List<Review> getReviewByIdTvShow(Long idTvShow) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from Review r where r.tvShow.id = :id";
@@ -102,7 +102,7 @@ public class ReviewDAOImpl implements ReviewDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public List getReviews(long idTvShow, long idUser) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from Review r where r.tvShow.id = :idtv and r.user.id = :idusr";

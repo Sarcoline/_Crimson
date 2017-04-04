@@ -23,14 +23,14 @@ public class RoleDAOImpl implements RoleDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public List<Role> getAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From Role a", Role.class).getResultList();
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public Role getById(Long id) {
         Session session = sessionFactory.getCurrentSession();
         return session.find(Role.class, id);

@@ -1,5 +1,5 @@
 <ehcache>
-    <cache name="myCache"
+    <cache name="application-cache"
             maxBytesLocalHeap="256000000"
             eternal="false"
             timeToIdleSeconds="120"

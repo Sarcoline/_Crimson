@@ -36,14 +36,14 @@ public class RatingDAOImpl implements RatingDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public Rating getRatingByIdUser(Long idUser) {
         Session session = sessionFactory.getCurrentSession();
         return session.find(Rating.class, idUser);
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public Rating getById(Long id) {
         Session session = sessionFactory.getCurrentSession();
         return session.find(Rating.class, id);
@@ -51,7 +51,7 @@ public class RatingDAOImpl implements RatingDAO {
 
     @Override
     @SuppressWarnings("unchecked")
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public List<Rating> getRatingByIdTvShow(Long idTvShow) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from Rating s where s.tvShow.id = :id";
@@ -61,14 +61,14 @@ public class RatingDAOImpl implements RatingDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public List<Rating> getAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("SELECT a FROM  Rating a", Rating.class).getResultList();
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public Rating getRating(long idtv, long iduser) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from Rating s where s.tvShow.id = :idtv and s.user.id = :idusr";

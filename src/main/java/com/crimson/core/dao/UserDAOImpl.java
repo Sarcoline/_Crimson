@@ -25,7 +25,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public List<User> getAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From User a", User.class).getResultList();
@@ -50,7 +50,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public User getUserByName(String name) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From User a where a.name like :custName", User.class)
@@ -58,7 +58,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public User getUserByToken(String token) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From User a where a.token like :custToken", User.class)
@@ -227,7 +227,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public User getUserByEmail(String email) {
         Session session = sessionFactory.getCurrentSession();
         User user;
@@ -242,7 +242,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public byte[] getUserProfilePicture(String name) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "select u.profilePic from User u where u.name = :custName";
@@ -250,7 +250,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     @SuppressWarnings("unchecked")
     public List<Comment> getComments(User user) {
         Session session = sessionFactory.getCurrentSession();

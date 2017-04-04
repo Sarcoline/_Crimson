@@ -43,21 +43,21 @@ public class EpisodeDAOImpl implements EpisodeDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public Episode getById(Long idEpisode) {
         Session session = sessionFactory.getCurrentSession();
         return session.find(Episode.class, idEpisode);
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public List<Episode> getAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("SELECT a FROM Episode a", Episode.class).getResultList();
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public Episode getEpisodeByTitle(String title) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From Episode a where a.title like :custTitle", Episode.class)
@@ -65,7 +65,7 @@ public class EpisodeDAOImpl implements EpisodeDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public Episode getBySeasonAndEpisodeNumber(int season, int number, long idTv) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select e FROM Episode e where " +

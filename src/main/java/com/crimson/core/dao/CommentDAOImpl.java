@@ -38,21 +38,21 @@ public class CommentDAOImpl implements CommentDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public Comment getById(Long idComment) {
         Session session = sessionFactory.getCurrentSession();
         return session.find(Comment.class, idComment);
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public List<Comment> getAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("SELECT a FROM Comment a", Comment.class).getResultList();
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public List<Comment> getCommentsByDate(LocalDate date) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From Comment a where a.date like :custDate", Comment.class).setParameter("custDate", date).getResultList();
@@ -88,7 +88,7 @@ public class CommentDAOImpl implements CommentDAO {
 
     @Override
     @SuppressWarnings("unchecked")
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public List<Comment> getCommentByIdUser(Long idUser) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from Comment s where s.user.id = :idusr";
@@ -99,7 +99,7 @@ public class CommentDAOImpl implements CommentDAO {
 
     @Override
     @SuppressWarnings("unchecked")
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public List<Comment> getCommentByIdTvShow(Long idTvShow) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from Comment s where s.tvShow.id = :idtv";
@@ -109,7 +109,7 @@ public class CommentDAOImpl implements CommentDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public List getComments(long idTvShow, long idUser) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from Comment s where s.tvShow.id = :idtv and s.user.id = :idusr";

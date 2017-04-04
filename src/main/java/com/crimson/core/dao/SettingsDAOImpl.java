@@ -23,14 +23,14 @@ public class SettingsDAOImpl implements SettingsDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public List<Setting> getAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From Setting a", Setting.class).getResultList();
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public Setting getById(Long id) {
         Session session = sessionFactory.getCurrentSession();
         return session.find(Setting.class, id);

@@ -35,21 +35,21 @@ public class GenreDAOImpl implements GenreDAO {
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public Genre getById(Long idGenre) {
         Session session = sessionFactory.getCurrentSession();
         return session.find(Genre.class, idGenre);
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public List<Genre> getAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("SELECT a FROM Genre a", Genre.class).getResultList();
     }
 
     @Override
-    @Cacheable("myCache")
+    @Cacheable("application-cache")
     public Genre getGenreByName(String name) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("Select a From Genre a where a.name like :custName", Genre.class)
