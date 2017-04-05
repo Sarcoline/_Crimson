@@ -124,6 +124,7 @@ public class RatingServiceImpl implements RatingService {
         calculateRating(tvShow.getId());
     }
 
+    @Override
     public void calculateRating(long id) {
         TvShow tvShow = tvShowDAO.getById(id);
         List<Rating> ratings = tvShow.getRatings();

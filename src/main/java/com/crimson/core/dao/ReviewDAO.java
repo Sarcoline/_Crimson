@@ -21,5 +21,5 @@ public interface ReviewDAO extends BaseDAO<Review, Long> {
 
     List<Review> getReviewByIdTvShow(Long idTvShow);
 
-    List getReviews(long idTvShow, long idUser);
+    List<Review> getReviews(long idTvShow, long idUser);
 }

@@ -80,33 +80,31 @@ public class ReviewDAOImpl implements ReviewDAO {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     @Cacheable("application-cache")
     public List<Review> getReviewByIdUser(Long idUser) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from Review r where r.user.id = :id";
-        return session.createQuery(hql)
+        return session.createQuery(hql, Review.class)
                 .setParameter("id", idUser)
                 .getResultList();
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     @Cacheable("application-cache")
     public List<Review> getReviewByIdTvShow(Long idTvShow) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from Review r where r.tvShow.id = :id";
-        return session.createQuery(hql)
+        return session.createQuery(hql, Review.class)
                 .setParameter("id", idTvShow)
                 .getResultList();
     }
 
     @Override
     @Cacheable("application-cache")
-    public List getReviews(long idTvShow, long idUser) {
+    public List<Review> getReviews(long idTvShow, long idUser) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from Review r where r.tvShow.id = :idtv and r.user.id = :idusr";
-        return session.createQuery(hql)
+        return session.createQuery(hql, Review.class)
                 .setParameter("idtv", idTvShow)
                 .setParameter("idusr", idUser)
                 .getResultList();

@@ -110,12 +110,11 @@ public class EpisodeDAOImpl implements EpisodeDAO {
         session.saveOrUpdate(episode);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public List<User> getUsers(Episode episode) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM User u JOIN FETCH u.episodes e where e.id = :id";
-        return session.createQuery(hql)
+        return session.createQuery(hql, User.class)
                 .setParameter("id", episode.getId())
                 .getResultList();
     }

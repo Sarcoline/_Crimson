@@ -31,5 +31,5 @@ public interface ReviewService {
 
     void deleteUserFromReview(Review review, User user);
 
-    List getReviews(long idTvShow, long idUser);
+    List<Review> getReviews(long idTvShow, long idUser);
 }

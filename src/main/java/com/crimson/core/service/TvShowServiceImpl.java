@@ -346,12 +346,11 @@ public class TvShowServiceImpl implements TvShowService {
     }
 
     @Override
-    public List<TvShowSearchDTO> tvShowsPaginationList(int pageNumber){
+    public List<TvShowSearchDTO> tvShowsPaginationList(int pageNumber) {
         int lastPage = tvShowsLastPageNumber();
-        List tvShows = new ArrayList<>();
+        List<TvShow> tvShows = new ArrayList<>();
         List<TvShowSearchDTO> tvShowsToReturn = new ArrayList<>();
-        if (lastPage <= pageNumber)
-        {
+        if (lastPage <= pageNumber) {
             tvShows = tvShowDAO.queryGettingTvShowListForPage(pageNumber, 25);
         }
         tvShows.forEach(
@@ -361,7 +360,7 @@ public class TvShowServiceImpl implements TvShowService {
         return tvShowsToReturn;
     }
 
-    public FilterResponseDTO filter(SearchFilterParameters parameters, int page){
+    public FilterResponseDTO filter(SearchFilterParameters parameters, int page) {
         FilterResponse response = new FilterResponse();
         Session session = tvShowDAO.getSession();
         Criteria c = session.createCriteria(TvShow.class);

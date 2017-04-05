@@ -50,12 +50,11 @@ public class RatingDAOImpl implements RatingDAO {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     @Cacheable("application-cache")
     public List<Rating> getRatingByIdTvShow(Long idTvShow) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from Rating s where s.tvShow.id = :id";
-        return session.createQuery(hql)
+        return session.createQuery(hql, Rating.class)
                 .setParameter("id", idTvShow)
                 .getResultList();
     }

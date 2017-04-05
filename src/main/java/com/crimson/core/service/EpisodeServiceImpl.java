@@ -196,7 +196,7 @@ public class EpisodeServiceImpl implements EpisodeService {
     @Override
     public void addUserToSeason(UserDTO user, int season, TvShowDTO tv) {
         tv.getEpisodes().forEach(episode -> {
-            if (!checkWatched(user, episode) && episode.getSeason() == season) addUser2Episode(user,episode);
+            if (!checkWatched(user, episode) && episode.getSeason() == season) addUser2Episode(user, episode);
         });
     }
 }

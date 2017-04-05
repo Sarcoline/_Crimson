@@ -74,12 +74,11 @@ public class GenreDAOImpl implements GenreDAO {
         session.saveOrUpdate(genre);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public List<TvShow> getTvShows(Genre genre) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM TvShow t JOIN FETCH t.genres g where g.id = :id";
-        return session.createQuery(hql)
+        return session.createQuery(hql, TvShow.class)
                 .setParameter("id", genre.getId())
                 .getResultList();
     }

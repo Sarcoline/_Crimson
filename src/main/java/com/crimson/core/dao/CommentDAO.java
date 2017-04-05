@@ -24,5 +24,5 @@ public interface CommentDAO extends BaseDAO<Comment, Long> {
 
     List<Comment> getCommentByIdTvShow(Long idTvShow);
 
-    List getComments(long idTvShow, long idUser);
+    List<Comment> getComments(long idTvShow, long idUser);
 }

@@ -105,7 +105,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List getReviews(long idTvShow, long idUser) {
+    public List<Review> getReviews(long idTvShow, long idUser) {
         return reviewDAO.getReviews(idTvShow, idUser);
     }
 }

@@ -65,12 +65,11 @@ public class RoleDAOImpl implements RoleDAO {
         session.saveOrUpdate(role);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public List<User> getUsers(Role role) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM User u JOIN FETCH u.roles r where r.idRole = :id";
-        return session.createQuery(hql)
+        return session.createQuery(hql, User.class)
                 .setParameter("id", role.getIdRole())
                 .getResultList();
     }

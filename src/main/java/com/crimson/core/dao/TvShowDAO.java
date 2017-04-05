@@ -30,7 +30,7 @@ public interface TvShowDAO extends BaseDAO<TvShow, Long> {
 
     Long getTvShowsToPaginationByQuery();
 
-    List queryGettingTvShowListForPage(int pageNumber, int maxResults);
+    List<TvShow> queryGettingTvShowListForPage(int pageNumber, int maxResults);
 
     void addUser2TvShow(User user, TvShow tvShow);
 

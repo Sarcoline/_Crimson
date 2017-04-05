@@ -20,7 +20,7 @@ public class TvShowDAOImpl implements TvShowDAO {
     private SessionFactory sessionFactory;
 
     @Override
-    public Session getSession(){
+    public Session getSession() {
         return sessionFactory.getCurrentSession();
     }
 
@@ -112,25 +112,23 @@ public class TvShowDAOImpl implements TvShowDAO {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public List<TvShow> searchTvShow(String pattern) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM TvShow t WHERE title like :pattern";
-        Query query = session.createQuery(hql);
-        query.setParameter("pattern", String.format("%%%s%%", pattern));
-        query.setMaxResults(5);
-        return query.getResultList();
+        return session.createQuery(hql, TvShow.class)
+                .setParameter("pattern", String.format("%%%s%%", pattern))
+                .setMaxResults(5)
+                .getResultList();
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public List<TvShow> filterTvShows(double min, double max) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from TvShow t WHERE overallRating between :start and :finish";
-        Query query = session.createQuery(hql);
-        query.setParameter("start", min);
-        query.setParameter("finish", max);
-        return query.getResultList();
+        return session.createQuery(hql, TvShow.class)
+                .setParameter("start", min)
+                .setParameter("finish", max)
+                .getResultList();
     }
 
 
@@ -144,20 +142,19 @@ public class TvShowDAOImpl implements TvShowDAO {
 
     //Zwraca ilość seriali w bazie do obliczenia ostatniej strony
     @Override
-    public Long getTvShowsToPaginationByQuery()
-    {
+    public Long getTvShowsToPaginationByQuery() {
         Session session = sessionFactory.getCurrentSession();
         return (Long) session.createQuery("SELECT count (id) FROM TvShow  f").uniqueResult();
     }
 
     //Zwraca listę seriali dla podanej strony
     @Override
-    public List queryGettingTvShowListForPage(int pageNumber, int maxResults){
+    public List<TvShow> queryGettingTvShowListForPage(int pageNumber, int maxResults) {
         Session session = sessionFactory.getCurrentSession();
-        org.hibernate.query.Query selectQuery = session.createQuery("from TvShow ");
-        selectQuery.setFirstResult((pageNumber - 1) * 25);
-        selectQuery.setMaxResults(25);
-        return selectQuery.list();
+        return session.createQuery("from TvShow ", TvShow.class)
+                .setFirstResult((pageNumber - 1) * 25)
+                .setMaxResults(25)
+                .getResultList();
     }
 
     //RELATIONSHIPS
@@ -258,86 +255,79 @@ public class TvShowDAOImpl implements TvShowDAO {
 
     @Override
     @Cacheable("application-cache")
-    @SuppressWarnings("unchecked")
     public List<User> getUsers(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM User u JOIN FETCH u.tvShows t where t.id = :id";
-        return session.createQuery(hql)
+        return session.createQuery(hql, User.class)
                 .setParameter("id", tv.getId())
                 .getResultList();
     }
 
     @Override
     @Cacheable("application-cache")
-    @SuppressWarnings("unchecked")
     public List<Genre> getGenres(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Genre g JOIN FETCH g.tvShows t where t.id = :id";
-        return session.createQuery(hql)
+        return session.createQuery(hql, Genre.class)
                 .setParameter("id", tv.getId())
                 .getResultList();
     }
 
     @Override
     @Cacheable("application-cache")
-    @SuppressWarnings("unchecked")
     public List<Episode> getEpisodes(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Episode e JOIN FETCH e.tvShow t where t.id = :id";
-        return session.createQuery(hql)
+        return session.createQuery(hql, Episode.class)
                 .setParameter("id", tv.getId())
                 .getResultList();
     }
 
     @Override
     @Cacheable("application-cache")
-    @SuppressWarnings("unchecked")
     public List<Rating> getRatings(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Rating r JOIN FETCH r.tvShow t where t.id = :id";
-        return session.createQuery(hql)
+        return session.createQuery(hql, Rating.class)
                 .setParameter("id", tv.getId())
                 .getResultList();
     }
 
     @Override
     @Cacheable("application-cache")
-    @SuppressWarnings("unchecked")
     public List<Comment> getComments(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Comment c JOIN FETCH c.tvShow t where t.id = :id";
-        return session.createQuery(hql)
+        return session.createQuery(hql, Comment.class)
                 .setParameter("id", tv.getId())
                 .getResultList();
     }
 
     @Override
     @Cacheable("application-cache")
-    @SuppressWarnings("unchecked")
     public List<Review> getReviews(TvShow tv) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Review r JOIN FETCH r.tvShow t where t.id = :id";
-        return session.createQuery(hql)
+        return session.createQuery(hql, Review.class)
                 .setParameter("id", tv.getId())
                 .getResultList();
     }
 
     @Override
     @Cacheable("application-cache")
+    @SuppressWarnings("unchecked")
     public HashMap<String, byte[]> getTvShowPicture(String slug) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "select u.pictures from TvShow u where u.slug = :custName";
-        HashMap<String, byte[]> pic = (HashMap<String, byte[]>) session.createQuery(hql).setParameter("custName", slug).getSingleResult();
-        return pic;
+        return (HashMap<String, byte[]>) session.createQuery(hql).setParameter("custName", slug).getSingleResult();
     }
 
     @Override
     @Cacheable("application-cache")
-    @SuppressWarnings("unchecked")
     public List<TvShow> getTvShowsByMaxRating() {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from TvShow t order by t.overallRating desc ";
-        return session.createQuery(hql).setMaxResults(10)
+        return session.createQuery(hql, TvShow.class).setMaxResults(10)
                 .getResultList();
     }
 }

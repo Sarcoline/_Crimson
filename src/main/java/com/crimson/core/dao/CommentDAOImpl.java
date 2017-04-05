@@ -87,33 +87,31 @@ public class CommentDAOImpl implements CommentDAO {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     @Cacheable("application-cache")
     public List<Comment> getCommentByIdUser(Long idUser) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from Comment s where s.user.id = :idusr";
-        return session.createQuery(hql)
+        return session.createQuery(hql, Comment.class)
                 .setParameter("idusr", idUser)
                 .getResultList();
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     @Cacheable("application-cache")
     public List<Comment> getCommentByIdTvShow(Long idTvShow) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from Comment s where s.tvShow.id = :idtv";
-        return session.createQuery(hql)
+        return session.createQuery(hql, Comment.class)
                 .setParameter("idtv", idTvShow)
                 .getResultList();
     }
 
     @Override
     @Cacheable("application-cache")
-    public List getComments(long idTvShow, long idUser) {
+    public List<Comment> getComments(long idTvShow, long idUser) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "from Comment s where s.tvShow.id = :idtv and s.user.id = :idusr";
-        return session.createQuery(hql)
+        return session.createQuery(hql, Comment.class)
                 .setParameter("idtv", idTvShow)
                 .setParameter("idusr", idUser)
                 .getResultList();

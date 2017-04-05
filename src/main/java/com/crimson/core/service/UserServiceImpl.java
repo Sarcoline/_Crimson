@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
         Role role = roleDAO.getAll().get(0);
         User user = mapperFacade.map(userDTO, User.class);
         user.setPassword(encoder.encode(user.getPassword()));
-        addRole2User(user,role);
+        addRole2User(user, role);
         user.setSetting(new Setting(false, 10, 7));
         if (userDTO.getUploadedPic() != null) {
             user.setProfilePic(userDTO.getUploadedPic().getBytes());
@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkFollow(UserDTO userDTO, TvShowDTO tvShow) {
-       return userDAO.getUserByName(userDTO.getName()).getTvShows().contains(tvShowDAO.getById(tvShow.getId()));
+        return userDAO.getUserByName(userDTO.getName()).getTvShows().contains(tvShowDAO.getById(tvShow.getId()));
     }
 
     @Override

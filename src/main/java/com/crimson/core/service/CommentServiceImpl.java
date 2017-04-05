@@ -112,7 +112,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List getComments(long idTvShow, long idUser) {
+    public List<Comment> getComments(long idTvShow, long idUser) {
         return commentDAO.getComments(idTvShow, idUser);
     }
 }
