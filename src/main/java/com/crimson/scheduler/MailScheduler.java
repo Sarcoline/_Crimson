@@ -1,19 +1,18 @@
 package com.crimson.scheduler;
 
-import com.crimson.core.dto.EpisodeDTO;
 import com.crimson.core.dto.UserDTO;
 import com.crimson.core.service.MailService;
 import com.crimson.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import javax.mail.MessagingException;
 import java.util.List;
 
 
-@Service
+@Component
 public class MailScheduler {
 
     @Autowired
@@ -22,24 +21,19 @@ public class MailScheduler {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private MailSchedulerJob mailSchedulerJob;
+
     @Async
-    @Scheduled (cron = "0 15 10 ? * *") //10:15AM kazdego dnia
+    @Scheduled (cron = "0 0/2 * * * *") //10:15AM kazdego dnia
     public void sendMail () throws MessagingException {
 
         List<UserDTO> users = userService.getAllUsers();
         users.forEach(user -> {
-            List<EpisodeDTO> upcoming = userService.getAllUpcomingUserEpisodes(user, user.getTvShows(), user.getEpisodes());
-            if (upcoming.size() > 0 && user.getSetting().getSendEpisodeList()) {
-                String body = "<h3>Hey, it's your daily episodes list: </h3>" +
-                        "<ul>";
-                StringBuilder sB = new StringBuilder(body);
-                upcoming.forEach(episode -> sB.append(String.format("<li>%s - S%sE%s - %s - %s</li>",
-                        episode.getTvShow().getTitle(), episode.getSeason(), episode.getNumber(),
-                        episode.getTitle(), episode.getReleaseDate())));
-                sB.append("</ul>");
-                body = sB.toString();
+            if (mailSchedulerJob.canExecute(user)) {
+                String body = mailSchedulerJob.createMessage(user);
                 try {
-                    mailService.sendMail(user.getEmail(),"Crimson - Daily episode list", body);
+                    mailSchedulerJob.sendMessage(user, body);
                 } catch (MessagingException e) {
                     e.printStackTrace();
                 }
