@@ -135,20 +135,32 @@ public class TvShowServiceImpl implements TvShowService {
     @Override
     public void addUser2TvShow(User user, TvShow tvShow) {
         if (!tvShowDAO.getUsers(tvShow).contains(user)) {
-            tvShowDAO.addUser2TvShow(user, tvShow);
+            List<User> users = tvShowDAO.getUsers(tvShow);
+            users.add(user);
+            tvShow.setUsers(users);
+            tvShowDAO.update(tvShow);
         }
         if (!userDAO.getTvShows(user).contains(tvShow)) {
-            userDAO.addTvShow2User(user, tvShow);
+            List<TvShow> tvShows = userDAO.getTvShows(user);
+            tvShows.add(tvShow);
+            user.setTvShows(tvShows);
+            userDAO.update(user);
         }
     }
 
     @Override
     public void deleteUserFromTvShow(User user, TvShow tvShow) {
         if (tvShowDAO.getUsers(tvShow).contains(user)) {
-            tvShowDAO.deleteUserFromTvShow(user, tvShow);
+            List<User> users = tvShowDAO.getUsers(tvShow);
+            users.remove(user);
+            tvShow.setUsers(users);
+            tvShowDAO.update(tvShow);
         }
         if (userDAO.getTvShows(user).contains(tvShow)) {
-            userDAO.deleteTvShowFromUser(user, tvShow);
+            List<TvShow> tvShows = userDAO.getTvShows(user);
+            tvShows.remove(tvShow);
+            user.setTvShows(tvShows);
+            userDAO.update(user);
         }
     }
 
@@ -157,20 +169,32 @@ public class TvShowServiceImpl implements TvShowService {
     @Override
     public void addGenre2TvShow(TvShow tvShow, Genre genre) {
         if (!tvShowDAO.getGenres(tvShow).contains(genre)) {
-            tvShowDAO.addGenre2TvShow(tvShow, genre);
+            List<Genre> genres = tvShowDAO.getGenres(tvShow);
+            genres.add(genre);
+            tvShow.setGenres(genres);
+            tvShowDAO.update(tvShow);
         }
         if (!genreDAO.getTvShows(genre).contains(tvShow)) {
-            genreDAO.addTvShow2Genre(genre, tvShow);
+            List<TvShow> tvShows = genreDAO.getTvShows(genre);
+            tvShows.add(tvShow);
+            genre.setTvShows(tvShows);
+            genreDAO.update(genre);
         }
     }
 
     @Override
     public void deleteGenreFromTvShow(TvShow tvShow, Genre genre) {
         if (tvShowDAO.getGenres(tvShow).contains(genre)) {
-            tvShowDAO.deleteGenreFromTvShow(tvShow, genre);
+            List<Genre> genres = tvShowDAO.getGenres(tvShow);
+            genres.remove(genre);
+            tvShow.setGenres(genres);
+            tvShowDAO.update(tvShow);
         }
         if (genreDAO.getTvShows(genre).contains(tvShow)) {
-            genreDAO.deleteTvShowFromGenre(genre, tvShow);
+            List<TvShow> tvShows = genreDAO.getTvShows(genre);
+            tvShows.remove(tvShow);
+            genre.setTvShows(tvShows);
+            genreDAO.update(genre);
         }
     }
 
@@ -179,10 +203,14 @@ public class TvShowServiceImpl implements TvShowService {
     @Override
     public void addEpisode2TvShow(TvShow tvShow, Episode episode) {
         if (!tvShowDAO.getEpisodes(tvShow).contains(episode)) {
-            tvShowDAO.addEpisode2TvShow(tvShow, episode);
+            List<Episode> episodes = tvShowDAO.getEpisodes(tvShow);
+            episodes.add(episode);
+            tvShow.setEpisodes(episodes);
+            tvShowDAO.update(tvShow);
         }
         if (episode.getTvShow() != tvShow) {
-            episodeDAO.addTvShow2Episode(tvShow, episode);
+            episode.setTvShow(tvShow);
+            episodeDAO.update(episode);
         }
 
     }
@@ -190,10 +218,14 @@ public class TvShowServiceImpl implements TvShowService {
     @Override
     public void deleteEpisodeFromTvShow(TvShow tvShow, Episode episode) {
         if (tvShowDAO.getEpisodes(tvShow).contains(episode)) {
-            tvShowDAO.deleteEpisodeFromTvShow(tvShow, episode);
+            List<Episode> episodes = tvShowDAO.getEpisodes(tvShow);
+            episodes.remove(episode);
+            tvShow.setEpisodes(episodes);
+            tvShowDAO.update(tvShow);
         }
         if (episode.getTvShow() == tvShow) {
-            episodeDAO.deleteTvShowFromEpisode(episode);
+            episode.setTvShow(null);
+            episodeDAO.update(episode);
         }
 
     }
@@ -203,60 +235,84 @@ public class TvShowServiceImpl implements TvShowService {
     @Override
     public void addRating2TvShow(TvShow tvShow, Rating rating) {
         if (!tvShowDAO.getRatings(tvShow).contains(rating)) {
-            tvShowDAO.addRating2TvShow(tvShow, rating);
+            List<Rating> ratings = tvShowDAO.getRatings(tvShow);
+            ratings.add(rating);
+            tvShow.setRatings(ratings);
+            tvShowDAO.update(tvShow);
         }
         if (rating.getTvShow() != tvShow) {
-            ratingDAO.addTvShow2Rating(rating, tvShow);
+            rating.setTvShow(tvShow);
+            ratingDAO.update(rating);
         }
     }
 
     @Override
     public void deleteRatingFromTvShow(TvShow tvShow, Rating rating) {
         if (tvShowDAO.getRatings(tvShow).contains(rating)) {
-            tvShowDAO.deleteRatingFromTvShow(tvShow, rating);
+            List<Rating> ratings = tvShowDAO.getRatings(tvShow);
+            ratings.remove(rating);
+            tvShow.setRatings(ratings);
+            tvShowDAO.update(tvShow);
         }
         if (rating.getTvShow() == tvShow) {
-            ratingDAO.deleteTvShowFromRating(rating);
+            rating.setTvShow(null);
+            ratingDAO.update(rating);
         }
     }
 
     @Override
     public void addComment(TvShow tvShow, Comment comment) {
         if (!tvShowDAO.getComments(tvShow).contains(comment)) {
-            tvShowDAO.addComment(tvShow, comment);
+            List<Comment> comments = tvShowDAO.getComments(tvShow);
+            comments.add(comment);
+            tvShow.setComments(comments);
+            tvShowDAO.update(tvShow);
         }
         if (comment.getTvShow() != tvShow) {
-            commentDAO.addTvShow2Comment(comment, tvShow);
+            comment.setTvShow(tvShow);
+            commentDAO.update(comment);
         }
     }
 
     @Override
     public void addReview(TvShow tvShow, Review review) {
         if (!tvShowDAO.getReviews(tvShow).contains(review)) {
-            tvShowDAO.addReview(tvShow, review);
+            List<Review> reviews = tvShowDAO.getReviews(tvShow);
+            reviews.add(review);
+            tvShow.setReviews(reviews);
+            tvShowDAO.update(tvShow);
         }
         if (review.getTvShow() != tvShow) {
-            reviewDAO.addTvShow2Review(review, tvShow);
+            review.setTvShow(tvShow);
+            reviewDAO.update(review);
         }
     }
 
     @Override
     public void deleteComment(TvShow tvShow, Comment comment) {
         if (tvShowDAO.getComments(tvShow).contains(comment)) {
-            tvShowDAO.deleteComment(tvShow, comment);
+            List<Comment> comments = tvShowDAO.getComments(tvShow);
+            comments.remove(comment);
+            tvShow.setComments(comments);
+            tvShowDAO.update(tvShow);
         }
         if (comment.getTvShow() == tvShow) {
-            commentDAO.deleteTvShowFromComment(comment);
+            comment.setTvShow(null);
+            commentDAO.update(comment);
         }
     }
 
     @Override
     public void deleteReview(TvShow tvShow, Review review) {
         if (tvShowDAO.getReviews(tvShow).contains(review)) {
-            tvShowDAO.deleteReview(tvShow, review);
+            List<Review> reviews = tvShowDAO.getReviews(tvShow);
+            reviews.remove(review);
+            tvShow.setReviews(reviews);
+            tvShowDAO.update(tvShow);
         }
         if (review.getTvShow() == tvShow) {
-            reviewDAO.deleteTvShowFromReview(review);
+            review.setTvShow(null);
+            reviewDAO.update(review);
         }
     }
 

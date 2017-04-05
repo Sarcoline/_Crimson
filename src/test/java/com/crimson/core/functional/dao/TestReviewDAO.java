@@ -136,33 +136,4 @@ public class TestReviewDAO {
         Assert.assertEquals(reviewList.contains(review1), true);
         Assert.assertEquals(reviewList.contains(review2), true);
     }
-
-    @Test
-    public void addTvShow2CommentTest() {
-        reviewDAO.addTvShow2Review(review1,tvShow);
-
-        Assert.assertEquals(reviewDAO.getById(review1.getId()).getTvShow().equals(tvShow), true);
-    }
-
-    @Test
-    public void deleteTvShowFromCommentTest() {
-        reviewDAO.deleteTvShowFromReview(review1);
-
-        Assert.assertEquals(reviewDAO.getById(review1.getId()).getTvShow(), null);
-    }
-
-    @Test
-    public void addUser2CommentTest() {
-        reviewDAO.addUser2Review(review1,user);
-
-        Assert.assertEquals(reviewDAO.getById(review1.getId()).getUser().equals(user), true);
-    }
-
-    @Test
-    public void deleteUserFromCommentTest() {
-        reviewDAO.deleteUserFromReview(review1);
-
-        Assert.assertEquals(reviewDAO.getById(review1.getId()).getUser(), null);
-    }
-
 }

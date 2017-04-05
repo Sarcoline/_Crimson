@@ -49,40 +49,56 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void addTvShow2Comment(Comment comment, TvShow tvShow) {
         if (comment.getTvShow() != tvShow) {
-            commentDAO.addTvShow2Comment(comment, tvShow);
+            comment.setTvShow(tvShow);
+            commentDAO.update(comment);
         }
         if (!tvShowDAO.getComments(tvShow).contains(comment)) {
-            tvShowDAO.addComment(tvShow, comment);
+            List<Comment> comments = tvShowDAO.getComments(tvShow);
+            comments.add(comment);
+            tvShow.setComments(comments);
+            tvShowDAO.update(tvShow);
         }
     }
 
     @Override
     public void deleteTvShowFromComment(Comment comment, TvShow tvShow) {
         if (comment.getTvShow() == tvShow) {
-            commentDAO.deleteTvShowFromComment(comment);
+            comment.setTvShow(null);
+            commentDAO.update(comment);
         }
         if (tvShowDAO.getComments(tvShow).contains(comment)) {
-            tvShowDAO.deleteComment(tvShow, comment);
+            List<Comment> comments = tvShowDAO.getComments(tvShow);
+            comments.remove(comment);
+            tvShow.setComments(comments);
+            tvShowDAO.update(tvShow);
         }
     }
 
     @Override
     public void addUser2Comment(Comment comment, User user) {
         if (comment.getUser() != user) {
-            commentDAO.addUser2Comment(comment, user);
+            comment.setUser(user);
+            commentDAO.update(comment);
         }
         if (!userDAO.getComments(user).contains(comment)) {
-            userDAO.addComment(user, comment);
+            List<Comment> comments = userDAO.getComments(user);
+            comments.add(comment);
+            user.setComments(comments);
+            userDAO.update(user);
         }
     }
 
     @Override
     public void deleteUserFromComment(Comment comment, User user) {
         if (comment.getUser() == user) {
-            commentDAO.deleteUserFromComment(comment);
+            comment.setUser(null);
+            commentDAO.update(comment);
         }
         if (userDAO.getComments(user).contains(comment)) {
-            userDAO.deleteComment(user, comment);
+            List<Comment> comments = userDAO.getComments(user);
+            comments.remove(comment);
+            user.setComments(comments);
+            userDAO.update(user);
         }
     }
 

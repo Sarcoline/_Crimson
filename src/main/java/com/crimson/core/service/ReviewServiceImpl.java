@@ -67,40 +67,56 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void addTvShow2Review(Review review, TvShow tvShow) {
         if (review.getTvShow() != tvShow) {
-            reviewDAO.addTvShow2Review(review, tvShow);
+            review.setTvShow(tvShow);
+            reviewDAO.update(review);
         }
         if (!tvShowDAO.getReviews(tvShow).contains(review)) {
-            tvShowDAO.addReview(tvShow, review);
+            List<Review> reviews = tvShowDAO.getReviews(tvShow);
+            reviews.add(review);
+            tvShow.setReviews(reviews);
+            tvShowDAO.update(tvShow);
         }
     }
 
     @Override
     public void addUser2Review(Review review, User user) {
         if (review.getUser() != user) {
-            reviewDAO.addUser2Review(review, user);
+            review.setUser(user);
+            reviewDAO.update(review);
         }
         if (!userDAO.getReviews(user).contains(review)) {
-            userDAO.addReview(user, review);
+            List<Review> reviews = userDAO.getReviews(user);
+            reviews.add(review);
+            user.setReviews(reviews);
+            userDAO.update(user);
         }
     }
 
     @Override
     public void deleteTvShowFromReview(Review review, TvShow tvShow) {
         if (review.getTvShow() == tvShow) {
-            reviewDAO.deleteTvShowFromReview(review);
+            review.setTvShow(null);
+            reviewDAO.update(review);
         }
         if (tvShowDAO.getReviews(tvShow).contains(review)) {
-            tvShowDAO.deleteReview(tvShow, review);
+            List<Review> reviews = tvShowDAO.getReviews(tvShow);
+            reviews.remove(review);
+            tvShow.setReviews(reviews);
+            tvShowDAO.update(tvShow);
         }
     }
 
     @Override
     public void deleteUserFromReview(Review review, User user) {
         if (review.getUser() == user) {
-            reviewDAO.deleteUserFromReview(review);
+            review.setUser(null);
+            reviewDAO.update(review);
         }
         if (userDAO.getReviews(user).contains(review)) {
-            userDAO.deleteReview(user, review);
+            List<Review> reviews = userDAO.getReviews(user);
+            reviews.remove(review);
+            user.setReviews(reviews);
+            userDAO.update(user);
         }
     }
 

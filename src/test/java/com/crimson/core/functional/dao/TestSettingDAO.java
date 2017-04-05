@@ -90,22 +90,4 @@ public class TestSettingDAO {
     public void getSettingById() {
         Assert.assertEquals(settingsDAO.getById(setting1.getId()).equals(setting1), true);
     }
-
-    @Test
-    public void addUser2SettingTest() {
-        settingsDAO.addUser2Setting(user1, setting1);
-
-        Assert.assertEquals(settingsDAO.getById(setting1.getId()).getUser(), user1);
-    }
-
-    @Test
-    public void deleteUserFromSettingTest() {
-        addUser2SettingTest();
-
-        Assert.assertEquals(settingsDAO.getById(setting1.getId()).getUser(), user1);
-
-        settingsDAO.deleteUserFromSetting(setting1);
-
-        Assert.assertEquals(settingsDAO.getById(setting1.getId()).getUser(), null);
-    }
 }

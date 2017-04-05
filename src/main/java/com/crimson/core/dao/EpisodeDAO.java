@@ -13,13 +13,5 @@ public interface EpisodeDAO extends BaseDAO<Episode, Long> {
 
     Episode getBySeasonAndEpisodeNumber(int season, int number, long idTv);
 
-    void addUser2Episode(User user, Episode episode);
-
-    void deleteUserFromEpisode(User user, Episode episode);
-
-    void addTvShow2Episode(TvShow tvShow, Episode episode);
-
-    void deleteTvShowFromEpisode(Episode episode);
-
     List<User> getUsers(Episode episode);
 }

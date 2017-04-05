@@ -77,33 +77,4 @@ public class RatingDAOImpl implements RatingDAO {
                 .getResultList();
         return rating.isEmpty() ? new Rating() : (Rating) rating.get(0);
     }
-
-    @Override
-    public void addTvShow2Rating(Rating rating, TvShow tvShow) {
-        Session session = sessionFactory.getCurrentSession();
-        rating.setTvShow(tvShow);
-        session.saveOrUpdate(rating);
-    }
-
-    @Override
-    public void deleteTvShowFromRating(Rating rating) {
-        Session session = sessionFactory.getCurrentSession();
-        rating.setTvShow(null);
-        session.saveOrUpdate(rating);
-    }
-
-    @Override
-    public void addUser2Rating(Rating rating, User user) {
-        Session session = sessionFactory.getCurrentSession();
-        rating.setUser(user);
-        session.saveOrUpdate(rating);
-    }
-
-    @Override
-    public void deleteUserFromRating(Rating rating) {
-        Session session = sessionFactory.getCurrentSession();
-        rating.setUser(null);
-        session.saveOrUpdate(rating);
-    }
-
 }

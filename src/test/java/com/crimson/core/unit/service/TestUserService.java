@@ -196,15 +196,11 @@ public class TestUserService {
 
         when(userDAO.getById(anyLong())).thenReturn(user);
         when(tvShowDAO.getById(anyLong())).thenReturn(tv);
-        doNothing().when(userDAO).addTvShow2User(anyObject(),anyObject());
-        doNothing().when(tvShowDAO).addUser2TvShow(anyObject(),anyObject());
 
         userService.addTvShow2User(userDTO,tvDTO);
 
         Mockito.verify(userDAO, Mockito.times(1)).getById(Matchers.anyLong());
         Mockito.verify(tvShowDAO, Mockito.times(1)).getById(Matchers.anyLong());
-        Mockito.verify(userDAO, Mockito.times(1)).addTvShow2User(anyObject(),anyObject());
-        Mockito.verify(tvShowDAO, Mockito.times(1)).addUser2TvShow(anyObject(),anyObject());
     }
 
     @Test
@@ -234,13 +230,8 @@ public class TestUserService {
         User user = User.builder().name("Test").build();
         Episode episode = Episode.builder().build();
 
-        doNothing().when(userDAO).addEpisode2User(anyObject(),anyObject());
-        doNothing().when(episodeDAO).addUser2Episode(anyObject(),anyObject());
-
         userService.addEpisode2User(user,episode);
 
-        Mockito.verify(userDAO, Mockito.times(1)).addEpisode2User(anyObject(),anyObject());
-        Mockito.verify(episodeDAO, Mockito.times(1)).addUser2Episode(anyObject(),anyObject());
     }
 
     @Test
@@ -248,13 +239,10 @@ public class TestUserService {
         User user = User.builder().name("Test").build();
         Rating rating = Rating.builder().build();
 
-        doNothing().when(userDAO).addRating2User(anyObject(),anyObject());
-        doNothing().when(ratingDAO).addUser2Rating(anyObject(),anyObject());
 
         userService.addRating2User(user,rating);
 
-        Mockito.verify(userDAO, Mockito.times(1)).addRating2User(anyObject(),anyObject());
-        Mockito.verify(ratingDAO, Mockito.times(1)).addUser2Rating(anyObject(),anyObject());
+
     }
 
     @Test
@@ -262,13 +250,10 @@ public class TestUserService {
         User user = User.builder().name("Test").build();
         Setting setting = Setting.builder().build();
 
-        doNothing().when(userDAO).addSetting2User(anyObject(),anyObject());
-        doNothing().when(settingsDAO).addUser2Setting(anyObject(),anyObject());
+
 
         userService.addSetting2User(user,setting);
 
-        Mockito.verify(userDAO, Mockito.times(1)).addSetting2User(anyObject(),anyObject());
-        Mockito.verify(settingsDAO, Mockito.times(1)).addUser2Setting(anyObject(),anyObject());
     }
 
     @Test
@@ -276,13 +261,11 @@ public class TestUserService {
         User user = User.builder().name("Test").build();
         Role role = Role.builder().roleName("USER").build();
 
-        doNothing().when(userDAO).addRole2User(anyObject(),anyObject());
-        doNothing().when(roleDAO).addUser2Role(anyObject(),anyObject());
+
 
         userService.addRole2User(user,role);
 
-        Mockito.verify(userDAO, Mockito.times(1)).addRole2User(anyObject(),anyObject());
-        Mockito.verify(roleDAO, Mockito.times(1)).addUser2Role(anyObject(),anyObject());
+
     }
 
     @Test
@@ -290,27 +273,21 @@ public class TestUserService {
         User user = User.builder().name("Test").build();
         Comment comment = Comment.builder().build();
 
-        doNothing().when(userDAO).addComment(anyObject(),anyObject());
-        doNothing().when(commentDAO).addUser2Comment(anyObject(),anyObject());
+
 
         userService.addComment(user,comment);
 
-        Mockito.verify(userDAO, Mockito.times(1)).addComment(anyObject(),anyObject());
-        Mockito.verify(commentDAO, Mockito.times(1)).addUser2Comment(anyObject(),anyObject());
+
     }
 
     @Test
-    public void addReviewTest(){
+    public void addReviewTest() {
         User user = User.builder().name("Test").build();
         Review review = Review.builder().build();
 
-        doNothing().when(userDAO).addReview(anyObject(),anyObject());
-        doNothing().when(reviewDAO).addUser2Review(anyObject(),anyObject());
 
-        userService.addReview(user,review);
+        userService.addReview(user, review);
 
-        Mockito.verify(userDAO, Mockito.times(1)).addReview(anyObject(),anyObject());
-        Mockito.verify(reviewDAO, Mockito.times(1)).addUser2Review(anyObject(),anyObject());
     }
 
     @Test
@@ -544,7 +521,6 @@ public class TestUserService {
         String path = "classpath:/images/user/user.jpg";
         //Resource resource = ApplicationContext.class.getResource(path);
 
-        doNothing().when(roleDAO).addUser2Role(Matchers.anyObject(),Matchers.anyObject());
         when(roleDAO.getAll()).thenReturn(roles);
         when(mapperFacade.map(Matchers.anyObject(),Matchers.anyObject())).thenReturn(userD);
         when(encoder.encode(anyString())).thenReturn("password");

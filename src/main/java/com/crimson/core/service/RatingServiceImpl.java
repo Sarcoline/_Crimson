@@ -75,40 +75,56 @@ public class RatingServiceImpl implements RatingService {
     @Override
     public void addTvShow2Rating(Rating rating, TvShow tvShow) {
         if (rating.getTvShow() != tvShow) {
-            ratingDAO.addTvShow2Rating(rating, tvShow);
+            rating.setTvShow(tvShow);
+            ratingDAO.update(rating);
         }
         if (!tvShowDAO.getRatings(tvShow).contains(rating)) {
-            tvShowDAO.addRating2TvShow(tvShow, rating);
-        }
+            List<Rating> ratings = tvShowDAO.getRatings(tvShow);
+            ratings.add(rating);
+            tvShow.setRatings(ratings);
+            tvShowDAO.update(tvShow);
+         }
     }
 
     @Override
     public void deleteTvShowFromRating(Rating rating, TvShow tvShow) {
         if (rating.getTvShow() == tvShow) {
-            ratingDAO.deleteTvShowFromRating(rating);
+            rating.setTvShow(null);
+            ratingDAO.update(rating);
         }
         if (tvShowDAO.getRatings(tvShow).contains(rating)) {
-            tvShowDAO.deleteRatingFromTvShow(tvShow, rating);
+            List<Rating> ratings = tvShowDAO.getRatings(tvShow);
+            ratings.remove(rating);
+            tvShow.setRatings(ratings);
+            tvShowDAO.update(tvShow);
         }
     }
 
     @Override
     public void addUser2Rating(Rating rating, User user) {
         if (rating.getUser() != user) {
-            ratingDAO.addUser2Rating(rating, user);
+            rating.setUser(user);
+            ratingDAO.update(rating);
         }
         if (!userDAO.getRatings(user).contains(rating)) {
-            userDAO.addRating2User(user, rating);
+            List<Rating> ratings = userDAO.getRatings(user);
+            ratings.add(rating);
+            user.setRatings(ratings);
+            userDAO.update(user);
         }
     }
 
     @Override
     public void deleteUserFromRating(Rating rating, User user) {
         if (rating.getUser() == user) {
-            ratingDAO.deleteUserFromRating(rating);
+            rating.setUser(null);
+            ratingDAO.update(rating);
         }
         if (userDAO.getRatings(user).contains(rating)) {
-            userDAO.deleteRatingFromUser(user, rating);
+            List<Rating> ratings = userDAO.getRatings(user);
+            ratings.remove(rating);
+            user.setRatings(ratings);
+            userDAO.update(user);
         }
     }
 

@@ -75,41 +75,6 @@ public class EpisodeDAOImpl implements EpisodeDAO {
 
     }
 
-
-    //RELATIONSHIPS
-
-    //EpisodeWatched(User2Episode)
-
-    @Override
-    public void addUser2Episode(User user, Episode episode) {
-        Session session = sessionFactory.getCurrentSession();
-        episode.getUsers().add(user);
-        session.saveOrUpdate(episode);
-    }
-
-    @Override
-    public void deleteUserFromEpisode(User user, Episode episode) {
-        Session session = sessionFactory.getCurrentSession();
-        episode.getUsers().remove(user);
-        session.saveOrUpdate(episode);
-    }
-
-    //TvShow2Episode
-
-    @Override
-    public void addTvShow2Episode(TvShow tvShow, Episode episode) {
-        Session session = sessionFactory.getCurrentSession();
-        episode.setTvShow(tvShow);
-        session.saveOrUpdate(episode);
-    }
-
-    @Override
-    public void deleteTvShowFromEpisode(Episode episode) {
-        Session session = sessionFactory.getCurrentSession();
-        episode.setTvShow(null);
-        session.saveOrUpdate(episode);
-    }
-
     @Override
     public List<User> getUsers(Episode episode) {
         Session session = sessionFactory.getCurrentSession();
