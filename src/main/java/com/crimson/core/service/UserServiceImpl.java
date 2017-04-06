@@ -345,13 +345,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteReview(User user, Review review) {
-        if (review.getUser() != user) {
-            review.setUser(user);
+        if (review.getUser() == user) {
+            review.setUser(null);
             reviewDAO.update(review);
         }
-        if (!userDAO.getReviews(user).contains(review)) {
+        if (userDAO.getReviews(user).contains(review)) {
             List<Review> reviews = userDAO.getReviews(user);
-            reviews.add(review);
+            reviews.remove(review);
             user.setReviews(reviews);
             userDAO.update(user);
         }
