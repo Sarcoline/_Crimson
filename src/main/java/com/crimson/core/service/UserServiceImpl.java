@@ -400,11 +400,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void confirmUser(String token) {
+    public boolean confirmUser(String token) {
         User user = userDAO.getUserByToken(token);
+        if (user == null) return false;
         user.setToken(null);
         user.setActive(true);
         userDAO.update(user);
+        return true;
     }
 
     @Override

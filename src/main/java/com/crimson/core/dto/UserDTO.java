@@ -21,7 +21,7 @@ public @Data class UserDTO {
     private Long id;
 
     @Size(min = 3, max = 30)
-    @Pattern(regexp = "[A-Za-z0-9]*")
+    @Pattern(regexp = "[\\S]+", message = "Illegal characters in name")
     private String name;
 
     @NotEmpty

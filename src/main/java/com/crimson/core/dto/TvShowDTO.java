@@ -21,11 +21,11 @@ public class TvShowDTO {
     private String title;
 
     @Size(min = 2, max = 30)
-    @Pattern(regexp = "[A-Za-z0-9]*(([ ]?[A-Za-z0-9]+)?)*")
+    @Pattern(regexp = "\\w+([+]?([ ]?\\w+)?)*")
     private String network;
 
-    @Size(min = 3, max = 30)
-    @Pattern(regexp = "[A-z][a-z]*(([ ]?[A-Z][a-z]*)?)*")
+    @Size(min = 2, max = 30)
+    @Pattern(regexp = "[A-Za-z]+(([ ]?[A-Za-z]+)?)*")
     private String country;
 
     @Length(max = 10000)
@@ -45,7 +45,7 @@ public class TvShowDTO {
     private boolean forAdult;
 
     @Size(min = 3, max = 20)
-    @Pattern(regexp = "[A-z][a-z]+")
+    @Pattern(regexp = "[A-Za-z]+")
     private String genre;
 
     private String slug;

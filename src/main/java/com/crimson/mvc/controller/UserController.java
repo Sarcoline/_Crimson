@@ -86,7 +86,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String registration(Model model) {
+    public String registration(Model model,  @RequestParam(value = "error", required = false) String error) {
+        if (error != null) {
+            model.addAttribute("error", "Invalid registration token.");
+        }
         model.addAttribute("userDTO", new UserDTO());
         return "register";
     }
@@ -113,7 +116,7 @@ public class UserController {
 
     @GetMapping(value = "/confirm/{token}")
     public String confirmAccount(@PathVariable("token") String token) {
-        userService.confirmUser(token);
+        if (!userService.confirmUser(token)) return "redirect:/register?error";
         return "redirect:/login?confirmed";
     }
 

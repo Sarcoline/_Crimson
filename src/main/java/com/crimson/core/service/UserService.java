@@ -86,7 +86,7 @@ public interface UserService {
 
     void updateSettings(UserDTO user, int days, boolean send);
 
-    void confirmUser(String token);
+    boolean confirmUser(String token);
 
     UserDTO getUserByEmail(String email);
 

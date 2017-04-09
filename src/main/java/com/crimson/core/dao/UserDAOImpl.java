@@ -61,8 +61,14 @@ public class UserDAOImpl implements UserDAO {
     @Cacheable("application-cache")
     public User getUserByToken(String token) {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("Select a From User a where a.token like :custToken", User.class)
-                .setParameter("custToken", token).getSingleResult();
+        User user;
+        try {
+            user = session.createQuery("Select a From User a where a.token like :custToken", User.class)
+                    .setParameter("custToken", token).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+        return user;
     }
     //RELATIONSHIPS
 
