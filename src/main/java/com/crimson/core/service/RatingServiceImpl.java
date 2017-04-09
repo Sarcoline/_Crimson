@@ -134,9 +134,9 @@ public class RatingServiceImpl implements RatingService {
         TvShow tvShow = mapperFacade.map(tvShowDTO, TvShow.class);
         Rating rating = new Rating();
         rating.setValue(value);
+        saveRating(rating);
         addTvShow2Rating(rating, tvShow);
         addUser2Rating(rating, user);
-        saveRating(rating);
         calculateRating(tvShow.getId());
     }
 
