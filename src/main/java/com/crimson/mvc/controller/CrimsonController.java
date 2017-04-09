@@ -203,7 +203,7 @@ public class CrimsonController {
     @GetMapping(value = "/{name}/delete")
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     public String deleteTvShow(@PathVariable("name") String name) {
-        tvShowService.deleteTvShow(tvShowService.getTvBySlug(name));
+        tvShowService.deleteTvShow(name);
         return "redirect:/";
     }
 

@@ -28,7 +28,7 @@ public interface TvShowService {
 
     byte[] getTvPics(String slug, String name);
 
-    void deleteTvShow(TvShowDTO tvshow);
+    void deleteTvShow(String name);
 
     void updateTvShow(TvShowDTO tvshow);
 

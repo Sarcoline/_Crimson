@@ -7,8 +7,8 @@ var createComment = function (text, user) {
     var img = document.createElement('img');
     img.className = 'uk-comment-avatar';
     img.setAttribute('src', '/images/user/' + user);
-    img.setAttribute('width', '50');
-    img.setAttribute('height', '50');
+    img.setAttribute('width', '40');
+    img.setAttribute('height', '30');
     var h4 = document.createElement('h4');
     h4.className = 'uk-comment-title';
     h4.innerText = user;

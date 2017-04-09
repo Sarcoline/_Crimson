@@ -102,24 +102,25 @@
                     </c:if>
                 </div>
                 <c:if test="${user.name == name}">
-                <div class="uk-width-1-1 uk-margin-large-top">
-                    <c:if test="${watchedEpisodesId.size() > 0}">
-                        <h2 class="uk-margin-large-bottom uk-text-center">Recently watched</h2>
-                        <ul class="uk-list uk-margin-large-left">
-                            <c:forEach items="${watchedEpisodes}" var="episode" begin="0" end="9">
+                    <div class="uk-width-1-1 uk-margin-large-top">
+                        <c:if test="${watchedEpisodesId.size() > 0}">
+                            <h2 class="uk-margin-large-bottom uk-text-center">Recently watched</h2>
+                            <ul class="uk-list uk-margin-large-left">
+                                <c:forEach items="${watchedEpisodes}" var="episode" begin="0" end="9">
 
-                                <li>
-                                    <p><strong><a href="<c:url value="/tv/${episode.tvShow.slug}" /> ">
-                                            ${episode.tvShow.title}</a> </strong> -
-                                        S${episode.season}E${episode.number} - ${episode.title}
-                                    </p>
-                                </li>
-                            </c:forEach>
-                        </ul>
-                    </c:if>
-                </div>
+                                    <li>
+                                        <p><strong><a href="<c:url value="/tv/${episode.tvShow.slug}" /> ">
+                                                ${episode.tvShow.title}</a> </strong> -
+                                            S${episode.season}E${episode.number} - ${episode.title}
+                                        </p>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </c:if>
+                    </div>
+                </c:if>
             </div>
-            </c:if>
+
         </div>
 
     </div>

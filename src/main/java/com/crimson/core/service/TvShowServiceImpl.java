@@ -103,8 +103,10 @@ public class TvShowServiceImpl implements TvShowService {
     }
 
     @Override
-    public void deleteTvShow(TvShowDTO tvshow) {
-        TvShow tv = tvShowDAO.getById(tvshow.getId());
+    public void deleteTvShow(String name) {
+        TvShow tv = tvShowDAO.getTvBySlug(name);
+        tv.getUsers().clear();
+        userDAO.getAll().forEach(user -> user.getTvShows().remove(tv));
         tvShowDAO.delete(tv);
     }
 

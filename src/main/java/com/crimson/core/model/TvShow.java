@@ -98,7 +98,7 @@ public @Data class TvShow {
 
     //RELATIONSHIPS
     //User2TvShow Relation
-    @ManyToMany(mappedBy = "tvShows", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "tvShows", fetch = FetchType.LAZY)
     private List<User> users = new ArrayList<>();
     //TvShow2Genre
     @ManyToMany(mappedBy = "tvShows", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
