@@ -406,6 +406,7 @@ public class UserServiceImpl implements UserService {
 
         List<EpisodeDTO> allUnwatchedUserEpisodes = new ArrayList<>();
 
+
         List<Episode> allWatchedUserEpisodes = userDAO.getEpisodes(user);
 
         allFollowedUserTvShows.forEach(tvShow -> {

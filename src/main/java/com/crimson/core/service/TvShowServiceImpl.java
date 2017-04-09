@@ -106,7 +106,13 @@ public class TvShowServiceImpl implements TvShowService {
     public void deleteTvShow(String name) {
         TvShow tv = tvShowDAO.getTvBySlug(name);
         tv.getUsers().clear();
-        userDAO.getAll().forEach(user -> user.getTvShows().remove(tv));
+        tv.getEpisodes().forEach(episode -> {
+            episode.getUsers().clear();
+            userDAO.getAll().forEach(user -> {
+                user.getTvShows().remove(tv);
+                user.getEpisodes().remove(episode);
+            });
+        });
         tvShowDAO.delete(tv);
     }
 
