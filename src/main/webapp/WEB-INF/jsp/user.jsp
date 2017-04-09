@@ -96,6 +96,8 @@
     <div class="uk-width-2-6">
         <div class="uk-container">
 
+            //Favorite TvShows of user
+
             <div class="uk-grid">
                 <div class="uk-width-1-1 uk-margin-large-top ">
                     <c:if test="${favorites.size() > 0}">
