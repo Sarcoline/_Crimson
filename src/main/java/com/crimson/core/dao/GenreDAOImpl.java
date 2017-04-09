@@ -56,24 +56,6 @@ public class GenreDAOImpl implements GenreDAO {
                 .setParameter("custName", name).getSingleResult();
     }
 
-    //RELATIONSHIPS
-
-    //Genre2TvShow
-
-    @Override
-    public void addTvShow2Genre(Genre genre, TvShow tvShow) {
-        Session session = sessionFactory.getCurrentSession();
-        genre.getTvShows().add(tvShow);
-        session.saveOrUpdate(genre);
-    }
-
-    @Override
-    public void deleteTvShowFromGenre(Genre genre, TvShow tvShow) {
-        Session session = sessionFactory.getCurrentSession();
-        genre.getTvShows().remove(tvShow);
-        session.saveOrUpdate(genre);
-    }
-
     @Override
     public List<TvShow> getTvShows(Genre genre) {
         Session session = sessionFactory.getCurrentSession();

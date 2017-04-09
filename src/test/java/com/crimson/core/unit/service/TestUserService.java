@@ -196,15 +196,44 @@ public class TestUserService {
 
         when(userDAO.getById(anyLong())).thenReturn(user);
         when(tvShowDAO.getById(anyLong())).thenReturn(tv);
-        doNothing().when(userDAO).addTvShow2User(anyObject(),anyObject());
-        doNothing().when(tvShowDAO).addUser2TvShow(anyObject(),anyObject());
+        doNothing().when(userDAO).update(anyObject());
+        doNothing().when(tvShowDAO).update(anyObject());
 
         userService.addTvShow2User(userDTO,tvDTO);
 
         Mockito.verify(userDAO, Mockito.times(1)).getById(Matchers.anyLong());
         Mockito.verify(tvShowDAO, Mockito.times(1)).getById(Matchers.anyLong());
-        Mockito.verify(userDAO, Mockito.times(1)).addTvShow2User(anyObject(),anyObject());
-        Mockito.verify(tvShowDAO, Mockito.times(1)).addUser2TvShow(anyObject(),anyObject());
+        Mockito.verify(userDAO,Mockito.times(1)).update(anyObject());
+        Mockito.verify(tvShowDAO,Mockito.times(1)).update(anyObject());
+    }
+
+    @Test
+    public void deleteTvShowFromUserTest(){
+        User user = User.builder().name("Test").build();
+        UserDTO userDTO = new UserDTO();
+        userDTO.setName("name123");
+        userDTO.setPassword("password");
+        TvShow tv = TvShow.builder().build();
+        TvShowDTO tvDTO = new TvShowDTO();
+        tvDTO.setTitle("Test");
+        List<TvShow> tvs = new ArrayList<>();
+        tvs.add(tv);
+        List<User> users = new ArrayList<>();
+        users.add(user);
+
+        when(userDAO.getUserByName(anyString())).thenReturn(user);
+        when(tvShowDAO.getById(anyLong())).thenReturn(tv);
+        when(userDAO.getTvShows(anyObject())).thenReturn(tvs);
+        when(tvShowDAO.getUsers(anyObject())).thenReturn(users);
+        doNothing().when(userDAO).update(anyObject());
+        doNothing().when(tvShowDAO).update(anyObject());
+
+        userService.deleteTvShowFromUser(userDTO,tvDTO);
+
+        Mockito.verify(userDAO, Mockito.times(1)).getUserByName(Matchers.anyString());
+        Mockito.verify(tvShowDAO, Mockito.times(1)).getById(Matchers.anyLong());
+        Mockito.verify(userDAO,Mockito.times(1)).update(anyObject());
+        Mockito.verify(tvShowDAO,Mockito.times(1)).update(anyObject());
     }
 
     @Test
@@ -234,13 +263,35 @@ public class TestUserService {
         User user = User.builder().name("Test").build();
         Episode episode = Episode.builder().build();
 
-        doNothing().when(userDAO).addEpisode2User(anyObject(),anyObject());
-        doNothing().when(episodeDAO).addUser2Episode(anyObject(),anyObject());
+        doNothing().when(userDAO).update(anyObject());
+        doNothing().when(episodeDAO).update(anyObject());
 
         userService.addEpisode2User(user,episode);
 
-        Mockito.verify(userDAO, Mockito.times(1)).addEpisode2User(anyObject(),anyObject());
-        Mockito.verify(episodeDAO, Mockito.times(1)).addUser2Episode(anyObject(),anyObject());
+        Mockito.verify(userDAO).update(anyObject());
+        Mockito.verify(episodeDAO).update(anyObject());
+    }
+
+    @Test
+    public void deleteEpisodeFromUserTest(){
+        User user = User.builder().name("Test").build();
+        Episode episode = Episode.builder().build();
+        List<Episode> episodes = new ArrayList<>();
+        episodes.add(episode);
+        List<User> users = new ArrayList<>();
+        users.add(user);
+
+        when(userDAO.getEpisodes(anyObject())).thenReturn(episodes);
+        when(episodeDAO.getUsers(anyObject())).thenReturn(users);
+        doNothing().when(userDAO).update(anyObject());
+        doNothing().when(episodeDAO).update(anyObject());
+
+        userService.deleteEpisodeFromUser(user,episode);
+
+        Mockito.verify(userDAO,times(2)).getEpisodes(anyObject());
+        Mockito.verify(episodeDAO,times(2)).getUsers(anyObject());
+        Mockito.verify(userDAO).update(anyObject());
+        Mockito.verify(episodeDAO).update(anyObject());
     }
 
     @Test
@@ -248,13 +299,32 @@ public class TestUserService {
         User user = User.builder().name("Test").build();
         Rating rating = Rating.builder().build();
 
-        doNothing().when(userDAO).addRating2User(anyObject(),anyObject());
-        doNothing().when(ratingDAO).addUser2Rating(anyObject(),anyObject());
+        doNothing().when(ratingDAO).update(anyObject());
+        doNothing().when(userDAO).update(anyObject());
 
         userService.addRating2User(user,rating);
 
-        Mockito.verify(userDAO, Mockito.times(1)).addRating2User(anyObject(),anyObject());
-        Mockito.verify(ratingDAO, Mockito.times(1)).addUser2Rating(anyObject(),anyObject());
+        Mockito.verify(userDAO,times(1)).update(anyObject());
+        Mockito.verify(ratingDAO,times(1)).update(anyObject());
+    }
+
+    @Test
+    public void deleteRatingFromUserTest(){
+        User user = User.builder().name("Test").build();
+        Rating rating = Rating.builder().build();
+        rating.setUser(user);
+        List<Rating> ratings = new ArrayList<>();
+        ratings.add(rating);
+
+        doNothing().when(ratingDAO).update(anyObject());
+        doNothing().when(userDAO).update(anyObject());
+        when(userDAO.getRatings(anyObject())).thenReturn(ratings);
+
+        userService.deleteRatingFromUser(user,rating);
+
+        Mockito.verify(userDAO,times(1)).update(anyObject());
+        Mockito.verify(ratingDAO,times(1)).update(anyObject());
+        Mockito.verify(userDAO,times(2)).getRatings(anyObject());
     }
 
     @Test
@@ -262,13 +332,29 @@ public class TestUserService {
         User user = User.builder().name("Test").build();
         Setting setting = Setting.builder().build();
 
-        doNothing().when(userDAO).addSetting2User(anyObject(),anyObject());
-        doNothing().when(settingsDAO).addUser2Setting(anyObject(),anyObject());
+        doNothing().when(userDAO).update(anyObject());
+        doNothing().when(settingsDAO).update(anyObject());
 
         userService.addSetting2User(user,setting);
 
-        Mockito.verify(userDAO, Mockito.times(1)).addSetting2User(anyObject(),anyObject());
-        Mockito.verify(settingsDAO, Mockito.times(1)).addUser2Setting(anyObject(),anyObject());
+        Mockito.verify(userDAO,times(1)).update(anyObject());
+        Mockito.verify(settingsDAO,times(1)).update(anyObject());
+    }
+
+    @Test
+    public void deleteSettingFromUserTest(){
+        User user = User.builder().name("Test").build();
+        Setting setting = Setting.builder().build();
+        user.setSetting(setting);
+        setting.setUser(user);
+
+        doNothing().when(userDAO).update(anyObject());
+        doNothing().when(settingsDAO).update(anyObject());
+
+        userService.deleteSettingFromUser(user,setting);
+
+        Mockito.verify(userDAO,times(1)).update(anyObject());
+        Mockito.verify(settingsDAO,times(1)).update(anyObject());
     }
 
     @Test
@@ -276,13 +362,35 @@ public class TestUserService {
         User user = User.builder().name("Test").build();
         Role role = Role.builder().roleName("USER").build();
 
-        doNothing().when(userDAO).addRole2User(anyObject(),anyObject());
-        doNothing().when(roleDAO).addUser2Role(anyObject(),anyObject());
+        doNothing().when(userDAO).update(anyObject());
+        doNothing().when(roleDAO).update(anyObject());
 
         userService.addRole2User(user,role);
 
-        Mockito.verify(userDAO, Mockito.times(1)).addRole2User(anyObject(),anyObject());
-        Mockito.verify(roleDAO, Mockito.times(1)).addUser2Role(anyObject(),anyObject());
+        Mockito.verify(userDAO,times(1)).update(anyObject());
+        Mockito.verify(roleDAO,times(1)).update(anyObject());
+    }
+
+    @Test
+    public void deleteRoleFromUserTest(){
+        User user = User.builder().name("Test").build();
+        Role role = Role.builder().roleName("USER").build();
+        List<User> users = new ArrayList<>();
+        users.add(user);
+        List<Role> roles = new ArrayList<>();
+        roles.add(role);
+
+        doNothing().when(userDAO).update(anyObject());
+        doNothing().when(roleDAO).update(anyObject());
+        when(userDAO.getRoles(anyObject())).thenReturn(roles);
+        when(roleDAO.getUsers(anyObject())).thenReturn(users);
+
+        userService.deleteRoleFromUser(user,role);
+
+        Mockito.verify(userDAO,times(1)).update(anyObject());
+        Mockito.verify(roleDAO,times(1)).update(anyObject());
+        Mockito.verify(userDAO,times(2)).getRoles(anyObject());
+        Mockito.verify(roleDAO,times(2)).getUsers(anyObject());
     }
 
     @Test
@@ -290,27 +398,65 @@ public class TestUserService {
         User user = User.builder().name("Test").build();
         Comment comment = Comment.builder().build();
 
-        doNothing().when(userDAO).addComment(anyObject(),anyObject());
-        doNothing().when(commentDAO).addUser2Comment(anyObject(),anyObject());
+        doNothing().when(commentDAO).update(anyObject());
+        doNothing().when(userDAO).update(anyObject());
 
         userService.addComment(user,comment);
 
-        Mockito.verify(userDAO, Mockito.times(1)).addComment(anyObject(),anyObject());
-        Mockito.verify(commentDAO, Mockito.times(1)).addUser2Comment(anyObject(),anyObject());
+        Mockito.verify(userDAO,times(1)).update(anyObject());
+        Mockito.verify(commentDAO,times(1)).update(anyObject());
     }
 
     @Test
-    public void addReviewTest(){
+    public void deleteCommentTest(){
+        User user = User.builder().name("Test").build();
+        Comment comment = Comment.builder().build();
+        comment.setUser(user);
+        List<Comment> comments = new ArrayList<>();
+        comments.add(comment);
+
+        doNothing().when(commentDAO).update(anyObject());
+        doNothing().when(userDAO).update(anyObject());
+        when(userDAO.getComments(anyObject())).thenReturn(comments);
+
+        userService.deleteComment(user,comment);
+
+        Mockito.verify(userDAO,times(1)).update(anyObject());
+        Mockito.verify(commentDAO,times(1)).update(anyObject());
+        Mockito.verify(userDAO,times(2)).getComments(anyObject());
+    }
+
+    @Test
+    public void addReviewTest() {
         User user = User.builder().name("Test").build();
         Review review = Review.builder().build();
 
-        doNothing().when(userDAO).addReview(anyObject(),anyObject());
-        doNothing().when(reviewDAO).addUser2Review(anyObject(),anyObject());
+        doNothing().when(reviewDAO).update(anyObject());
+        doNothing().when(userDAO).update(anyObject());
 
         userService.addReview(user,review);
 
-        Mockito.verify(userDAO, Mockito.times(1)).addReview(anyObject(),anyObject());
-        Mockito.verify(reviewDAO, Mockito.times(1)).addUser2Review(anyObject(),anyObject());
+        Mockito.verify(userDAO,times(1)).update(anyObject());
+        Mockito.verify(reviewDAO,times(1)).update(anyObject());
+    }
+
+    @Test
+    public void deleteReviewTest() {
+        User user = User.builder().name("Test").build();
+        Review review = Review.builder().build();
+        review.setUser(user);
+        List<Review> reviews = new ArrayList<>();
+        reviews.add(review);
+
+        doNothing().when(reviewDAO).update(anyObject());
+        doNothing().when(userDAO).update(anyObject());
+        when(userDAO.getReviews(anyObject())).thenReturn(reviews);
+
+        userService.deleteReview(user,review);
+
+        Mockito.verify(userDAO,times(1)).update(anyObject());
+        Mockito.verify(reviewDAO,times(1)).update(anyObject());
+        Mockito.verify(userDAO,times(2)).getReviews(anyObject());
     }
 
     @Test
@@ -544,7 +690,6 @@ public class TestUserService {
         String path = "classpath:/images/user/user.jpg";
         //Resource resource = ApplicationContext.class.getResource(path);
 
-        doNothing().when(roleDAO).addUser2Role(Matchers.anyObject(),Matchers.anyObject());
         when(roleDAO.getAll()).thenReturn(roles);
         when(mapperFacade.map(Matchers.anyObject(),Matchers.anyObject())).thenReturn(userD);
         when(encoder.encode(anyString())).thenReturn("password");

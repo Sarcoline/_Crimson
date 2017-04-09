@@ -52,34 +52,6 @@ public class ReviewDAOImpl implements ReviewDAO {
     }
 
     @Override
-    public void addTvShow2Review(Review review, TvShow tvShow) {
-        Session session = sessionFactory.getCurrentSession();
-        review.setTvShow(tvShow);
-        session.saveOrUpdate(review);
-    }
-
-    @Override
-    public void deleteTvShowFromReview(Review review) {
-        Session session = sessionFactory.getCurrentSession();
-        review.setTvShow(null);
-        session.saveOrUpdate(review);
-    }
-
-    @Override
-    public void addUser2Review(Review review, User user) {
-        Session session = sessionFactory.getCurrentSession();
-        review.setUser(user);
-        session.saveOrUpdate(review);
-    }
-
-    @Override
-    public void deleteUserFromReview(Review review) {
-        Session session = sessionFactory.getCurrentSession();
-        review.setUser(null);
-        session.saveOrUpdate(review);
-    }
-
-    @Override
     @Cacheable("application-cache")
     public List<Review> getReviewByIdUser(Long idUser) {
         Session session = sessionFactory.getCurrentSession();

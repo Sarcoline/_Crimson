@@ -84,41 +84,4 @@ public class TestGenreDAO {
 
         Assert.assertEquals(test.getId(), genre.getId());
     }
-
-
-    //RELATIONSHIPS TEST
-
-    //Genre2TvShow
-
-    @Test
-    public void addTvShow2GenreTest() {
-        int size = genre.getTvShows().size();
-
-        genreDAO.addTvShow2Genre(genre, tvShow);
-
-        Assert.assertEquals(size + 1, genre.getTvShows().size());
-        Assert.assertEquals(size + 1, genreDAO.getById(genre.getId()).getTvShows().size());
-        Assert.assertEquals(genreDAO.getById(genre.getId()).getTvShows().contains(tvShow), true);
-    }
-
-    @Test
-    public void deleteTvShowFromGenre() {
-        addTvShow2GenreTest();
-
-        int size = genre.getTvShows().size();
-
-        genreDAO.deleteTvShowFromGenre(genre, tvShow);
-
-        Assert.assertEquals(size - 1, genre.getTvShows().size());
-        Assert.assertEquals(size - 1, genreDAO.getById(genre.getId()).getTvShows().size());
-        Assert.assertEquals(genreDAO.getById(genre.getId()).getTvShows().contains(tvShow), false);
-    }
-
-    @Test
-    public void getTvShowsTest(){
-        genreDAO.addTvShow2Genre(genre,tvShow);
-        tvShowDAO.addGenre2TvShow(tvShow,genre);
-        Assert.assertEquals(genreDAO.getTvShows(genre),genre.getTvShows());
-    }
-
 }

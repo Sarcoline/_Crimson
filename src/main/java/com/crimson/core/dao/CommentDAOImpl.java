@@ -59,34 +59,6 @@ public class CommentDAOImpl implements CommentDAO {
     }
 
     @Override
-    public void addTvShow2Comment(Comment comment, TvShow tvShow) {
-        Session session = sessionFactory.getCurrentSession();
-        comment.setTvShow(tvShow);
-        session.saveOrUpdate(comment);
-    }
-
-    @Override
-    public void deleteTvShowFromComment(Comment comment) {
-        Session session = sessionFactory.getCurrentSession();
-        comment.setTvShow(null);
-        session.saveOrUpdate(comment);
-    }
-
-    @Override
-    public void addUser2Comment(Comment comment, User user) {
-        Session session = sessionFactory.getCurrentSession();
-        comment.setUser(user);
-        session.saveOrUpdate(comment);
-    }
-
-    @Override
-    public void deleteUserFromComment(Comment comment) {
-        Session session = sessionFactory.getCurrentSession();
-        comment.setUser(null);
-        session.saveOrUpdate(comment);
-    }
-
-    @Override
     @Cacheable("application-cache")
     public List<Comment> getCommentByIdUser(Long idUser) {
         Session session = sessionFactory.getCurrentSession();

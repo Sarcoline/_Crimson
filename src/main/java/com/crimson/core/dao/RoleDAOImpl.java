@@ -48,23 +48,6 @@ public class RoleDAOImpl implements RoleDAO {
         session.saveOrUpdate(role);
     }
 
-    //RELATIONSHIPS
-
-    //User2Role
-    @Override
-    public void addUser2Role(User user, Role role) {
-        Session session = sessionFactory.getCurrentSession();
-        role.getUsers().add(user);
-        session.saveOrUpdate(role);
-    }
-
-    @Override
-    public void deleteUserFromRole(User user, Role role) {
-        Session session = sessionFactory.getCurrentSession();
-        role.getUsers().remove(user);
-        session.saveOrUpdate(role);
-    }
-
     @Override
     public List<User> getUsers(Role role) {
         Session session = sessionFactory.getCurrentSession();

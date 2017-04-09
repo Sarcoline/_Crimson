@@ -96,40 +96,4 @@ public class TestRoleDAO {
 
         Assert.assertEquals(tmpRole.equals(role1), true);
     }
-
-    @Test
-    public void addUser2RoleTest() {
-        int listSize = role1.getUsers().size();
-
-        roleDAO.addUser2Role(user1, role1);
-
-        Assert.assertEquals(listSize + 1, role1.getUsers().size());
-        Assert.assertEquals(role1.getUsers().contains(user1), true);
-        Assert.assertEquals(listSize + 1, roleDAO.getById(role1.getIdRole()).getUsers().size());
-        Assert.assertEquals(roleDAO.getById(role1.getIdRole()).getUsers().contains(user1), true);
-    }
-
-    @Test
-    public void deleteUserFromRoleTest() {
-        addUser2RoleTest();
-        int listSize = role1.getUsers().size();
-
-        roleDAO.deleteUserFromRole(user1, role1);
-
-        Assert.assertEquals(listSize - 1, role1.getUsers().size());
-        Assert.assertEquals(role1.getUsers().contains(user1), false);
-        Assert.assertEquals(listSize - 1, roleDAO.getById(role1.getIdRole()).getUsers().size());
-        Assert.assertEquals(roleDAO.getById(role1.getIdRole()).getUsers().contains(user1), false);
-    }
-
-    @Test
-    public void getUsersTest(){
-        roleDAO.addUser2Role(user1,role1);
-        userDAO.addRole2User(user1,role1);
-
-        roleDAO.addUser2Role(user2,role1);
-        userDAO.addRole2User(user2,role1);
-
-        Assert.assertEquals(roleDAO.getUsers(role1),role1.getUsers());
-    }
 }

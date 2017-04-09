@@ -52,20 +52,24 @@ public class SettingsServiceImpl implements SettingsService {
     @Override
     public void addUser2Setting(User user, Setting setting) {
         if (setting.getUser() != user) {
-            settingsDAO.addUser2Setting(user, setting);
+            setting.setUser(user);
+            settingsDAO.update(setting);
         }
         if (user.getSetting() != setting) {
-            userDAO.addSetting2User(user, setting);
+            user.setSetting(setting);
+            userDAO.update(user);
         }
     }
 
     @Override
     public void deleteUserFromSetting(User user, Setting setting) {
         if (setting.getUser() == user) {
-            settingsDAO.deleteUserFromSetting(setting);
+            setting.setUser(null);
+            settingsDAO.update(setting);
         }
         if (user.getSetting() == setting) {
-            userDAO.deleteSettingFromUser(user);
+            user.setSetting(null);
+            userDAO.update(user);
         }
     }
 

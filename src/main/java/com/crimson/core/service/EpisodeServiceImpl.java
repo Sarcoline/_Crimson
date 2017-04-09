@@ -72,10 +72,16 @@ public class EpisodeServiceImpl implements EpisodeService {
         User user = userDAO.getById(userDTO.getId());
         Episode episode = episodeDAO.getById(episodeDTO.getId());
         if (!userDAO.getEpisodes(user).contains(episode)) {
-            userDAO.addEpisode2User(user, episode);
+            List<Episode> episodes = userDAO.getEpisodes(user);
+            episodes.add(episode);
+            user.setEpisodes(episodes);
+            userDAO.update(user);
         }
         if (!episodeDAO.getUsers(episode).contains(user)) {
-            episodeDAO.addUser2Episode(user, episode);
+            List<User> users = episodeDAO.getUsers(episode);
+            users.add(user);
+            episode.setUsers(users);
+            episodeDAO.update(episode);
         }
 
     }
@@ -85,10 +91,16 @@ public class EpisodeServiceImpl implements EpisodeService {
         Episode episode = episodeDAO.getById(episodeDTO.getId());
         User user = userDAO.getById(userDTO.getId());
         if (userDAO.getEpisodes(user).contains(episode)) {
-            userDAO.deleteEpisodeFromUser(user, episode);
+            List<Episode> episodes = userDAO.getEpisodes(user);
+            episodes.remove(episode);
+            user.setEpisodes(episodes);
+            userDAO.update(user);
         }
         if (episodeDAO.getUsers(episode).contains(user)) {
-            episodeDAO.deleteUserFromEpisode(user, episode);
+            List<User> users = episodeDAO.getUsers(episode);
+            users.remove(user);
+            episode.setUsers(users);
+            episodeDAO.update(episode);
         }
     }
 
@@ -108,20 +120,28 @@ public class EpisodeServiceImpl implements EpisodeService {
     @Override
     public void addTvShow2Episode(TvShow tvShow, Episode episode) {
         if (episode.getTvShow() != tvShow) {
-            episodeDAO.addTvShow2Episode(tvShow, episode);
+            episode.setTvShow(tvShow);
+            episodeDAO.update(episode);
         }
         if (!tvShowDAO.getEpisodes(tvShow).contains(episode)) {
-            tvShowDAO.addEpisode2TvShow(tvShow, episode);
+            List<Episode> episodes = tvShowDAO.getEpisodes(tvShow);
+            episodes.add(episode);
+            tvShow.setEpisodes(episodes);
+            tvShowDAO.update(tvShow);
         }
     }
 
     @Override
     public void deleteTvShowFromEpisode(TvShow tvShow, Episode episode) {
         if (episode.getTvShow() == tvShow) {
-            episodeDAO.deleteTvShowFromEpisode(episode);
+            episode.setTvShow(null);
+            episodeDAO.update(episode);
         }
         if (tvShowDAO.getEpisodes(tvShow).contains(episode)) {
-            tvShowDAO.deleteEpisodeFromTvShow(tvShow, episode);
+            List<Episode> episodes = tvShowDAO.getEpisodes(tvShow);
+            episodes.remove(episode);
+            tvShow.setEpisodes(episodes);
+            tvShowDAO.update(tvShow);
         }
     }
 

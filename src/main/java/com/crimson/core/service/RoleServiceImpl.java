@@ -48,20 +48,32 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void addUser2Role(User user, Role role) {
         if (!roleDAO.getUsers(role).contains(user)) {
-            roleDAO.addUser2Role(user, role);
+            List<User> users = roleDAO.getUsers(role);
+            users.add(user);
+            role.setUsers(users);
+            roleDAO.update(role);
         }
         if (!userDAO.getRoles(user).contains(role)) {
-            userDAO.addRole2User(user, role);
+            List<Role> roles = userDAO.getRoles(user);
+            roles.add(role);
+            user.setRoles(roles);
+            userDAO.update(user);
         }
     }
 
     @Override
     public void deleteUserFromRole(User user, Role role) {
         if (roleDAO.getUsers(role).contains(user)) {
-            roleDAO.deleteUserFromRole(user, role);
+            List<User> users = roleDAO.getUsers(role);
+            users.remove(user);
+            role.setUsers(users);
+            roleDAO.update(role);
         }
         if (userDAO.getRoles(user).contains(role)) {
-            userDAO.deleteRoleFromUser(user, role);
+            List<Role> roles = userDAO.getRoles(user);
+            roles.remove(role);
+            user.setRoles(roles);
+            userDAO.update(user);
         }
     }
 

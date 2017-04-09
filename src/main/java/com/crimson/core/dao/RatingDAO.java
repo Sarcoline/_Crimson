@@ -14,12 +14,4 @@ public interface RatingDAO extends BaseDAO<Rating, Long> {
     List<Rating> getRatingByIdTvShow(Long idTvShow);
 
     Rating getRating(long idtv, long iduser);
-
-    void addTvShow2Rating(Rating rating, TvShow tvShow);
-
-    void deleteTvShowFromRating(Rating rating);
-
-    void addUser2Rating(Rating rating, User user);
-
-    void deleteUserFromRating(Rating rating);
 }

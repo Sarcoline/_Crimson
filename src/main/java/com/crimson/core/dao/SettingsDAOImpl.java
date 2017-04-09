@@ -47,22 +47,4 @@ public class SettingsDAOImpl implements SettingsDAO {
         Session session = sessionFactory.getCurrentSession();
         session.update(setting);
     }
-
-    //RELATIONSHIPS
-
-
-    //User2Setting
-    @Override
-    public void addUser2Setting(User user, Setting setting) {
-        Session session = sessionFactory.getCurrentSession();
-        setting.setUser(user);
-        session.saveOrUpdate(setting);
-    }
-
-    @Override
-    public void deleteUserFromSetting(Setting setting) {
-        Session session = sessionFactory.getCurrentSession();
-        setting.setUser(null);
-        session.saveOrUpdate(setting);
-    }
 }

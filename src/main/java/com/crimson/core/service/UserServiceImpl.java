@@ -138,10 +138,16 @@ public class UserServiceImpl implements UserService {
         User user = userDAO.getById(userDTO.getId());
         TvShow tv = tvShowDAO.getById(tvShowDTO.getId());
         if (!userDAO.getTvShows(user).contains(tv)) {
-            userDAO.addTvShow2User(user, tv);
+            List<TvShow> tvShows = userDAO.getTvShows(user);
+            tvShows.add(tv);
+            user.setTvShows(tvShows);
+            userDAO.update(user);
         }
         if (!tvShowDAO.getUsers(tv).contains(user)) {
-            tvShowDAO.addUser2TvShow(user, tv);
+            List<User> users = tvShowDAO.getUsers(tv);
+            users.add(user);
+            tv.setUsers(users);
+            tvShowDAO.update(tv);
         }
     }
 
@@ -150,10 +156,16 @@ public class UserServiceImpl implements UserService {
         User user = userDAO.getUserByName(userDTO.getName());
         TvShow tv = tvShowDAO.getById(tvShow.getId());
         if (userDAO.getTvShows(user).contains(tv)) {
-            userDAO.deleteTvShowFromUser(user, tv);
+            List<TvShow> tvShows = userDAO.getTvShows(user);
+            tvShows.remove(tv);
+            user.setTvShows(tvShows);
+            userDAO.update(user);
         }
         if (tvShowDAO.getUsers(tv).contains(user)) {
-            tvShowDAO.deleteUserFromTvShow(user, tv);
+            List<User> users = tvShowDAO.getUsers(tv);
+            users.remove(user);
+            tv.setUsers(users);
+            tvShowDAO.update(tv);
         }
     }
 
@@ -170,20 +182,32 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addEpisode2User(User user, Episode episode) {
         if (!userDAO.getEpisodes(user).contains(episode)) {
-            userDAO.addEpisode2User(user, episode);
+            List<Episode> episodes = userDAO.getEpisodes(user);
+            episodes.add(episode);
+            user.setEpisodes(episodes);
+            userDAO.update(user);
         }
         if (!episodeDAO.getUsers(episode).contains(user)) {
-            episodeDAO.addUser2Episode(user, episode);
+            List<User> users = episodeDAO.getUsers(episode);
+            users.add(user);
+            episode.setUsers(users);
+            episodeDAO.update(episode);
         }
     }
 
     @Override
     public void deleteEpisodeFromUser(User user, Episode episode) {
         if (userDAO.getEpisodes(user).contains(episode)) {
-            userDAO.deleteEpisodeFromUser(user, episode);
+            List<Episode> episodes = userDAO.getEpisodes(user);
+            episodes.remove(episode);
+            user.setEpisodes(episodes);
+            userDAO.update(user);
         }
         if (episodeDAO.getUsers(episode).contains(user)) {
-            episodeDAO.deleteUserFromEpisode(user, episode);
+            List<User> users = episodeDAO.getUsers(episode);
+            users.remove(user);
+            episode.setUsers(users);
+            episodeDAO.update(episode);
         }
     }
 
@@ -191,42 +215,54 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addRating2User(User user, Rating rating) {
-        if (!userDAO.getRatings(user).contains(rating)) {
-            userDAO.addRating2User(user, rating);
-        }
         if (rating.getUser() != user) {
-            ratingDAO.addUser2Rating(rating, user);
+            rating.setUser(user);
+            ratingDAO.update(rating);
+        }
+        if (!userDAO.getRatings(user).contains(rating)) {
+            List<Rating> ratings = userDAO.getRatings(user);
+            ratings.add(rating);
+            user.setRatings(ratings);
+            userDAO.update(user);
         }
     }
 
     @Override
     public void deleteRatingFromUser(User user, Rating rating) {
-        if (userDAO.getRatings(user).contains(rating)) {
-            userDAO.deleteRatingFromUser(user, rating);
-        }
         if (rating.getUser() == user) {
-            ratingDAO.deleteUserFromRating(rating);
+            rating.setUser(null);
+            ratingDAO.update(rating);
+        }
+        if (userDAO.getRatings(user).contains(rating)) {
+            List<Rating> ratings = userDAO.getRatings(user);
+            ratings.remove(rating);
+            user.setRatings(ratings);
+            userDAO.update(user);
         }
     }
 
     //User2Setting
     @Override
     public void addSetting2User(User user, Setting setting) {
-        if (user.getSetting() != setting) {
-            userDAO.addSetting2User(user, setting);
-        }
         if (setting.getUser() != user) {
-            settingsDAO.addUser2Setting(user, setting);
+            setting.setUser(user);
+            settingsDAO.update(setting);
+        }
+        if (user.getSetting() != setting) {
+            user.setSetting(setting);
+            userDAO.update(user);
         }
     }
 
     @Override
     public void deleteSettingFromUser(User user, Setting setting) {
-        if (user.getSetting() == setting) {
-            userDAO.deleteSettingFromUser(user);
-        }
         if (setting.getUser() == user) {
-            settingsDAO.deleteUserFromSetting(setting);
+            setting.setUser(null);
+            settingsDAO.update(setting);
+        }
+        if (user.getSetting() == setting) {
+            user.setSetting(null);
+            userDAO.update(user);
         }
     }
 
@@ -234,62 +270,90 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addRole2User(User user, Role role) {
-        if (!userDAO.getRoles(user).contains(role)) {
-            userDAO.addRole2User(user, role);
-        }
         if (!roleDAO.getUsers(role).contains(user)) {
-            roleDAO.addUser2Role(user, role);
+            List<User> users = roleDAO.getUsers(role);
+            users.add(user);
+            role.setUsers(users);
+            roleDAO.update(role);
+        }
+        if (!userDAO.getRoles(user).contains(role)) {
+            List<Role> roles = userDAO.getRoles(user);
+            roles.add(role);
+            user.setRoles(roles);
+            userDAO.update(user);
         }
     }
 
     @Override
     public void deleteRoleFromUser(User user, Role role) {
-        if (userDAO.getRoles(user).contains(role)) {
-            userDAO.deleteRoleFromUser(user, role);
-        }
         if (roleDAO.getUsers(role).contains(user)) {
-            roleDAO.deleteUserFromRole(user, role);
+            List<User> users = roleDAO.getUsers(role);
+            users.remove(user);
+            role.setUsers(users);
+            roleDAO.update(role);
+        }
+        if (userDAO.getRoles(user).contains(role)) {
+            List<Role> roles = userDAO.getRoles(user);
+            roles.remove(role);
+            user.setRoles(roles);
+            userDAO.update(user);
         }
 
     }
 
     @Override
     public void addComment(User user, Comment comment) {
-        if (!userDAO.getComments(user).contains(comment)) {
-            userDAO.addComment(user, comment);
-        }
         if (comment.getUser() != user) {
-            commentDAO.addUser2Comment(comment, user);
+            comment.setUser(user);
+            commentDAO.update(comment);
+        }
+        if (!userDAO.getComments(user).contains(comment)) {
+            List<Comment> comments = userDAO.getComments(user);
+            comments.add(comment);
+            user.setComments(comments);
+            userDAO.update(user);
         }
     }
 
     @Override
     public void addReview(User user, Review review) {
-        if (!userDAO.getReviews(user).contains(review)) {
-            userDAO.addReview(user, review);
-        }
         if (review.getUser() != user) {
-            reviewDAO.addUser2Review(review, user);
+            review.setUser(user);
+            reviewDAO.update(review);
+        }
+        if (!userDAO.getReviews(user).contains(review)) {
+            List<Review> reviews = userDAO.getReviews(user);
+            reviews.add(review);
+            user.setReviews(reviews);
+            userDAO.update(user);
         }
     }
 
     @Override
     public void deleteComment(User user, Comment comment) {
-        if (userDAO.getComments(user).contains(comment)) {
-            userDAO.deleteComment(user, comment);
-        }
         if (comment.getUser() == user) {
-            commentDAO.deleteUserFromComment(comment);
+            comment.setUser(null);
+            commentDAO.update(comment);
+        }
+        if (userDAO.getComments(user).contains(comment)) {
+            List<Comment> comments = userDAO.getComments(user);
+            comments.remove(comment);
+            user.setComments(comments);
+            userDAO.update(user);
         }
     }
 
     @Override
     public void deleteReview(User user, Review review) {
-        if (userDAO.getReviews(user).contains(review)) {
-            userDAO.deleteReview(user, review);
-        }
         if (review.getUser() == user) {
-            reviewDAO.deleteUserFromReview(review);
+            review.setUser(null);
+            reviewDAO.update(review);
+        }
+        if (userDAO.getReviews(user).contains(review)) {
+            List<Review> reviews = userDAO.getReviews(user);
+            reviews.remove(review);
+            user.setReviews(reviews);
+            userDAO.update(user);
         }
     }
 
