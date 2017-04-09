@@ -66,7 +66,8 @@ var markSeasonAsWatched = function (watchedSeason) {
       var slug = $(this).data('slug');
       var x = $("a.watched-this[data-season='" + season + "']");
       x.each(function () {
-         $(this).find('i').toggleClass('fa-square-o fa-check-square-o');
+          var i = $(this).find('i');
+         if (!i.hasClass("fa-check-square-o")) i.removeClass("fa-square-o").addClass("fa-check-square-o");
       });
       $.post('/api/watchedseason',{season: season, slug: slug });
   })
