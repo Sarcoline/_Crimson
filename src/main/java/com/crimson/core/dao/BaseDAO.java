@@ -2,6 +2,7 @@ package com.crimson.core.dao;
 
 import java.util.List;
 
+
 public interface BaseDAO<E, PK> {
 
     void save(E object);
@@ -13,6 +14,7 @@ public interface BaseDAO<E, PK> {
     List<E> getAll();
 
     E getById(PK key);
+    
 
 
 }

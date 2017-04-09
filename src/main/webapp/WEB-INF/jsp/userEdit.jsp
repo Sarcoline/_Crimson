@@ -8,6 +8,10 @@
 <body>
 <div class="uk-container uk-container-center uk-margin-large-top">
 
+
+    //Edit profile information : name, email, password
+
+
     <h2 class="uk-margin-large-top">Edit account information!</h2>
     <form:form modelAttribute="userDTO" method="POST" enctype="utf8" class="uk-form uk-form-stacked">
         <form:errors cssClass="uk-alert uk-alert-danger" element="div"/>
@@ -44,6 +48,7 @@
 
     </form:form>
 
+    //Edit settings about days of upcoming episodes and episode list
 
     <h2 class="uk-margin-large-top">Edit settings </h2>
     <form class="uk-form uk-form-stacked" >
@@ -65,6 +70,9 @@
         <a class="uk-button uk-button-primary" id="saveSettings">Save</a>
         </div>
     </form>
+
+    //Edit profile picture
+
     <h2 class="uk-margin-large-top">Change profile picture</h2>
     <img src="<c:url value="/images/user/${userDTO.name}"/> " alt="" width="200" height="200">
     <form class="uk-form uk-margin-top" method="post" action="<c:url value="/updatePicture" />"
@@ -78,6 +86,9 @@
                value="${_csrf.token}"/>
         <input class="uk-button uk-button-primary" type="submit" value="Save"/>
     </form>
+
+    //Option to delete our account
+
     <button class="uk-button uk-button-danger uk-margin-large-top" type="button"
             data-uk-modal="{target:'#myy-id'}">
         Delete account
@@ -85,6 +96,7 @@
 
 </div>
 
+//Confirmation to delete our account
 
 <div id="myy-id" class="uk-modal">
     <div class="uk-modal-dialog">
@@ -104,6 +116,7 @@
 
     </div>
 </div>
+
 <script>
 
     var token = $("meta[name='_csrf']").attr("content");

@@ -1,6 +1,3 @@
-
-
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <sec:authentication var="name" property="name"/>
@@ -26,6 +23,9 @@
     ${tv.genre}, ${tv.releaseYear} - <c:if test="${tv.finishYear != 0}">${tv.finishYear}</c:if>
 
 </h3>
+
+// Gallery of TvShow
+
 <div class="uk-grid">
     <div class="uk-width-large-1-6  uk-width-medium-1-1" data-uk-grid-margin=" ">
         <div class="gallery">
@@ -43,6 +43,9 @@
             </div>
         </div>
     </div>
+
+    //Summary of our TvShow and extra option for moderator
+
     <div class="uk-width-large-4-6 uk-width-medium-1-1">
         <article class="uk-article summary">
             <h2 class="uk-article-title">Summary of <strong>${tv.title}</strong>
@@ -56,6 +59,9 @@
             <p>${tv.description}</p>
 
         </article>
+
+        //List of episodes of each season
+
         <h2>Episode list:</h2>
         <div class="uk-grid episodes">
             <div class="uk-width-large-1-6 uk-width-small-2-6">
@@ -98,6 +104,9 @@
                 </ul>
             </div>
         </div>
+
+        //Reviews and extra option for moderator
+
         <h2 class="uk-margin-large-top">Reviews (${reviews.size()}): </h2>
         <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_AUTHOR')">
             <a class="uk-button uk-button-success"
@@ -120,8 +129,14 @@
                 </c:forEach>
             </ul>
         </div>
+
+        //Comments
+
         <h2 class="uk-margin-large-top">Comments (${comments.size()}): </h2>
         <sec:authorize access="isAuthenticated()">
+
+            //Add new comment
+
         <button class="uk-button uk-button-success"
                 data-uk-toggle="{target:'#add-comment'}">Add
         </button>
@@ -134,6 +149,9 @@
             <button class="uk-width-1-2 uk-button uk-button-primary uk-button-large" id="send-comment" disabled>Send
             </button>
         </form>
+
+        //List of comments
+
         <div class="uk-margin-large-bottom comments">
             <ul class="uk-comment-list uk-list-lined">
                 <li id="comments">
@@ -156,6 +174,9 @@
             </ul>
         </div>
     </div>
+
+    //Ratings
+
     <div class="uk-width-large-1-6 uk-width-medium-1-1">
         <div class="uk-grid details" data-uk-grid-margin=" ">
             <div class="uk-width-large-1-1 uk-width-small-1-2">
@@ -176,6 +197,10 @@
 
                 </div>
             </div>
+
+            //Additional TvShow data : network, country
+            //Option to watch trailer
+
             <div class="uk-width-large-1-1 uk-width-small-1-2">
                 <div class="info">
                     <p>Network:
@@ -191,12 +216,16 @@
         </div>
     </div>
 </div>
+
 <div id="my-id" class="uk-modal">
     <div class="uk-modal-dialog">
         <a class="uk-modal-close uk-close"></a>
         <div class="uk-modal-header">
             <h2 class="uk-text-center">Rate ${tv.title}</h2>
         </div>
+
+        //View when we want to rate a TvShow, stars thanks we rate it.
+
         <div class="uk-grid">
             <div class="uk-width-1-2 uk-align-center">
                 <sec:authorize access="isAuthenticated()">
@@ -231,6 +260,7 @@
     </div>
 </div>
 
+//Warning when TvShow is only for adult
 
 <div id="adultWarning" class="uk-modal uk-open" aria-hidden="false" style="overflow-y: auto; display: none;">
     <div class="uk-modal-dialog uk-modal-dialog-blank warning">
@@ -249,6 +279,7 @@
         </div>
     </div>
 </div>
+
 <script src="<c:url value="/static/js/userActions.js"/>"></script>
 <script src="<c:url value="/static/js/comment.js" />"></script>
 <script>
