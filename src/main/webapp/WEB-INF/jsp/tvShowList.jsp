@@ -5,6 +5,11 @@
     <title>List of Tv Shows</title>
 </head>
 <body>
+
+//Option that allow user to search TvShows according to his own liking
+//Available filters : year start, year end, genre, network, country, rating between
+
+
 <div class="uk-grid uk-margin-large-top uk-margin-large-bottom">
     <div class="uk-width-medium-1-6 uk-width-small-1-1 uk-margin-large-top">
         <form class="uk-form uk-form-stacked uk-margin-large-left" id="filterForm">
