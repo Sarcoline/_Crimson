@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface RoleDAO extends BaseDAO<Role, Long> {
     List<User> getUsers(Role role);
+
+    long RoleSize();
 }

@@ -9,6 +9,9 @@
 <body>
 <div class="index">
 
+
+    <%-- Welcome for user if is authenticated or is anonymous --%>
+
     <div class="uk-container uk-container-center">
         <sec:authorize access="isAuthenticated()">
             <h1 class="welcome uk-margin-large-top">Hello ${name}!</h1>
@@ -16,6 +19,10 @@
         <sec:authorize access="isAnonymous()">
             <h1 class="welcome uk-margin-large-top">Welcome in <strong class="crimson"> Crimson </strong></h1>
         </sec:authorize>
+
+
+
+        <%-- Slider with TvShows --%>
 
         <div class="uk-grid">
             <div class="top-10 uk-margin-large-top uk-width-1-1">
@@ -38,6 +45,10 @@
                        data-uk-slider-item="next"></a>
                 </div>
             </div>
+
+
+            <%-- Here we have got latest reviews --%>
+
             <div class="new-reviews uk-margin-top uk-width-1-2 ">
                 <h2>Latest reviews</h2>
                 <div class="">

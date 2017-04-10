@@ -6,6 +6,9 @@
     <title>Title</title>
 </head>
 <body>
+
+<%-- Add new episode --%>
+
 <div class="uk-container uk-container-center uk-margin-large-top">
     <h1>Add new episode to </h1>
     <div class="uk-grid uk-margin-large-top">
@@ -71,4 +74,6 @@
     </div>
 </div>
 </body>
+
 </html>
+

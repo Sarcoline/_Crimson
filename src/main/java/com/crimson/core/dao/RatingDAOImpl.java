@@ -77,4 +77,6 @@ public class RatingDAOImpl implements RatingDAO {
                 .getResultList();
         return rating.isEmpty() ? new Rating() : (Rating) rating.get(0);
     }
+
+
 }

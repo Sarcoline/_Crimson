@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Query;
 import java.util.List;
 
 @Repository
@@ -25,6 +26,7 @@ public class EpisodeDAOImpl implements EpisodeDAO {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(episode);
     }
+
 
     @Override
     public void delete(Episode episode) {
@@ -83,5 +85,15 @@ public class EpisodeDAOImpl implements EpisodeDAO {
                 .setParameter("id", episode.getId())
                 .getResultList();
     }
+
+    @Override
+    public long EpisodesSize(){
+
+        Session session = sessionFactory.getCurrentSession();
+        Query q = session.createQuery("SELECT count(x) FROM Episode x");
+
+        return (long) q.getSingleResult();
+    }
+
 
 }

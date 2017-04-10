@@ -1,3 +1,4 @@
+
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -6,6 +7,10 @@
     <title>Title</title>
 </head>
 <body>
+
+<%-- Add new TvShow --%>
+<%-- Form where data can be entered --%>
+
 <div class="uk-container uk-container-center uk-margin-large-top">
     <h1>Add new TvShow</h1>
     <div class="uk-grid uk-margin-large-top">
@@ -85,6 +90,9 @@
                 <form:label path="back" for="back" class="uk-form-label">Back</form:label>
                 <form:input path="back" value="" class="uk-width-1-1 uk-form-large" type="file" name="back"/>
             </div>
+
+            <%-- Add galerry and poster to new TvShow --%>
+
             <div class="uk-form-row">
                 <form:errors path="poster" cssClass="uk-alert uk-alert-danger" element="div"/>
                 <form:label path="poster" for="poster" class="uk-form-label">Poster</form:label>
