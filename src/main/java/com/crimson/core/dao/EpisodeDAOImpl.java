@@ -72,7 +72,6 @@ public class EpisodeDAOImpl implements EpisodeDAO {
                 "e.tvShow.id = :idTv and e.number = :number and e.season = :season", Episode.class)
                 .setParameter("idTv", idTv).setParameter("number", number).setParameter("season", season)
                 .getSingleResult();
-
     }
 
     @Override

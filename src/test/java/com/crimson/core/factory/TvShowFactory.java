@@ -36,6 +36,7 @@ public class TvShowFactory {
                         .network("Network")
                         .country("US")
                         .genre("Comedy")
+                        .slug("test1")
                         .build();
                 break;
             }
@@ -43,9 +44,9 @@ public class TvShowFactory {
             case "test2": {
                 tv = TvShow.builder()
                         .title("Test2")
-                        .network("Network")
-                        .country("US")
-                        .genre("Comedy")
+                        .network("Test")
+                        .country("Test")
+                        .genre("Test")
                         .build();
                 break;
             }

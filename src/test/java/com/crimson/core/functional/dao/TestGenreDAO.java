@@ -84,4 +84,12 @@ public class TestGenreDAO {
 
         Assert.assertEquals(test.getId(), genre.getId());
     }
+
+    @Test
+    public void getTvShovsTest(){
+        genre.getTvShows().add(tvShow);
+        tvShow.getGenres().add(genre);
+
+        Assert.assertEquals(genreDAO.getTvShows(genre),genre.getTvShows());
+    }
 }

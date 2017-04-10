@@ -96,4 +96,12 @@ public class TestRoleDAO {
 
         Assert.assertEquals(tmpRole.equals(role1), true);
     }
+
+    @Test
+    public void getUsersTest(){
+        role1.getUsers().add(user1);
+        user1.getRoles().add(role1);
+
+        Assert.assertEquals(roleDAO.getUsers(role1),role1.getUsers());
+    }
 }
