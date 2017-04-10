@@ -66,6 +66,7 @@ public class TestUserDAO {
     private Comment comment = commentFactory.getComment("comment1");
     private Review review = reviewFactory.getReview("review1");
 
+
     @Before
     public void setDB() {
 
