@@ -40,6 +40,7 @@ public class CrimsonController {
     private ReviewService reviewService;
 
 
+    //displays tvshow page
     @GetMapping("/{name}")
     public String displayTvShow(Model model, @PathVariable("name") String name) {
         TvShowDTO tv = tvShowService.getTvBySlug(name);
@@ -72,6 +73,7 @@ public class CrimsonController {
         return "tvShow";
     }
 
+    //displays page for editing tvshow details
     @GetMapping("/{name}/edit")
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     public String displayEditTvShow(@RequestParam(value = "error", required = false) String error,
@@ -84,6 +86,7 @@ public class CrimsonController {
         return "tvShowEdit";
     }
 
+    //handles post request for editing tvshow details
     @RequestMapping(value = "/{name}/edit", method = RequestMethod.POST)
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     public String postEditTvShow(@ModelAttribute("tv") @Valid TvShowDTO tvShowDTO, BindingResult bindingResult, @PathVariable("name") String name) {
@@ -95,6 +98,7 @@ public class CrimsonController {
         return String.format("redirect:/tv/%s", slugify.slugify(tvShowDTO.getTitle()));
     }
 
+    //displays page with list of tvshow episodes
     @GetMapping("/{name}/edit/episodes")
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     public String displayTvShowEpisodes(@RequestParam(value = "error", required = false) String error,
@@ -116,6 +120,7 @@ public class CrimsonController {
         return "tvShowEpisodes";
     }
 
+    //displays page for editing episode with given id
     @GetMapping("/{name}/edit/episodes/{id}")
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     public String displayEditTvShowEpisodes(@RequestParam(value = "error", required = false) String error,
@@ -129,6 +134,7 @@ public class CrimsonController {
         return "tvShowEditEpisode";
     }
 
+    //handles request to delete episode with given id
     @GetMapping("/{name}/edit/episodes/{id}/delete")
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     public String deleteEpisode(@PathVariable("id") long id, @PathVariable("name") String name) {
@@ -137,6 +143,7 @@ public class CrimsonController {
         return String.format("redirect:/tv/%s/edit/episodes", name);
     }
 
+    //displays form for adding new episode
     @GetMapping("/{name}/edit/episodes/add")
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     public String displayAddTvShowEpisodes(@RequestParam(value = "error", required = false) String error,
@@ -156,6 +163,7 @@ public class CrimsonController {
         return "addEpisode";
     }
 
+    //handles request for adding new episode
     @RequestMapping(value = "/{name}/edit/episodes/add", method = RequestMethod.POST)
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     public String postAddTvShowEpisode(@ModelAttribute("episode") @Valid EpisodeFormDTO episodeFormDTO,
@@ -167,7 +175,7 @@ public class CrimsonController {
         return String.format("redirect:/tv/%s/edit/episodes", name);
     }
 
-
+    //handles request for editing episode
     @RequestMapping(value = "/{name}/edit/episodes/{id}", method = RequestMethod.POST)
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     public String postEditTvShowEpisodes(@ModelAttribute("episode") @Valid EpisodeFormDTO episodeFormDTO, BindingResult bindingResult,
@@ -180,6 +188,7 @@ public class CrimsonController {
         return String.format("redirect:/tv/%s/edit/episodes", name);
     }
 
+    //displays form for adding new tvshow
     @GetMapping(value = "/add")
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     public String addTvShow(Model model, @RequestParam(value = "error", required = false) String error) {
@@ -190,6 +199,7 @@ public class CrimsonController {
         return "addTvShow";
     }
 
+    //handles request for adding new tvshow
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     public String addTvShow(@ModelAttribute("tv") @Valid TvShowAddDTO tvShowAddDTO, BindingResult bindingResult) throws IOException {
@@ -200,6 +210,7 @@ public class CrimsonController {
         return "redirect:/";
     }
 
+    //handles request for deleting tvshow
     @GetMapping(value = "/{name}/delete")
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     public String deleteTvShow(@PathVariable("name") String name) {
@@ -207,6 +218,7 @@ public class CrimsonController {
         return "redirect:/";
     }
 
+    //handles request for changing tvshow pictures
     @RequestMapping(value = "/{name}/updatePicture", method = RequestMethod.POST)
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     public String postUpdatePicture(@PathVariable("name") String name,
@@ -216,13 +228,14 @@ public class CrimsonController {
         return String.format("redirect:/tv/%s/edit", name);
     }
 
-
+    //displays page with list of tvshows
     @GetMapping("/list")
     public String tvShowList(Model model) {
         model.addAttribute("tvSize", tvShowService.tvShowsSize());
         return "tvShowList";
     }
 
+    //displyas page with episode list from external api
     @GetMapping(value = "/{name}/edit/episodes/api")
     public String addEpisodesFromJson(@PathVariable("name") String name, Model model) {
         model.addAttribute("id", tvShowService.getTvBySlug(name).getId());
@@ -230,6 +243,7 @@ public class CrimsonController {
         return "addEpisodesFromJson";
     }
 
+    //displays form for writing reviews
     @GetMapping(value = "/{name}/reviews/write")
     @Secured({"ROLE_AUTHOR", "ROLE_ADMIN"})
     public String writeReview(@PathVariable("name") String title, Model model) {
@@ -242,6 +256,7 @@ public class CrimsonController {
         return "writeReview";
     }
 
+    //handles request for adding review
     @RequestMapping(value = "/{name}/reviews/write", method = RequestMethod.POST)
     @Secured({"ROLE_AUTHOR", "ROLE_ADMIN"})
     public String postReview(@Valid @ModelAttribute("review") ReviewDTO reviewDTO, BindingResult bindingResult,
@@ -259,6 +274,7 @@ public class CrimsonController {
         return String.format("redirect:/tv/%s", title);
     }
 
+    //displays page with review
     @GetMapping(value = "/{name}/reviews/{id}")
     public String displayReview(Model model, @PathVariable("id") long id) {
         model.addAttribute("review", reviewService.getReviewById(id));

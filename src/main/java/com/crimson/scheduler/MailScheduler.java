@@ -24,8 +24,10 @@ public class MailScheduler {
     @Autowired
     private MailSchedulerJob mailSchedulerJob;
 
+
+    //Scheduler that send once a day list of upcoming episodes to user
     @Async
-    @Scheduled (cron = "0 0/2 * * * *") //10:15AM kazdego dnia
+    @Scheduled (cron = "0 0/10 * * * *")
     public void sendMail () throws MessagingException {
 
         List<UserDTO> users = userService.getAllUsers();

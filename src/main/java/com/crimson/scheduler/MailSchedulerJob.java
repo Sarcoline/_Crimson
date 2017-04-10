@@ -20,11 +20,13 @@ public class MailSchedulerJob {
     private UserService userService;
 
 
+    //Check if job can execute for given user
     boolean canExecute(UserDTO user) {
         List<EpisodeDTO> upcoming = userService.getAllUpcomingUserEpisodes(user, user.getTvShows(), user.getEpisodes());
         return upcoming.size() > 0 && user.getSetting().getSendEpisodeList();
     }
 
+    //Create message string with list of upcoming episodes for given user
     String createMessage(UserDTO user) {
         List<EpisodeDTO> upcoming = userService.getAllUpcomingUserEpisodes(user, user.getTvShows(), user.getEpisodes());
         String body = "<h3>Hey, it's your daily episodes list: </h3>" +
@@ -37,6 +39,7 @@ public class MailSchedulerJob {
         return sB.toString();
     }
 
+    //Send mail with episode list to user
     void sendMessage(UserDTO user, String body) throws MessagingException {
         mailService.sendMail(user.getEmail(),"Crimson - Daily episode list", body);
     }

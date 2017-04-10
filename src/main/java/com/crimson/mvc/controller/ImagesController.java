@@ -21,12 +21,14 @@ public class ImagesController {
     @Autowired
     private UserService userService;
 
+    //returns image for given tvshow slug and image name
     @ResponseBody
     @RequestMapping(value = "/images/tv/{name}/{image}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] GetShowImage(@PathVariable String image, @PathVariable String name) throws IOException {
         return tvShowService.getTvPics(name, image);
     }
 
+    //returns profile picture of user
     @ResponseBody
     @RequestMapping(value = "/images/user/{name}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] GetUserImage(@PathVariable String name) throws IOException {

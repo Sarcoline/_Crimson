@@ -49,6 +49,7 @@ public class UserController {
     private MailService mailService;
 
 
+    //index page controller, displays latest reviews and highest rated tvshows
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("reviews", reviewService.getAllReviews());
@@ -56,6 +57,7 @@ public class UserController {
         return "index";
     }
 
+    //displays login page and show optional error messages
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(
             @RequestParam(value = "error", required = false) String error,
@@ -85,6 +87,7 @@ public class UserController {
 
     }
 
+    //displays registration page
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String registration(Model model, @RequestParam(value = "error", required = false) String error) {
         if (error != null) {
@@ -94,6 +97,7 @@ public class UserController {
         return "register";
     }
 
+    //handles post request from registration page, sends confirmation email
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String registration(@Valid UserDTO userDTO, BindingResult bindingResult) throws IOException, MessagingException {
         userValidator.validate(userDTO, bindingResult);
@@ -114,12 +118,14 @@ public class UserController {
         return "redirect:/login?registered";
     }
 
+    //confrimation of verification token
     @GetMapping(value = "/confirm/{token}")
     public String confirmAccount(@PathVariable("token") String token) {
         if (!userService.confirmUser(token)) return "redirect:/register?error";
         return "redirect:/login?confirmed";
     }
 
+    //updates profile picture of user
     @RequestMapping(value = "/updatePicture", method = RequestMethod.POST)
     public String updatePicture(@RequestParam("fileUpload") MultipartFile dto) throws Exception {
 
@@ -129,6 +135,7 @@ public class UserController {
         return "redirect:/user/edit";
     }
 
+    //displays dashboard of user with followed tvshows and upcoming episodes
     @GetMapping("/user/{name}")
     public String displayUser(Model model, @PathVariable("name") String name) {
 
@@ -149,6 +156,8 @@ public class UserController {
         return "user";
     }
 
+
+    //displays page for editing user details
     @GetMapping("/user/edit")
     @Secured("ROLE_USER")
     public String editUser(@RequestParam(value = "error", required = false) String error, Model model) {
@@ -165,6 +174,7 @@ public class UserController {
         } else return "redirect:/";
     }
 
+    //handles post request for editing user
     @RequestMapping(value = "/user/edit", method = RequestMethod.POST)
     @Secured("ROLE_USER")
     public String postEditUser(@Valid UserDTO userDTO, BindingResult bindingResult) throws IOException {
@@ -176,6 +186,7 @@ public class UserController {
         return "redirect:/user/edit";
     }
 
+    //delete user account, logout and redirect to main page
     @RequestMapping(value = "/user/delete/", method = RequestMethod.GET)
     @Secured("ROLE_USER")
     public void deleteUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -186,6 +197,7 @@ public class UserController {
         response.sendRedirect("/");
     }
 
+    //handles post request for changing user password
     @RequestMapping(value = "/user/updatePassword", method = RequestMethod.POST)
     public String changeUserPassword(@Valid PasswordDTO passwordDTO, BindingResult bindingResult) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -202,6 +214,7 @@ public class UserController {
         return String.format("redirect:/user/%s", user.getName());
     }
 
+    //displays page where user can change password
     @RequestMapping(value = "/user/updatePassword", method = RequestMethod.GET)
     public String displayChangeUserPassword(@RequestParam(value = "wrongPassword", required = false) String wrongPassword,
                                             @RequestParam(value = "mismatch", required = false) String mismatch, Model model) {
@@ -215,6 +228,7 @@ public class UserController {
         return "changePassword";
     }
 
+    //displays page where user can reset password
     @GetMapping(value = "/user/resetPassword")
     public String resetPassword(Model model, @RequestParam(value = "usernotfound", required = false) String usernotfound) {
         if (usernotfound != null) {
@@ -223,6 +237,7 @@ public class UserController {
         return "resetPassword";
     }
 
+    //handles post request for reseting password, send reset token to given mail
     @RequestMapping(value = "/user/resetPassword", method = RequestMethod.POST)
     public String postResetPassword(@RequestParam("email") String email) throws MessagingException {
         UserDTO userDTO = userService.getUserByEmail(email);
@@ -238,6 +253,7 @@ public class UserController {
         return "resetPasswordSent";
     }
 
+    //displays page where user can input new password after reseting old one
     @RequestMapping(value = "/user/changePassword", method = RequestMethod.GET)
     public String changePassword(Model model, @RequestParam("id") long id,
                                  @RequestParam("token") String token) {
@@ -250,6 +266,7 @@ public class UserController {
         return "resetPasswordInput";
     }
 
+    //saves new password after reseting old one
     @RequestMapping(value = "/user/changePassword", method = RequestMethod.POST)
     public String savePassword(@Valid PasswordResetDTO passwordResetDTO, BindingResult bindingResult) {
 

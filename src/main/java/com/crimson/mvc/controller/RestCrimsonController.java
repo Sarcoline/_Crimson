@@ -9,7 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -33,18 +32,21 @@ public class RestCrimsonController {
     private CommentService commentService;
 
 
+    //returns search results for given pattern
     @RequestMapping(value = "/search/{pattern}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public List<TvShowSearchDTO> searchResult(@PathVariable("pattern") String pattern, HttpServletRequest request) {
+    public List<TvShowSearchDTO> searchResult(@PathVariable("pattern") String pattern) {
         return tvShowService.searchTvShow(pattern);
     }
 
+    //returns list of tvshows for given page
     @GetMapping(value = "/tvshows/{page}", produces = "application/json")
     @ResponseBody
     public List<TvShowSearchDTO> getTvShowsOnPage(@PathVariable("page") int page) {
         return tvShowService.tvShowsPaginationList(page);
     }
 
+    //handles adding comments to tvshow
     @RequestMapping(value = "/addComment", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
     @Secured("ROLE_USER")
@@ -58,6 +60,7 @@ public class RestCrimsonController {
         commentService.save(commentDTO);
     }
 
+    //handles user request to mark episode as watched
     @RequestMapping(value = "/watched", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
     @Secured("ROLE_USER")
@@ -69,6 +72,7 @@ public class RestCrimsonController {
         else episodeService.addUser2Episode(user, episode);
     }
 
+    //handles user request for marking whole season of tvshow as watched
     @RequestMapping(value = "/watchedseason", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
     @Secured("ROLE_USER")
@@ -79,6 +83,7 @@ public class RestCrimsonController {
         episodeService.addUserToSeason(user, season, tvShowService.getTvBySlug(slug));
     }
 
+    //handles user request for rating tvshow
     @RequestMapping(value = "/rate", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
     @Secured("ROLE_USER")
@@ -91,6 +96,7 @@ public class RestCrimsonController {
         return "rated";
     }
 
+    //handles user request to follow tvshow
     @RequestMapping(value = "/follow", method = RequestMethod.POST)
     @Secured("ROLE_USER")
     @ResponseBody
@@ -109,11 +115,13 @@ public class RestCrimsonController {
         return response;
     }
 
+    //returns list of tvshows for given parameters
     @RequestMapping(value = "/filter/{page}", method = RequestMethod.POST)
     public FilterResponseDTO filter(@RequestBody SearchFilterParameters parameters, @PathVariable("page") int page) {
         return tvShowService.filter(parameters, page);
     }
 
+    //adds episodes from external api
     @RequestMapping(value = "/{name}/add", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
@@ -122,6 +130,7 @@ public class RestCrimsonController {
         episodeService.saveEpisodeJSON(episodes, tvShowService.getTvBySlug(name).getId());
     }
 
+    //handles updating user settings
     @RequestMapping(value = "/updateSettings", method = RequestMethod.POST)
     public void updateSettings(@RequestParam("days") int days, @RequestParam("send") boolean send) throws Exception {
 
@@ -130,6 +139,7 @@ public class RestCrimsonController {
         userService.updateSettings(user, days, send);
     }
 
+    //user set himself as adult
     @RequestMapping(value = "/setadult", method = RequestMethod.POST)
     public void setIsAdult(@RequestParam("id") long id) {
         userService.setIsAdult(id);
