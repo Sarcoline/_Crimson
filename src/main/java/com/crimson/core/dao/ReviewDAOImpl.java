@@ -19,24 +19,28 @@ public class ReviewDAOImpl implements ReviewDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
+    //Saving Review object to database
     @Override
     public void save(Review review) {
         Session session = sessionFactory.getCurrentSession();
         session.persist(review);
     }
 
+    //Deleting Review object from database
     @Override
     public void delete(Review review) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(review);
     }
 
+    //Updating Review object from database
     @Override
     public void update(Review review) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(review);
     }
 
+    //Getting Reviews objects from database and returning list
     @Override
     @Cacheable("application-cache")
     public List<Review> getAll() {
@@ -44,6 +48,7 @@ public class ReviewDAOImpl implements ReviewDAO {
         return session.createQuery("SELECT r FROM Review r", Review.class).getResultList();
     }
 
+    //Getting Review object from database by id
     @Override
     @Cacheable("application-cache")
     public Review getById(Long idReview) {
@@ -51,6 +56,7 @@ public class ReviewDAOImpl implements ReviewDAO {
         return session.find(Review.class, idReview);
     }
 
+    //Getting relational Review objects from database by relational user id
     @Override
     @Cacheable("application-cache")
     public List<Review> getReviewByIdUser(Long idUser) {
@@ -61,6 +67,7 @@ public class ReviewDAOImpl implements ReviewDAO {
                 .getResultList();
     }
 
+    //Getting relational Review objects from database by relational tvShow id
     @Override
     @Cacheable("application-cache")
     public List<Review> getReviewByIdTvShow(Long idTvShow) {
@@ -71,6 +78,7 @@ public class ReviewDAOImpl implements ReviewDAO {
                 .getResultList();
     }
 
+    //Getting relational Reviews objects from database by User id and TvShow id
     @Override
     @Cacheable("application-cache")
     public List<Review> getReviews(long idTvShow, long idUser) {

@@ -19,24 +19,28 @@ public class CommentDAOImpl implements CommentDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
+    //Saving Comment object to database
     @Override
     public void save(Comment comment) {
         Session session = sessionFactory.getCurrentSession();
         session.persist(comment);
     }
 
+    //Deleting Comment object from database
     @Override
     public void delete(Comment comment) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(comment);
     }
 
+    //Updating Comment object from database
     @Override
     public void update(Comment comment) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(comment);
     }
 
+    //Getting Comment object from database by id
     @Override
     @Cacheable("application-cache")
     public Comment getById(Long idComment) {
@@ -44,6 +48,7 @@ public class CommentDAOImpl implements CommentDAO {
         return session.find(Comment.class, idComment);
     }
 
+    //Getting Comments objects from database and returning list
     @Override
     @Cacheable("application-cache")
     public List<Comment> getAll() {
@@ -51,6 +56,7 @@ public class CommentDAOImpl implements CommentDAO {
         return session.createQuery("SELECT a FROM Comment a", Comment.class).getResultList();
     }
 
+    //Getting Comment object from database by date
     @Override
     @Cacheable("application-cache")
     public List<Comment> getCommentsByDate(LocalDate date) {
@@ -58,6 +64,7 @@ public class CommentDAOImpl implements CommentDAO {
         return session.createQuery("Select a From Comment a where a.date like :custDate", Comment.class).setParameter("custDate", date).getResultList();
     }
 
+    //Getting Comment object from database by User id
     @Override
     @Cacheable("application-cache")
     public List<Comment> getCommentByIdUser(Long idUser) {
@@ -68,6 +75,7 @@ public class CommentDAOImpl implements CommentDAO {
                 .getResultList();
     }
 
+    //Getting Comment object from database by TvShow id
     @Override
     @Cacheable("application-cache")
     public List<Comment> getCommentByIdTvShow(Long idTvShow) {
@@ -78,6 +86,7 @@ public class CommentDAOImpl implements CommentDAO {
                 .getResultList();
     }
 
+    //Getting relational Comments objects from database by TvShow id and User id
     @Override
     @Cacheable("application-cache")
     public List<Comment> getComments(long idTvShow, long idUser) {

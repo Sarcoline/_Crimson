@@ -20,12 +20,14 @@ public class EpisodeDAOImpl implements EpisodeDAO {
     @Autowired
     private UserDAO userDAO;
 
+    //Saving Episode object to database
     @Override
     public void save(Episode episode) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(episode);
     }
 
+    //Deleting Episode object from database
     @Override
     public void delete(Episode episode) {
         Session session = sessionFactory.getCurrentSession();
@@ -36,12 +38,14 @@ public class EpisodeDAOImpl implements EpisodeDAO {
         session.delete(episode);
     }
 
+    //Updating Episode object from database
     @Override
     public void update(Episode episode) {
         Session session = sessionFactory.getCurrentSession();
         session.update(episode);
     }
 
+    //Getting Episode object from database by id
     @Override
     @Cacheable("application-cache")
     public Episode getById(Long idEpisode) {
@@ -49,6 +53,7 @@ public class EpisodeDAOImpl implements EpisodeDAO {
         return session.find(Episode.class, idEpisode);
     }
 
+    //Getting Episodes objects from database and returning list
     @Override
     @Cacheable("application-cache")
     public List<Episode> getAll() {
@@ -56,6 +61,7 @@ public class EpisodeDAOImpl implements EpisodeDAO {
         return session.createQuery("SELECT a FROM Episode a", Episode.class).getResultList();
     }
 
+    //Getting Episode object from database by title
     @Override
     @Cacheable("application-cache")
     public Episode getEpisodeByTitle(String title) {
@@ -64,6 +70,7 @@ public class EpisodeDAOImpl implements EpisodeDAO {
                 .setParameter("custTitle", title).getSingleResult();
     }
 
+    //Getting Episode object from database by season and episode number
     @Override
     @Cacheable("application-cache")
     public Episode getBySeasonAndEpisodeNumber(int season, int number, long idTv) {
@@ -74,6 +81,7 @@ public class EpisodeDAOImpl implements EpisodeDAO {
                 .getSingleResult();
     }
 
+    //Getting relational Users objects from Episode object from database
     @Override
     public List<User> getUsers(Episode episode) {
         Session session = sessionFactory.getCurrentSession();

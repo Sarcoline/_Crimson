@@ -16,24 +16,28 @@ public class GenreDAOImpl implements GenreDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
+    //Saving Genre object to database
     @Override
     public void save(Genre genre) {
         Session session = sessionFactory.getCurrentSession();
         session.persist(genre);
     }
 
+    //Deleting Genre object from database
     @Override
     public void delete(Genre genre) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(genre);
     }
 
+    //Updating Genre object from database
     @Override
     public void update(Genre genre) {
         Session session = sessionFactory.getCurrentSession();
         session.update(genre);
     }
 
+    //Getting Genre object from database by id
     @Override
     @Cacheable("application-cache")
     public Genre getById(Long idGenre) {
@@ -41,6 +45,7 @@ public class GenreDAOImpl implements GenreDAO {
         return session.find(Genre.class, idGenre);
     }
 
+    //Getting Genres objects from database and returning list
     @Override
     @Cacheable("application-cache")
     public List<Genre> getAll() {
@@ -48,6 +53,7 @@ public class GenreDAOImpl implements GenreDAO {
         return session.createQuery("SELECT a FROM Genre a", Genre.class).getResultList();
     }
 
+    //Getting Genre object from database by name
     @Override
     @Cacheable("application-cache")
     public Genre getGenreByName(String name) {
@@ -56,6 +62,7 @@ public class GenreDAOImpl implements GenreDAO {
                 .setParameter("custName", name).getSingleResult();
     }
 
+    //Getting relational TvShows objects from Genre object from database
     @Override
     public List<TvShow> getTvShows(Genre genre) {
         Session session = sessionFactory.getCurrentSession();

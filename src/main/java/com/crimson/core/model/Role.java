@@ -27,14 +27,19 @@ public @Data class Role {
     @Size(min = 3, max = 20, message = "{invalid.size.role}")
     private String roleName;
 
+    //Optimistic Locking
     @Version
     int version;
 
+    //Builder method to create new object
     @Builder
     public Role(String roleName){
         this.roleName = roleName;
     }
 
+    //Relationships
+
+    //Role2Users
     @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<User> users = new ArrayList<>();
 

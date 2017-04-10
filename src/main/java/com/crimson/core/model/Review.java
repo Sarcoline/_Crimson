@@ -38,9 +38,11 @@ public @Data class Review {
     @NotNull
     private LocalDate publicationDate;
 
+    //Optimistic Locking
     @Version
     private int version;
 
+    //Builder method to create new object
     @Builder
     public Review(String title, String introduction, String content){
         this.title = title;

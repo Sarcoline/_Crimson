@@ -53,6 +53,7 @@ public @Data class User {
     @Version
     private int version;
 
+    //Builder method to create new object
     @Builder
     public User(String name, String email, String password, byte[] profilePic, int version, boolean active){
         this.name = name;
@@ -63,6 +64,7 @@ public @Data class User {
         this.active = active;
     }
 
+    //Relationships
 
     //User2TvShow
     @ManyToMany(fetch = FetchType.LAZY)

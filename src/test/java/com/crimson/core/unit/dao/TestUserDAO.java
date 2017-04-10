@@ -202,7 +202,7 @@ public class TestUserDAO {
         List<TvShow> tvShows = new ArrayList<>();
         String hql = "FROM TvShow t JOIN FETCH t.users u where u.id = :id";
         when(sessionFactory.getCurrentSession()).thenReturn(session);
-        when(session.createQuery(hql)).thenReturn(query);
+        when(session.createQuery(hql, TvShow.class)).thenReturn(query);
         when(query.setParameter("id", user.getId())).thenReturn(query);
         when(query.getResultList()).thenReturn(tvShows);
 
@@ -211,7 +211,7 @@ public class TestUserDAO {
 
         //then
         verify(sessionFactory, times(1)).getCurrentSession();
-        verify(session, times(1)).createQuery(anyString());
+        verify(session, times(1)).createQuery(anyString(), anyObject());
         verify(query, times(1)).setParameter(anyString(), anyLong());
         verify(query, times(1)).getResultList();
         Assert.assertEquals(getTvShows.equals(tvShows), true);
@@ -224,7 +224,7 @@ public class TestUserDAO {
         List<Rating> ratings = new ArrayList<>();
         String hql = "FROM Rating r JOIN FETCH r.user u where u.id = :id";
         when(sessionFactory.getCurrentSession()).thenReturn(session);
-        when(session.createQuery(hql)).thenReturn(query);
+        when(session.createQuery(hql, Rating.class)).thenReturn(query);
         when(query.setParameter("id", user.getId())).thenReturn(query);
         when(query.getResultList()).thenReturn(ratings);
 
@@ -233,7 +233,7 @@ public class TestUserDAO {
 
         //then
         verify(sessionFactory, times(1)).getCurrentSession();
-        verify(session, times(1)).createQuery(anyString());
+        verify(session, times(1)).createQuery(anyString(), anyObject());
         verify(query, times(1)).setParameter(anyString(), anyLong());
         verify(query, times(1)).getResultList();
         Assert.assertEquals(getRatings.equals(ratings), true);
@@ -246,7 +246,7 @@ public class TestUserDAO {
         List<Role> roles = new ArrayList<>();
         String hql = "FROM Role r JOIN FETCH r.users u where u.id = :id";
         when(sessionFactory.getCurrentSession()).thenReturn(session);
-        when(session.createQuery(hql)).thenReturn(query);
+        when(session.createQuery(hql, Role.class)).thenReturn(query);
         when(query.setParameter("id", user.getId())).thenReturn(query);
         when(query.getResultList()).thenReturn(roles);
 
@@ -255,7 +255,7 @@ public class TestUserDAO {
 
         //then
         verify(sessionFactory, times(1)).getCurrentSession();
-        verify(session, times(1)).createQuery(anyString());
+        verify(session, times(1)).createQuery(anyString(), anyObject());
         verify(query, times(1)).setParameter(anyString(), anyLong());
         verify(query, times(1)).getResultList();
         Assert.assertEquals(gettedRoles.equals(roles), true);
@@ -268,7 +268,7 @@ public class TestUserDAO {
         List<Review> reviews = new ArrayList<>();
         String hql = "FROM Review r JOIN FETCH r.user u where u.id = :id";
         when(sessionFactory.getCurrentSession()).thenReturn(session);
-        when(session.createQuery(hql)).thenReturn(query);
+        when(session.createQuery(hql, Review.class)).thenReturn(query);
         when(query.setParameter("id", user.getId())).thenReturn(query);
         when(query.getResultList()).thenReturn(reviews);
 
@@ -277,7 +277,7 @@ public class TestUserDAO {
 
         //then
         verify(sessionFactory, times(1)).getCurrentSession();
-        verify(session, times(1)).createQuery(anyString());
+        verify(session, times(1)).createQuery(anyString(), anyObject());
         verify(query, times(1)).setParameter(anyString(), anyLong());
         verify(query, times(1)).getResultList();
         Assert.assertEquals(gettedReviews.equals(reviews), true);
@@ -291,7 +291,7 @@ public class TestUserDAO {
         List<Comment> comments = new ArrayList<>();
         String hql = "FROM Comment c JOIN FETCH c.user u where u.id = :id";
         when(sessionFactory.getCurrentSession()).thenReturn(session);
-        when(session.createQuery(hql)).thenReturn(query);
+        when(session.createQuery(hql, Comment.class)).thenReturn(query);
         when(query.setParameter("id", user.getId())).thenReturn(query);
         when(query.getResultList()).thenReturn(comments);
 
@@ -300,7 +300,7 @@ public class TestUserDAO {
 
         //then
         verify(sessionFactory, times(1)).getCurrentSession();
-        verify(session, times(1)).createQuery(anyString());
+        verify(session, times(1)).createQuery(anyString(), anyObject());
         verify(query, times(1)).setParameter(anyString(), anyLong());
         verify(query, times(1)).getResultList();
         Assert.assertEquals(gettedComments.equals(comments), true);

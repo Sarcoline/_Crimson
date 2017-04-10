@@ -22,6 +22,19 @@ public @Data class Rating {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //Optimistic Locking
+    @Version
+    private int version;
+
+    //Builder method to create new object
+    @Builder
+    public Rating(int value, int version) {
+        this.value = value;
+        this.version = version;
+    }
+
+    //Relationships
+
     //user
     @ManyToOne(cascade = CascadeType.MERGE)
     @PrimaryKeyJoinColumn(name = "idUser")
@@ -31,16 +44,6 @@ public @Data class Rating {
     @ManyToOne(fetch = FetchType.EAGER)
     @PrimaryKeyJoinColumn(name = "idTvShow")
     private TvShow tvShow;
-
-    //Optimistic Locking
-    @Version
-    private int version;
-
-    @Builder
-    public Rating(int value, int version) {
-        this.value = value;
-        this.version = version;
-    }
 
     @Override
     public String toString()

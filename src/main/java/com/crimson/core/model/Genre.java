@@ -31,11 +31,14 @@ public @Data class Genre {
     @Version
     private int version;
 
+    //Builder method to create new object
     @Builder
     public Genre(String name, int version) {
         this.name = name;
         this.version = version;
     }
+
+    //Relationships
 
     //Genre2TvShow
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

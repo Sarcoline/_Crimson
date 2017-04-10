@@ -52,6 +52,7 @@ public @Data class Episode {
     private Integer version;
 
 
+    //Builder method to create new object
     @Builder
     public Episode(String title, int season, int number, LocalDate releaseDate, String episodeSummary, Long idTvShow) {
         this.title = title;
@@ -61,6 +62,8 @@ public @Data class Episode {
         this.episodeSummary = episodeSummary;
         this.idTvShow = idTvShow;
     }
+
+    //Relationships
 
     //EpisodeWatched(User2Episode) Relation
     @ManyToMany(mappedBy = "episodes", fetch = FetchType.LAZY)

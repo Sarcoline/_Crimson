@@ -16,12 +16,14 @@ public class RoleDAOImpl implements RoleDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
+    //Saving Role object to database
     @Override
     public void save(Role role) {
         Session session = sessionFactory.getCurrentSession();
         session.persist(role);
     }
 
+    //Getting Roles objects from database and returning list
     @Override
     @Cacheable("application-cache")
     public List<Role> getAll() {
@@ -29,6 +31,7 @@ public class RoleDAOImpl implements RoleDAO {
         return session.createQuery("Select a From Role a", Role.class).getResultList();
     }
 
+    //Getting Role object from database by id
     @Override
     @Cacheable("application-cache")
     public Role getById(Long id) {
@@ -36,18 +39,21 @@ public class RoleDAOImpl implements RoleDAO {
         return session.find(Role.class, id);
     }
 
+    //Deleting Role object from database
     @Override
     public void delete(Role role) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(role);
     }
 
+    //Updating Role object from database
     @Override
     public void update(Role role) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(role);
     }
 
+    //Getting relational Users objects from Role object from database
     @Override
     public List<User> getUsers(Role role) {
         Session session = sessionFactory.getCurrentSession();

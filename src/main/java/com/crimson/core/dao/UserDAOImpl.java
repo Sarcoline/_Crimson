@@ -17,13 +17,14 @@ public class UserDAOImpl implements UserDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-
+    //Saving user object to database
     @Override
     public void save(User user) {
         Session session = sessionFactory.getCurrentSession();
         session.persist(user);
     }
 
+    //Getting all user object from database and set to list
     @Override
     @Cacheable("application-cache")
     public List<User> getAll() {
@@ -31,24 +32,28 @@ public class UserDAOImpl implements UserDAO {
         return session.createQuery("Select a From User a", User.class).getResultList();
     }
 
+    //Getting choosed by id user object from database
     @Override
     public User getById(Long id) {
         Session session = sessionFactory.getCurrentSession();
         return session.find(User.class, id);
     }
 
+    //Deleting user object from database
     @Override
     public void delete(User user) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(user);
     }
 
+    //Updating user object in database
     @Override
     public void update(User user) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(user);
     }
 
+    //Getting user object from database by username
     @Override
     @Cacheable("application-cache")
     public User getUserByName(String name) {
@@ -57,6 +62,7 @@ public class UserDAOImpl implements UserDAO {
                 .setParameter("custName", name).getSingleResult();
     }
 
+    //Getting user object from database by token
     @Override
     @Cacheable("application-cache")
     public User getUserByToken(String token) {
@@ -71,6 +77,7 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
+    //Getting relational TvShows objects from User object from database
     @Override
     public List<TvShow> getTvShows(User user) {
         Session session = sessionFactory.getCurrentSession();
@@ -80,6 +87,7 @@ public class UserDAOImpl implements UserDAO {
                 .getResultList();
     }
 
+    //Getting relational Episodes objects from User object from database
     @Override
     public List<Episode> getEpisodes(User user) {
         Session session = sessionFactory.getCurrentSession();
@@ -89,6 +97,7 @@ public class UserDAOImpl implements UserDAO {
                 .getResultList();
     }
 
+    //Getting relational Ratings objects from User object from database
     @Override
     public List<Rating> getRatings(User user) {
         Session session = sessionFactory.getCurrentSession();
@@ -98,6 +107,7 @@ public class UserDAOImpl implements UserDAO {
                 .getResultList();
     }
 
+    //Getting relational Roles objects from User object from database
     @Override
     public List<Role> getRoles(User user) {
         Session session = sessionFactory.getCurrentSession();
@@ -107,6 +117,7 @@ public class UserDAOImpl implements UserDAO {
                 .getResultList();
     }
 
+    //Getting relational Reviews objects from User object from database
     @Override
     public List<Review> getReviews(User user) {
         Session session = sessionFactory.getCurrentSession();
@@ -116,6 +127,7 @@ public class UserDAOImpl implements UserDAO {
                 .getResultList();
     }
 
+    //Getting user object from database by email
     @Override
     @Cacheable("application-cache")
     public User getUserByEmail(String email) {
@@ -131,6 +143,7 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
+    //Getting User profile picture by username
     @Override
     @Cacheable("application-cache")
     public byte[] getUserProfilePicture(String name) {
@@ -139,6 +152,7 @@ public class UserDAOImpl implements UserDAO {
         return (byte[]) session.createQuery(hql).setParameter("custName", name).getSingleResult();
     }
 
+    //Getting relational Comments objects from User object from database
     @Override
     @Cacheable("application-cache")
     public List<Comment> getComments(User user) {

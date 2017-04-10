@@ -82,7 +82,7 @@ public @Data class TvShow {
     @Version
     private int version;
 
-
+    //Builder method to create new object
     @Builder
     public TvShow(String title, String network, String country, String genre, String description, String trailerUrl, double overallRating, int releaseYear, String slug){
         this.title = title;

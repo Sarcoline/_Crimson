@@ -25,12 +25,14 @@ public @Data class PasswordResetToken {
 
     private Date expiryDate;
 
+    //Method to create new object
     public PasswordResetToken(String token, User user) {
         this.token = token;
         this.user = user;
         this.expiryDate = calculateExpiryDate();
     }
 
+    //Method to calculate date for expire send token
     private Date calculateExpiryDate() {
         final Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(new Date().getTime());

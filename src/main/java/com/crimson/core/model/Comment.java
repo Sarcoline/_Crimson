@@ -30,9 +30,11 @@ public @Data class Comment {
     @NotNull
     private LocalDate date;
 
+    //Optimistic Locking
     @Version
     private int version;
 
+    //Builder method to create new object
     @Builder
     public Comment(String text){
         this.text = text;

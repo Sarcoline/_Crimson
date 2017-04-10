@@ -17,24 +17,28 @@ public class RatingDAOImpl implements RatingDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
+    //Saving Rating object to database
     @Override
     public void save(Rating rating) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(rating);
     }
 
+    //Deleting Rating object from database
     @Override
     public void delete(Rating rating) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(rating);
     }
 
+    //Updating Rating object from database
     @Override
     public void update(Rating rating) {
         Session session = sessionFactory.getCurrentSession();
         session.update(rating);
     }
 
+    //Getting Rating object from database by id User
     @Override
     @Cacheable("application-cache")
     public Rating getRatingByIdUser(Long idUser) {
@@ -42,6 +46,7 @@ public class RatingDAOImpl implements RatingDAO {
         return session.find(Rating.class, idUser);
     }
 
+    //Getting Rating object from database by id
     @Override
     @Cacheable("application-cache")
     public Rating getById(Long id) {
@@ -49,6 +54,7 @@ public class RatingDAOImpl implements RatingDAO {
         return session.find(Rating.class, id);
     }
 
+    //Getting Rating object from database by id TvShow
     @Override
     @Cacheable("application-cache")
     public List<Rating> getRatingByIdTvShow(Long idTvShow) {
@@ -59,6 +65,7 @@ public class RatingDAOImpl implements RatingDAO {
                 .getResultList();
     }
 
+    //Getting Ratings objects from database and returning list
     @Override
     @Cacheable("application-cache")
     public List<Rating> getAll() {
@@ -66,6 +73,7 @@ public class RatingDAOImpl implements RatingDAO {
         return session.createQuery("SELECT a FROM  Rating a", Rating.class).getResultList();
     }
 
+    //Getting Rating object by tvShow id and User id
     @Override
     @Cacheable("application-cache")
     public Rating getRating(long idtv, long iduser) {

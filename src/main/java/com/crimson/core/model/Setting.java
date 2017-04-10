@@ -28,9 +28,11 @@ public @Data class Setting {
     @Range(max = 30, message = "{invalid.daysOfUpcomingEpisodes}")
     private int daysOfUpcomingEpisodes;
 
+    //Optimistic Locking
     @Version
     int version;
 
+    //Builder method to create new object
     @Builder
     public Setting(Boolean sendEpisodeList, int numberOfEpisodesOnUserPage, int daysOfUpcomingEpisodes){
         this.sendEpisodeList = sendEpisodeList;
@@ -38,6 +40,10 @@ public @Data class Setting {
         this.daysOfUpcomingEpisodes = daysOfUpcomingEpisodes;
     }
 
+
+    //Relationships
+
+    //User2Setting
     @OneToOne
     @PrimaryKeyJoinColumn
     private User user;
