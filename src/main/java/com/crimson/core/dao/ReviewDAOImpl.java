@@ -2,14 +2,13 @@ package com.crimson.core.dao;
 
 
 import com.crimson.core.model.Review;
-import com.crimson.core.model.TvShow;
-import com.crimson.core.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Query;
 import java.util.List;
 
 
@@ -89,4 +88,15 @@ public class ReviewDAOImpl implements ReviewDAO {
                 .setParameter("idusr", idUser)
                 .getResultList();
     }
+
+    @Override
+    public long ReviewsSize() {
+
+        Session session = sessionFactory.getCurrentSession();
+        Query q = session.createQuery("SELECT count(x) FROM Review x");
+
+        return (long) q.getSingleResult();
+    }
+
+
 }

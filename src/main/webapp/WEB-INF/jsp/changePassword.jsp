@@ -6,6 +6,9 @@
 <%@ page session="false" %>
 <html>
 <body>
+
+<%-- Change password --%>
+
 <div class="uk-container uk-container-center uk-margin-large-top">
     <div class=" uk-text-center">
         <div class="uk-panel uk-panel-box uk-vertical-align-middle uk-margin-top login" style="width: 400px;">
@@ -16,6 +19,9 @@
                     <p>${error}</p>
                 </div>
             </c:if>
+
+            <%-- Form where we enter old password and new password, and submit it --%>
+
             <form:form modelAttribute="passwordDTO" action="/user/updatePassword" method="POST" enctype="utf8"
                        class="uk-form uk-form-stacked">
                 <form:errors cssClass="uk-alert uk-alert-danger" element="div"/>

@@ -79,7 +79,7 @@ public class RestCrimsonController {
         episodeService.addUserToSeason(user, season, tvShowService.getTvBySlug(slug));
     }
 
-     @RequestMapping(value = "/rate", method = RequestMethod.POST)
+    @RequestMapping(value = "/rate", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
     @Secured("ROLE_USER")
     @ResponseBody
@@ -91,7 +91,7 @@ public class RestCrimsonController {
         return "rated";
     }
 
-   @RequestMapping(value = "/follow", method = RequestMethod.POST)
+    @RequestMapping(value = "/follow", method = RequestMethod.POST)
     @Secured("ROLE_USER")
     @ResponseBody
     public String follow(@RequestParam("id") Long id) {

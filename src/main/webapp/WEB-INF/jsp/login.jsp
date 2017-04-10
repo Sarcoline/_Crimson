@@ -5,6 +5,8 @@
     <title>Login</title>
 </head>
 <body>
+
+
 <div class="uk-container uk-container-center uk-margin-large-top">
     <div class=" uk-text-center">
         <div class="uk-panel uk-panel-box uk-vertical-align-middle uk-margin-top login" style="width: 400px;">
@@ -21,6 +23,9 @@
                     <p>${msg}</p>
                 </div>
             </c:if>
+
+            <%-- Form to log in. User enter name and password --%>
+
             <form name='loginForm' action="<c:url value='/login' />" method='POST' class="uk-form uk-form-stacked">
                 <div class="uk-form-row">
                     <input class="uk-width-1-1 uk-form-large" type="text" name='username' placeholder="Username"

@@ -16,6 +16,11 @@
                     <p>${error}</p>
                 </div>
             </c:if>
+
+
+            <%-- Form where user gives his details : name, email, password and picture --%>
+            <%-- User details are needed for registration --%>
+
             <form:form modelAttribute="userDTO" method="POST" enctype="multipart/form-data"
                        class="uk-form uk-form-stacked">
                 <form:errors cssClass="uk-alert uk-alert-danger" element="div"/>

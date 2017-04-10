@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Query;
 import java.util.List;
 
 @Repository
@@ -61,6 +62,15 @@ public class RoleDAOImpl implements RoleDAO {
         return session.createQuery(hql, User.class)
                 .setParameter("id", role.getIdRole())
                 .getResultList();
+    }
+
+    @Override
+    public long RoleSize() {
+
+        Session session = sessionFactory.getCurrentSession();
+        Query q = session.createQuery("SELECT count(x) FROM Role x");
+
+        return (long) q.getSingleResult();
     }
 
 }

@@ -8,6 +8,8 @@
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
 </head>
 <body>
+
+<%-- Display list of episodes downloaded from external api --%>
 <div class="uk-container uk-container-center uk-margin-large-top">
     <h1>Add episodes </h1>
     <p id="loading"></p>

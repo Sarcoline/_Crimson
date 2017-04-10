@@ -22,11 +22,18 @@
     </content>
 </head>
 <body>
+
+<%-- Write review for the selected TvShow --%>
+
 <div class="uk-container uk-container-center uk-margin-large-top">
     <h1>Write review for ${tv.title}</h1>
     <form:form modelAttribute="review" method="POST" enctype="utf8" class="uk-form uk-form-stacked">
         <form:errors cssClass="uk-alert uk-alert-danger" element="div"/>
         <div class="uk-form-row">
+
+            <%-- Form to write new review --%>
+            <%-- Here user enter selected details --%>
+
             <form:errors path="title" cssClass="uk-alert uk-alert-danger" element="div"/>
             <form:label path="title" for="title" class="uk-form-label">Title</form:label>
             <form:input path="title"

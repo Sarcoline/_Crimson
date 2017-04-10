@@ -2,6 +2,7 @@ package com.crimson.core.dao;
 
 import java.util.List;
 
+
 public interface BaseDAO<E, PK> {
 
     void save(E object);

@@ -16,6 +16,9 @@
                     <p>${error}</p>
                 </div>
             </c:if>
+
+            <%-- Form to edit TvShow --%>
+
             <form:form modelAttribute="tv" method="POST" enctype="utf8" class="uk-form uk-form-stacked">
                 <form:errors cssClass="uk-alert uk-alert-danger" element="div"/>
                 <div class="uk-form-row">

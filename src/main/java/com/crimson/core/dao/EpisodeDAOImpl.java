@@ -1,7 +1,6 @@
 package com.crimson.core.dao;
 
 import com.crimson.core.model.Episode;
-import com.crimson.core.model.TvShow;
 import com.crimson.core.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Query;
 import java.util.List;
 
 @Repository
@@ -28,6 +28,7 @@ public class EpisodeDAOImpl implements EpisodeDAO {
     }
 
     //Deleting Episode object from database
+
     @Override
     public void delete(Episode episode) {
         Session session = sessionFactory.getCurrentSession();
@@ -90,5 +91,15 @@ public class EpisodeDAOImpl implements EpisodeDAO {
                 .setParameter("id", episode.getId())
                 .getResultList();
     }
+
+    @Override
+    public long EpisodesSize() {
+
+        Session session = sessionFactory.getCurrentSession();
+        Query q = session.createQuery("SELECT count(x) FROM Episode x");
+
+        return (long) q.getSingleResult();
+    }
+
 
 }

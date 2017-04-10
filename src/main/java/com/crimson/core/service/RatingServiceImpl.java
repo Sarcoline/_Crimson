@@ -83,7 +83,7 @@ public class RatingServiceImpl implements RatingService {
             ratings.add(rating);
             tvShow.setRatings(ratings);
             tvShowDAO.update(tvShow);
-         }
+        }
     }
 
     @Override
