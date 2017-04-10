@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Query;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -88,4 +89,15 @@ public class CommentDAOImpl implements CommentDAO {
                 .setParameter("idusr", idUser)
                 .getResultList();
     }
+
+    @Override
+    public long CommentsSize(){
+
+        Session session = sessionFactory.getCurrentSession();
+        Query q = session.createQuery("SELECT count(x) FROM Comment x");
+
+        return (long) q.getSingleResult();
+    }
+
+
 }

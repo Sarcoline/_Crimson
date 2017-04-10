@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Query;
 import java.util.List;
 
 @Repository
@@ -64,4 +65,16 @@ public class GenreDAOImpl implements GenreDAO {
                 .setParameter("id", genre.getId())
                 .getResultList();
     }
+
+    @Override
+    public long GenreSize(){
+
+        Session session = sessionFactory.getCurrentSession();
+        Query q = session.createQuery("SELECT count(x) FROM Genre x");
+
+        return (long) q.getSingleResult();
+    }
+
+
+
 }
