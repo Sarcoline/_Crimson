@@ -44,9 +44,9 @@ public class TestEpisodeDAO {
     private User user = userFactory.getUser("aleks");
     private TvShow tvShow = tvShowFactory.getTvShow("friends");
 
-
     @Before
     public void setDB() {
+        episode.setTvShow(tvShow);
         episodeDAO.save(episode);
         tvShowDAO.save(tvShow);
         userDAO.save(user);
@@ -104,5 +104,13 @@ public class TestEpisodeDAO {
         Assert.assertEquals(test.getId(), episode.getId());
         Assert.assertEquals(test.getSeason(), episode.getSeason());
         Assert.assertEquals(test.getNumber(), episode.getNumber());
+    }
+
+    @Test
+    public void getUsersTest(){
+        episode.getUsers().add(user);
+        user.getEpisodes().add(episode);
+
+        Assert.assertEquals(episodeDAO.getUsers(episode),episode.getUsers());
     }
 }

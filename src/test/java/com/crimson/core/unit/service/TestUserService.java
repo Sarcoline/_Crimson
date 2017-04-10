@@ -688,15 +688,10 @@ public class TestUserService {
         List<Role> roles = new ArrayList<>();
         roles.add(role);
         String path = "classpath:/images/user/user.jpg";
-        //Resource resource = ApplicationContext.class.getResource(path);
 
         when(roleDAO.getAll()).thenReturn(roles);
         when(mapperFacade.map(Matchers.anyObject(),Matchers.anyObject())).thenReturn(userD);
         when(encoder.encode(anyString())).thenReturn("password");
         when(context.getResource(anyString())).thenReturn(null);
-
-        //userService.saveUser(userDTO);
-
-        //Mockito.verify(userDAO, Mockito.times(1)).save(Matchers.anyObject());
     }
 }

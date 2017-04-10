@@ -135,4 +135,70 @@ public class TestUserDAO {
 
         Assert.assertEquals(getUserByNameTest.getName(), user.getName());
     }
+
+    @Test
+    public void getUserByTokenTest() {
+        user.setToken("Token");
+        User test = userDAO.getUserByToken("Token");
+
+        Assert.assertEquals(test.getName(), user.getName());
+    }
+
+    @Test
+    public void getUserByEmailTest() {
+        user.setEmail("Email");
+        User test = userDAO.getUserByEmail("Email");
+
+        Assert.assertEquals(test.getName(), user.getName());
+    }
+
+    @Test
+    public void getTvShowsTest(){
+        tvShow.getUsers().add(user);
+        tvShowDAO.update(tvShow);
+        user.getTvShows().add(tvShow);
+        userDAO.update(user);
+
+        Assert.assertEquals(userDAO.getTvShows(user),user.getTvShows());
+    }
+
+    @Test
+    public void getEpisodesTest(){
+        episode.getUsers().add(user);
+        user.getEpisodes().add(episode);
+
+        Assert.assertEquals(userDAO.getEpisodes(user),user.getEpisodes());
+    }
+
+    @Test
+    public void getRolesTest(){
+        role1.getUsers().add(user);
+        user.getRoles().add(role1);
+
+        Assert.assertEquals(userDAO.getRoles(user),user.getRoles());
+    }
+
+    @Test
+    public void getRatingsTest(){
+        rating.setUser(user);
+        user.getRatings().add(rating);
+
+        Assert.assertEquals(userDAO.getRatings(user),user.getRatings());
+    }
+
+    @Test
+    public void getReviewsTest(){
+        review.setUser(user);
+        user.getReviews().add(review);
+
+        Assert.assertEquals(userDAO.getReviews(user),user.getReviews());
+    }
+
+    @Test
+    public void getCommentsTest(){
+        comment.setUser(user);
+        user.getComments().add(comment);
+
+        Assert.assertEquals(userDAO.getComments(user),user.getComments());
+    }
 }
