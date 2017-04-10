@@ -1,8 +1,6 @@
 package com.crimson.core.unit.service;
 
-import com.crimson.context.TestSpringCore;
 import com.crimson.core.dao.*;
-import com.crimson.core.dto.EpisodeDTO;
 import com.crimson.core.dto.TvShowDTO;
 import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.*;
@@ -14,16 +12,11 @@ import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.ApplicationContext;
-import org.springframework.core.io.Resource;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +25,6 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
-@ContextConfiguration(classes = TestSpringCore.class)
-@Transactional
-@Rollback
 @RunWith(MockitoJUnitRunner.class)
 public class TestUserService {
 
