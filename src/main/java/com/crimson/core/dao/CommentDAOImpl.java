@@ -2,8 +2,6 @@ package com.crimson.core.dao;
 
 
 import com.crimson.core.model.Comment;
-import com.crimson.core.model.TvShow;
-import com.crimson.core.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +89,7 @@ public class CommentDAOImpl implements CommentDAO {
     }
 
     @Override
-    public long CommentsSize(){
+    public long CommentsSize() {
 
         Session session = sessionFactory.getCurrentSession();
         Query q = session.createQuery("SELECT count(x) FROM Comment x");

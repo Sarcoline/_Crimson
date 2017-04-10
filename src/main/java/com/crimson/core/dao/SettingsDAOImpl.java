@@ -1,7 +1,6 @@
 package com.crimson.core.dao;
 
 import com.crimson.core.model.Setting;
-import com.crimson.core.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

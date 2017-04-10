@@ -2,8 +2,6 @@ package com.crimson.core.dao;
 
 
 import com.crimson.core.model.Comment;
-import com.crimson.core.model.TvShow;
-import com.crimson.core.model.User;
 
 import java.time.LocalDate;
 import java.util.List;

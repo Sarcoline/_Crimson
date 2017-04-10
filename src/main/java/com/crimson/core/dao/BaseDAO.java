@@ -14,7 +14,6 @@ public interface BaseDAO<E, PK> {
     List<E> getAll();
 
     E getById(PK key);
-    
 
 
 }

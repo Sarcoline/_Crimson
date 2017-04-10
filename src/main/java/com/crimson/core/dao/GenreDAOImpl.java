@@ -67,14 +67,13 @@ public class GenreDAOImpl implements GenreDAO {
     }
 
     @Override
-    public long GenreSize(){
+    public long GenreSize() {
 
         Session session = sessionFactory.getCurrentSession();
         Query q = session.createQuery("SELECT count(x) FROM Genre x");
 
         return (long) q.getSingleResult();
     }
-
 
 
 }

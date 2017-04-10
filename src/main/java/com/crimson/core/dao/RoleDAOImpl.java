@@ -59,7 +59,7 @@ public class RoleDAOImpl implements RoleDAO {
     }
 
     @Override
-    public long RoleSize(){
+    public long RoleSize() {
 
         Session session = sessionFactory.getCurrentSession();
         Query q = session.createQuery("SELECT count(x) FROM Role x");

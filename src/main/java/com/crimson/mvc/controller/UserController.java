@@ -86,7 +86,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String registration(Model model,  @RequestParam(value = "error", required = false) String error) {
+    public String registration(Model model, @RequestParam(value = "error", required = false) String error) {
         if (error != null) {
             model.addAttribute("error", "Invalid registration token.");
         }

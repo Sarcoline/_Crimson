@@ -1,7 +1,6 @@
 package com.crimson.core.dao;
 
 import com.crimson.core.model.Episode;
-import com.crimson.core.model.TvShow;
 import com.crimson.core.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -87,7 +86,7 @@ public class EpisodeDAOImpl implements EpisodeDAO {
     }
 
     @Override
-    public long EpisodesSize(){
+    public long EpisodesSize() {
 
         Session session = sessionFactory.getCurrentSession();
         Query q = session.createQuery("SELECT count(x) FROM Episode x");

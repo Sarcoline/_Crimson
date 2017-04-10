@@ -2,8 +2,6 @@ package com.crimson.core.dao;
 
 
 import com.crimson.core.model.Review;
-import com.crimson.core.model.TvShow;
-import com.crimson.core.model.User;
 
 import java.util.List;
 
