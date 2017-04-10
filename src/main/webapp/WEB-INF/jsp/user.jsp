@@ -9,8 +9,10 @@
 </head>
 <body>
 
-//Basic data of user : name, email, picture, number of TvShows which user follow
-//Option that redirects us to the edit page
+
+<%-- Basic data of user : name, email, picture, number of TvShows which user follow --%>
+<%-- Option that redirects us to the edit page --%>
+
 
 <div class="uk-grid">
     <div class="uk-width-4-6 uk-margin-large-top" data-uk-grid-margin=" ">
@@ -45,7 +47,8 @@
                 </div>
             </div>
 
-            //Information when we don't follow none TvShows
+
+            <%-- Information when we don't follow none TvShows --%>
 
             <c:if test="${user.name == name}">
                 <div class="uk-width-4-5 ">
@@ -66,7 +69,8 @@
                         </div>
                     </div>
 
-                    //User can see upcoming episodes his TvShows which he follow
+
+                    <%-- User can see upcoming episodes his TvShows which he follow --%>
 
                     <h2>Upcoming episodes
                         <small class="uk-text-muted">${user.setting.daysOfUpcomingEpisodes} days</small>
@@ -96,7 +100,8 @@
     <div class="uk-width-2-6">
         <div class="uk-container">
 
-            //Favorite TvShows of user
+
+            <%-- Favorite TvShows of user --%>
 
             <div class="uk-grid">
                 <div class="uk-width-1-1 uk-margin-large-top ">
@@ -114,7 +119,8 @@
                     </c:if>
                 </div>
 
-                //User can see what he recently watched
+
+                <%-- User can see what he recently watched --%>
 
                 <c:if test="${user.name == name}">
                     <div class="uk-width-1-1 uk-margin-large-top">
@@ -158,3 +164,33 @@
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -6,8 +6,10 @@
 </head>
 <body>
 
-//Option that allow user to search TvShows according to his own liking
-//Available filters : year start, year end, genre, network, country, rating between
+
+<%-- Option that allow user to search TvShows according to his own liking --%>
+<%-- Available filters : year start, year end, genre, network, country, rating between --%>
+
 
 
 <div class="uk-grid uk-margin-large-top uk-margin-large-bottom">
@@ -99,4 +101,19 @@
     filter(${tvSize});
 </script>
 </body>
+
+
+
 </html>
+
+
+
+
+
+
+
+
+
+
+
+

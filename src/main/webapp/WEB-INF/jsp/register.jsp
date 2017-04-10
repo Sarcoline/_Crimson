@@ -17,8 +17,9 @@
                 </div>
             </c:if>
 
-            //Form where user gives his details : name, email, password and picture
-            //User details are needed for registration
+
+            <%-- Form where user gives his details : name, email, password and picture --%>
+            <%-- User details are needed for registration --%>
 
             <form:form modelAttribute="userDTO" method="POST" enctype="multipart/form-data"
                        class="uk-form uk-form-stacked">

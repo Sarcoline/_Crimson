@@ -9,7 +9,8 @@
 <div class="uk-container uk-container-center uk-margin-large-top">
 
 
-    //Edit profile information : name, email, password
+
+    <%-- Edit profile information : name, email, password --%>
 
 
     <h2 class="uk-margin-large-top">Edit account information!</h2>
@@ -48,7 +49,9 @@
 
     </form:form>
 
-    //Edit settings about days of upcoming episodes and episode list
+
+        <%-- Edit settings about days of upcoming episodes and episode list --%>
+
 
     <h2 class="uk-margin-large-top">Edit settings </h2>
     <form class="uk-form uk-form-stacked" >
@@ -71,7 +74,9 @@
         </div>
     </form>
 
-    //Edit profile picture
+
+        <%-- Edit profile picture --%>
+
 
     <h2 class="uk-margin-large-top">Change profile picture</h2>
     <img src="<c:url value="/images/user/${userDTO.name}"/> " alt="" width="200" height="200">
@@ -87,7 +92,8 @@
         <input class="uk-button uk-button-primary" type="submit" value="Save"/>
     </form>
 
-    //Option to delete our account
+
+        <%-- Option to delete your account --%>
 
     <button class="uk-button uk-button-danger uk-margin-large-top" type="button"
             data-uk-modal="{target:'#myy-id'}">
@@ -96,7 +102,9 @@
 
 </div>
 
-//Confirmation to delete our account
+
+<%-- Confirmation to delete our account --%>
+
 
 <div id="myy-id" class="uk-modal">
     <div class="uk-modal-dialog">

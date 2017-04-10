@@ -9,7 +9,8 @@
 <body>
 <div class="index">
 
-    //Welcome for user if is authenticated or is anonymous
+
+    <%-- Welcome for user if is authenticated or is anonymous --%>
 
     <div class="uk-container uk-container-center">
         <sec:authorize access="isAuthenticated()">
@@ -20,7 +21,8 @@
         </sec:authorize>
 
 
-        //Slider with TvShows
+
+        <%-- Slider with TvShows --%>
 
         <div class="uk-grid">
             <div class="top-10 uk-margin-large-top uk-width-1-1">
@@ -44,7 +46,8 @@
                 </div>
             </div>
 
-            //Here we have got latest reviews
+
+            <%-- Here we have got latest reviews --%>
 
             <div class="new-reviews uk-margin-top uk-width-1-2 ">
                 <h2>Latest reviews</h2>
