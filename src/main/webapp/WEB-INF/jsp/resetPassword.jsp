@@ -11,6 +11,10 @@
                     <p>${error}</p>
                 </div>
             </c:if>
+
+            <%-- Form to reset password --%>
+            <%-- User enter email and submit --%>
+
             <form name='resetForm' action="<c:url value='/user/resetPassword' />" method='POST'
                   class="uk-form uk-form-stacked">
                 <div class="uk-form-row">
@@ -29,61 +33,5 @@
 </div>
 </body>
 
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

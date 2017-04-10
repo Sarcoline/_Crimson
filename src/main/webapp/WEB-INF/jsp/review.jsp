@@ -5,6 +5,9 @@
     <title>Title</title>
 </head>
 <body>
+
+<%-- Review --%>
+
 <div class="uk-container uk-container-center uk-margin-large-top">
     <article class="uk-article uk-margin-large-top review">
         <h1 class="uk-article-title review-title">${review.title}</h1>

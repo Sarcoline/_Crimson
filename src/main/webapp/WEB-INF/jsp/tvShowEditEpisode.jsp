@@ -10,6 +10,9 @@
     </content>
 </head>
 <body>
+
+<%-- Edit episode --%>
+
 <div class="uk-container uk-container-center uk-margin-large-top">
     <h1>Edit ${episode.title} of ${episode.tvShow.title}</h1>
     <div class="uk-grid uk-margin-large-top">
@@ -20,6 +23,9 @@
                     <p>${error}</p>
                 </div>
             </c:if>
+
+            <%-- Form to edit episode --%>
+
             <form:form modelAttribute="episode" method="POST" enctype="utf8" class="uk-form uk-form-stacked">
                 <form:errors cssClass="uk-alert uk-alert-danger" element="div"/>
                 <div class="uk-form-row">
