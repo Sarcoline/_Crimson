@@ -24,6 +24,8 @@ public interface TvShowDAO extends BaseDAO<TvShow, Long> {
 
     List<TvShow> searchTvShow(String pattern);
 
+    List<Long> getIdsOfWatchedEpisodes(String name);
+
     List<TvShow> filterTvShows(double min, double max);
 
     long tvShowsSize();

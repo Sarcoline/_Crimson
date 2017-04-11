@@ -42,7 +42,7 @@ public interface UserService {
 
     byte[] getUserProfilePicture(String name);
 
-    boolean checkFollow(UserDTO userDTO, TvShowDTO tvShow);
+    boolean checkFollow(String name, long id);
 
     void deleteRatingFromUser(User user, Rating rating);
 

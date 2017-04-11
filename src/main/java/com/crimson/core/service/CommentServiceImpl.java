@@ -29,10 +29,10 @@ public class CommentServiceImpl implements CommentService {
     private UserDAO userDAO;
 
     @Override
-    public void save(CommentDTO commentDTO) {
+    public void save(CommentDTO commentDTO, String name) {
         Comment comment1 = new Comment(commentDTO.getText());
         addTvShow2Comment(comment1, tvShowDAO.getById(commentDTO.getIdTvShow()));
-        addUser2Comment(comment1, userDAO.getById(commentDTO.getUser().getId()));
+        addUser2Comment(comment1, userDAO.getUserByName(name));
         commentDAO.save(comment1);
     }
 

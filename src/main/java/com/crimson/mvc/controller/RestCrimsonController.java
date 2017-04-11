@@ -52,12 +52,11 @@ public class RestCrimsonController {
     @Secured("ROLE_USER")
     public void addComment(@RequestBody CommentDTO commentDTO) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDTO user = userService.getUserByName(auth.getName());
-        TvShowDTO tvShowDTO = tvShowService.getTvById(commentDTO.getIdTvShow());
-        commentDTO.setTvShow(tvShowDTO);
-        commentDTO.setUser(user);
+        //TvShowDTO tvShowDTO = tvShowService.getTvById(commentDTO.getIdTvShow());
+        //commentDTO.setIdTvShow(tvShowDTO.getId());
+        //commentDTO.setUser(auth.getName());
         commentDTO.setDate(LocalDate.now());
-        commentService.save(commentDTO);
+        commentService.save(commentDTO, auth.getName());
     }
 
     //handles user request to mark episode as watched
@@ -105,7 +104,7 @@ public class RestCrimsonController {
         UserDTO user = userService.getUserByName(auth.getName());
         TvShowDTO tv = tvShowService.getTvById(id);
         String response;
-        if (userService.checkFollow(user, tv)) {
+        if (userService.checkFollow(user.getName(), tv.getId())) {
             userService.deleteTvShowFromUser(user, tv);
             response = "unfollow";
         } else {

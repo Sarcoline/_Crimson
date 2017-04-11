@@ -9,7 +9,10 @@ import ma.glasnost.orika.MapperFacade;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Matchers;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.mock.web.MockMultipartFile;
@@ -20,10 +23,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TestUserService {
@@ -168,7 +172,7 @@ public class TestUserService {
         when(userDAO.getUserByName(anyString())).thenReturn(user);
         when(tvShowDAO.getById(anyLong())).thenReturn(tv);
 
-        userService.checkFollow(userDTO,tvDTO);
+        userService.checkFollow(userDTO.getName(),tvDTO.getId());
 
         Mockito.verify(userDAO, Mockito.times(1)).getUserByName(Matchers.anyString());
         Mockito.verify(tvShowDAO, Mockito.times(1)).getById(Matchers.anyLong());

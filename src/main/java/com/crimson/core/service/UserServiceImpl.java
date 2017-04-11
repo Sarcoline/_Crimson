@@ -129,8 +129,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean checkFollow(UserDTO userDTO, TvShowDTO tvShow) {
-        return userDAO.getUserByName(userDTO.getName()).getTvShows().contains(tvShowDAO.getById(tvShow.getId()));
+    public boolean checkFollow(String name, long id) {
+        return userDAO.checkFollow(name,id);
     }
 
     @Override

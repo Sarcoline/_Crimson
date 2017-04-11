@@ -135,6 +135,10 @@ public class TvShowServiceImpl implements TvShowService {
         return tvShowDAO.tvShowsSize();
     }
 
+    @Override
+    public List<Long> getIdsOfEpisodes(String name) {
+        return tvShowDAO.getIdsOfWatchedEpisodes(name);
+    }
 
     //RELATIONSHIPS
 

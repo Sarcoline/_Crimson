@@ -162,4 +162,16 @@ public class UserDAOImpl implements UserDAO {
                 .setParameter("id", user.getId())
                 .getResultList();
     }
+
+    @Override
+    public boolean checkFollow(String userName, long idTv) {
+
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "FROM User u JOIN FETCH u.tvShows t where u.name = :name and t.id = :id";
+        List tvs =  session.createQuery(hql)
+                .setParameter("name", userName)
+                .setParameter("id", idTv)
+                .getResultList();
+        return !tvs.isEmpty();
+    }
 }

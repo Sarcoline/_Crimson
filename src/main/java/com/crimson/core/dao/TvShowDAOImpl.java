@@ -134,6 +134,13 @@ public class TvShowDAOImpl implements TvShowDAO {
                 .getResultList();
     }
 
+    @Override
+    public List<Long> getIdsOfWatchedEpisodes(String name) {
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "select e.id FROM Episode e JOIN e.users u WHERE u.name = :name";
+        return session.createQuery(hql, Long.class).setParameter("name", name).getResultList();
+    }
+
     //Method to filter TvShows object by min and max attributes
     @Override
     public List<TvShow> filterTvShows(double min, double max) {

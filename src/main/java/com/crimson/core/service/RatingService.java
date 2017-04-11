@@ -24,7 +24,7 @@ public interface RatingService {
 
     List<Rating> getAllRatings();
 
-    Rating getRating(long idtv, long iduser);
+    Rating getRating(long idtv, String name);
 
     void addTvShow2Rating(Rating rating, TvShow tvShow);
 

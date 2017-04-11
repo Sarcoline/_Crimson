@@ -85,7 +85,7 @@
                             </sec:authorize>
                             </h3>
                             <ul class="uk-list uk-list-line">
-                                <c:forEach items="${episodes}" var="episode">
+                                <c:forEach items="${tv.episodes}" var="episode">
                                     <c:if test="${episode.season == count.count}">
                                         <li>
                                             <p><strong> ${episode.number}. </strong>
@@ -112,7 +112,7 @@
 
         <%-- Reviews and extra option for moderator --%>
 
-        <h2 class="uk-margin-large-top">Reviews (${reviews.size()}): </h2>
+        <h2 class="uk-margin-large-top">Reviews (${tv.reviews.size()}): </h2>
         <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_AUTHOR')">
             <a class="uk-button uk-button-success"
                href="/tv/${tv.slug}/reviews/write">Write
@@ -138,7 +138,7 @@
 
         <%-- Comments --%>
 
-        <h2 class="uk-margin-large-top">Comments (${comments.size()}): </h2>
+        <h2 class="uk-margin-large-top">Comments (${tv.comments.size()}): </h2>
         <sec:authorize access="isAuthenticated()">
 
 
@@ -308,7 +308,8 @@
         var userAdult = false;
         var forAdult = ${tv.forAdult};
         <sec:authorize access="isAuthenticated()">
-        userAdult = ${user.adult};
+        userAdult = true;
+        //${user.adult};
         </sec:authorize>
         var modal = UIkit.modal("#adultWarning");
         if (!userAdult) {
@@ -317,7 +318,7 @@
         $('#imAdult').on('click', function () {
             modal.hide();
             <sec:authorize access="isAuthenticated()">
-            $.post("/api/setadult", {id:${user.id}});
+            $.post("/api/setadult", {id:2});
             </sec:authorize>
         });
         <sec:authorize access="isAuthenticated()">
@@ -380,6 +381,7 @@
                         console.log('not ok')
                     }
                 });
+
             }
         });
         </sec:authorize>

@@ -32,6 +32,8 @@ public interface TvShowService {
 
     void updateTvShow(TvShowDTO tvshow);
 
+    List<Long> getIdsOfEpisodes(String name);
+
     void addUser2TvShow(User user, TvShow tvShow);
 
     void deleteUserFromTvShow(User user, TvShow tvShow);

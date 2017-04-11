@@ -13,9 +13,8 @@ public @Data class CommentDTO {
 
     private long id;
 
-    public CommentDTO(String value, UserDTO user, TvShowDTO tvShow ) {
+    public CommentDTO(String value, UserDTO user) {
         this.text = value;
-        this.tvShow = tvShow;
         this.user = user;
     }
 
@@ -28,7 +27,6 @@ public @Data class CommentDTO {
 
     @Range(min = 10, max = 200)
     private String text;
-    private TvShowDTO tvShow;
     private UserDTO user;
     private LocalDate date;
 

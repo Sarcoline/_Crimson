@@ -11,5 +11,5 @@ public interface RatingDAO extends BaseDAO<Rating, Long> {
 
     List<Rating> getRatingByIdTvShow(Long idTvShow);
 
-    Rating getRating(long idtv, long iduser);
+    Rating getRating(long idtv, String name);
 }

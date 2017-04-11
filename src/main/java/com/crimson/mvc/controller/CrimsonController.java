@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -49,13 +48,13 @@ public class CrimsonController {
         List<EpisodeDTO> episodes = tv.getEpisodes();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
-            UserDTO user = userService.getUserByName(auth.getName());
-            follow = userService.checkFollow(user, tv);
-            rating = ratingService.getRating(tv.getId(), user.getId()).getValue();
-            model.addAttribute("user", user);
-            List<Long> watchedEpisodesId = new ArrayList<>();
-            user.getEpisodes().forEach(episode -> watchedEpisodesId.add(episode.getId()));
-            model.addAttribute("watchedEpisodesId", watchedEpisodesId);
+            //UserDTO user = userService.getUserByName(auth.getName());
+            follow = userService.checkFollow(auth.getName(), tv.getId());
+            rating = ratingService.getRating(tv.getId(), auth.getName()).getValue();
+            //model.addAttribute("user", user);
+            //List<Long> watchedEpisodesId = new ArrayList<>();
+            //user.getEpisodes().forEach(episode -> watchedEpisodesId.add(episode.getId()));
+            model.addAttribute("watchedEpisodesId", tvShowService.getIdsOfEpisodes(auth.getName()));
         }
 
         episodes.sort(Comparator.comparing(EpisodeDTO::getNumber));
@@ -63,13 +62,11 @@ public class CrimsonController {
         int seasons = episodes.isEmpty() ? 0 : episodes.get(episodes.size() - 1).getSeason();
         List<CommentDTO> comments = tv.getComments();
         comments.sort(Comparator.comparing(CommentDTO::getDate).reversed());
-        model.addAttribute("comments", comments);
         model.addAttribute("tv", tv);
-        model.addAttribute("episodes", episodes);
         model.addAttribute("seasons", seasons);
         model.addAttribute("rating", rating);
         model.addAttribute("follow", follow);
-        model.addAttribute("reviews", tv.getReviews());
+        model.addAttribute("comments", comments);
         return "tvShow";
     }
 

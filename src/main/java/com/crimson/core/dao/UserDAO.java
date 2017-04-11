@@ -26,4 +26,6 @@ public interface UserDAO extends BaseDAO<User, Long> {
     User getUserByEmail(String email);
 
     byte[] getUserProfilePicture(String name);
+
+    boolean checkFollow(String userName, long idTv);
 }

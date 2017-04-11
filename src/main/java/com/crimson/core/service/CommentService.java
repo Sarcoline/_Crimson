@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface CommentService {
 
-    void save(CommentDTO commentDTO);
+    void save(CommentDTO commentDTO, String name);
 
     void delete(Comment comment);
 

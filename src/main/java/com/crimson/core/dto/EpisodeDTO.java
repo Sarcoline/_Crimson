@@ -1,15 +1,11 @@
 package com.crimson.core.dto;
 
-import com.crimson.core.model.TvShow;
-import com.crimson.core.model.User;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public @Data class EpisodeDTO {
@@ -34,9 +30,7 @@ public @Data class EpisodeDTO {
 
     private Integer version;
 
-    private List<User> users = new ArrayList<>();
-
-    private TvShow tvShow;
+    private TvShowDTO tvShow;
 
     @Override
     public String toString()

@@ -74,12 +74,12 @@ public class RatingDAOImpl implements RatingDAO {
     //Getting Rating object by tvShow id and User id
     @Override
     @Cacheable("application-cache")
-    public Rating getRating(long idtv, long iduser) {
+    public Rating getRating(long idtv, String name) {
         Session session = sessionFactory.getCurrentSession();
-        String hql = "from Rating s where s.tvShow.id = :idtv and s.user.id = :idusr";
+        String hql = "from Rating s where s.tvShow.id = :idtv and s.user.name = :name";
         List rating = session.createQuery(hql)
                 .setParameter("idtv", idtv)
-                .setParameter("idusr", iduser)
+                .setParameter("name", name)
                 .getResultList();
         return rating.isEmpty() ? new Rating() : (Rating) rating.get(0);
     }

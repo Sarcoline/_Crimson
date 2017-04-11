@@ -9,7 +9,6 @@ import org.hibernate.validator.constraints.URL;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Data
@@ -49,8 +48,6 @@ public class TvShowDTO {
     private String genre;
 
     private String slug;
-
-    private HashMap<String, byte[]> pictures = new HashMap<>();
 
     private List<EpisodeDTO> episodes = new ArrayList<>();
 

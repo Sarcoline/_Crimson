@@ -68,8 +68,8 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public Rating getRating(long idtv, long iduser) {
-        return ratingDAO.getRating(idtv, iduser);
+    public Rating getRating(long idtv, String name) {
+        return ratingDAO.getRating(idtv, name);
     }
 
     @Override
