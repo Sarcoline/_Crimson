@@ -10,7 +10,10 @@ public @Data class EpisodeFromJson {
     private String summary;
     private String releaseDate;
     private long idTvShow;
+    private String slug;
+    private String tvTitle;
     private long id;
+
 
     @Override
     public String toString()

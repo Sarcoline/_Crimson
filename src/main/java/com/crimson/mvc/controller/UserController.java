@@ -139,18 +139,18 @@ public class UserController {
     @GetMapping("/user/{name}")
     public String displayUser(Model model, @PathVariable("name") String name) {
 
-        UserDTO user = userService.getUserByName(name);
-        List<TvShowDTO> tvs = user.getTvShows();
-        List<TvShowDTO> favorites = userService.getUserTvShowsSortedByMaxRating(user);
-        List<EpisodeDTO> watchedEpisodes = user.getEpisodes();
+        UserDisplayDTO user = userService.getUserDisplayByName(name);
+        List<TvShowSearchDTO> tvs = user.getTvShows();
+        List<TvShowSearchDTO> favorites = userService.getUserTvShowsSortedByMaxRating(user.getId());
+        List<EpisodeFromJson> watchedEpisodes = user.getEpisodes();
         List<Long> watchedEpisodesId = new ArrayList<>();
         watchedEpisodes.forEach(episode -> watchedEpisodesId.add(episode.getId()));
-        //List<EpisodeDTO> upcoming = userService.getAllUpcomingUserEpisodes(user, tvs, watchedEpisodes);
+        List<EpisodeFromJson> upcoming = userService.getUpcomingEpisodes(user);
 
         model.addAttribute("tvshows", tvs);
         model.addAttribute("watchedEpisodes", Lists.reverse(watchedEpisodes));
         model.addAttribute("watchedEpisodesId", watchedEpisodesId);
-        //model.addAttribute("upcomimgEpisodes", upcoming);
+        model.addAttribute("upcomimgEpisodes", upcoming);
         model.addAttribute("favorites", favorites);
         model.addAttribute("user", user);
         return "user";

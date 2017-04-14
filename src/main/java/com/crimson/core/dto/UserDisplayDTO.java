@@ -29,7 +29,7 @@ public @Data class UserDisplayDTO {
 
     private boolean adult;
 
-    //private Setting setting;
+    private SettingDTO setting;
 
     private List<TvShowSearchDTO> tvShows = new ArrayList<>();
 

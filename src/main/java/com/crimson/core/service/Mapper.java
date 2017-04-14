@@ -44,6 +44,8 @@ public class Mapper extends ConfigurableMapper {
                 .byDefault()
                 .register();
         factory.classMap(Episode.class, EpisodeFromJson.class)
+                .field("tvShow.slug", "slug")
+                .field("tvShow.title", "tvTitle")
                 .byDefault()
                 .register();
         factory.classMap(Rating.class, RatingDTO.class)

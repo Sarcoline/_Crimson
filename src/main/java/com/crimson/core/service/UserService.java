@@ -1,9 +1,6 @@
 package com.crimson.core.service;
 
-import com.crimson.core.dto.EpisodeDTO;
-import com.crimson.core.dto.TvShowDTO;
-import com.crimson.core.dto.UserDTO;
-import com.crimson.core.dto.UserDisplayDTO;
+import com.crimson.core.dto.*;
 import com.crimson.core.model.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -76,13 +73,15 @@ public interface UserService {
 
     List<Review> getReviews(User user);
 
-    List<TvShowDTO> getUserTvShowsSortedByMaxRating(UserDTO user);
+    List<TvShowSearchDTO> getUserTvShowsSortedByMaxRating(long id);
 
     List<EpisodeDTO> getAllUnwatchedUserEpisodes(UserDTO user);
 
     List<Long> getWatchedEpisodesIds(UserDisplayDTO user);
 
     List<EpisodeDTO> getAllUpcomingUserEpisodes(UserDTO userDTO, List<TvShowDTO> tvs, List<EpisodeDTO> watchedEpisodes);
+
+    List<EpisodeFromJson> getUpcomingEpisodes(UserDisplayDTO user);
 
     void updatePassword(UserDTO user, String password);
 

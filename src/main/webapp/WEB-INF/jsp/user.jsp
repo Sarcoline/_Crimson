@@ -72,26 +72,26 @@
 
                     <%-- User can see upcoming episodes his TvShows which he follow --%>
 
-                    <%--<h2>Upcoming episodes--%>
-                        <%--<small class="uk-text-muted">${user.setting.daysOfUpcomingEpisodes} days</small>--%>
-                    <%--</h2>--%>
-                    <%--<c:if test="${upcomimgEpisodes.size() <= 0}">--%>
-                        <%--<h3 class="uk-text-muted">There's no upcoming episodes</h3>--%>
-                    <%--</c:if>--%>
-                    <%--<ul class="uk-list uk-list-line" style="font-size: 1.1rem">--%>
-                        <%--<c:forEach items="${upcomimgEpisodes}" var="episode">--%>
-                            <%--<li>--%>
-                                <%--<p><strong><a href="<c:url value="/tv/${episode.tvShow.slug}" /> ">--%>
-                                        <%--${episode.tvShow.title} </a> - S${episode.season}E${episode.number} ---%>
-                                <%--</strong>--%>
-                                    <%--<a class="watched-this" data-id="${episode.id}"><i class="fa fa-square-o"--%>
-                                                                                       <%--aria-hidden="true"></i></a>--%>
-                                        <%--${episode.title}--%>
-                                    <%--<small class="episode-date uk-text-muted">${episode.releaseDate}</small>--%>
-                                <%--</p>--%>
-                            <%--</li>--%>
-                        <%--</c:forEach>--%>
-                    <%--</ul>--%>
+                    <h2>Upcoming episodes
+                        <small class="uk-text-muted">${user.setting.daysOfUpcomingEpisodes} days</small>
+                    </h2>
+                    <c:if test="${upcomimgEpisodes.size() <= 0}">
+                        <h3 class="uk-text-muted">There's no upcoming episodes</h3>
+                    </c:if>
+                    <ul class="uk-list uk-list-line" style="font-size: 1.1rem">
+                        <c:forEach items="${upcomimgEpisodes}" var="episode">
+                            <li>
+                                <p><strong><a href="<c:url value="/tv/${episode.slug}" /> ">
+                                        ${episode.title} </a> - S${episode.season}E${episode.number} -
+                                </strong>
+                                    <a class="watched-this" data-id="${episode.id}"><i class="fa fa-square-o"
+                                                                                       aria-hidden="true"></i></a>
+                                        ${episode.title}
+                                    <small class="episode-date uk-text-muted">${episode.releaseDate}</small>
+                                </p>
+                            </li>
+                        </c:forEach>
+                    </ul>
 
                 </div>
             </c:if>
@@ -130,8 +130,8 @@
                                 <c:forEach items="${watchedEpisodes}" var="episode" begin="0" end="9">
 
                                     <li>
-                                        <p><strong><a href="<c:url value="/tv/${episode.tvShow.slug}" /> ">
-                                                ${episode.tvShow.title}</a> </strong> -
+                                        <p><strong><a href="<c:url value="/tv/${episode.slug}" /> ">
+                                                ${episode.tvTitle}</a> </strong> -
                                             S${episode.season}E${episode.number} - ${episode.title}
                                         </p>
                                     </li>

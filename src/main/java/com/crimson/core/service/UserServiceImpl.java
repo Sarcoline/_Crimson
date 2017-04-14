@@ -1,10 +1,7 @@
 package com.crimson.core.service;
 
 import com.crimson.core.dao.*;
-import com.crimson.core.dto.EpisodeDTO;
-import com.crimson.core.dto.TvShowDTO;
-import com.crimson.core.dto.UserDTO;
-import com.crimson.core.dto.UserDisplayDTO;
+import com.crimson.core.dto.*;
 import com.crimson.core.model.*;
 import ma.glasnost.orika.MapperFacade;
 import org.apache.commons.io.IOUtils;
@@ -384,13 +381,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<TvShowDTO> getUserTvShowsSortedByMaxRating(UserDTO user) {
+    public List<TvShowSearchDTO> getUserTvShowsSortedByMaxRating(long id) {
 
-        List<TvShowDTO> sortedList = new ArrayList<>();
-        List<Rating> unsortedList = user.getRatings();
-        unsortedList.sort(Comparator.comparingInt(Rating::getValue).reversed());
-        //unsortedList.forEach(rating -> sortedList.add(rating.getTvShow()));
 
+        List<TvShowSearchDTO> sortedList = new ArrayList<>();
+//        List<Rating> unsortedList = user.getRatings();
+//        unsortedList.sort(Comparator.comparingInt(Rating::getValue).reversed());
+//        //unsortedList.forEach(rating -> sortedList.add(rating.getTvShow()));
+        userDAO.getTvShowsByMaxRating(id).forEach(rating -> {
+            sortedList.add(mapperFacade.map(rating.getTvShow(), TvShowSearchDTO.class));
+        });
         return sortedList;
     }
 
@@ -444,6 +444,30 @@ public class UserServiceImpl implements UserService {
         }
 
         allFutureUserEpisodesDTO.sort(Comparator.comparing(EpisodeDTO::getReleaseDate));
+        return allFutureUserEpisodesDTO;
+    }
+
+    @Override
+    public List<EpisodeFromJson> getUpcomingEpisodes(UserDisplayDTO user) {
+        int days = user.getSetting().getDaysOfUpcomingEpisodes();
+        List<EpisodeFromJson> allFutureUserEpisodes = new ArrayList<>();
+        List<EpisodeFromJson> allFutureUserEpisodesDTO = new ArrayList<>();
+        LocalDate currentDate = LocalDate.now();
+        LocalDate lastDate = LocalDate.now().plusDays(days);
+
+        user.getTvShows().forEach(tv -> {
+            if (tv.getFinishYear() == 0) allFutureUserEpisodes.addAll(tv.getEpisodes());
+        });
+
+        allFutureUserEpisodes.removeAll(user.getEpisodes());
+
+        for (EpisodeFromJson episode : allFutureUserEpisodes) {
+            LocalDate episodeDate = LocalDate.parse(episode.getReleaseDate());
+            if (episodeDate.isAfter(currentDate) && episodeDate.isBefore(lastDate))
+                allFutureUserEpisodesDTO.add(mapperFacade.map(episode, EpisodeFromJson.class));
+        }
+
+        allFutureUserEpisodesDTO.sort(Comparator.comparing(EpisodeFromJson::getReleaseDate));
         return allFutureUserEpisodesDTO;
     }
 

@@ -2,6 +2,8 @@ package com.crimson.core.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 
 public @Data class TvShowSearchDTO {
 
@@ -12,6 +14,8 @@ public @Data class TvShowSearchDTO {
     private Double overallRating;
 
     private String slug;
+
+    private List<EpisodeFromJson> episodes;
 
     private int finishYear;
     @Override

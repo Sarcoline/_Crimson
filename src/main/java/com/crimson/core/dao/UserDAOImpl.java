@@ -164,6 +164,17 @@ public class UserDAOImpl implements UserDAO {
         return !tvs.isEmpty();
     }
 
+
+    @Override
+    public List<Rating> getTvShowsByMaxRating(long id) {
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "from Rating r where r.user.id = :id order by r.value desc";
+        return session.createQuery(hql, Rating.class)
+                .setParameter("id", id)
+                .setMaxResults(5)
+                .getResultList();
+    }
+
     @Override
     public boolean checkWatched(String userName, long idEpisode) {
 

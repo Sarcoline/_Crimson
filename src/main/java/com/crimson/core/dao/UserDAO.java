@@ -30,4 +30,6 @@ public interface UserDAO extends BaseDAO<User, Long> {
     byte[] getUserProfilePicture(String name);
 
     boolean checkFollow(String name, long id);
+
+    List<Rating> getTvShowsByMaxRating(long id);
 }
