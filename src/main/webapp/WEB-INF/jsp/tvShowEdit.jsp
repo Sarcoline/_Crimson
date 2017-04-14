@@ -57,6 +57,13 @@
                                 placeholder="Release Year"/>
                 </div>
                 <div class="uk-form-row">
+                    <form:errors path="finishYear" cssClass="uk-alert uk-alert-danger" element="div"/>
+                    <form:input path="finishYear" value="${tv.finishYear}" class="uk-width-1-1 uk-form-large"
+                                type="number"
+                                name='finishYear'
+                                placeholder="Finish Year"/>
+                </div>
+                <div class="uk-form-row">
                     <form:errors path="description" cssClass="uk-alert uk-alert-danger" element="div"/>
                     <form:textarea path="description" value="${tv.description}" class="uk-width-1-1 uk-form-large"
                                    type="text"

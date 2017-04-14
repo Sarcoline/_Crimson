@@ -2,6 +2,7 @@ package com.crimson.core.dto;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Email;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -30,6 +31,14 @@ public @Data class UserDisplayDTO {
     private boolean adult;
 
     private SettingDTO setting;
+
+    private String password;
+
+    private String matchingPassword;
+
+    private byte[] profilePic;
+
+    private MultipartFile uploadedPic;
 
     private List<TvShowSearchDTO> tvShows = new ArrayList<>();
 

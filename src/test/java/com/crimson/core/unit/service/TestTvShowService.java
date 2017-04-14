@@ -7,16 +7,19 @@ import com.crimson.core.service.TvShowServiceImpl;
 import ma.glasnost.orika.MapperFacade;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TestTvShowService {
@@ -75,7 +78,7 @@ public class TestTvShowService {
         when(tvShowDAO.getById(anyLong())).thenReturn(tv);
         doNothing().when(tvShowDAO).update(anyObject());
 
-        tvShowService.updateTvShow(tvDTO);
+        //tvShowService.updateTvShow(tvDTO);
 
         Mockito.verify(tvShowDAO).update(anyObject());
         Mockito.verify(tvShowDAO).getById(anyLong());

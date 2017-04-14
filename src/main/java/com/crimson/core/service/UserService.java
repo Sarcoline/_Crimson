@@ -19,7 +19,7 @@ public interface UserService {
 
     void updateUser(UserDTO userDTO);
 
-    void changeProfilePic(UserDTO userDTO, MultipartFile file) throws IOException;
+    void changeProfilePic(String username, MultipartFile file) throws IOException;
 
     UserDisplayDTO getUserDisplayByName(String name);
 
@@ -87,7 +87,7 @@ public interface UserService {
 
     boolean checkOldPassword(UserDTO userDTO, String password);
 
-    void updateSettings(UserDTO user, int days, boolean send);
+    void updateSettings(String username, int days, boolean send);
 
     boolean confirmUser(String token);
 

@@ -76,6 +76,11 @@ public class TvShowServiceImpl implements TvShowService {
     }
 
     @Override
+    public TvShowEditDTO getEditTvBySlug(String slug) {
+        return mapperFacade.map(tvShowDAO.getTvBySlug(slug), TvShowEditDTO.class);
+    }
+
+    @Override
     public List<TvShow> getTvByGenre(String genre) {
         return tvShowDAO.getTvByGenre(genre);
     }
@@ -121,7 +126,7 @@ public class TvShowServiceImpl implements TvShowService {
     }
 
     @Override
-    public void updateTvShow(TvShowDTO tvshow) {
+    public void updateTvShow(TvShowEditDTO tvshow) {
         Slugify slugify = new Slugify();
         TvShow tv = tvShowDAO.getById(tvshow.getId());
         tv.setCountry(tvshow.getCountry());

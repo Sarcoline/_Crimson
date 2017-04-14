@@ -1,6 +1,5 @@
 package com.crimson.core.dto;
 
-import com.crimson.core.model.TvShow;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
@@ -25,14 +24,14 @@ public @Data class EpisodeFormDTO {
     @NotNull
     private String releaseDate;
 
-    @Length(max = 1000)
+    @Length(max = 2000)
     private String episodeSummary;
 
     private Long idTvShow;
 
     private Integer version;
 
-    private TvShow tvShow;
+    private String slug;
 
     @Override
     public String toString()

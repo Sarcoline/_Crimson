@@ -6,5 +6,5 @@ import java.util.List;
 
 public @Data class FilterResponseDTO {
     int size;
-    List<TvShowSearchDTO> tvShows;
+    List<TvShowEmptyDTO> tvShows;
 }

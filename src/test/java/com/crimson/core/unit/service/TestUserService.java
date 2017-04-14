@@ -131,7 +131,7 @@ public class TestUserService {
         when(userDAO.getById(anyLong())).thenReturn(user);
         doNothing().when(userDAO).update(anyObject());
 
-        userService.changeProfilePic(userDTO,file);
+        userService.changeProfilePic(userDTO.getName(),file);
 
         Mockito.verify(userDAO, Mockito.times(1)).getById(Matchers.anyLong());
         Mockito.verify(userDAO, Mockito.times(1)).update(anyObject());
@@ -629,7 +629,7 @@ public class TestUserService {
         when(userDAO.getById(anyLong())).thenReturn(user);
         doNothing().when(userDAO).update(anyObject());
 
-        userService.updateSettings(userDTO,5,false);
+        userService.updateSettings(userDTO.getName(),5,false);
 
         Mockito.verify(userDAO,times(1)).getById(anyLong());
         Mockito.verify(userDAO,times(1)).update(anyObject());

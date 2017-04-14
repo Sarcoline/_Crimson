@@ -104,8 +104,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changeProfilePic(UserDTO userDTO, MultipartFile file) throws IOException {
-        User user2 = userDAO.getById(userDTO.getId());
+    public void changeProfilePic(String username, MultipartFile file) throws IOException {
+        User user2 = userDAO.getUserByName(username);
         user2.setProfilePic(file.getBytes());
         userDAO.update(user2);
     }
@@ -484,8 +484,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateSettings(UserDTO userDTO, int days, boolean send) {
-        User user = userDAO.getById(userDTO.getId());
+    public void updateSettings(String username, int days, boolean send) {
+        User user = userDAO.getUserByName(username);
         user.getSetting().setDaysOfUpcomingEpisodes(days);
         user.getSetting().setSendEpisodeList(send);
         userDAO.update(user);

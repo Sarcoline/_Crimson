@@ -12,8 +12,8 @@ public @Data class ReviewDTO {
 
     private Long id;
     LocalDate publicationDate;
-    UserDTO user;
-    TvShowDTO tvShow;
+    String username;
+    String slug;
 
     @Length(min = 5,max = 100, message = "Title must be between 5 and 100 characters")
     @NotNull

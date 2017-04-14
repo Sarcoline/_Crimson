@@ -130,8 +130,7 @@ public class UserController {
     public String updatePicture(@RequestParam("fileUpload") MultipartFile dto) throws Exception {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDTO user = userService.getUserByName(auth.getName());
-        userService.changeProfilePic(user, dto);
+        userService.changeProfilePic(auth.getName(), dto);
         return "redirect:/user/edit";
     }
 
@@ -167,7 +166,7 @@ public class UserController {
         }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
-            UserDTO userDTO = userService.getUserByName(auth.getName());
+            UserDisplayDTO userDTO = userService.getUserDisplayByName(auth.getName());
             model.addAttribute("userDTO", userDTO);
             model.addAttribute("settings", userDTO.getSetting());
             return "userEdit";

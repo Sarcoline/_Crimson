@@ -29,8 +29,8 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void save(ReviewDTO reviewDTO) {
         Review review = new Review(reviewDTO.getTitle(), reviewDTO.getIntroduction(), reviewDTO.getContent());
-        addTvShow2Review(review, tvShowDAO.getById(reviewDTO.getTvShow().getId()));
-        addUser2Review(review, userDAO.getById(reviewDTO.getUser().getId()));
+        addTvShow2Review(review, tvShowDAO.getTvBySlug(reviewDTO.getSlug()));
+        addUser2Review(review, userDAO.getUserByName(reviewDTO.getUsername()));
         reviewDAO.save(review);
     }
 

@@ -81,7 +81,7 @@ public class CrimsonController {
         if (error != null) {
             model.addAttribute("error", "Error!");
         }
-        TvShowDTO tv = tvShowService.getTvBySlug(name);
+        TvShowEditDTO tv = tvShowService.getEditTvBySlug(name);
         model.addAttribute("tv", tv);
         return "tvShowEdit";
     }
@@ -89,13 +89,13 @@ public class CrimsonController {
     //handles post request for editing tvshow details
     @RequestMapping(value = "/{name}/edit", method = RequestMethod.POST)
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
-    public String postEditTvShow(@ModelAttribute("tv") @Valid TvShowDTO tvShowDTO, BindingResult bindingResult, @PathVariable("name") String name) {
+    public String postEditTvShow(@ModelAttribute("tv") @Valid TvShowEditDTO TvShowEditDTO, BindingResult bindingResult, @PathVariable("name") String name) {
         if (bindingResult.hasErrors()) {
             return "tvShowEdit";
         }
         Slugify slugify = new Slugify();
-        tvShowService.updateTvShow(tvShowDTO);
-        return String.format("redirect:/tv/%s", slugify.slugify(tvShowDTO.getTitle()));
+        tvShowService.updateTvShow(TvShowEditDTO);
+        return String.format("redirect:/tv/%s", slugify.slugify(TvShowEditDTO.getTitle()));
     }
 
     //displays page with list of tvshow episodes
@@ -103,15 +103,15 @@ public class CrimsonController {
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     public String displayTvShowEpisodes(@RequestParam(value = "error", required = false) String error,
                                         @PathVariable("name") String name, Model model) {
-        TvShowDTO tv = tvShowService.getTvBySlug(name);
-        List<EpisodeDTO> episodes = tv.getEpisodes();
-        episodes.sort(Comparator.comparing(EpisodeDTO::getSeason));
-        episodes.sort(Comparator.comparing(EpisodeDTO::getNumber));
+        TvShowDisplayDTO tv = tvShowService.getDisplayBySlug(name);
+        List<EpisodeFromJson> episodes = tv.getEpisodes();
+        episodes.sort(Comparator.comparing(EpisodeFromJson::getSeason));
+        episodes.sort(Comparator.comparing(EpisodeFromJson::getNumber));
         if (error != null) {
             model.addAttribute("error", "Error!");
         }
         int seasons = 0;
-        for (EpisodeDTO episode : episodes) {
+        for (EpisodeFromJson episode : episodes) {
             if (seasons < episode.getSeason()) seasons = episode.getSeason();
         }
         model.addAttribute("name", name);
@@ -238,7 +238,7 @@ public class CrimsonController {
     //displyas page with episode list from external api
     @GetMapping(value = "/{name}/edit/episodes/api")
     public String addEpisodesFromJson(@PathVariable("name") String name, Model model) {
-        model.addAttribute("id", tvShowService.getTvBySlug(name).getId());
+        model.addAttribute("id", tvShowService.getDisplayBySlug(name).getId());
         model.addAttribute("name", name);
         return "addEpisodesFromJson";
     }
@@ -247,11 +247,6 @@ public class CrimsonController {
     @GetMapping(value = "/{name}/reviews/write")
     @Secured({"ROLE_AUTHOR", "ROLE_ADMIN"})
     public String writeReview(@PathVariable("name") String title, Model model) {
-        TvShowDTO tv = tvShowService.getTvBySlug(title);
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDTO user = userService.getUserByName(auth.getName());
-        model.addAttribute("tv", tv);
-        model.addAttribute("user", user);
         model.addAttribute("review", new ReviewDTO());
         return "writeReview";
     }
@@ -261,15 +256,12 @@ public class CrimsonController {
     @Secured({"ROLE_AUTHOR", "ROLE_ADMIN"})
     public String postReview(@Valid @ModelAttribute("review") ReviewDTO reviewDTO, BindingResult bindingResult,
                              @PathVariable("name") String title, Model model) {
-        TvShowDTO tv = tvShowService.getTvBySlug(title);
         if (bindingResult.hasErrors()) {
-            model.addAttribute("tv", tv);
             return "writeReview";
         }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDTO user = userService.getUserByName(auth.getName());
-        reviewDTO.setUser(user);
-        reviewDTO.setTvShow(tv);
+        reviewDTO.setUsername(auth.getName());
+        reviewDTO.setSlug(title);
         reviewService.save(reviewDTO);
         return String.format("redirect:/tv/%s", title);
     }

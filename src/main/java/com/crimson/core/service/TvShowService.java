@@ -32,7 +32,7 @@ public interface TvShowService {
 
     void deleteTvShow(String name);
 
-    void updateTvShow(TvShowDTO tvshow);
+    void updateTvShow(TvShowEditDTO tvshow);
 
     void addUser2TvShow(User user, TvShow tvShow);
 
@@ -89,4 +89,6 @@ public interface TvShowService {
     long tvShowsSize();
 
     FilterResponseDTO filter(SearchFilterParameters parameters, int page);
+
+    TvShowEditDTO getEditTvBySlug(String name);
 }

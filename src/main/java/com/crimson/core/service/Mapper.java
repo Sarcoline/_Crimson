@@ -26,6 +26,9 @@ public class Mapper extends ConfigurableMapper {
                 .byDefault()
                 .register();
         factory.classMap(Episode.class, EpisodeFormDTO.class)
+                .field("tvShow.slug", "slug")
+                .byDefault()
+                .register();factory.classMap(TvShow.class, TvShowEmptyDTO.class)
                 .byDefault()
                 .register();
         factory.classMap(Comment.class, CommentDTO.class)
@@ -49,6 +52,9 @@ public class Mapper extends ConfigurableMapper {
                 .byDefault()
                 .register();
         factory.classMap(Rating.class, RatingDTO.class)
+                .byDefault()
+                .register();
+        factory.classMap(TvShow.class, TvShowEditDTO.class)
                 .byDefault()
                 .register();
         factory.classMap(Setting.class, SettingDTO.class)

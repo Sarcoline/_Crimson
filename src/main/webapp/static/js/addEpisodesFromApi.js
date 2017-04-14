@@ -10,7 +10,7 @@ var addEpisodes = function (tvshow, idTv) {
                     var li = document.createElement('li');
                     var a = document.createElement('a');
                     a.setAttribute("data-season", data[i].season);
-                    a.setAttribute("data-episode", data[i].number);
+                    a.setAttribute("data-number", data[i].number);
                     a.setAttribute("data-title", data[i].name);
                     a.setAttribute("data-date", data[i].airdate);
                     a.setAttribute("data-summary", data[i].summary);
@@ -63,7 +63,7 @@ var addEpisodes = function (tvshow, idTv) {
                 title: a.dataset.title,
                 releaseDate: a.dataset.date,
                 season: a.dataset.season,
-                episode: a.dataset.episode,
+                number: a.dataset.number,
                 summary: a.dataset.summary,
                 idTvShow: idTv
             };
@@ -78,7 +78,7 @@ var addEpisodes = function (tvshow, idTv) {
             title: $(this).data('title'),
             releaseDate: $(this).data('date'),
             season: $(this).data('season'),
-            episode: $(this).data('episode'),
+            number: $(this).data('number'),
             summary: $(this).data('summary'),
             idTvShow: idTv
         };

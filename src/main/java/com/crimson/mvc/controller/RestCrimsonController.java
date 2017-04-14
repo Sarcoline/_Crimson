@@ -113,7 +113,7 @@ public class RestCrimsonController {
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     public void addEpisodesFromJsonPost(@RequestBody List<EpisodeFromJson> episodes,
                                         @PathVariable("name") String name) {
-        episodeService.saveEpisodeJSON(episodes, tvShowService.getTvBySlug(name).getId());
+        episodeService.saveEpisodeJSON(episodes, tvShowService.getDisplayBySlug(name).getId());
     }
 
     //handles updating user settings
@@ -121,8 +121,7 @@ public class RestCrimsonController {
     public void updateSettings(@RequestParam("days") int days, @RequestParam("send") boolean send) throws Exception {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDTO user = userService.getUserByName(auth.getName());
-        userService.updateSettings(user, days, send);
+        userService.updateSettings(auth.getName(), days, send);
     }
 
     //user set himself as adult
