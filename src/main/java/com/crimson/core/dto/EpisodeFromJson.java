@@ -6,7 +6,7 @@ public @Data class EpisodeFromJson {
 
     private String title;
     private int season;
-    private int episode;
+    private int number;
     private String summary;
     private String releaseDate;
     private long idTvShow;

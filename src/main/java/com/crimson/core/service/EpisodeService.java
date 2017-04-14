@@ -1,6 +1,8 @@
 package com.crimson.core.service;
 
-import com.crimson.core.dto.*;
+import com.crimson.core.dto.EpisodeDTO;
+import com.crimson.core.dto.EpisodeFormDTO;
+import com.crimson.core.dto.EpisodeFromJson;
 import com.crimson.core.model.Episode;
 import com.crimson.core.model.TvShow;
 import com.crimson.core.model.User;
@@ -21,13 +23,13 @@ public interface EpisodeService {
 
     Episode getEpisodeByTitle(String title);
 
-    void addUser2Episode(UserDTO userDTO, EpisodeDTO episode);
+    void addUser2Episode(String username, long id);
 
-    void deleteUserFromEpisode(UserDTO userDTO, EpisodeDTO episodeDTO);
+    void deleteUserFromEpisode(String username, long id);
 
     List<User> getUsers(Episode episode);
 
-    boolean checkWatched(UserDTO userDTO, EpisodeDTO episodeDTO);
+    boolean checkWatched(String username, long id);
 
     void addTvShow2Episode(TvShow tvShow, Episode episode);
 
@@ -41,5 +43,5 @@ public interface EpisodeService {
 
     void saveEpisodeJSON(List<EpisodeFromJson> episodeFromJson, long tvShowId);
 
-    void addUserToSeason(UserDTO user, int season, TvShowDTO tv);
+    void addUserToSeason(String username, int season, String slug);
 }

@@ -125,8 +125,8 @@
                         <article class="uk-article uk-margin-top">
 
                             <p class="uk-article-lead">${review.title}</p>
-                            <p class="uk-article-meta">By <a href="<c:url value="/user/${review.user.name}"/> ">
-                                    ${review.user.name}</a> on ${review.publicationDate}</p>
+                            <p class="uk-article-meta">By <a href="<c:url value="/user/${review.username}"/> ">
+                                    ${review.username}</a> on ${review.publicationDate}</p>
                                 ${review.introduction} <a href="<c:url value="/tv/${tv.slug}/reviews/${review.id}"/> "
                                                           style="color: #00a8e6;">Read more</a>
                         </article>
@@ -166,12 +166,12 @@
                     <c:forEach items="${comments}" var="comment">
                         <article class="uk-comment uk-margin-top">
                             <header class="uk-comment-header">
-                                <img class="uk-comment-avatar" src="<c:url value="/images/user/${comment.user.name}"/> "
+                                <img class="uk-comment-avatar" src="<c:url value="/images/user/${comment.username}"/> "
                                      style="width: 40px; height: 30px;"
                                      alt="">
-                                <h4 class="uk-comment-title">${comment.user.name}</h4>
+                                <h4 class="uk-comment-title">${comment.username}</h4>
                                 <div class="uk-comment-meta">${comment.date} | <a
-                                        href="<c:url value="/user/${comment.user.name}"/>">Profile</a></div>
+                                        href="<c:url value="/user/${comment.username}"/>">Profile</a></div>
                             </header>
                             <div class="uk-comment-body">
                                 <p><c:out value="${comment.text}"/></p>
@@ -194,7 +194,6 @@
                         <c:out value="${tv.ratings.size() == 0 ? '?' : tv.overallRating}"/><small class="uk-text-muted" style="font-size: 2rem;">/10</small>
                     </p>
                     <p class="uk-text-muted">${tv.ratings.size()} ratings</p>
-                    <p class="uk-text-muted">${tv.users.size()} follows</p>
                     <sec:authorize access="isAuthenticated()">
                         <div class="userRating">
                             <img src="<c:url value="/images/user/${name}"/>" class="userPicture">
@@ -360,7 +359,6 @@
                 text: commentInput.val(),
                 idTvShow: ${tv.id}
             };
-            console.log(comment);
             if (comment.text.length >= 5) {
                 $.ajax({
                     headers: {
@@ -371,7 +369,6 @@
                     url: "/api/addComment",
                     data: JSON.stringify(comment),
                     success: function () {
-                        console.log('ok');
                         $('#comments').prepend(createComment(comment.text, '${name}'));
                         $('#add-comment').addClass('uk-hidden');
                         commentInput.val(' ');

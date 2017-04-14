@@ -40,6 +40,31 @@ public class Mapper extends ConfigurableMapper {
         factory.classMap(TvShowAddDTO.class, TvShow.class)
                 .byDefault()
                 .register();
+        factory.classMap(TvShow.class, TvShowDisplayDTO.class)
+                .byDefault()
+                .register();
+        factory.classMap(Episode.class, EpisodeFromJson.class)
+                .byDefault()
+                .register();
+        factory.classMap(Rating.class, RatingDTO.class)
+                .byDefault()
+                .register();
+        factory.classMap(Setting.class, SettingDTO.class)
+                .byDefault()
+                .register();
+        factory.classMap(User.class, UserDisplayDTO.class)
+                .byDefault()
+                .register();
+        factory.classMap(Comment.class, CommentDisplayDTO.class)
+                .field("user.name", "username")
+                .field("tvShow.id","idTvShow")
+                .byDefault()
+                .register();
+        factory.classMap(Review.class, ReviewDisplayDTO.class)
+                .field("user.name", "username")
+                .field("tvShow.id","idTvShow")
+                .byDefault()
+                .register();
         factory.getConverterFactory().registerConverter(new LocalDateConverter());
     }
 }

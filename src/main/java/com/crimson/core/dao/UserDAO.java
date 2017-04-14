@@ -19,6 +19,8 @@ public interface UserDAO extends BaseDAO<User, Long> {
 
     List<Role> getRoles(User user);
 
+    boolean checkWatched(String userName, long idEpisode);
+
     List<Comment> getComments(User user);
 
     List<Review> getReviews(User user);
@@ -26,4 +28,6 @@ public interface UserDAO extends BaseDAO<User, Long> {
     User getUserByEmail(String email);
 
     byte[] getUserProfilePicture(String name);
+
+    boolean checkFollow(String name, long id);
 }

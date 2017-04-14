@@ -2,8 +2,8 @@ package com.crimson.core.service;
 
 import com.crimson.core.dto.EpisodeDTO;
 import com.crimson.core.dto.TvShowDTO;
-import com.crimson.core.dto.TvShowSearchDTO;
 import com.crimson.core.dto.UserDTO;
+import com.crimson.core.dto.UserDisplayDTO;
 import com.crimson.core.model.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,11 +24,13 @@ public interface UserService {
 
     void changeProfilePic(UserDTO userDTO, MultipartFile file) throws IOException;
 
+    UserDisplayDTO getUserDisplayByName(String name);
+
     UserDTO getUserByName(String name);
 
-    void addTvShow2User(UserDTO user, TvShowDTO tvShow);
+    void addTvShow2User(String username, long id);
 
-    void deleteTvShowFromUser(UserDTO user, TvShowDTO tvShow);
+    void deleteTvShowFromUser(String username, long id);
 
     void addEpisode2User(User user, Episode episode);
 
@@ -42,7 +44,7 @@ public interface UserService {
 
     byte[] getUserProfilePicture(String name);
 
-    boolean checkFollow(UserDTO userDTO, TvShowDTO tvShow);
+    boolean checkFollow(String name, long id);
 
     void deleteRatingFromUser(User user, Rating rating);
 
@@ -74,9 +76,11 @@ public interface UserService {
 
     List<Review> getReviews(User user);
 
-    List<TvShowSearchDTO> getUserTvShowsSortedByMaxRating(UserDTO user);
+    List<TvShowDTO> getUserTvShowsSortedByMaxRating(UserDTO user);
 
     List<EpisodeDTO> getAllUnwatchedUserEpisodes(UserDTO user);
+
+    List<Long> getWatchedEpisodesIds(UserDisplayDTO user);
 
     List<EpisodeDTO> getAllUpcomingUserEpisodes(UserDTO userDTO, List<TvShowDTO> tvs, List<EpisodeDTO> watchedEpisodes);
 

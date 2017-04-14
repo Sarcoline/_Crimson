@@ -3,8 +3,6 @@ package com.crimson.core.service;
 import com.crimson.core.dao.RatingDAO;
 import com.crimson.core.dao.TvShowDAO;
 import com.crimson.core.dao.UserDAO;
-import com.crimson.core.dto.TvShowDTO;
-import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.Rating;
 import com.crimson.core.model.TvShow;
 import com.crimson.core.model.User;
@@ -68,8 +66,8 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public Rating getRating(long idtv, long iduser) {
-        return ratingDAO.getRating(idtv, iduser);
+    public Rating getRating(long idtv, String username) {
+        return ratingDAO.getRating(idtv, username);
     }
 
     @Override
@@ -129,14 +127,16 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public void saveUserRating(UserDTO userDTO, TvShowDTO tvShowDTO, int value) {
-        User user = mapperFacade.map(userDTO, User.class);
-        TvShow tvShow = mapperFacade.map(tvShowDTO, TvShow.class);
-        Rating rating = new Rating();
+    public void saveUserRating(String username, long id, int value) {
+        User user = userDAO.getUserByName(username);
+        TvShow tvShow = tvShowDAO.getById(id);
+        Rating rating = ratingDAO.getRating(id, username);
         rating.setValue(value);
+        rating.setTvShow(tvShow);
+        rating.setUser(user);
         saveRating(rating);
-        addTvShow2Rating(rating, tvShow);
-        addUser2Rating(rating, user);
+        //addTvShow2Rating(rating, tvShow);
+        //addUser2Rating(rating, user);
         calculateRating(tvShow.getId());
     }
 

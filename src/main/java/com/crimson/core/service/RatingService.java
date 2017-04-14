@@ -1,7 +1,5 @@
 package com.crimson.core.service;
 
-import com.crimson.core.dto.TvShowDTO;
-import com.crimson.core.dto.UserDTO;
 import com.crimson.core.model.Rating;
 import com.crimson.core.model.TvShow;
 import com.crimson.core.model.User;
@@ -24,7 +22,7 @@ public interface RatingService {
 
     List<Rating> getAllRatings();
 
-    Rating getRating(long idtv, long iduser);
+    Rating getRating(long idtv, String username);
 
     void addTvShow2Rating(Rating rating, TvShow tvShow);
 
@@ -34,7 +32,7 @@ public interface RatingService {
 
     void deleteUserFromRating(Rating rating, User user);
 
-    void saveUserRating(UserDTO userDTO, TvShowDTO tvShowDTO, int value);
+    void saveUserRating(String username, long id, int value);
 
     void calculateRating(long id);
 }

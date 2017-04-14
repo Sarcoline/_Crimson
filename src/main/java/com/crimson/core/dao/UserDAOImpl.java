@@ -152,6 +152,30 @@ public class UserDAOImpl implements UserDAO {
         return (byte[]) session.createQuery(hql).setParameter("custName", name).getSingleResult();
     }
 
+    @Override
+    public boolean checkFollow(String userName, long idTv) {
+
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "FROM User u JOIN FETCH u.tvShows t where u.name = :name and t.id = :id";
+        List tvs =  session.createQuery(hql)
+                .setParameter("name", userName)
+                .setParameter("id", idTv)
+                .getResultList();
+        return !tvs.isEmpty();
+    }
+
+    @Override
+    public boolean checkWatched(String userName, long idEpisode) {
+
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "FROM User u JOIN FETCH u.episodes e where u.name = :name and e.id = :id";
+        List tvs =  session.createQuery(hql)
+                .setParameter("name", userName)
+                .setParameter("id", idEpisode)
+                .getResultList();
+        return !tvs.isEmpty();
+    }
+
     //Getting relational Comments objects from User object from database
     @Override
     @Cacheable("application-cache")

@@ -12,6 +12,8 @@ public @Data class TvShowSearchDTO {
     private Double overallRating;
 
     private String slug;
+
+    private int finishYear;
     @Override
     public String toString()
     {

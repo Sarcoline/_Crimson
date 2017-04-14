@@ -9,7 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RequestMapping("/api")
@@ -52,12 +51,7 @@ public class RestCrimsonController {
     @Secured("ROLE_USER")
     public void addComment(@RequestBody CommentDTO commentDTO) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDTO user = userService.getUserByName(auth.getName());
-        TvShowDTO tvShowDTO = tvShowService.getTvById(commentDTO.getIdTvShow());
-        commentDTO.setTvShow(tvShowDTO);
-        commentDTO.setUser(user);
-        commentDTO.setDate(LocalDate.now());
-        commentService.save(commentDTO);
+        commentService.save(commentDTO, auth.getName());
     }
 
     //handles user request to mark episode as watched
@@ -66,10 +60,8 @@ public class RestCrimsonController {
     @Secured("ROLE_USER")
     public void watched(@RequestParam("id") long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDTO user = userService.getUserByName(auth.getName());
-        EpisodeDTO episode = episodeService.getEpisodeById(id);
-        if (episodeService.checkWatched(user, episode)) episodeService.deleteUserFromEpisode(user, episode);
-        else episodeService.addUser2Episode(user, episode);
+        if (episodeService.checkWatched(auth.getName(), id)) episodeService.deleteUserFromEpisode(auth.getName(), id);
+        else episodeService.addUser2Episode(auth.getName(), id);
     }
 
     //handles user request for marking whole season of tvshow as watched
@@ -78,9 +70,7 @@ public class RestCrimsonController {
     @Secured("ROLE_USER")
     public void watchedSeason(@RequestParam("season") int season, @RequestParam("slug") String slug) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDTO user = userService.getUserByName(auth.getName());
-
-        episodeService.addUserToSeason(user, season, tvShowService.getTvBySlug(slug));
+        episodeService.addUserToSeason(auth.getName(), season, slug);
     }
 
     //handles user request for rating tvshow
@@ -90,9 +80,7 @@ public class RestCrimsonController {
     @ResponseBody
     public String rate(@RequestParam("id") long id, @RequestParam("value") int value) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDTO user = userService.getUserByName(auth.getName());
-        TvShowDTO tv = tvShowService.getTvById(id);
-        ratingService.saveUserRating(user, tv, value);
+        ratingService.saveUserRating(auth.getName(), id, value);
         return "rated";
     }
 
@@ -102,14 +90,12 @@ public class RestCrimsonController {
     @ResponseBody
     public String follow(@RequestParam("id") Long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserDTO user = userService.getUserByName(auth.getName());
-        TvShowDTO tv = tvShowService.getTvById(id);
         String response;
-        if (userService.checkFollow(user, tv)) {
-            userService.deleteTvShowFromUser(user, tv);
+        if (userService.checkFollow(auth.getName(), id)) {
+            userService.deleteTvShowFromUser(auth.getName(), id);
             response = "unfollow";
         } else {
-            userService.addTvShow2User(user, tv);
+            userService.addTvShow2User(auth.getName(), id);
             response = "follow";
         }
         return response;

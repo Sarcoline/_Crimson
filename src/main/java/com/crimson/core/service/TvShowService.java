@@ -12,6 +12,8 @@ public interface TvShowService {
 
     List<TvShow> getAllTvShows();
 
+    TvShowDisplayDTO getDisplayBySlug(String slug);
+
     TvShowDTO getTvById(Long id);
 
     TvShowDTO getTvByIdWithEpisodes(Long id);

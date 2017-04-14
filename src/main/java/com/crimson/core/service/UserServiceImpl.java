@@ -3,8 +3,8 @@ package com.crimson.core.service;
 import com.crimson.core.dao.*;
 import com.crimson.core.dto.EpisodeDTO;
 import com.crimson.core.dto.TvShowDTO;
-import com.crimson.core.dto.TvShowSearchDTO;
 import com.crimson.core.dto.UserDTO;
+import com.crimson.core.dto.UserDisplayDTO;
 import com.crimson.core.model.*;
 import ma.glasnost.orika.MapperFacade;
 import org.apache.commons.io.IOUtils;
@@ -114,6 +114,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDisplayDTO getUserDisplayByName(String name) {
+            return mapperFacade.map(userDAO.getUserByName(name), UserDisplayDTO.class);
+    }
+    @Override
     public UserDTO getUserByName(String name) {
         return mapperFacade.map(userDAO.getUserByName(name), UserDTO.class);
     }
@@ -129,42 +133,34 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean checkFollow(UserDTO userDTO, TvShowDTO tvShow) {
-        return userDAO.getUserByName(userDTO.getName()).getTvShows().contains(tvShowDAO.getById(tvShow.getId()));
+    public boolean checkFollow(String name, long id) {
+        return userDAO.checkFollow(name,id);
     }
 
     @Override
-    public void addTvShow2User(UserDTO userDTO, TvShowDTO tvShowDTO) {
-        User user = userDAO.getById(userDTO.getId());
-        TvShow tv = tvShowDAO.getById(tvShowDTO.getId());
+    public void addTvShow2User(String username, long id) {
+        User user = userDAO.getUserByName(username);
+        TvShow tv = tvShowDAO.getById(id);
         if (!userDAO.getTvShows(user).contains(tv)) {
-            List<TvShow> tvShows = userDAO.getTvShows(user);
-            tvShows.add(tv);
-            user.setTvShows(tvShows);
+            user.getTvShows().add(tv);
             userDAO.update(user);
         }
         if (!tvShowDAO.getUsers(tv).contains(user)) {
-            List<User> users = tvShowDAO.getUsers(tv);
-            users.add(user);
-            tv.setUsers(users);
+            tv.getUsers().add(user);
             tvShowDAO.update(tv);
         }
     }
 
     @Override
-    public void deleteTvShowFromUser(UserDTO userDTO, TvShowDTO tvShow) {
-        User user = userDAO.getUserByName(userDTO.getName());
-        TvShow tv = tvShowDAO.getById(tvShow.getId());
+    public void deleteTvShowFromUser(String username, long id) {
+        User user = userDAO.getUserByName(username);
+        TvShow tv = tvShowDAO.getById(id);
         if (userDAO.getTvShows(user).contains(tv)) {
-            List<TvShow> tvShows = userDAO.getTvShows(user);
-            tvShows.remove(tv);
-            user.setTvShows(tvShows);
+            user.getTvShows().remove(tv);
             userDAO.update(user);
         }
         if (tvShowDAO.getUsers(tv).contains(user)) {
-            List<User> users = tvShowDAO.getUsers(tv);
-            users.remove(user);
-            tv.setUsers(users);
+            tv.getUsers().remove(user);
             tvShowDAO.update(tv);
         }
     }
@@ -388,12 +384,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<TvShowSearchDTO> getUserTvShowsSortedByMaxRating(UserDTO userDTO) {
+    public List<TvShowDTO> getUserTvShowsSortedByMaxRating(UserDTO user) {
 
-        List<TvShowSearchDTO> sortedList = new ArrayList<>();
-        List<Rating> unsortedList = userDTO.getRatings();
+        List<TvShowDTO> sortedList = new ArrayList<>();
+        List<Rating> unsortedList = user.getRatings();
         unsortedList.sort(Comparator.comparingInt(Rating::getValue).reversed());
-        unsortedList.forEach(rating -> sortedList.add(mapperFacade.map(rating.getTvShow(), TvShowSearchDTO.class)));
+        //unsortedList.forEach(rating -> sortedList.add(rating.getTvShow()));
 
         return sortedList;
     }
@@ -417,6 +413,13 @@ public class UserServiceImpl implements UserService {
             });
         });
         return allUnwatchedUserEpisodes;
+    }
+
+    @Override
+    public List<Long> getWatchedEpisodesIds(UserDisplayDTO user) {
+        List<Long> watchedEpisodesId = new ArrayList<>();
+        user.getEpisodes().forEach(episode -> watchedEpisodesId.add(episode.getId()));
+        return watchedEpisodesId;
     }
 
     @Override

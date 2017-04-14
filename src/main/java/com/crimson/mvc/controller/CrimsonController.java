@@ -43,27 +43,27 @@ public class CrimsonController {
     //displays tvshow page
     @GetMapping("/{name}")
     public String displayTvShow(Model model, @PathVariable("name") String name) {
-        TvShowDTO tv = tvShowService.getTvBySlug(name);
+        TvShowDisplayDTO tv = tvShowService.getDisplayBySlug(name);
         boolean follow = false;
         int rating = 0;
-        List<EpisodeDTO> episodes = tv.getEpisodes();
+        List<EpisodeFromJson> episodes = tv.getEpisodes();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
-            UserDTO user = userService.getUserByName(auth.getName());
-            follow = userService.checkFollow(user, tv);
-            rating = ratingService.getRating(tv.getId(), user.getId()).getValue();
+            UserDisplayDTO user = userService.getUserDisplayByName(auth.getName());
+            follow = userService.checkFollow(auth.getName(), tv.getId());
+            rating = ratingService.getRating(tv.getId(), auth.getName()).getValue();
             model.addAttribute("user", user);
             List<Long> watchedEpisodesId = new ArrayList<>();
             user.getEpisodes().forEach(episode -> watchedEpisodesId.add(episode.getId()));
             model.addAttribute("watchedEpisodesId", watchedEpisodesId);
         }
 
-        episodes.sort(Comparator.comparing(EpisodeDTO::getNumber));
-        episodes.sort(Comparator.comparing(EpisodeDTO::getSeason));
+        episodes.sort(Comparator.comparing(EpisodeFromJson::getNumber));
+        episodes.sort(Comparator.comparing(EpisodeFromJson::getSeason));
         int seasons = episodes.isEmpty() ? 0 : episodes.get(episodes.size() - 1).getSeason();
-        List<CommentDTO> comments = tv.getComments();
-        comments.sort(Comparator.comparing(CommentDTO::getDate).reversed());
-        model.addAttribute("comments", comments);
+        List<CommentDisplayDTO> comments = tv.getComments();
+        comments.sort(Comparator.comparing(CommentDisplayDTO::getDate).reversed());
+        model.addAttribute("comments", tv.getComments());
         model.addAttribute("tv", tv);
         model.addAttribute("episodes", episodes);
         model.addAttribute("seasons", seasons);
