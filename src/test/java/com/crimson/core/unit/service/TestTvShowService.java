@@ -2,6 +2,7 @@ package com.crimson.core.unit.service;
 
 import com.crimson.core.dao.*;
 import com.crimson.core.dto.TvShowDTO;
+import com.crimson.core.dto.TvShowEditDTO;
 import com.crimson.core.model.*;
 import com.crimson.core.service.TvShowServiceImpl;
 import ma.glasnost.orika.MapperFacade;
@@ -71,14 +72,14 @@ public class TestTvShowService {
     @Test
     public void updateTest(){
         TvShow tv = TvShow.builder().build();
-        TvShowDTO tvDTO = new TvShowDTO();
+        TvShowEditDTO tvDTO = new TvShowEditDTO();
         tvDTO.setTitle("Title");
         tvDTO.setCountry("Country");
         tvDTO.setNetwork("Network");
         when(tvShowDAO.getById(anyLong())).thenReturn(tv);
         doNothing().when(tvShowDAO).update(anyObject());
 
-        //tvShowService.updateTvShow(tvDTO);
+        tvShowService.updateTvShow(tvDTO);
 
         Mockito.verify(tvShowDAO).update(anyObject());
         Mockito.verify(tvShowDAO).getById(anyLong());

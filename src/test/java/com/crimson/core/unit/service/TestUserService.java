@@ -128,12 +128,12 @@ public class TestUserService {
         byte[] bytes = new byte['x'];
         MultipartFile file = new MockMultipartFile("string",bytes);
 
-        when(userDAO.getById(anyLong())).thenReturn(user);
+        when(userDAO.getUserByName(anyString())).thenReturn(user);
         doNothing().when(userDAO).update(anyObject());
 
         userService.changeProfilePic(userDTO.getName(),file);
 
-        Mockito.verify(userDAO, Mockito.times(1)).getById(Matchers.anyLong());
+        Mockito.verify(userDAO, Mockito.times(1)).getUserByName(Matchers.anyString());
         Mockito.verify(userDAO, Mockito.times(1)).update(anyObject());
     }
 
@@ -161,41 +161,26 @@ public class TestUserService {
 
     @Test
     public void checkFollowTest(){
-        User user = User.builder().name("Test").build();
-        UserDTO userDTO = new UserDTO();
-        userDTO.setName("name123");
-        userDTO.setPassword("password");
-        TvShow tv = TvShow.builder().build();
-        TvShowDTO tvDTO = new TvShowDTO();
-        tvDTO.setTitle("Test");
+        when(userDAO.checkFollow(anyString(),anyLong())).thenReturn(true);
 
-        when(userDAO.getUserByName(anyString())).thenReturn(user);
-        when(tvShowDAO.getById(anyLong())).thenReturn(tv);
+        userService.checkFollow("name",1L);
 
-        userService.checkFollow(userDTO.getName(),tvDTO.getId());
-
-        Mockito.verify(userDAO, Mockito.times(1)).getUserByName(Matchers.anyString());
-        Mockito.verify(tvShowDAO, Mockito.times(1)).getById(Matchers.anyLong());
-    }
+        Mockito.verify(userDAO, Mockito.times(1)).checkFollow(anyString(),anyLong());
+}
 
     @Test
     public void addTvShow2UserTest(){
         User user = User.builder().name("Test").build();
-        UserDTO userDTO = new UserDTO();
-        userDTO.setName("name123");
-        userDTO.setPassword("password");
         TvShow tv = TvShow.builder().build();
-        TvShowDTO tvDTO = new TvShowDTO();
-        tvDTO.setTitle("Test");
 
-        when(userDAO.getById(anyLong())).thenReturn(user);
+        when(userDAO.getUserByName(anyString())).thenReturn(user);
         when(tvShowDAO.getById(anyLong())).thenReturn(tv);
         doNothing().when(userDAO).update(anyObject());
         doNothing().when(tvShowDAO).update(anyObject());
 
-        userService.addTvShow2User(userDTO.getName(),tvDTO.getId());
+        userService.addTvShow2User("name",1L);
 
-        Mockito.verify(userDAO, Mockito.times(1)).getById(Matchers.anyLong());
+        Mockito.verify(userDAO, Mockito.times(1)).getUserByName(Matchers.anyString());
         Mockito.verify(tvShowDAO, Mockito.times(1)).getById(Matchers.anyLong());
         Mockito.verify(userDAO,Mockito.times(1)).update(anyObject());
         Mockito.verify(tvShowDAO,Mockito.times(1)).update(anyObject());
@@ -204,12 +189,7 @@ public class TestUserService {
     @Test
     public void deleteTvShowFromUserTest(){
         User user = User.builder().name("Test").build();
-        UserDTO userDTO = new UserDTO();
-        userDTO.setName("name123");
-        userDTO.setPassword("password");
         TvShow tv = TvShow.builder().build();
-        TvShowDTO tvDTO = new TvShowDTO();
-        tvDTO.setTitle("Test");
         List<TvShow> tvs = new ArrayList<>();
         tvs.add(tv);
         List<User> users = new ArrayList<>();
@@ -222,7 +202,7 @@ public class TestUserService {
         doNothing().when(userDAO).update(anyObject());
         doNothing().when(tvShowDAO).update(anyObject());
 
-        userService.deleteTvShowFromUser(userDTO.getName(),tvDTO.getId());
+        userService.deleteTvShowFromUser("name",1L);
 
         Mockito.verify(userDAO, Mockito.times(1)).getUserByName(Matchers.anyString());
         Mockito.verify(tvShowDAO, Mockito.times(1)).getById(Matchers.anyLong());
@@ -620,18 +600,15 @@ public class TestUserService {
     @Test
     public void updateSettingsTest(){
         User user = User.builder().name("Test").build();
-        UserDTO userDTO = new UserDTO();
-        userDTO.setName("name123");
-        userDTO.setPassword("password");
         Setting setting = Setting.builder().build();
         user.setSetting(setting);
 
-        when(userDAO.getById(anyLong())).thenReturn(user);
+        when(userDAO.getUserByName(anyString())).thenReturn(user);
         doNothing().when(userDAO).update(anyObject());
 
-        userService.updateSettings(userDTO.getName(),5,false);
+        userService.updateSettings("name",5,false);
 
-        Mockito.verify(userDAO,times(1)).getById(anyLong());
+        Mockito.verify(userDAO,times(1)).getUserByName(anyString());
         Mockito.verify(userDAO,times(1)).update(anyObject());
     }
 
